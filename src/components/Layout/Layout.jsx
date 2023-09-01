@@ -1,13 +1,14 @@
 import Chemins from '../../routers/Chemins'
 import Header from '../Header/Header'
 import Footer from '../Footer/Footer'
-// import Marge from '../marge/marge'
+import Espace from '../Espace/Espace'
+
 
 const Layout = () => {
   return (
     <div>
       <Header/>
-      {/* <Marge/> */}
+      <Espace/>
       <div>
         <Chemins/>
       </div>

@@ -59,9 +59,9 @@ const Header = () => {
           <div className="header-nav__content">
             <ul className="header-nav__list">
               <li>
-                <a title="home">
-                  Acceuil
-                </a>
+                <NavLink to="acceuil">
+                    <h1>Acceuil</h1>
+                </NavLink>
               </li>
               <li>
                 <NavLink to="/page/porte">
@@ -74,22 +74,34 @@ const Header = () => {
                 </NavLink>
               </li>
               <li>
-                <a href="./Habillage_Facade.html">Habillage Façade</a>
+                <NavLink to="/page/HabillageFaçade">
+                    <h1>Habillage Façade</h1>
+                </NavLink>
               </li>
               <li>
-                <a href="./Baies.html">Baies</a>
+                <NavLink to="/page/Baies">
+                    <h1>Baies</h1>
+                </NavLink>
               </li>
               <li>
-                <a href="./Garde_corp.html">Garde Corps</a>
+                <NavLink to="/page/GardeCorps">
+                    <h1>Garde Corps</h1>
+                </NavLink>
               </li>
               <li>
-                <a href="./Amenagement_Interieur.html">Aménagement Intérieur</a>
+                 <NavLink to="/page/AménagementIntérieur">
+                    <h1>Aménagement Intérieur</h1>
+                </NavLink>
               </li>
               <li>
-                <a href="./Amenagement_Exterieur.html">Aménagement Extérieur</a>
+                 <NavLink to="/page/AménagementExtérieur">
+                    <h1>Aménagement Extérieur</h1>
+                </NavLink>
               </li>
               <li>
-                <a href="./Fermeture_exterieur.html">Fermeture Extérieur</a>
+                <NavLink to="/page/Fermeture Extérieu">
+                    <h1>Fermeture Extérieu</h1>
+                </NavLink>
               </li>
             </ul>
           </div>
