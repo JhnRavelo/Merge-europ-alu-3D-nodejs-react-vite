@@ -1,0 +1,62 @@
+.fenetre__coulissante {
+    height: auto;
+}
+
+.fenetre {
+    margin-top: 6rem;
+    height: auto;
+}
+
+.fenetre__coulissante .presentation {
+    display: flex;
+    width: 100%;
+    margin-bottom: 5rem;
+}
+
+.fenetre .presentation {
+    width: 100%;
+    display: flex;
+    padding-bottom: 5rem;
+    position: relative;
+}
+
+.img__pres {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fenetre__coulissante img {
+    display: flex;
+    width: 50%;
+}
+
+.fenetre img {
+    width: 80%;
+    max-height: 500px;
+}
+
+.presentation .desc {
+    width: 100%;
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.presentation .desc h1 {
+    font-size: 4rem;
+    font-weight: 500;
+    width: 100%;
+}
+
+.presentation .desc p {
+    margin-top: 2em;
+    font-size: 1.2rem;
+}
+
+.presentation.pres2 {
+    text-align: end;
+}
+

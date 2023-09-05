@@ -1,0 +1,22 @@
+.show-modal {
+    margin-top: 1rem;
+    border: none;
+    outline: none;
+    padding: 10px 50px 10px 50px;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: 700;
+    background-color: var(--orange);
+    transition: .6s ease;
+    color: #fff;
+}
+
+.show-modal:hover {
+    cursor: pointer;
+    background-color: #06001a;
+    transform: scale(1.1);
+  }
+  
+.show-modal:active {
+transform: scale(1);
+}

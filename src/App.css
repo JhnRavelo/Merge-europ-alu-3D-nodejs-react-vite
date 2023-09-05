@@ -46,3 +46,21 @@
   input[type=number] {
     -moz-appearance: textfield;
   }
+
+.container {
+  width: 80%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  background: transparent;
+}
+
+.home-content-tablecell .row {
+  position: relative;
+  padding-top: 16.2rem;
+  padding-bottom: 15rem;
+}
+
+/* ========================== MEDIA QUERY ========================= */
+

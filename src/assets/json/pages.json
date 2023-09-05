@@ -1,0 +1,23 @@
+[
+  {
+    "title": "Fenêtre",
+    "home": {
+      "title": "FENÊTRES",
+      "img": "img-fenetre",
+      "src": "./assets/images/FENÊTRES/_MG_7819-1.jpg"
+    },
+    "products": [
+      {
+        "title": "Fenêtres Coulissante",
+        "description": "Lorem, ipsum. Quam, sit obcaecati corrupti accusamusui suscipit morum quis. Incidunt aliquid maiores soluta mollitia eveniet?",
+        "png": "./assets/images/FENÊTRES/PNG/FENÊTRE COULISSANTE.png",
+        "gallery": [
+          "./assets/images/FENÊTRES/FENÊTRE_COULISSANTES/_MG_4788.JPG",
+          "./assets/images/FENÊTRES/FENÊTRE_COULISSANTES/_MG_4805-1.jpg",
+          "./assets/images/FENÊTRES/FENÊTRE_COULISSANTES/_MG_7673.jpg",
+          "./assets/images/FENÊTRES/FENÊTRE_COULISSANTES/_MG_7927-1.jpg"
+        ]
+      }
+    ]
+  }
+]

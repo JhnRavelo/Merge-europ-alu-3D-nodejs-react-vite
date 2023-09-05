@@ -1,16 +1,26 @@
 import Chemins from '../../routers/Chemins'
 import Header from '../Header/Header'
 import Footer from '../Footer/Footer'
-import Espace from '../Espace/Espace'
+import Grids from '../Grids/Grids'
+// import Espace from '../Espace/Espace'
+import ProductContext from '../Products/ProductContext'
 
+import Home from '../Home/Home'
+import Products from '../Products/Products'
 
 const Layout = () => {
   return (
     <div>
       <Header/>
-      <Espace/>
+      {/* <Espace/> */}
       <div>
+        <Grids/>
         <Chemins/>
+        <ProductContext.Provider value={0}>
+        <Home />
+        <Products index={0}/>
+        </ProductContext.Provider>
+        
       </div>
       <Footer/>
     </div>
