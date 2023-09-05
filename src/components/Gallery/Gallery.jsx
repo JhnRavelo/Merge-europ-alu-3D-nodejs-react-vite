@@ -1,57 +1,39 @@
-import './Gallery.css'
+import './Gallery.css';
+import pages from '../../assets/json/pages.json';
+import ProductContext from '../Products/ProductContext';
+import { useContext } from 'react';
+import propTypes from 'prop-types';
 
-const Gallery = () => {
+const Gallery = ({ indexCategory }) => {
+  const indexContext = useContext(ProductContext);
+  console.log(pages[indexContext].products[0].gallery);
+  var images = pages[indexContext].products[indexCategory].gallery;
+  console.log(images);
   return (
     <>
-        <div className="container">
-            <div className="row">
-                <div className="fenetre__coulissante">
-                <div className="gallery">
-                            <section id="portfolio">
-                                <div className="row portfolio-content">
-                                    <div id="folio-wrap" className="bricks-wrapper">
-                                        <div className="brick folio-item">
-                                            <a 
-                                                data-fancybox = "gallery1"
-                                                href="./images/redim_FENÊTRES/redim_FENÊTRE_COULISSANTES/_MG_4788.JPG" 
-                                            >
-                                                <img src="./images/redim_FENÊTRES/redim_FENÊTRE_COULISSANTES/_MG_4788.JPG" alt="Skaterboy" />
-                                            </a>
-                                        </div>
-                                        <div className="brick folio-item">
-                                            <a 
-                                                data-fancybox = "gallery1"
-                                                href="./images/redim_FENÊTRES/redim_FENÊTRE_COULISSANTES/_MG_4805-1.jpg" 
-                                            >
-                                                <img src="./images/redim_FENÊTRES/redim_FENÊTRE_COULISSANTES/_MG_4805-1.jpg" alt="Skaterboy" />
-                                            </a>
-                                        </div>
-                                        <div className="brick folio-item">
-                                            <a 
-                                                data-fancybox = "gallery1"
-                                                href="./images/redim_FENÊTRES/redim_FENÊTRE_COULISSANTES/_MG_7673.jpg" 
-                                            >
-                                                <img src="./images/redim_FENÊTRES/redim_FENÊTRE_COULISSANTES/_MG_7673.jpg" alt="Skaterboy" />
-                                            </a>
-                                        </div>
-                                        <div className="brick folio-item">
-                                            <a 
-                                                data-fancybox = "gallery1"
-                                                href="./images/redim_FENÊTRES/redim_FENÊTRE_COULISSANTES/_MG_7927-1.jpg" 
-                                            >
-                                                <img src="./images/redim_FENÊTRES/redim_FENÊTRE_COULISSANTES/_MG_7927-1.jpg" alt="Skaterboy" />
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-                        </div>
-                </div>
+      <div className='gallery'>
+        <section id='portfolio'>
+          <div className='row portfolio-content'>
+            <div id='folio-wrap' className='bricks-wrapper'>
+              {images.map((url, index) => {
+                return (
+                  <div key={index} className='brick folio-item'>
+                    <a data-fancybox={`gallery${indexCategory}`} href={url}>
+                      <img src={url} alt='gallery' />
+                    </a>
+                  </div>
+                );
+              })}
             </div>
-        </div>
-
+          </div>
+        </section>
+      </div>
     </>
-  )
-}
+  );
+};
 
-export default Gallery
+Gallery.propTypes = {
+  indexCategory: propTypes.number,
+};
+
+export default Gallery;

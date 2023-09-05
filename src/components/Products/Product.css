@@ -9,6 +9,7 @@
 
 .fenetre__coulissante .presentation {
     display: flex;
+    /* flex-direction: row-reverse; */
     width: 100%;
     margin-bottom: 5rem;
 }
@@ -58,5 +59,6 @@
 
 .presentation.pres2 {
     text-align: end;
+    flex-direction: row-reverse;
 }
 

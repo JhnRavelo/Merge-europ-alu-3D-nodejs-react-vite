@@ -17,6 +17,17 @@
           "./assets/images/FENÊTRES/FENÊTRE_COULISSANTES/_MG_7673.jpg",
           "./assets/images/FENÊTRES/FENÊTRE_COULISSANTES/_MG_7927-1.jpg"
         ]
+      },
+      {
+        "title": "Fenêtres Oscillo-Battente",
+        "description": "Lorem, ipsum. Quam, sit obcaecati corrupti accusamusui suscipit morum quis. Incidunt aliquid maiores soluta mollitia eveniet?",
+        "png": "./assets/images/FENÊTRES/PNG/FENÊTRE OSCILLO-BATTANTE.png",
+        "gallery": [
+          "./assets/images/FENÊTRES/FENÊTRE_OSCILLO-BATTANTE/_MG_2897-1.jpg",
+          "./assets/images/FENÊTRES/FENÊTRE_OSCILLO-BATTANTE/_MG_3801-1.jpg",
+          "./assets/images/FENÊTRES/FENÊTRE_OSCILLO-BATTANTE/_MG_3883.jpg",
+          "./assets/images/FENÊTRES/FENÊTRE_OSCILLO-BATTANTE/P1030588-1.jpg"
+        ]
       }
     ]
   }

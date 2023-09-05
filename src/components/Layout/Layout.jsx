@@ -7,6 +7,7 @@ import ProductContext from '../Products/ProductContext'
 
 import Home from '../Home/Home'
 import Products from '../Products/Products'
+import HeaderProduct from '../HeaderProduct/HeaderProduct'
 
 const Layout = () => {
   return (
@@ -18,7 +19,8 @@ const Layout = () => {
         <Chemins/>
         <ProductContext.Provider value={0}>
         <Home />
-        <Products index={0}/>
+        <HeaderProduct/>
+        <Products />
         </ProductContext.Provider>
         
       </div>
