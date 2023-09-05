@@ -50,8 +50,8 @@
     line-height: 1.25;
     text-transform: uppercase;
     letter-spacing: 0.4rem;
-    margin-bottom: 4.2rem;
-    margin-top: 1rem;
+    margin-bottom: 3.2rem;
+    margin-top: 2rem;
     padding-right: 220px;
     color: var(--orange);
     position: relative;
@@ -141,7 +141,7 @@
     height: 30px;
     width: 30px;
     position: absolute;
-    top: 39px;
+    top: 25px;
     right: 30px;
     font: 0/0 a;
     text-shadow: none;

@@ -14,26 +14,27 @@ const Products = ({index}) => {
   return (
     <>
         <HeaderProduct/>
+        <section>
+            <div className="container">
+                <div className="row">
+                    <div className="fenetre__coulissante">
+                        <div className="presentation">
+                            <div className="img__pres">
+                                <img className="float_right" src={product.png} alt="" />
+                            </div>
+                            <div className="desc">
+                                <div className="button_intrested_start">
+                                    <h1 className="title">{product.title}</h1>
+                                    <p className="short__desc">Lorem, ipsum. Quam, sit obcaecati corrupti accusamusui suscipit morum quis. Incidunt aliquid maiores soluta mollitia eveniet?</p>
 
-        <div className="container">
-            <div className="row">
-                <div className="fenetre__coulissante">
-                    <div className="presentation">
-                        <div className="img__pres">
-                            <img className="float_right" src={product.png} alt="" />
-                        </div>
-                        <div className="desc">
-                            <div className="button_intrested_start">
-                                <h1 className="title">{product.title}</h1>
-                                <p className="short__desc">Lorem, ipsum. Quam, sit obcaecati corrupti accusamusui suscipit morum quis. Incidunt aliquid maiores soluta mollitia eveniet?</p>
-
-                                <Button />
+                                    <Button />
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     </>
   )
 }
