@@ -6,9 +6,8 @@ import propTypes from 'prop-types';
 
 const Gallery = ({ indexCategory }) => {
   const indexContext = useContext(ProductContext);
-  console.log(pages[indexContext].products[0].gallery);
   var images = pages[indexContext].products[indexCategory].gallery;
-  console.log(images);
+  // console.log(images);
   return (
     <>
       <div className='gallery'>
