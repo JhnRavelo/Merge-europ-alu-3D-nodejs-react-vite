@@ -3,6 +3,9 @@ import Logo from "../../assets/Logo_aluhd.png";
 import { useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
+
 const Header = () => {
   const headerRef = useRef();
   useEffect(() => {
@@ -36,7 +39,7 @@ const Header = () => {
           <div className="login__logout">
             <div className="deco">
               <div className="use__icon">
-                <i className="userIcon fa-solid fa-user"></i>
+                <FontAwesomeIcon className="userIcon fa-user" icon={faUser} />
               </div>
             </div>
             <div className="logout">

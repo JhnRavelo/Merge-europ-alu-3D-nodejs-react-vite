@@ -328,7 +328,7 @@ footer .contact ul li {
 
 @media only screen and (max-width: 700px) {
     footer .logo__foot img {
-        width: 30vw !important;
+        width: 40vw !important;
     }
 
     .contact-main {
