@@ -373,6 +373,29 @@ footer .contact ul li {
     }
 }
 
+@media screen and (max-width: 750px) {
+    #go-top {
+        bottom: 0px;
+        right: 0px;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    #go-top {
+        bottom: 10px;
+        right: 15px;
+    }
+
+    #go-top a {
+        height: 50px;
+        width: 50px;
+        line-height: 50px;
+    }
+
+    #go-top a i {
+        font-size: 1.2rem;
+    }
+}
 /* ===================================================================
  * # footer
  *
