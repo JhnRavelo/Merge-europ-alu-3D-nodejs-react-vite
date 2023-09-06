@@ -32,11 +32,36 @@
       {
         "title": "Fenêtres à Souffltet",
         "description": "Lorem, ipsum. Quam, sit obcaecati corrupti accusamusui suscipit morum quis. Incidunt aliquid maiores soluta mollitia eveniet?",
-        "png": "./assets/images/FENÊTRES/PNG/FENÊTRE OSCILLO-BATTANTE.png",
+        "png": "./assets/images/FENÊTRES/PNG/SOUFFLET.png",
         "gallery": [
           "./assets/images/FENÊTRES/FENÊTRE_À_SOUFFLET/_DSC9027.JPG",
           "./assets/images/FENÊTRES/FENÊTRE_À_SOUFFLET/_MG_3994-1.jpg",
           "./assets/images/FENÊTRES/FENÊTRE_À_SOUFFLET/_MG_7691-1.jpg"
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Habillage",
+    "home": {
+      "title": "HABILLAGE",
+      "img": "img-habillage",
+      "src": "./assets/images/HABILLAGE_FAÇADE/HPL_RESOPLAN/AKADIN-Ambohimangakely.png"
+    },
+    "products": [
+      {
+        "title": "Panneau Composite",
+        "description": "Lorem, ipsum. Quam, sit obcaecati corrupti accusamusui suscipit morum quis. Incidunt aliquid maiores soluta mollitia eveniet?",
+        "png": "./assets/images/HABILLAGE_FAÇADE/PANNEAU_COMPOSITE_ALUMINIUM/LYZA.png",
+        "gallery": [
+          "./assets/images/HABILLAGE_FAÇADE/PANNEAU_COMPOSITE_ALUMINIUM/AKOOR--(1).png",
+          "./assets/images/HABILLAGE_FAÇADE/PANNEAU_COMPOSITE_ALUMINIUM/DHL.png",
+          "./assets/images/HABILLAGE_FAÇADE/PANNEAU_COMPOSITE_ALUMINIUM/FDV_9742-a.png",
+          "./assets/images/HABILLAGE_FAÇADE/PANNEAU_COMPOSITE_ALUMINIUM/HCM-1.png",
+          "./assets/images/HABILLAGE_FAÇADE/PANNEAU_COMPOSITE_ALUMINIUM/HCM-2.png",
+          "./assets/images/HABILLAGE_FAÇADE/PANNEAU_COMPOSITE_ALUMINIUM/LYZA.png",
+          "./assets/images/HABILLAGE_FAÇADE/PANNEAU_COMPOSITE_ALUMINIUM/SANIFER.png",
+          "./assets/images/HABILLAGE_FAÇADE/PANNEAU_COMPOSITE_ALUMINIUM/SBM.png"
         ]
       }
     ]

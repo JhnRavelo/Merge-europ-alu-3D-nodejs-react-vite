@@ -6,17 +6,19 @@ import ProductContext from './ProductContext';
 import { Fragment, useContext, useRef } from 'react';
 import Gallery from '../Gallery/Gallery';
 import SimpleParallax from 'simple-parallax-js';
-import Separation from '../Separation/Separation';
+// import Separation from '../Separation/Separation';
+import Template from '../Template/Template';
+import Habillage from '../Habillage/Habillage';
 
 const Products = () => {
   const indexContext = useContext(ProductContext);
   const products = pages[indexContext].products;
-
+  const title = pages[indexContext].title;
   let presRefs = useRef([]);
   presRefs.current = [];
   let imgRefs = useRef([]);
   imgRefs.current = [];
-
+  console.log(title);
   var i = -1,
     j = -1;
 
@@ -42,46 +44,25 @@ const Products = () => {
     });
   };
 
-    const productsLenght = products.length;
+  const productsLenght = products.length;
   return (
     <>
-      <section>
-        <div className='container'>
-          <div className='row'>
-            {products.map((product, index) => {
-              return (
-                <Fragment key={index}>
-                  <div className='fenetre__coulissante'>
-                    <div ref={addtoRefsPres} className='presentation'>
-                      <div className='img__pres'>
-                        <img
-                          ref={addtoRefsImg}
-                          className='float_right'
-                          src={product.png}
-                          alt={product.title}
-                        />
-                      </div>
-                      <div className='desc'>
-                        <div className='button_intrested_start'>
-                          <h1 className='title'>{product.title}</h1>
-                          <p className='short__desc'>
-                            Lorem, ipsum. Quam, sit obcaecati corrupti
-                            accusamusui suscipit morum quis. Incidunt aliquid
-                            maiores soluta mollitia eveniet?
-                          </p>
-
-                          <Button />
-                        </div>
-                      </div>
-                    </div>
-                    <Gallery indexCategory={index} />
-                  </div>
-                  { productsLenght > index + 1 && <Separation/>}
-                </Fragment>
-              );
-            })}
-          </div>
-        </div>
+      <section id='produit'>
+        {title !== 'Habillage' ? (
+          <Template
+            products={products}
+            addtoRefsImg={addtoRefsImg}
+            addtoRefsPres={addtoRefsPres}
+            productsLenght={productsLenght}
+          />
+        ) : (
+          <Habillage
+            products={products}
+            addtoRefsImg={addtoRefsImg}
+            addtoRefsPres={addtoRefsPres}
+            productsLenght={productsLenght}
+          />
+        )}
       </section>
     </>
   );
