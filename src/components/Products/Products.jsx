@@ -6,10 +6,11 @@ import ProductContext from './ProductContext';
 import { Fragment, useContext, useRef } from 'react';
 import Gallery from '../Gallery/Gallery';
 import SimpleParallax from 'simple-parallax-js';
+import Separation from '../Separation/Separation';
 
 const Products = () => {
   const indexContext = useContext(ProductContext);
-  const product = pages[indexContext].products;
+  const products = pages[indexContext].products;
 
   let presRefs = useRef([]);
   presRefs.current = [];
@@ -34,8 +35,6 @@ const Products = () => {
     if (el && !imgRefs.current.includes(el)) {
       imgRefs.current.push(el);
     }
-    console.log(j);
-    console.log(imgRefs.current[j]);
     new SimpleParallax(imgRefs.current[j], {
       overflow: true,
       orientation: 'up',
@@ -43,13 +42,13 @@ const Products = () => {
     });
   };
 
-  //   console.log(product);
+    const productsLenght = products.length;
   return (
     <>
       <section>
         <div className='container'>
           <div className='row'>
-            {product.map((product, index) => {
+            {products.map((product, index) => {
               return (
                 <Fragment key={index}>
                   <div className='fenetre__coulissante'>
@@ -77,6 +76,7 @@ const Products = () => {
                     </div>
                     <Gallery indexCategory={index} />
                   </div>
+                  { productsLenght > index + 1 && <Separation/>}
                 </Fragment>
               );
             })}
