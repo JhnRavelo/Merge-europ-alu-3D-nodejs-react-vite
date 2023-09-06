@@ -17,7 +17,7 @@ const Layout = () => {
       <div>
         <Grids/>
         <Chemins/>
-        <ProductContext.Provider value={0}>
+        <ProductContext.Provider value={1}>
         <Home />
         <HeaderProduct/>
         <Products />

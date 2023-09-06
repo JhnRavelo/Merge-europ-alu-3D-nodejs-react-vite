@@ -1,16 +1,24 @@
 import './Gallery.css';
 import pages from '../../assets/json/pages.json';
 import ProductContext from '../Products/ProductContext';
-import { useContext } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import propTypes from 'prop-types';
 
 const Gallery = ({ indexCategory }) => {
+  const galleryRef = useRef();
   const indexContext = useContext(ProductContext);
   var images = pages[indexContext].products[indexCategory].gallery;
+  const title = pages[indexContext].title;
   // console.log(images);
+  useEffect(() => {
+    if (title == 'Habillage') {
+      galleryRef.current.classList.add('container');
+    }
+  },[title]);
+
   return (
     <>
-      <div className='gallery'>
+      <div className='gallery' ref={galleryRef}>
         <section id='portfolio'>
           <div className='row portfolio-content'>
             <div id='folio-wrap' className='bricks-wrapper'>

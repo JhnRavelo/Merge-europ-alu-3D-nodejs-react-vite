@@ -1,10 +1,10 @@
 import './Product.css';
-import Button from '../Button/Button';
+// import Button from '../Button/Button';
 import pages from '../../assets/json/pages.json';
 import propTypes from 'prop-types';
 import ProductContext from './ProductContext';
-import { Fragment, useContext, useRef } from 'react';
-import Gallery from '../Gallery/Gallery';
+import { useContext, useRef } from 'react';
+// import Gallery from '../Gallery/Gallery';
 import SimpleParallax from 'simple-parallax-js';
 // import Separation from '../Separation/Separation';
 import Template from '../Template/Template';
@@ -37,11 +37,18 @@ const Products = () => {
     if (el && !imgRefs.current.includes(el)) {
       imgRefs.current.push(el);
     }
-    new SimpleParallax(imgRefs.current[j], {
-      overflow: true,
-      orientation: 'up',
-      scale: 1.8,
-    });
+    if(title!=='Habillage'){
+      new SimpleParallax(imgRefs.current[j], {
+        overflow: true,
+        orientation: 'up',
+        scale: 1.8,
+      });
+    }else{
+      new SimpleParallax(imgRefs.current[j], {
+        scale: 1.5,
+      })
+    }
+    
   };
 
   const productsLenght = products.length;
