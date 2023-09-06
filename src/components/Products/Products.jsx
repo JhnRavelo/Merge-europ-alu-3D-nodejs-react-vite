@@ -1,12 +1,11 @@
 import './Product.css';
 import Button from '../Button/Button';
-// import HeaderProduct from "../HeaderProduct/HeaderProduct"
 import pages from '../../assets/json/pages.json';
 import propTypes from 'prop-types';
 import ProductContext from './ProductContext';
 import { Fragment, useContext, useRef } from 'react';
-// import simpleParallax from 'simple-parallax-js'
 import Gallery from '../Gallery/Gallery';
+import SimpleParallax from 'simple-parallax-js';
 
 const Products = () => {
   const indexContext = useContext(ProductContext);
@@ -14,19 +13,34 @@ const Products = () => {
 
   let presRefs = useRef([]);
   presRefs.current = [];
+  let imgRefs = useRef([]);
+  imgRefs.current = [];
 
-var i = -1
+  var i = -1,
+    j = -1;
 
-  const addtoRefs = (el) => {
-    i = i+1
+  const addtoRefsPres = (el) => {
+    i = i + 1;
     if (el && !presRefs.current.includes(el)) {
       presRefs.current.push(el);
     }
-    if(i%2==!0){
-      presRefs.current[i].classList.add('pres2')
-      console.log(presRefs.current[i]);
+    if (i % 2 == !0) {
+      presRefs.current[i].classList.add('pres2');
     }
-    console.log(i);
+  };
+
+  const addtoRefsImg = (el) => {
+    j = j + 1;
+    if (el && !imgRefs.current.includes(el)) {
+      imgRefs.current.push(el);
+    }
+    console.log(j);
+    console.log(imgRefs.current[j]);
+    new SimpleParallax(imgRefs.current[j], {
+      overflow: true,
+      orientation: 'up',
+      scale: 1.8,
+    });
   };
 
   //   console.log(product);
@@ -36,17 +50,13 @@ var i = -1
         <div className='container'>
           <div className='row'>
             {product.map((product, index) => {
-              
-              if (index % 2 == !0) {
-                console.log(presRefs);
-                // presRefs.current[index].classList.add('pres2');
-              }
               return (
                 <Fragment key={index}>
                   <div className='fenetre__coulissante'>
-                    <div ref={addtoRefs} className='presentation'>
+                    <div ref={addtoRefsPres} className='presentation'>
                       <div className='img__pres'>
                         <img
+                          ref={addtoRefsImg}
                           className='float_right'
                           src={product.png}
                           alt={product.title}
