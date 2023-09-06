@@ -253,18 +253,27 @@ header .header {
 
 .use__icon .fa-user {
     color: #ffffff;
-    font-size: 30px;
+    font-size: 4vh;
     transition: all 0.3s ease;
 }
+.use__icon {
+    transition: all .3s ease;
+    width: 30px;
+}
 
-.use__icon .fa-user:hover {
+.use__icon:hover {
     cursor: pointer;
     transform: scale(1.2);
 }
 
-.use__icon .fa-user:active {
+.use__icon:active {
     cursor: pointer;
     transform: scale(1);
+}
+
+.userIcon {
+    pointer-events: none;
+    font-size: 5vh;
 }
 
 .logout, .profile {
@@ -369,6 +378,18 @@ header .header {
 @media (max-width: 1024px) {
     .header-nav h3::after {
         display: none;
+    }
+}
+
+@media (width: 720px) {
+    .profile {
+        top: 130px;
+        right: 175px;
+    }
+
+    .logout {
+        top: 80px;
+        right: 175px; 
     }
 }
 

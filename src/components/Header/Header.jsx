@@ -13,8 +13,11 @@ const Header = () => {
 
   useEffect(() => {
     function menuIsClosed(e) {
+      const profile = showProfileRef.current;
+      const logout = showLogoutRef.current;
       const header = headerRef.current;
       const target = e.target;
+      console.log(target)
       if (
         !target.classList.contains("header-nav") &&
         !target.classList.contains("header-nav__content") &&
@@ -22,6 +25,17 @@ const Header = () => {
         !target.matches(".header-menu-trigger")
       ) {
         header.classList.remove("menu-is-open");
+      }
+
+      if (
+        !target.classList.contains("userIcon") &&
+        !target.classList.contains("logout") &&
+        !target.classList.contains("login__logout") &&
+        !target.classList.contains("use__icon") &&
+        !target.matches(".profile")
+      ) {
+        profile.classList.remove("showed");
+        logout.classList.remove("showed");
       }
     }
     document.body.addEventListener("click", menuIsClosed);
@@ -45,8 +59,8 @@ const showOption = () => {
 
           <div className="login__logout">
             <div className="deco">
-              <div className="use__icon" >
-                <FontAwesomeIcon className=" userIcon fa-user" icon={faUser} fade onClick={showOption}/>
+              <div className="use__icon" onClick={showOption}>
+                <FontAwesomeIcon className="userIcon fa-user" icon={faUser} fade />
               </div>
             </div>
             <div className="userOption" >
