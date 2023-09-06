@@ -39,11 +39,14 @@ const Header = () => {
           <div className="login__logout">
             <div className="deco">
               <div className="use__icon">
-                <FontAwesomeIcon className="userIcon fa-user" icon={faUser} />
+                <FontAwesomeIcon className=" userIcon fa-user" icon={faUser} fade />
               </div>
             </div>
             <div className="logout">
               <p>Se déconnecter</p>
+            </div>
+            <div className="profile">
+              <p>Votre Profils</p>
             </div>
           </div>
 

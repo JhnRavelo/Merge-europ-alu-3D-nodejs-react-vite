@@ -268,7 +268,7 @@ header .header {
 }
 
 
-.logout {
+.logout, .profile {
     display: block;
     position: fixed;
     right: 130px;
@@ -285,28 +285,36 @@ header .header {
     border: none;
     /* border-top-right-radius: 10px; */
     border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
+    /* border-bottom-left-radius: 10px; */
     border-bottom-right-radius: 10px;
-    transform: scale(0);
     box-shadow: 0px 2px 18px 0px rgba(0, 0, 0, 0.836);
-    pointer-events: none;
+    /* transform: scale(0); */
+    /* pointer-events: none; */
 }
 
-.logout.showed {
+.profile {
+    top: 120px;
+}
+
+.logout.showed,
+.profile.showed {
     transform: scale(1);
     pointer-events: all;
 }
 
-.logout:hover {
+.logout:hover,
+.profile:hover {
     cursor: pointer;
     transform: scale(1.1);
 }
 
-.logout:active {
+.logout:active,
+.profile:active {
     transform: scale(1);
 }
 
-.logout p {
+.logout p,
+.profile p {
     /* color: var(--orange); */
     color: #fff;
     font-size: 1.2rem;

@@ -1,3 +1,4 @@
+import './Habillage.css'
 import { Fragment } from 'react';
 import Button from '../Button/Button';
 import Gallery from '../Gallery/Gallery';
