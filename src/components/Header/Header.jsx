@@ -66,8 +66,10 @@ const showOption = () => {
               <div className="logout" ref={showLogoutRef}>
                 <p>Se déconnecter</p>
               </div>
-              <div className="profile" ref={showProfileRef}>
-                <p>Votre Profils</p>
+              <div className="profile" ref={showProfileRef}>               
+                <NavLink to="/page/profile">
+                  <p>Votre Profils</p>
+                </NavLink>
               </div>
             </div>
           </div>

@@ -1,7 +1,9 @@
 /* ================= Header =============== */
 
 /* -------------- Navigation --------------- */
-
+* a {
+    text-decoration: none;
+}
 .header-nav {
     z-index: 600;
     font-size: 1.6rem;

@@ -3,11 +3,14 @@ import { Route, Routes } from 'react-router-dom';
 // import Signup from "../components/Singup/Signup";
 import Page from '../components/Page/Page';
 
+import ProfilPage from "../components/ProfilPage/ProfilPage";
+
 const Chemins = () => {
   return (
-    <Routes>
+<Routes>
       <Route path='/page/fenetre' element={<Page />} />
       <Route path='/page/habillage' element={<Page />} />
+      <Route path="/page/profile" element={<ProfilPage/>} />
     </Routes>
   );
 };
