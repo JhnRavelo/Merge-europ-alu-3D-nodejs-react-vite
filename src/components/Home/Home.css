@@ -210,4 +210,39 @@ html[data-useragent*='MSIE 10.0'] .scrolldown,
     }
 }
 
+/* =================== RESPA =================== */
+
+@media (max-width: 780px) {
+    .home-content-tablecell h3 {
+        font-size: 7vw;
+        width: 45vw;
+        border-bottom: none;
+    }
+
+    .home-content-tablecell h1 {
+        font-size: 6vw;
+    }
+}
+
+@media (max-width: 480px) {
+    .home-content-tablecell h3 {
+        font-size: 6vw;
+        width: 45vw;
+        border-bottom: none;
+    }
+
+    .home-content-tablecell .more {
+        animation: fadeInUp 1s ease;
+        margin: 4.8rem 0 0 0;
+    }
+
+    .home-content-tablecell .more .button {
+        padding: 15px 15px 15px 15px;
+        border: 2px solid #fff;
+        color: #fff;
+        font-size: 2;
+    }
+}
+
+
 /* =================== HOME ===================== */
