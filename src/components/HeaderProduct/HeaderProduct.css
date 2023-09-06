@@ -56,3 +56,19 @@
 
 
 /* =================== RESPA =================== */
+
+@media (max-width: 767.98px) {
+    .heading-section h2 {
+        font-size: 35px;
+    }
+}
+
+@media (max-width: 450px) {
+    .heading-section .subheading {
+        font-size: 17px;
+    }
+
+    .heading-section h2 {
+        font-size: 25px;
+    }
+}
