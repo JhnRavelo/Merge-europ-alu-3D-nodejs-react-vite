@@ -28,6 +28,16 @@
           "./assets/images/FENÊTRES/FENÊTRE_OSCILLO-BATTANTE/_MG_3883.jpg",
           "./assets/images/FENÊTRES/FENÊTRE_OSCILLO-BATTANTE/P1030588-1.jpg"
         ]
+      },
+      {
+        "title": "Fenêtres à Souffltet",
+        "description": "Lorem, ipsum. Quam, sit obcaecati corrupti accusamusui suscipit morum quis. Incidunt aliquid maiores soluta mollitia eveniet?",
+        "png": "./assets/images/FENÊTRES/PNG/FENÊTRE OSCILLO-BATTANTE.png",
+        "gallery": [
+          "./assets/images/FENÊTRES/FENÊTRE_À_SOUFFLET/_DSC9027.JPG",
+          "./assets/images/FENÊTRES/FENÊTRE_À_SOUFFLET/_MG_3994-1.jpg",
+          "./assets/images/FENÊTRES/FENÊTRE_À_SOUFFLET/_MG_7691-1.jpg"
+        ]
       }
     ]
   }
