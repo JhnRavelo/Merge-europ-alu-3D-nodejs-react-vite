@@ -8,6 +8,9 @@ import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 const Header = () => {
   const headerRef = useRef();
+  const showLogoutRef = useRef();
+  const showProfileRef = useRef();
+
   useEffect(() => {
     function menuIsClosed(e) {
       const header = headerRef.current;
@@ -27,6 +30,10 @@ const Header = () => {
   const onOpenMenu = () => {
     headerRef.current.classList.toggle("menu-is-open");
   };
+const showOption = () => {
+  showProfileRef.current.classList.toggle("showed")
+  showLogoutRef.current.classList.toggle("showed")
+}
 
   return (
     <>
@@ -38,15 +45,17 @@ const Header = () => {
 
           <div className="login__logout">
             <div className="deco">
-              <div className="use__icon">
-                <FontAwesomeIcon className=" userIcon fa-user" icon={faUser} fade />
+              <div className="use__icon" >
+                <FontAwesomeIcon className=" userIcon fa-user" icon={faUser} fade onClick={showOption}/>
               </div>
             </div>
-            <div className="logout">
-              <p>Se déconnecter</p>
-            </div>
-            <div className="profile">
-              <p>Votre Profils</p>
+            <div className="userOption" >
+              <div className="logout" ref={showLogoutRef}>
+                <p>Se déconnecter</p>
+              </div>
+              <div className="profile" ref={showProfileRef}>
+                <p>Votre Profils</p>
+              </div>
             </div>
           </div>
 

@@ -267,7 +267,6 @@ header .header {
     transform: scale(1);
 }
 
-
 .logout, .profile {
     display: block;
     position: fixed;
@@ -288,16 +287,29 @@ header .header {
     /* border-bottom-left-radius: 10px; */
     border-bottom-right-radius: 10px;
     box-shadow: 0px 2px 18px 0px rgba(0, 0, 0, 0.836);
-    /* transform: scale(0); */
-    /* pointer-events: none; */
+    transform: scale(0);
+    pointer-events: none;
 }
 
+/* .userOption {
+    transform: scale(0);
+    pointer-events: none;
+    transition: .3s ease;
+    position: absolute;
+    right: 10px;
+    top: 20px;
+} */
 .profile {
     top: 120px;
 }
 
-.logout.showed,
-.profile.showed {
+/* .userOption.showed {
+    transform: scale(1);
+    pointer-events: all;
+} */
+
+.profile.showed,
+.logout.showed {
     transform: scale(1);
     pointer-events: all;
 }
