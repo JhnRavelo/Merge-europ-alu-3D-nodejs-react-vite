@@ -10,43 +10,11 @@ import SimpleParallax from 'simple-parallax-js';
 const Template = ({ products, productsLenght, title }) => {
   const presRefs = useRef([]);
   const imgRefs = useRef([]);
-  // var i = useRef();
-  // var j = useRef();
   useEffect(() => {
     imgRefs.current = [];
     presRefs.current = [];
-    // i.current = -1;
-    // j.current = -1;
   }, []);
-  // const addtoRefsPres = (el) => {
-  //   if (el && !presRefs.current.includes(el)) {
-  //     presRefs.current.push(el);
-  //     i.current = i.current + 1;
-  //   }
-  //   console.log(presRefs.current[i.current]);
-  //   if (i.current % 2 == !0 && presRefs.current[i.current]) {
-  //     presRefs.current[i.current].classList.add('pres2');
-  //   }
-  // };
 
-  // const addtoRefsImg = (el) => {
-  //   if (el && !imgRefs.current.includes(el)) {
-  //     imgRefs.current.push(el);
-  //     j.current = j.current + 1;
-  //   }
-  //   console.log(imgRefs.current[j.current]);
-  //   if (title !== 'Habillage' && imgRefs.current[j.current]) {
-  //     new SimpleParallax(imgRefs.current[j.current], {
-  //       overflow: true,
-  //       orientation: 'up',
-  //       scale: 1.8,
-  //     });
-  //   } else if (title == 'Habillage' && imgRefs.current[j.current]) {
-  //     new SimpleParallax(imgRefs.current[j.current], {
-  //       scale: 1.5,
-  //     });
-  //   }
-  // };
   return (
     <div className='container'>
       <div className='row'>
@@ -63,10 +31,15 @@ const Template = ({ products, productsLenght, title }) => {
           const addtoRefsImg = (el) => {
             if (el && !imgRefs.current.includes(el)) {
               imgRefs.current.push(el);
-              
             }
-            console.log(imgRefs.current[index]);
-            if (title !== 'Habillage' && imgRefs.current[index]) {
+
+            if (
+              title !== 'Habillage' &&
+              imgRefs.current[index] &&
+              imgRefs.current[index].className !==
+                'float_right simple-parallax-initialized'
+            ) {
+              // console.log(imgRefs.current[index].className);
               new SimpleParallax(imgRefs.current[index], {
                 overflow: true,
                 orientation: 'up',
@@ -116,8 +89,6 @@ const Template = ({ products, productsLenght, title }) => {
 
 Template.propTypes = {
   products: propTypes.array,
-  // addtoRefsImg: propTypes.func,
-  // addtoRefsPres: propTypes.func,
   productsLenght: propTypes.number,
   title: propTypes.string,
 };

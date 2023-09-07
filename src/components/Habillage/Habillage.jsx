@@ -1,4 +1,4 @@
-import './Habillage.css'
+import './Habillage.css';
 import { Fragment } from 'react';
 import Button from '../Button/Button';
 import Gallery from '../Gallery/Gallery';
@@ -7,11 +7,7 @@ import Separation from '../Separation/Separation';
 import { useEffect, useRef } from 'react';
 import SimpleParallax from 'simple-parallax-js';
 
-const Habillage = ({
-  products,
-  productsLenght,
-  title
-}) => {
+const Habillage = ({ products, productsLenght, title }) => {
   const presRefs = useRef([]);
   const imgRefs = useRef([]);
   useEffect(() => {
@@ -35,16 +31,21 @@ const Habillage = ({
           const addtoRefsImg = (el) => {
             if (el && !imgRefs.current.includes(el)) {
               imgRefs.current.push(el);
-              
             }
-            console.log(imgRefs.current[index]);
+            
             if (title !== 'Habillage' && imgRefs.current[index]) {
+              console.log(imgRefs.current[index].className)
               new SimpleParallax(imgRefs.current[index], {
                 overflow: true,
                 orientation: 'up',
                 scale: 1.8,
               });
-            } else if (title == 'Habillage' && imgRefs.current[index]) {
+            } else if (
+              title == 'Habillage' &&
+              imgRefs.current[index] &&
+              imgRefs.current[index].className !==
+                'image_parallaxe simple-parallax-initialized'
+            ) {
               new SimpleParallax(imgRefs.current[index], {
                 scale: 1.5,
               });
@@ -55,8 +56,8 @@ const Habillage = ({
               <div ref={addtoRefsPres} className='Habillage_presenatation'>
                 <div className='pres'>
                   <img
-                  ref={addtoRefsImg}
-                    className='image_parallaxe '
+                    ref={addtoRefsImg}
+                    className='image_parallaxe'
                     src={product.png}
                     alt={product.title}
                   />
@@ -80,8 +81,8 @@ const Habillage = ({
                   <div></div>
                 </div>
               </div>
-              <Gallery indexCategory={index}/>
-              {productsLenght > index + 1 && <Separation/>}
+              <Gallery indexCategory={index} />
+              {productsLenght > index + 1 && <Separation />}
             </Fragment>
           );
         })}
