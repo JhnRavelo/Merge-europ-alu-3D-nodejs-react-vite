@@ -1,4 +1,6 @@
 import "./UserProfileCard.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {faPlus} from "@fortawesome/free-solid-svg-icons"
 
 const UserProfileCard = () => {
   return (
@@ -11,6 +13,9 @@ const UserProfileCard = () => {
                 src=""
                 alt=""
               />
+            </div>
+            <div className="changeImg">
+              <FontAwesomeIcon className="plusIcon" icon={faPlus}/>
             </div>
           </div>
 
