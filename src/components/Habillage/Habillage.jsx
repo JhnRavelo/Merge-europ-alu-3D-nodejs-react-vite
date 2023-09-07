@@ -4,17 +4,52 @@ import Button from '../Button/Button';
 import Gallery from '../Gallery/Gallery';
 import propTypes from 'prop-types';
 import Separation from '../Separation/Separation';
+import { useEffect, useRef } from 'react';
+import SimpleParallax from 'simple-parallax-js';
 
 const Habillage = ({
   products,
-  addtoRefsImg,
-  addtoRefsPres,
   productsLenght,
+  title
 }) => {
+  const presRefs = useRef([]);
+  const imgRefs = useRef([]);
+  useEffect(() => {
+    imgRefs.current = [];
+    presRefs.current = [];
+  }, []);
+
   return (
     <>
       <div className='panneau_composite'>
         {products.map((product, index) => {
+          const addtoRefsPres = (el) => {
+            if (el && !presRefs.current.includes(el)) {
+              presRefs.current.push(el);
+            }
+            // console.log(presRefs.current[index]);
+            if (index % 2 == !0 && presRefs.current[index]) {
+              presRefs.current[index].classList.add('pres2');
+            }
+          };
+          const addtoRefsImg = (el) => {
+            if (el && !imgRefs.current.includes(el)) {
+              imgRefs.current.push(el);
+              
+            }
+            console.log(imgRefs.current[index]);
+            if (title !== 'Habillage' && imgRefs.current[index]) {
+              new SimpleParallax(imgRefs.current[index], {
+                overflow: true,
+                orientation: 'up',
+                scale: 1.8,
+              });
+            } else if (title == 'Habillage' && imgRefs.current[index]) {
+              new SimpleParallax(imgRefs.current[index], {
+                scale: 1.5,
+              });
+            }
+          };
           return (
             <Fragment key={index}>
               <div ref={addtoRefsPres} className='Habillage_presenatation'>
@@ -57,8 +92,7 @@ const Habillage = ({
 
 Habillage.propTypes = {
   products: propTypes.array,
-  addtoRefsImg: propTypes.func,
-  addtoRefsPres: propTypes.func,
+  title: propTypes.string,
   productsLenght: propTypes.number,
 };
 

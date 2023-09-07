@@ -1,7 +1,7 @@
 import "./Header.css";
 import Logo from "../../assets/Logo_aluhd.png";
 import { useEffect, useRef } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
@@ -17,7 +17,6 @@ const Header = () => {
       const logout = showLogoutRef.current;
       const header = headerRef.current;
       const target = e.target;
-      console.log(target)
       if (
         !target.classList.contains("header-nav") &&
         !target.classList.contains("header-nav__content") &&
@@ -98,14 +97,14 @@ const showOption = () => {
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/page/fenetre">
+                <Link to="/page/fenetre">
                     <h1>Fenêtre</h1>
-                </NavLink>
+                </Link>
               </li>
               <li>
-                <NavLink to="/page/HabillageFaçade">
+                <Link to="/page/habillage">
                     <h1>Habillage Façade</h1>
-                </NavLink>
+                </Link>
               </li>
               <li>
                 <NavLink to="/page/Baies">

@@ -1,21 +1,15 @@
-import { Route, Routes } from "react-router-dom";
-
-import Fenetre from "../pages/Fenetre/Fenetre";
-import Porte from "../pages/Porte/Porte";
-
-import Login from "../components/Login/Login";
-import Signup from "../components/Singup/Signup";
+import { Route, Routes } from 'react-router-dom';
+// import Login from "../components/Login/Login";
+// import Signup from "../components/Singup/Signup";
+import Page from '../components/Page/Page';
 
 const Chemins = () => {
   return (
-        <Routes>
-            <Route path="/login" element={<Login/>} />
-            <Route path="/signup" element={<Signup/>} />
-            <Route path="/page/fenetre" element={<Fenetre/>} />
-            <Route path="/page/porte" element={<Porte/>} />
-        </Routes>
-    )
+    <Routes>
+      <Route path='/page/fenetre' element={<Page />} />
+      <Route path='/page/habillage' element={<Page />} />
+    </Routes>
+  );
+};
 
-}
-
-export default Chemins
+export default Chemins;

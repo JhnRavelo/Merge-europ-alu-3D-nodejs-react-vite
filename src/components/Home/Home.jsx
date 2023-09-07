@@ -6,12 +6,13 @@ import ProductContext from '../Products/ProductContext';
 
 const Home = () => {
   var index = useContext(ProductContext)
-    // const products = pages[index]
+    const products = pages[index].home
+    // console.log(products);
     console.log(index)
   return (
     <>
       
-          <section id="home" key={index} style={{backgroundImage:`url(${pages[index].home.src})`}}>
+          <section id="home" key={index} style={{backgroundImage:`url(${products.src})`}}>
             <div className="overlay"></div>
             <div className="demi-overlay"></div>
             <div className="gradient-overlay"></div>
@@ -20,7 +21,7 @@ const Home = () => {
               <div className="home-content-tablecell">
                 <div className="row">
                   <div className="col-twelve">
-                    <h3 className="animate-intro">{pages[index].home.title}</h3>
+                    <h3 className="animate-intro">{products.title}</h3>
                     <h1 className="animate-intro">
                       Architecture Moderne <br />
                       et Innovante
