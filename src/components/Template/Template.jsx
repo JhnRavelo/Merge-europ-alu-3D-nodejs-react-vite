@@ -4,7 +4,6 @@ import Gallery from '../Gallery/Gallery';
 import Separation from '../Separation/Separation';
 import propTypes from 'prop-types';
 import { useEffect, useRef } from 'react';
-// import Gallery from '../Gallery/Gallery';
 import SimpleParallax from 'simple-parallax-js';
 
 const Template = ({ products, productsLenght, title }) => {
@@ -28,6 +27,7 @@ const Template = ({ products, productsLenght, title }) => {
               presRefs.current[index].classList.add('pres2');
             }
           };
+          
           const addtoRefsImg = (el) => {
             if (el && !imgRefs.current.includes(el)) {
               imgRefs.current.push(el);
