@@ -4,6 +4,7 @@
 * a {
     text-decoration: none;
 }
+
 .header-nav {
     z-index: 600;
     font-size: 1.6rem;
@@ -32,7 +33,7 @@
 
 .header-nav a {
     text-decoration: none;
-    font-size: 1.3rem;
+    font-size: .9rem;
     letter-spacing: 2px;
     color: rgb(172, 171, 171) !important;
     transition: 0.6s;
@@ -355,6 +356,10 @@ header .header {
     animation: animate-bars 3s ease infinite;
 }
 
+#header-menu-trigger:hover {
+    cursor: pointer;
+}
+
 #header-menu-trigger .header-menu-text {
     display: block;
     position: absolute;
@@ -377,6 +382,12 @@ header .header {
 }
 
 /* ================= Header =============== */
+@media (max-width: 1075px) {
+    .header-nav__list li {
+        padding: 13px;
+    }
+}
+
 @media (max-width: 1024px) {
     .header-nav h3::after {
         display: none;
@@ -395,7 +406,7 @@ header .header {
     }
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 875px) {
     .header-nav {
         width: 65%;
     }
@@ -403,21 +414,49 @@ header .header {
 
 @media only screen and (max-width: 700px) {
     .header-nav__list a {
-        font-size: 1.1rem !important;
+        font-size: .8rem !important;
     }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 675px) {
     .header-nav {
         width: 80%;
     }
+
+    .header-nav {
+        padding: 0rem 1rem 0rem 3rem;
+    }
 }
 
+@media (max-width: 550px) {
+    .header-nav__list li {
+        padding: 12px;
+    }
+
+}
+
+@media (max-width: 300px) {
+    .header-nav {
+        width: 100%;
+    }
+
+    .header-nav__list li {
+        padding: 10px;
+    }
+
+}
 
 @media (max-width: 400px) {
     .header-nav {
         z-index: 600;
-        width: 85%;
         padding: 3.6rem 1rem 1.6rem 3rem;
+    }
+
+    .header-nav__list li {
+        padding: 5px;
+    }
+
+    .header-nav__list a {
+        font-size: .6rem !important;
     }
 }
