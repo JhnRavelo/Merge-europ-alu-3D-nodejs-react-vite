@@ -1,0 +1,158 @@
+.wrapper,
+.wrapper .img-area,
+.social-icons a{
+    background-color: rgba(255,255,255,0.13);
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    /* border: 2px solid rgba(255,255,255,0.1); */
+    box-shadow: 13px 13px 20px #cbced1, -13px -13px 20px #fff;
+}
+
+.wrapper{
+    position: relative;
+    width: 400px;
+    padding: 30px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+} 
+
+.wrapper .img-area{                    
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.img-area .inner-area{
+    height: calc(100% - 25px);
+    width: calc(100% - 25px);
+    border-radius: 50%;
+}
+
+.inner-area img{
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.wrapper .name{                        
+    font-size: 23px;
+    font-weight: 700;
+    /* color: #06001a; */
+    color: var(--orange);
+    margin: 10px 0 5px 0;
+}
+
+.wrapper .firstname{
+    color: #06001a;
+    padding: 5px;
+    font-weight: 600;
+    font-size: 17px;
+}
+.wrapper .email{
+    color: #06001a;
+    padding: 3px;
+    font-weight: 600;
+    font-size: 17px;
+    text-decoration: underline;
+}
+.wrapper .number{
+    color: #06001a;
+    font-weight: 600;
+    font-size: 17px;
+    padding: 3px;
+
+}
+
+.wrapper .social-icons{
+    margin: 15px 0 25px 0;
+}
+
+.social-icons {
+    display: none;
+}
+
+.social-icons a {
+    position: relative;
+    height: 40px;
+    width: 40px;
+    margin: 0 5px;
+    display: inline-flex;
+    text-decoration: none;
+    border-radius: 50%;
+    border: 1px solid #ffffff;
+}  
+
+.social-icons a:hover::before,
+.wrapper .icon:hover::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border-radius: 50%;
+    background: #ecf0f3;
+    box-shadow: inset -3px -3px 7px #ffffff,
+                inset 3px 3px 5px #ceced1;
+}
+
+.buttons button:active {
+    /* transition: all .1s ease !important; */
+    color: #06001a;
+    background: #ecf0f3 !important;
+    box-shadow: inset -3px -3px 7px #ffffff,
+                inset 3px 3px 5px #ceced1;
+
+}
+
+
+.buttons button:hover{
+    background: #06001a;
+    transform: scale(1.02);
+    transition: .2s ease;
+}  
+
+
+.wrapper .buttons{
+    display: flex;
+    width: 100%;
+    gap: 20px;
+    justify-content: space-between;
+
+}
+
+.buttons button{
+    position: relative;
+    width: 100%;
+    border: none;
+    outline: none;
+    margin-top: 2rem;
+    padding: 12px 0;
+    background-color: #06001a;
+    color: #fff;                                                              
+    font-size: 17px;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 4;
+    box-shadow: 3px 3px 8px #b1b1b1, -3px -3px 8px #fff;
+
+}
+
+.social-icons a i{
+    position: relative;
+    z-index: 3;
+    margin-top: 3px;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    font-size: 20px;
+    line-height: 35px;
+}

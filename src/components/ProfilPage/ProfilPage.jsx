@@ -1,9 +1,12 @@
 import './ProfilPage.css'
+import UserProfileCard from '../UserProfileCard/UserProfileCard'
 
 const ProfilPage = () => {
   return (
     <>
-        ProfilPage
+      <div className="profile__page">
+        <UserProfileCard/>
+      </div>
     </>
   )
 }

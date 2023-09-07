@@ -16,7 +16,17 @@ const Layout = () => {
       {/* <Espace/> */}
       <div>
         <Grids/>
+<<<<<<< HEAD
         <Chemins/> 
+=======
+        <Chemins/>
+        <ProductContext.Provider value={0}>
+          <Home />
+          <HeaderProduct/>
+          <Products />
+        </ProductContext.Provider>
+        
+>>>>>>> 96f8721 (modifocation title et logo page index.html)
       </div>
       <Footer/>
     </div>
