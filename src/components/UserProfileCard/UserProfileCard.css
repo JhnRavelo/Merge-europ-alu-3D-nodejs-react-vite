@@ -139,10 +139,9 @@
 .buttons button:active {
     /* color: #06001a; */
     transform: scale(.9);
-    border: 3px solid red;
-    /* background: #ecf0f3 !important;
+    background: #ecf0f3 !important;
     box-shadow: inset -3px -3px 7px #ffffff,
-                inset 3px 3px 5px #ceced1; */
+                inset 3px 3px 5px #ceced1;
 
 }
 
