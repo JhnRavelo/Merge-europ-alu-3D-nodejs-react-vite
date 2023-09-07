@@ -1,8 +1,50 @@
 import "./UserProfileCard.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faPlus} from "@fortawesome/free-solid-svg-icons"
+import { Fragment, useEffect, useRef, useState } from "react";
+import avatars from "../../assets/json/avatar.json"
+// import avatar0 from '../../assets/avatar/User-avatar.png'
+// import avatar1 from '../../assets/avatar/Avatar-Profile.png'
+// import avatar2 from '../../assets/avatar/user-profile.png'
+// import avatar3 from '../../assets/avatar/woman-business.png'
+// import avatar4 from '../../assets/avatar/woman-users.png'
 
 const UserProfileCard = () => {
+  const showChangeAvatarRef = useRef();
+  const listeAvatarRef = useRef();
+  // const profilRef = useRef([])
+  const [imgProfile, setImgProfile] = useState(avatars[0]);
+// useEffect(()=>{
+  
+// })
+
+// const addToRefProfil= (el)=>{
+//   if(el && !profilRef.current.includes(el)){
+//     profilRef.current.push(el)
+//   }
+  
+// }
+
+  const showChangeAvatar = () => {
+    listeAvatarRef.current.classList.toggle('showed')
+  }
+
+  const handleClick = (e) => {
+    if(e.target.src.includes('Avatar-Profile')){
+      setImgProfile(avatars[1])
+    }
+    else if(e.target.src.includes('user-profile')){
+      setImgProfile(avatars[2])
+    }
+    else if(e.target.src.includes('woman-business')){
+      setImgProfile(avatars[3])
+    }
+    else if(e.target.src.includes('woman-users')){
+      setImgProfile(avatars[4])
+    }
+    
+  }
+
   return (
     <>
       <div className="upc">
@@ -10,28 +52,32 @@ const UserProfileCard = () => {
           <div className="img-area">
             <div className="inner-area">
               <img
-                src=""
-                alt=""
+                src={imgProfile}
+                alt="avatar"
               />
             </div>
-            <div className="changeImg">
+            <div className="changeImg" ref={showChangeAvatarRef} onClick={showChangeAvatar}>
               <FontAwesomeIcon className="plusIcon" icon={faPlus}/>
             </div>
           </div>
 
-          <div className="social-icons">
-            <a href="#" className="gl">
-              <i className="fa fa-youtube"></i>
-            </a>
-            <a href="#" className="facebook">
-              <i className="fa fa-facebook"></i>
-            </a>
-            <a href="#" className="insta">
-              <i className="fa fa-google"></i>
-            </a>
-            <a href="#" className="yt">
-              <i className="fa fa fa-whatsapp"></i>
-            </a>
+          <div ref={listeAvatarRef} className="social-icons">
+            {
+              avatars.map((avatar, index)=>{
+                
+                if(index!==0){
+                  return(
+                    <Fragment key={index}>
+                      <a>
+                        <img  onClick={handleClick} src={avatar} alt="avatar" />
+                      </a>
+                    </Fragment>
+                  )
+                }
+                
+                
+              })
+            }
           </div>
           <div className="name">HERINAVALONA</div>
           <div className="firstname">Sylvestre Hardy</div>

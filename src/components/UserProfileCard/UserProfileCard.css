@@ -14,13 +14,14 @@
 
 .wrapper{
     position: relative;
-    width: 400px;
+    width: 25vw;
     padding: 30px;
     border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    height: 80vh;
 } 
 
 .wrapper .img-area{                    
@@ -50,7 +51,7 @@
 }
 
 .changeImg:hover {
-    transform: scale(1.03);
+    transform: scale(1.1);
     cursor: pointer;
 }
 .changeImg:active {
@@ -108,7 +109,25 @@
 }
 
 .social-icons {
-    display: none;
+    pointer-events: none;
+    transition: all .3s ease;
+    transform: scale(0);
+    position: absolute;
+    top: 20px;
+    margin: 1rem;
+    background: #fff;
+    padding: 5px;
+    border-radius: 10px;
+    box-shadow: rgba(0,0,0,0.24) 0px 3px 8px;
+}
+
+.social-icons.showed {
+    pointer-events: all;
+    transform: scale(1);
+}
+
+.social-icons a img {
+    border-radius: 50%;
 }
 
 .social-icons a {
@@ -122,7 +141,18 @@
     border: 1px solid #ffffff;
 }  
 
-.social-icons a:hover::before,
+.social-icons img {
+    transition: all .3s ease;
+}
+
+.social-icons img:hover{
+    transform: scale(1.1);
+}
+
+.social-icons img:active {
+    transform: scale(1);
+}
+
 .wrapper .icon:hover::before{
     content: "";
     position: absolute;
@@ -188,4 +218,24 @@
     height: 100%;
     font-size: 20px;
     line-height: 35px;
+}
+
+/* ================ RESP ================ */
+
+@media (max-width: 1024px) {
+    .buttons {
+        display: flex;
+        flex-direction: column;
+        margin-top: 20px;
+    }
+
+    .buttons button {
+        margin-top: 0;
+    }
+}
+
+@media (max-width: 900px) {
+    .wrapper{
+        width: 30vw;
+    }
 }
