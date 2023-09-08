@@ -267,6 +267,7 @@
 
 .corps {
  max-width: 100vw;
+ pointer-events: none;
 }
 
 .corps.none {

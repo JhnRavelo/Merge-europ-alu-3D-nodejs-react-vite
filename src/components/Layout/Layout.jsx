@@ -8,12 +8,12 @@ const Layout = () => {
   return (
     <>
       <ScrollToTop />
+      <div className='corps'>
       <Header />
-      <div>
         <Grids />
         <Chemins />
-      </div>
       <Footer />
+      </div>
     </>
   );
 };
