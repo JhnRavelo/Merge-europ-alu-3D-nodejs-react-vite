@@ -28,9 +28,6 @@ useEffect(()=>{
     setInddex(0)
   }
 },[location])
-// const StateIndex = ()=>{
-  
-// }
   
   return (
     <ProductContext.Provider value={index}>

@@ -9,6 +9,7 @@ import SimpleParallax from 'simple-parallax-js';
 const Template = ({ products, productsLenght, title }) => {
   const presRefs = useRef([]);
   const imgRefs = useRef([]);
+
   useEffect(() => {
     imgRefs.current = [];
     presRefs.current = [];
