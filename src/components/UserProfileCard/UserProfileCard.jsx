@@ -49,40 +49,41 @@ const UserProfileCard = () => {
     <>
       <div className="upc">
         <div className="wrapper">
-          <div className="img-area">
-            <div className="inner-area">
-              <img
-                src={imgProfile}
-                alt="avatar"
-              />
+          <div className="gauche">
+            <div className="img-area">
+              <div className="inner-area">
+                <img
+                  src={imgProfile}
+                  alt="avatar"
+                />
+              </div>
+              <div className="changeImg" ref={showChangeAvatarRef} onClick={showChangeAvatar}>
+                <FontAwesomeIcon className="plusIcon" icon={faPlus}/>
+              </div>
             </div>
-            <div className="changeImg" ref={showChangeAvatarRef} onClick={showChangeAvatar}>
-              <FontAwesomeIcon className="plusIcon" icon={faPlus}/>
+
+            <div ref={listeAvatarRef} className="social-icons">
+              {
+                avatars.map((avatar, index)=>{
+                  
+                  if(index!==0){
+                    return(
+                      <Fragment key={index}>
+                        <a>
+                          <img  onClick={handleClick} src={avatar} alt="avatar" />
+                        </a>
+                      </Fragment>
+                    )
+                  }
+                })
+              }
             </div>
+            <div className="name">HERINAVALONA</div>
+            <div className="firstname">Sylvestre Hardy</div>
+            <div className="email">sylvestrehardy@gmail.com</div>
+            <div className="number">034 66 454 54</div>
           </div>
 
-          <div ref={listeAvatarRef} className="social-icons">
-            {
-              avatars.map((avatar, index)=>{
-                
-                if(index!==0){
-                  return(
-                    <Fragment key={index}>
-                      <a>
-                        <img  onClick={handleClick} src={avatar} alt="avatar" />
-                      </a>
-                    </Fragment>
-                  )
-                }
-                
-                
-              })
-            }
-          </div>
-          <div className="name">HERINAVALONA</div>
-          <div className="firstname">Sylvestre Hardy</div>
-          <div className="email">sylvestrehardy@gmail.com</div>
-          <div className="number">034 66 454 54</div>
           <div className="buttons">
             <button>Message</button>
             <button>Pannier</button>
