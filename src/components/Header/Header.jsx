@@ -1,7 +1,7 @@
 import "./Header.css";
 import Logo from "../../assets/Logo_aluhd.png";
 import { useEffect, useRef } from "react";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useLocation } from "react-router-dom";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
@@ -10,6 +10,7 @@ const Header = () => {
   const headerRef = useRef();
   const showLogoutRef = useRef();
   const showProfileRef = useRef();
+  const location = useLocation();
 
   useEffect(() => {
     function menuIsClosed(e) {
@@ -40,6 +41,17 @@ const Header = () => {
     document.body.addEventListener("click", menuIsClosed);
   }, []);
 
+  useEffect(()=>{
+    console.log(location.pathname)
+    if(location.pathname == '/page/profile'){
+      showProfileRef.current.style.opacity = 0
+      showProfileRef.current.style.pointerEvents = 'none'
+    }else{
+      showProfileRef.current.style.opacity = 1
+      showProfileRef.current.style.pointerEvents = 'all'
+    }
+  },[location.pathname])
+
   const onOpenMenu = () => {
     headerRef.current.classList.toggle("menu-is-open");
   };
@@ -66,11 +78,12 @@ const showOption = () => {
               <div className="logout" ref={showLogoutRef}>
                 <p>Se déconnecter</p>
               </div>
-              <div className="profile" ref={showProfileRef}>               
-                <NavLink to="/page/profile">
-                  <p>Votre Profils</p>
-                </NavLink>
+                <div className="profile" ref={showProfileRef}>               
+                  <NavLink to="/page/profile">
+                    <p>Votre Profils</p>
+                  </NavLink>
               </div>
+
             </div>
           </div>
 
