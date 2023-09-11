@@ -12,7 +12,6 @@ const SignupTemplate = () => {
   const nextBtnRef = useRef();
   const formContext = useContext(FormContext);
   var product = useContext(ButtonContext);
-  console.log(product[0]);
   const errors = [
     formContext[0].name,
     formContext[0].email,
@@ -46,7 +45,7 @@ const SignupTemplate = () => {
       var { password, confirmPassword } = formContext[0];
       var inputs = [...document.querySelectorAll('.username')];
       var champs = [...document.querySelectorAll('.user-input')];
-      console.log(password);
+
       if (!champs[0].value) {
         errorShake(inputs[0]);
       }
@@ -88,9 +87,8 @@ const SignupTemplate = () => {
             <FontAwesomeIcon icon={faTimes} className='fa-xmark' />
           </div>
           <div className='title__form'>{"S'enregister"}</div>
-          <div className='fields'>
-            <SignupStep index={index} />
-          </div>
+
+          <SignupStep index={index} />
           <div className='next-prev-form'>
             <button
               ref={prevBtnRef}

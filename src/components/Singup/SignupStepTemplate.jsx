@@ -11,6 +11,7 @@ const SignupStepTemplate = ({ index }) => {
 
   return (
     <>
+    <div className='fields'>
       <div className='username'>
         <FontAwesomeIcon icon={icon[index]} className='fa fa-user' />
         <Field
@@ -28,6 +29,7 @@ const SignupStepTemplate = ({ index }) => {
         name={userForm[index].name}
         component={'p'}
       />
+      </div>
     </>
   );
 };

@@ -27,7 +27,7 @@
   margin: 0 10px 0px 25px
 }
 
-.pre-info i,
+.pre-info .fa,
 .fields i {
   color: var(--orange);
   margin: 10px;
@@ -408,6 +408,8 @@
 
 .login-div {
   /* overflow: hidden; */
+  text-align: left;
+  flex-direction: row;
   position: relative;
   margin: 5rem;
   width: 430px;

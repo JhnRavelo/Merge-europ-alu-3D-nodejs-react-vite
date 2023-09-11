@@ -1,12 +1,15 @@
 import propTypes from 'prop-types';
 import SignupStepTemplate from './SignupStepTemplate';
 import SignupStepPassword from './SignupStepPassword';
+import SignupStepFinal from './SignupStepFinal';
 
 const SignupStep = ({ index }) => {
   if (index == 2) {
-    return <SignupStepPassword/>;
+    return <SignupStepPassword />;
+  } else if (index == 4) {
+    return <SignupStepFinal />;
   } else {
-    return <SignupStepTemplate index={index}/>;
+    return <SignupStepTemplate index={index} />;
   }
 };
 

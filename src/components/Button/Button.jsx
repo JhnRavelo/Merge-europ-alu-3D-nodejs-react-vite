@@ -25,7 +25,7 @@ const Button = () => {
   return (
     <>
       {show && (
-        <ButtonContext.Provider value={[product, handleClick]}>
+        <ButtonContext.Provider value={[product, showForm]}>
           <FormField />
         </ButtonContext.Provider>
       )}
