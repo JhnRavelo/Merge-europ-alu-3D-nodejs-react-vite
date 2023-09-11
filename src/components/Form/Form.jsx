@@ -1,8 +1,8 @@
 import './Form.css';
 import { Formik, Form } from 'formik';
-// import SignupStepOne from '../Singup/SignupStepOne';
 import SignupTemplate from '../Singup/SignupTemplate';
 import * as Yup from 'yup';
+import FormContext from './FormContext';
 
 const iniatialValues = {
     name: '',
@@ -22,13 +22,19 @@ const FormField = () => {
           initialValues={iniatialValues}
           validationSchema={validationSchema}
         >
-          <Form>
-            <SignupTemplate />
-          </Form>
+          {({ errors,values }) => (
+            <FormContext.Provider value={[errors, values]}>
+              <Form>
+                <SignupTemplate />
+              </Form>
+            </FormContext.Provider>
+          )}
         </Formik>
       </div>
     </section>
   );
-};
+}
+
+// FormField.displayName = "FormField"
 
 export default FormField;

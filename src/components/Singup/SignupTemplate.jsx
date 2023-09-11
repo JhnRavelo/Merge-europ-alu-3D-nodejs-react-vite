@@ -1,14 +1,18 @@
-import { useEffect, useRef, useState } from 'react';
-// import SignupStepOne from './SignupStepOne';
-// import SignupStepTwo from './SignupStepTwo';
+import { useContext, useEffect, useRef, useState } from 'react';
 import SignupStep from './SignupStep';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import FormContext from '../Form/FormContext';
+import ButtonContext from '../Button/ButtonContext';
 
 const SignupTemplate = () => {
   const [index, setIndex] = useState(0);
   const prevBtnRef = useRef();
   const nextBtnRef = useRef();
+  const formContext = useContext(FormContext);
+  var product = useContext(ButtonContext);
+  console.log(product[0]);
+  const errors = [formContext[0].name, formContext[0].email];
 
   useEffect(() => {
     const prevBtn = prevBtnRef.current;
@@ -28,11 +32,11 @@ const SignupTemplate = () => {
   }, [index]);
 
   const handleClickConnect = () => {
-    console.log(index);
+    console.log('connect');
   };
 
   const handleClickNext = () => {
-    var error = document.querySelector('.error');
+    var error = errors[index];
     var input = document.querySelector('.username');
     var champ = document.querySelector('.user-input');
     if (error || !champ.value) {
@@ -48,13 +52,18 @@ const SignupTemplate = () => {
       setIndex((prevIndex) => prevIndex + 1);
     }
   };
+  const formClosed = () => {
+    const corps = document.querySelector('.corps');
+    corps.classList.remove('none');
+    product[1]();
+  };
 
   return (
     <div className='card' data-step>
       <div className='modal-box register-form'>
         <div className='login-div'>
           <div className='logo__form'></div>
-          <div className='close-btn'>
+          <div className='close-btn' onClick={formClosed}>
             <FontAwesomeIcon icon={faTimes} className='fa-xmark' />
           </div>
           <div className='title__form'>{"S'enregister"}</div>

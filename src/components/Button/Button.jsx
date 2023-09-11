@@ -1,19 +1,35 @@
+import { useRef, useState } from 'react';
 import './Button.css';
+import FormField from '../Form/Form';
+import ButtonContext from './ButtonContext';
 
 const Button = () => {
-  const handleClick = () => {
-    console.log('click');
-    const section = document.body.querySelector('#form'),
-      corps = document.querySelector('.corps');
+  const btnRef = useRef();
+  const [product, setProduct] = useState();
+  const [show, setShow] = useState(false);
 
-    console.log(section);
-    console.log(corps);
-    section.classList.add('active');
+  const showForm = () => {
+    if (show === false) {
+      setShow(true);
+    } else {
+      setShow(false);
+    }
+  };
+
+  const handleClick = () => {
+    showForm();
+    const corps = document.querySelector('.corps');
     corps.classList.add('none');
+    setProduct(btnRef.current.parentElement.querySelector('h1').textContent);
   };
   return (
     <>
-      <button onClick={handleClick} className='show-modal'>
+      {show && (
+        <ButtonContext.Provider value={[product, handleClick]}>
+          <FormField />
+        </ButtonContext.Provider>
+      )}
+      <button ref={btnRef} onClick={() => handleClick()} className='show-modal'>
         Intéressé ?
       </button>
     </>
