@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import FormContext from '../Form/FormContext';
 import ButtonContext from '../Button/ButtonContext';
+import errorShake from '../../utils/errorShake';
 
 const SignupTemplate = () => {
   const [index, setIndex] = useState(0);
@@ -12,7 +13,12 @@ const SignupTemplate = () => {
   const formContext = useContext(FormContext);
   var product = useContext(ButtonContext);
   console.log(product[0]);
-  const errors = [formContext[0].name, formContext[0].email];
+  const errors = [
+    formContext[0].name,
+    formContext[0].email,
+    '',
+    formContext[0].phone,
+  ];
 
   useEffect(() => {
     const prevBtn = prevBtnRef.current;
@@ -20,7 +26,7 @@ const SignupTemplate = () => {
     if (index == 0) {
       prevBtn.style.opacity = 0;
       prevBtn.style.pointerEvents = 'none';
-    } else if (index == 3) {
+    } else if (index == 4) {
       nextBtn.style.opacity = 0;
       nextBtn.style.pointerEvents = 'none';
     } else {
@@ -36,20 +42,35 @@ const SignupTemplate = () => {
   };
 
   const handleClickNext = () => {
-    var error = errors[index];
-    var input = document.querySelector('.username');
-    var champ = document.querySelector('.user-input');
-    if (error || !champ.value) {
-      input.classList.add('input--invalid');
-      input.classList.remove('hide');
-
-      input.addEventListener('animationend', (e) => {
-        if (e.animationName === 'shake') {
-          input.classList.remove('input--invalid');
-        }
-      });
+    if (index == 2) {
+      var { password, confirmPassword } = formContext[0];
+      var inputs = [...document.querySelectorAll('.username')];
+      var champs = [...document.querySelectorAll('.user-input')];
+      console.log(password);
+      if (!champs[0].value) {
+        errorShake(inputs[0]);
+      }
+      if (!champs[1].value) {
+        errorShake(inputs[1]);
+      }
+      if (password) {
+        errorShake(inputs[0]);
+      }
+      if (confirmPassword) {
+        errorShake(inputs[1]);
+      }
+      if (!password && !confirmPassword && champs[0].value && champs[1].value) {
+        setIndex((prevIndex) => prevIndex + 1);
+      }
     } else {
-      setIndex((prevIndex) => prevIndex + 1);
+      var error = errors[index];
+      var input = document.querySelector('.username');
+      var champ = document.querySelector('.user-input');
+      if (error || !champ.value) {
+        errorShake(input);
+      } else {
+        setIndex((prevIndex) => prevIndex + 1);
+      }
     }
   };
   const formClosed = () => {

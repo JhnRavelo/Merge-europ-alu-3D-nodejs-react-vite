@@ -7,6 +7,8 @@ import userForm from '../../assets/json/userForm.json';
 const icon = [faUser, faEnvelope, '', faPhone];
 
 const SignupStepTemplate = ({ index }) => {
+  console.log(userForm[index].name);
+
   return (
     <>
       <div className='username'>
@@ -24,7 +26,7 @@ const SignupStepTemplate = ({ index }) => {
       <ErrorMessage
         className='error name-error'
         name={userForm[index].name}
-        compTSignupStepTemplatent={'p'}
+        component={'p'}
       />
     </>
   );
