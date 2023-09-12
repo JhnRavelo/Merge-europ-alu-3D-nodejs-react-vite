@@ -11,6 +11,7 @@ const app = express()
 app.use(cors())
 app.use(session())
 
+
 db.sequelize.sync().then(() => {
     app.listen(process.env.PORT, ()=>{
         console.log(`http://127.0.0.1:${process.env.PORT}`)
