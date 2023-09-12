@@ -14,22 +14,15 @@ const SignupTemplate = () => {
   var product = useContext(ButtonContext);
   const [title, setTitle] = useState(`S'enregistrer`);
 
-  const errors = [
-    formContext[0].name,
-    formContext[0].email,
-    '',
-    formContext[0].phone,
-  ];
-
   useEffect(() => {
     const prevBtn = prevBtnRef.current;
     const nextBtn = nextBtnRef.current;
     if (index == 0) {
       setTitle("S'Enregistrer");
-      nextBtn.style.display = 'flex'
+      nextBtn.style.display = 'flex';
       nextBtn.style.opacity = 1;
-      nextBtn.style.pointerEvents = 'all'
-      prevBtn.style.display = 'flex'
+      nextBtn.style.pointerEvents = 'all';
+      prevBtn.style.display = 'flex';
       prevBtn.style.opacity = 0;
       prevBtn.style.pointerEvents = 'none';
     } else if (index == 4) {
@@ -37,8 +30,8 @@ const SignupTemplate = () => {
       nextBtn.style.pointerEvents = 'none';
     } else if (index == 5) {
       setTitle('Se Connecter');
-      prevBtn.style.display = 'none'
-      nextBtn.style.display = 'none'
+      prevBtn.style.display = 'none';
+      nextBtn.style.display = 'none';
     } else {
       prevBtn.style.opacity = 1;
       prevBtn.style.pointerEvents = 'all';
@@ -48,12 +41,11 @@ const SignupTemplate = () => {
   }, [index]);
 
   const handleClickConnect = () => {
-    if(index==0){
+    if (index == 0) {
       setIndex(5);
-    }else if(index==5){
-      setIndex(0)
+    } else if (index == 5) {
+      setIndex(0);
     }
-    
   };
 
   const handleClickNext = () => {
@@ -78,9 +70,20 @@ const SignupTemplate = () => {
         setIndex((prevIndex) => prevIndex + 1);
       }
     } else {
-      var error = errors[index];
+      
+      
       var input = document.querySelector('.username');
       var champ = document.querySelector('.user-input');
+      if (index == 1 && champ.value == 'Nami@g') {
+        formContext[0].email = "L'adresse email existe déjà";
+      }
+      const errors = [
+        formContext[0].name,
+        formContext[0].email,
+        '',
+        formContext[0].phone,
+      ];
+      var error = errors[index];
       if (error || !champ.value) {
         errorShake(input);
       } else {
@@ -102,7 +105,10 @@ const SignupTemplate = () => {
     } else if (index == 5) {
       return (
         <p>
-          Pas encore de compte ? <a className='register' onClick={handleClickConnect}>{" S'enregistrer"}</a>
+          Pas encore de compte ?{' '}
+          <a className='register' onClick={handleClickConnect}>
+            {" S'enregistrer"}
+          </a>
         </p>
       );
     }
@@ -138,7 +144,7 @@ const SignupTemplate = () => {
               Suivant
             </button>
           </div>
-          <DisplayFootForm/>
+          <DisplayFootForm />
         </div>
       </div>
     </div>
