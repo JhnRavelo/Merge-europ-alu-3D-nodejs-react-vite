@@ -7,7 +7,7 @@ import userForm from '../../assets/json/userForm.json';
 const icon = [faUser, faEnvelope, '', faPhone];
 
 const SignupStepTemplate = ({ index }) => {
-  console.log(userForm[index].name);
+  // console.log(userForm[index].name);
 
   return (
     <>

@@ -16,6 +16,7 @@ const iniatialValues = {
     password: '',
     confirmPassword: '',
     phone: '',
+    checked:[]
   },
   validationSchema = Yup.object({
     name: Yup.string()
