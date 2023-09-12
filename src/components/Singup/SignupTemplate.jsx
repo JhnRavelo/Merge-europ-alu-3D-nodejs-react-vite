@@ -12,7 +12,7 @@ const SignupTemplate = () => {
   const nextBtnRef = useRef();
   const formContext = useContext(FormContext);
   var product = useContext(ButtonContext);
-const [title, setTitle] = useState(`S'enregistrer`)
+  const [title, setTitle] = useState(`S'enregistrer`);
 
   const errors = [
     formContext[0].name,
@@ -30,13 +30,13 @@ const [title, setTitle] = useState(`S'enregistrer`)
     } else if (index == 4) {
       nextBtn.style.opacity = 0;
       nextBtn.style.pointerEvents = 'none';
-    } else if(index == 5){
-      setTitle('Se Connecter')
+    } else if (index == 5) {
+      setTitle('Se Connecter');
       prevBtn.style.display = 'none';
       // prevBtn.style.pointerEvents = 'all';
       nextBtn.style.display = 'none';
       // nextBtn.style.pointerEvents = 'all';
-    }else {
+    } else {
       prevBtn.style.opacity = 1;
       prevBtn.style.pointerEvents = 'all';
       nextBtn.style.opacity = 1;
@@ -45,7 +45,12 @@ const [title, setTitle] = useState(`S'enregistrer`)
   }, [index]);
 
   const handleClickConnect = () => {
-    setIndex(5)
+    if(index==0){
+      setIndex(5);
+    }else if(index==5){
+      setIndex(0)
+    }
+    
   };
 
   const handleClickNext = () => {
@@ -80,6 +85,26 @@ const [title, setTitle] = useState(`S'enregistrer`)
       }
     }
   };
+
+  const DisplayFootForm = () => {
+    if (index == 0) {
+      return (
+        <p>
+          Vous avez déjà un compte ?{' '}
+          <a className='login' onClick={handleClickConnect}>
+            Se connecter
+          </a>
+        </p>
+      );
+    } else if (index == 5) {
+      return (
+        <p>
+          Pas encore de compte ? <a className='register' onClick={handleClickConnect}>{" S'enregistrer"}</a>
+        </p>
+      );
+    }
+  };
+
   const formClosed = () => {
     const corps = document.querySelector('.corps');
     corps.classList.remove('none');
@@ -110,14 +135,7 @@ const [title, setTitle] = useState(`S'enregistrer`)
               Suivant
             </button>
           </div>
-          {index == 0 && (
-            <p>
-              Vous avez déjà un compte ?{' '}
-              <a className='login' onClick={handleClickConnect}>
-                Se connecter
-              </a>
-            </p>
-          )}
+          <DisplayFootForm/>
         </div>
       </div>
     </div>

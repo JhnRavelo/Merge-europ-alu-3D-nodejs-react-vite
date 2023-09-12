@@ -6,21 +6,10 @@ import FormContext from './FormContext';
 import { useContext } from 'react';
 import ButtonContext from '../Button/ButtonContext';
 
-// var phoneRegEx =
-//   /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
 var phoneRegEx =
   /^((\+\d{1,3}(-|)?\(?\d\)?(-|)?\d{1,3})|(\(?\d{2,3}\)?))(-|)?(\d{3,4})(-|)?(\d{4})((x|ext)\d{1,5}){0,1}$/;
 
-// const iniatialValues = {
-//     name: '',
-//     email: '',
-//     password: '',
-//     confirmPassword: '',
-//     phone: '',
-//     checked: [],
-//     checkbox: true,
-//   },
   const validationSchema = Yup.object({
     name: Yup.string()
       .required('Vous devez mettre votre nom')
