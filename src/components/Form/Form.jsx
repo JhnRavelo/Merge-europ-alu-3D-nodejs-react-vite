@@ -3,22 +3,25 @@ import { Formik, Form } from 'formik';
 import SignupTemplate from '../Singup/SignupTemplate';
 import * as Yup from 'yup';
 import FormContext from './FormContext';
+import { useContext } from 'react';
+import ButtonContext from '../Button/ButtonContext';
 
 // var phoneRegEx =
 //   /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
 var phoneRegEx =
-  /^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,3})|(\(?\d{2,3}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$/;
+  /^((\+\d{1,3}(-|)?\(?\d\)?(-|)?\d{1,3})|(\(?\d{2,3}\)?))(-|)?(\d{3,4})(-|)?(\d{4})((x|ext)\d{1,5}){0,1}$/;
 
-const iniatialValues = {
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    phone: '',
-    checked:[]
-  },
-  validationSchema = Yup.object({
+// const iniatialValues = {
+//     name: '',
+//     email: '',
+//     password: '',
+//     confirmPassword: '',
+//     phone: '',
+//     checked: [],
+//     checkbox: true,
+//   },
+  const validationSchema = Yup.object({
     name: Yup.string()
       .required('Vous devez mettre votre nom')
       .matches(/^[A-Za-z]+$/, 'Votre doit seulement contenir des lettres'),
@@ -39,9 +42,25 @@ const iniatialValues = {
     phone: Yup.string()
       .matches(phoneRegEx, 'Numéro de téléphone invalide')
       .required('Le numéro de téléphone est requis'),
+    checked: Yup.array()
+      .of(Yup.string())
+      .min(1, 'Vous devez selectionner au moins un produit'),
+    checkbox: Yup.boolean()
+      .oneOf([true], 'Veillez accepter la création de compte')
+      .required('Veillez accepter la création de compte'),
   });
 
 const FormField = () => {
+  const buttonContext = useContext(ButtonContext)
+  const iniatialValues = {
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    phone: '',
+    checked: [buttonContext[0]],
+    checkbox: true,
+  }
   return (
     <section id='form' className='active'>
       <div className='overlay'></div>
@@ -49,9 +68,10 @@ const FormField = () => {
         <Formik
           initialValues={iniatialValues}
           validationSchema={validationSchema}
+          
         >
-          {({ errors, values }) => (
-            <FormContext.Provider value={[errors, values]}>
+          {({ errors, values, isValid }) => (
+            <FormContext.Provider value={[errors, values, isValid]}>
               <Form>
                 <SignupTemplate />
               </Form>

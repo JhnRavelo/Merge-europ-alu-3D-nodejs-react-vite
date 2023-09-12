@@ -12,6 +12,8 @@ const SignupTemplate = () => {
   const nextBtnRef = useRef();
   const formContext = useContext(FormContext);
   var product = useContext(ButtonContext);
+const [title, setTitle] = useState(`S'enregistrer`)
+
   const errors = [
     formContext[0].name,
     formContext[0].email,
@@ -28,7 +30,13 @@ const SignupTemplate = () => {
     } else if (index == 4) {
       nextBtn.style.opacity = 0;
       nextBtn.style.pointerEvents = 'none';
-    } else {
+    } else if(index == 5){
+      setTitle('Se Connecter')
+      prevBtn.style.display = 'none';
+      // prevBtn.style.pointerEvents = 'all';
+      nextBtn.style.display = 'none';
+      // nextBtn.style.pointerEvents = 'all';
+    }else {
       prevBtn.style.opacity = 1;
       prevBtn.style.pointerEvents = 'all';
       nextBtn.style.opacity = 1;
@@ -37,7 +45,7 @@ const SignupTemplate = () => {
   }, [index]);
 
   const handleClickConnect = () => {
-    console.log('connect');
+    setIndex(5)
   };
 
   const handleClickNext = () => {
@@ -86,7 +94,7 @@ const SignupTemplate = () => {
           <div className='close-btn' onClick={formClosed}>
             <FontAwesomeIcon icon={faTimes} className='fa-xmark' />
           </div>
-          <div className='title__form'>{"S'enregister"}</div>
+          <div className='title__form'>{title}</div>
 
           <SignupStep index={index} />
           <div className='next-prev-form'>

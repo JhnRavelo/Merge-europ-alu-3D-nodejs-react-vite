@@ -560,7 +560,7 @@
 /* ================ RESPONSIVE =============== */
  
 .desabledBtn {
-  background-color: lightgray;
+  background-color: lightgray !important;
   pointer-events: none;
 }
 
@@ -569,7 +569,7 @@ p.errorNotChecked,
   text-align: center;
   font-weight: 700;
   color: red;
-  display: none;
+  /* display: none; */
 }
 
 p.errorNotChecked.error{

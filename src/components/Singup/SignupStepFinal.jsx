@@ -5,50 +5,49 @@ import {
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Fragment, useContext, useRef, useState } from 'react';
+import { Fragment, useContext, useEffect, useRef, useState } from 'react';
 import ProductContext from '../Products/ProductContext';
 import page from '../../assets/json/pages.json';
 import ButtonContext from '../Button/ButtonContext';
 import FormContext from '../Form/FormContext';
-import { Field } from 'formik';
+import { ErrorMessage, Field } from 'formik';
 
 const SignupStepFinal = () => {
   const productCategoryIndex = useContext(ProductContext);
   const productContext = useContext(ButtonContext);
   const formContext = useContext(FormContext);
   const btnListRef = useRef();
-  const [checkedBox, setChekedBox] = useState(true);
+  const btnSubmitRef = useRef();
   const [productSelected, setproductSelected] = useState(productContext[0]);
-  const [productChecked, setproductCheked] = useState(false);
   const checkboxRef = useRef([]);
 
   checkboxRef.current = [];
 
-  const { name, email, phone, checked } = formContext[1];
+  const { name, email, phone, checked} = formContext[1];
+  const validation = formContext[2];
   const productTypes = page[productCategoryIndex].products;
   // console.log(productTypes);
   // console.log(productSelected);
 
+  useEffect(() => {
+    var btnSubmit = btnSubmitRef.current;
+    if (!validation) {
+      btnSubmit.classList.add('desabledBtn');
+    } else {
+      btnSubmit.classList.remove('desabledBtn');
+    }
+  }, [validation]);
+
   const handleListClick = () => {
     const btnList = btnListRef.current;
     btnList.classList.toggle('open');
+    console.log(checked);
   };
 
-  const handleChangeChecked = () => {
-    if (checked) {
-      setChekedBox(false);
-    } else {
-      setChekedBox(true);
-    }
-  };
   const addtoRefsCheck = (el) => {
     if (el && !checkboxRef.current.includes(el)) {
       checkboxRef.current.push(el);
     }
-    // checkboxRef.current.map((checkbox) => {
-
-    //   // console.log(checkbox.childNodes[0].checked);
-    // });
   };
   const handleClickList = () => {
     const arrayChecked = [];
@@ -57,7 +56,6 @@ const SignupStepFinal = () => {
       if (checkbox.childNodes[0].checked) {
         setproductSelected(checkbox.childNodes[1].textContent);
       }
-      // console.log(checkbox.childNodes[0].checked);
     });
     const count = arrayChecked.reduce((acc, currentValue) => {
       if (currentValue === true) {
@@ -72,9 +70,6 @@ const SignupStepFinal = () => {
       setproductSelected(`${count} produits selectionnés`);
     }
     console.log(arrayChecked);
-    // if(checked.length == 0){
-    //   setproductSelected('Aucun produit selectionné')
-    // }
   };
 
   return (
@@ -125,13 +120,6 @@ const SignupStepFinal = () => {
                     />
                     <span className='item-text'>{product.title}</span>
                   </label>
-
-                  {/* <li className='item'>
-                    <span className='checkbox'>
-                      <i className='fa-solid fa-check check-icon'></i>
-                    </span>
-                    <span className='item-text'>{product.title}</span>
-                  </li> */}
                 </Fragment>
               );
             })}
@@ -139,21 +127,25 @@ const SignupStepFinal = () => {
         </div>
       </div>
 
-      <p className='notSelectedProduit'>Sélectionnez au moins un produit</p>
+      <ErrorMessage
+        name='checked'
+        component={'p'}
+        className='notSelectedProduit'
+      />
 
       <div className='check'>
         <label>
-          <input
+          <Field
             id='acceptCheckbox'
             type='checkbox'
-            checked={checkedBox}
-            onChange={handleChangeChecked}
+            name='checkbox'
           />
           {"Cette action va vous créer un compte chez Europ'Alu"}
         </label>
       </div>
       <div className='buttons'>
         <button
+          ref={btnSubmitRef}
           id='submitBtn'
           type='submit'
           className='form-button signin-button'
@@ -161,7 +153,11 @@ const SignupStepFinal = () => {
           Envoyer
         </button>
       </div>
-      <p className='errorNotChecked'>Veillez accepter la création de compte</p>
+      <ErrorMessage
+        component={'p'}
+        name='checkbox'
+        className='errorNotChecked'
+      />
     </>
   );
 };
