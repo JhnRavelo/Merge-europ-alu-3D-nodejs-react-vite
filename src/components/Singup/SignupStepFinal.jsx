@@ -5,7 +5,7 @@ import {
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useContext } from 'react';
+import { Fragment, useContext, useRef, useState } from 'react';
 import ProductContext from '../Products/ProductContext';
 import page from '../../assets/json/pages.json';
 import ButtonContext from '../Button/ButtonContext';
@@ -15,11 +15,28 @@ const SignupStepFinal = () => {
   const productCategoryIndex = useContext(ProductContext);
   const productContext = useContext(ButtonContext);
   const formContext = useContext(FormContext);
+  const btnListRef = useRef();
+  const [checked, setCheked] = useState(true);
+
   const { name, email, phone } = formContext[1];
   const productSelected = productContext[0];
   const productTypes = page[productCategoryIndex].products;
   console.log(productTypes);
-  console.log(productSelected);
+  // console.log(productSelected);
+
+  const handleListClick = () => {
+    const btnList = btnListRef.current;
+    btnList.classList.toggle('open');
+  };
+
+  const handleChangeChecked = () => {
+    if (checked) {
+      setCheked(false);
+    } else {
+      setCheked(true);
+    }
+  };
+
   return (
     <>
       <div className='pre-info'>
@@ -40,7 +57,11 @@ const SignupStepFinal = () => {
         <label>Produits qui vous Intérèssent :</label>
 
         <div className='container'>
-          <div className='select-btn'>
+          <div
+            className='select-btn'
+            ref={btnListRef}
+            onClick={handleListClick}
+          >
             <span className='btn-text'></span>
             <span className='arrow-dwn'>
               <FontAwesomeIcon
@@ -51,14 +72,36 @@ const SignupStepFinal = () => {
           </div>
 
           <ul className='list-items'>
-            {productTypes.map((product) => {
-              <li className='item'>
-                <span className='checkbox'>
-                  <i className='fa-solid fa-check check-icon'></i>
-                </span>
-                <span className='item-text'>{product.title}</span>
-              </li>;
+            {productTypes.map((product, index) => {
+              return (
+                <Fragment key={index}>
+                  <li className='item'>
+                    <span className='checkbox'>
+                      <i className='fa-solid fa-check check-icon'></i>
+                    </span>
+                    <span className='item-text'>{product.title}</span>
+                  </li>
+                </Fragment>
+              );
             })}
+            {/* <li className='item'>
+              <span className='checkbox'>
+                <i className='fa-solid fa-check check-icon'></i>
+              </span>
+              <span className='item-text'>Fenêtres Coulissante</span>
+            </li>
+            <li className='item'>
+              <span className='checkbox'>
+                <i className='fa-solid fa-check check-icon'></i>
+              </span>
+              <span className='item-text'>Fenêtres Oscillo-Battante</span>
+            </li>
+            <li className='item'>
+              <span className='checkbox'>
+                <i className='fa-solid fa-check check-icon'></i>
+              </span>
+              <span className='item-text'>Fenêtres à Souffltet</span>
+            </li> */}
           </ul>
         </div>
       </div>
@@ -67,7 +110,12 @@ const SignupStepFinal = () => {
 
       <div className='check'>
         <label>
-          <input id='acceptCheckbox' type='checkbox' checked />
+          <input
+            id='acceptCheckbox'
+            type='checkbox'
+            checked={checked}
+            onChange={handleChangeChecked}
+          />
           {"Cette action va vous créer un compte chez Europ'Alu"}
         </label>
       </div>
