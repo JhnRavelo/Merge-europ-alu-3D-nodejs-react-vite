@@ -25,6 +25,11 @@ const SignupTemplate = () => {
     const prevBtn = prevBtnRef.current;
     const nextBtn = nextBtnRef.current;
     if (index == 0) {
+      setTitle("S'Enregistrer");
+      nextBtn.style.display = 'flex'
+      nextBtn.style.opacity = 1;
+      nextBtn.style.pointerEvents = 'all'
+      prevBtn.style.display = 'flex'
       prevBtn.style.opacity = 0;
       prevBtn.style.pointerEvents = 'none';
     } else if (index == 4) {
@@ -32,10 +37,8 @@ const SignupTemplate = () => {
       nextBtn.style.pointerEvents = 'none';
     } else if (index == 5) {
       setTitle('Se Connecter');
-      prevBtn.style.display = 'none';
-      // prevBtn.style.pointerEvents = 'all';
-      nextBtn.style.display = 'none';
-      // nextBtn.style.pointerEvents = 'all';
+      prevBtn.style.display = 'none'
+      nextBtn.style.display = 'none'
     } else {
       prevBtn.style.opacity = 1;
       prevBtn.style.pointerEvents = 'all';
