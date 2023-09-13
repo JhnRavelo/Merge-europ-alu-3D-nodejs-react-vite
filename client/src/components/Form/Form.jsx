@@ -2,14 +2,17 @@ import './Form.css';
 import { Formik, Form } from 'formik';
 import SignupTemplate from '../Singup/SignupTemplate';
 import FormContext from './FormContext';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import ButtonContext from '../Button/ButtonContext';
 import { addUser } from '../../lib/service/User';
-import validate from '../../lib/utils/validationSchema';
+import {validate} from '../../lib/utils/validationSchema';
+import { addTraker } from '../../lib/service/Trakers';
 
   const onSubmit = async(values)=>{
-    const res= await addUser(values)
+    const res = await addUser(values)
     console.log(res);
+    const track = await addTraker(values)
+    console.log(track);
   }
 
 const FormField = () => {
@@ -24,11 +27,6 @@ const FormField = () => {
     checkbox: true,
   }
 
-  const [validationSchema, setValidationSchema] = useState(validate)
-
-  const updateSchema = (newShema) => {
-    setValidationSchema(newShema)
-  }
 
   return (
     <section id='form' className='active'>
@@ -36,14 +34,14 @@ const FormField = () => {
       <div className='multi-step-form'>
         <Formik
           initialValues={iniatialValues}
-          validationSchema={validationSchema}
+          validationSchema={validate}
           onSubmit={onSubmit}
           
         >
           {({ errors, values, isValid }) => (
             <FormContext.Provider value={[errors, values, isValid]}>
               <Form>
-                <SignupTemplate updateSchema={updateSchema}/>
+                <SignupTemplate />
               </Form>
             </FormContext.Provider>
           )}

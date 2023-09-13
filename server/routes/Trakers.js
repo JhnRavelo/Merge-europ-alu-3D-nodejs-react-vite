@@ -7,10 +7,10 @@ const session = require('../session/index.js')
 var jsonParser = bodyParser.json()
 router.use(session())
 router.post('/', jsonParser, async (req, res) => {
-    const {name, email, page, phone} = await req.body 
+    const {name, email, checked, phone} = await req.body 
     console.log(name);  
-    if(page && name && email){
-        page.map(async(track) => {
+    if(checked && name && email){
+        checked.map(async(track) => {
             var date = new Date
             var day = date.getDate()
             var month = date.getMonth() + 1;
@@ -37,7 +37,7 @@ router.post('/', jsonParser, async (req, res) => {
             }
 
         })
-        res.json('')
+        res.json('Produit ajouté')
     }
     
     

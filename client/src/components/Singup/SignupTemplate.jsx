@@ -5,22 +5,22 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import FormContext from '../Form/FormContext';
 import ButtonContext from '../Button/ButtonContext';
 import errorShake from '../../lib/utils/errorShake';
-import { addUser } from '../../lib/service/User';
-import propTypes from 'prop-types'
+import propTypes from 'prop-types';
 
-const SignupTemplate = ({updateSchema}) => {
+const SignupTemplate = () => {
   const [index, setIndex] = useState(0);
   const prevBtnRef = useRef();
   const nextBtnRef = useRef();
   const formContext = useContext(FormContext);
   var product = useContext(ButtonContext);
   const [title, setTitle] = useState(`S'enregistrer`);
-  const [errors, setErrors] = useState([
+  const errors = [
     formContext[0].name,
     formContext[0].email,
     '',
     formContext[0].phone,
-  ]);
+  ];
+
   useEffect(() => {
     const prevBtn = prevBtnRef.current;
     const nextBtn = nextBtnRef.current;
@@ -79,19 +79,6 @@ const SignupTemplate = ({updateSchema}) => {
     } else {
       var input = document.querySelector('.username');
       var champ = document.querySelector('.user-input');
-      let errorsField
-      if (index == 1) {
-        console.log(formContext[1].email);
-        let res = await addUser(formContext[1])
-          .then((data) => console.log(data))
-          .catch((err) => console.log(err));
-        if (res !== 'Suivant') {
-          errorsField = [...errors]
-          errorsField[index]= "L'adresse email existe déjà";
-          setErrors(errorsField)
-        }
-      }
-
       var error = errors[index];
       if (error || !champ.value) {
         errorShake(input);
@@ -161,7 +148,7 @@ const SignupTemplate = ({updateSchema}) => {
 };
 
 SignupTemplate.propTypes = {
-  updateSchema: propTypes.func
-}
+  updateSchema: propTypes.func,
+};
 
 export default SignupTemplate;

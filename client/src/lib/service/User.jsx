@@ -8,7 +8,25 @@ export const addUser = async (body) => {
         if (!response) {
           onFail(`Probleme de connexion au serveur`);
         } else {
-          // console.log(response.data);
+          onSucces(response.data);
+        }
+      })
+      .catch((error) => {
+        if (error) {
+          onFail(`Probleme de connexion au serveur`);
+        }
+      });
+  });
+};
+
+export const getUser = async () => {
+  return new Promise((onSucces, onFail) => {
+    axios
+      .get('http://127.0.0.1:5000/auth')
+      .then((response) => {
+        if (!response) {
+          onFail(`Probleme de connexion au serveur`);
+        } else {
           onSucces(response.data);
         }
       })

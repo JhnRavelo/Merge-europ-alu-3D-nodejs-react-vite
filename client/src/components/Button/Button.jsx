@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import './Button.css';
 import FormField from '../Form/Form';
 import ButtonContext from './ButtonContext';
+import { getUser } from '../../lib/service/User';
 
 const Button = () => {
   const btnRef = useRef();
@@ -16,7 +17,9 @@ const Button = () => {
     }
   };
 
-  const handleClick = () => {
+  const handleClick = async() => {
+    const res = await getUser()
+    console.log(res);
     showForm();
     const corps = document.querySelector('.corps');
     corps.classList.add('none');

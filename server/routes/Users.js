@@ -11,6 +11,7 @@ var jsonParser = bodyParser.json();
 router.use(session());
 
 router.get('/', jsonParser, async (req, res) => {
+  console.log(req.session);
   if (req.session.isAuth) {
     res.json(req.session.user);
   } else {
@@ -27,10 +28,10 @@ router.get('/logout', jsonParser, async (req, res) => {
   }
 });
 
-router.get('/users', jsonParser, async (req, res) => {
-    const findUsers = await users.findAll()
-    console.log(findUsers);
-})
+// router.get('/users', jsonParser, async (req, res) => {
+//   const findUsers = await users.findAll();
+//   console.log(findUsers);
+// });
 
 router.post('/login', jsonParser, async (req, res) => {
   const { name, email } = await req.body;
@@ -56,7 +57,7 @@ router.post('/login', jsonParser, async (req, res) => {
 
 router.post('/', jsonParser, async (req, res) => {
   const { name, email, phone, password } = await req.body;
-  console.log(email);
+  console.log(req.body);
   var userName;
   if (email) {
     userName = await users.findOne({
@@ -97,6 +98,8 @@ router.post('/', jsonParser, async (req, res) => {
       phone,
     };
     res.json('Votre compte a été créer');
+  }else {
+    res.json('Suivant')
   }
 });
 
