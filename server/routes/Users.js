@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const { users } = require('../database/models');
-const validator = require('validator');
 const bodyParser = require('body-parser');
 const session = require('../session/index.js');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 var jsonParser = bodyParser.json();
 
@@ -28,31 +28,31 @@ router.get('/logout', jsonParser, async (req, res) => {
   }
 });
 
-// router.get('/users', jsonParser, async (req, res) => {
-//   const findUsers = await users.findAll();
-//   console.log(findUsers);
-// });
-
 router.post('/login', jsonParser, async (req, res) => {
-  const { name, email } = await req.body;
+  const { email, password } = await req.body;
   const userName = await users.findOne({
     where: {
       email: email,
-      name: name,
     },
   });
 
+  const match = await bcrypt.compare(password, userName.password);
+
   if (!userName) {
-    return res.json('Pas le bon utilisateur');
+    return res.json(`L'utilisateur n'existe pas `);
+  } else if (match) {
+    return res.json(`Vous êtes connecté`);
+  } else if (!match) {
+    return res.json('Mot de passe invalide');
   }
 
-  req.session.isAuth = true;
-  req.session.user = {
-    name,
-    email,
-    phone: userName.phone,
-  };
-  res.json('');
+  // req.session.isAuth = true;
+  // req.session.user = {
+  //   name,
+  //   email,
+  //   phone: userName.phone,
+  // };
+  // res.json('');
 });
 
 router.post('/', jsonParser, async (req, res) => {
@@ -69,19 +69,7 @@ router.post('/', jsonParser, async (req, res) => {
 
   if (userName) {
     res.json(`L'utilisateur existe déjà`);
-  } else if (email && !validator.isEmail(email)) {
-    res.json(`L'adresse email n'est pas valide`);
-  } else if (phone && !validator.isMobilePhone(phone)) {
-    res.json(`Le numéro de téléphone est invalide`);
-  } else if (
-    name &&
-    email &&
-    !userName &&
-    phone &&
-    validator.isEmail(email) &&
-    validator.isMobilePhone(phone) &&
-    password
-  ) {
+  } else if (name && email && !userName && phone && password) {
     bcrypt.hash(password, 10).then((hash) => {
       users.create({
         name,
@@ -91,6 +79,29 @@ router.post('/', jsonParser, async (req, res) => {
       });
     });
 
+    const accessToken = jwt.sign(
+      {
+        userName: name,
+        userEmail: email,
+        userPhone: phone,
+      },
+      process.env.ACCESS_TOKEN_SECRET,
+      {
+        expiresIn: '600s',
+      }
+    );
+
+    const refreshToken = jwt.sign(
+      {
+        userName: name,
+        userEmail: email,
+        userPhone: phone,
+      },
+      process.env.ACCESS_REFRESH_TOKEN,
+      {
+        expiresIn: '1d',
+      }
+    );
     req.session.isAuth = true;
     req.session.user = {
       name,
@@ -98,8 +109,8 @@ router.post('/', jsonParser, async (req, res) => {
       phone,
     };
     res.json('Votre compte a été créer');
-  }else {
-    res.json('Suivant')
+  } else {
+    res.json('Suivant');
   }
 });
 
