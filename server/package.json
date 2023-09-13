@@ -2,6 +2,7 @@
   "name": "threejs-europ",
   "version": "1.0.0",
   "description": "un site avec un 3D",
+  "proxy":"",
   "bin": "app.js",
   "pkg": {
     "assets": [

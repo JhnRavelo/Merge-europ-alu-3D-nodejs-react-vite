@@ -4,16 +4,23 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import FormContext from '../Form/FormContext';
 import ButtonContext from '../Button/ButtonContext';
-import errorShake from '../../utils/errorShake';
+import errorShake from '../../lib/utils/errorShake';
+import { addUser } from '../../lib/service/User';
+import propTypes from 'prop-types'
 
-const SignupTemplate = () => {
+const SignupTemplate = ({updateSchema}) => {
   const [index, setIndex] = useState(0);
   const prevBtnRef = useRef();
   const nextBtnRef = useRef();
   const formContext = useContext(FormContext);
   var product = useContext(ButtonContext);
   const [title, setTitle] = useState(`S'enregistrer`);
-
+  const [errors, setErrors] = useState([
+    formContext[0].name,
+    formContext[0].email,
+    '',
+    formContext[0].phone,
+  ]);
   useEffect(() => {
     const prevBtn = prevBtnRef.current;
     const nextBtn = nextBtnRef.current;
@@ -48,7 +55,7 @@ const SignupTemplate = () => {
     }
   };
 
-  const handleClickNext = () => {
+  const handleClickNext = async () => {
     if (index == 2) {
       var { password, confirmPassword } = formContext[0];
       var inputs = [...document.querySelectorAll('.username')];
@@ -70,19 +77,21 @@ const SignupTemplate = () => {
         setIndex((prevIndex) => prevIndex + 1);
       }
     } else {
-      
-      
       var input = document.querySelector('.username');
       var champ = document.querySelector('.user-input');
-      if (index == 1 && champ.value == 'Nami@g') {
-        formContext[0].email = "L'adresse email existe déjà";
+      let errorsField
+      if (index == 1) {
+        console.log(formContext[1].email);
+        let res = await addUser(formContext[1])
+          .then((data) => console.log(data))
+          .catch((err) => console.log(err));
+        if (res !== 'Suivant') {
+          errorsField = [...errors]
+          errorsField[index]= "L'adresse email existe déjà";
+          setErrors(errorsField)
+        }
       }
-      const errors = [
-        formContext[0].name,
-        formContext[0].email,
-        '',
-        formContext[0].phone,
-      ];
+
       var error = errors[index];
       if (error || !champ.value) {
         errorShake(input);
@@ -150,5 +159,9 @@ const SignupTemplate = () => {
     </div>
   );
 };
+
+SignupTemplate.propTypes = {
+  updateSchema: propTypes.func
+}
 
 export default SignupTemplate;

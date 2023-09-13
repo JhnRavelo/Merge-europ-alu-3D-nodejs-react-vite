@@ -1,18 +1,10 @@
 module.exports = (sequelize,DataTypes) => {
     const trakers = sequelize.define('trakers', {
-        // ID_user: {
-        //     type: DataTypes.INTEGER,
-        //     allowNull: false,
-        // },
-        // ID_page: {
-        //     type: DataTypes.INTEGER,
-        //     allowNull: false,
-        // },
         name: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        eMail: {
+        email: {
             type: DataTypes.STRING,
             allowNull: false,
         },
@@ -43,19 +35,3 @@ module.exports = (sequelize,DataTypes) => {
     })
     return trakers 
 }
-// const { Sequelize, Datatypes } = require('sequelize')
-// const dotnev = require('dotenv')
-// const connectDatabase = require('./db-config')
-
-// const createTrakers = async() => {
-//     const database = connectDatabase()
-
-
-//     await trakers.sync().then(()=>{
-//         console.log('page table crée')
-//     }).catch((err)=>{
-//         console.error('unable to create:', err)
-//     })
-// }
-
-// module.exports = createTrakers

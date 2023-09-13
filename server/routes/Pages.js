@@ -1,7 +1,6 @@
 const express = require('express')
 const router = express.Router()
 const { pages } = require('../database/models')
-// const validator = require('validator')
 const bodyParser = require('body-parser')
 const session = require('../session/index.js')
 

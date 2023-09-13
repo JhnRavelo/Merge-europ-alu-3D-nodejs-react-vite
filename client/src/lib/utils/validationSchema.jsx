@@ -1,0 +1,36 @@
+import * as Yup from 'yup'
+
+const phoneRegEx =
+  /^((\+\d{1,3}(-|)?\(?\d\)?(-|)?\d{1,3})|(\(?\d{2,3}\)?))(-|)?(\d{3,4})(-|)?(\d{4})((x|ext)\d{1,5}){0,1}$/;
+
+
+const validationSchema = Yup.object({
+  name: Yup.string()
+    .required('Vous devez mettre votre nom')
+    .matches(/^[A-Za-z]+$/, 'Votre doit seulement contenir des lettres'),
+  email: Yup.string()
+    .required('Vous devez mettre votre adresse email')
+    .email(`l'adresse email est invalide`),
+  password: Yup.string()
+    .min(8, 'Le mot de passe doit avoir au moins 8 caractères')
+    .matches(
+      /[A-Z]/,
+      'Le mot de passe doit contenir au moins une lettre majuscule'
+    )
+    .matches(/[0-9]/, 'Le mot de passe doit contenir au moins un chiffre')
+    .required('Le mot de passe est requis'),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref('password'), null], 'Le mot de passe doit être le même')
+    .required('Le mot de passe doit être confirmer'),
+  phone: Yup.string()
+    .matches(phoneRegEx, 'Numéro de téléphone invalide')
+    .required('Le numéro de téléphone est requis'),
+  checked: Yup.array()
+    .of(Yup.string())
+    .min(1, 'Vous devez selectionner au moins un produit'),
+  checkbox: Yup.boolean()
+    .oneOf([true], 'Veillez accepter la création de compte')
+    .required('Veillez accepter la création de compte'),
+});
+
+export default validationSchema
