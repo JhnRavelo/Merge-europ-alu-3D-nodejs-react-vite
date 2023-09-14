@@ -22,12 +22,16 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    refreshToken: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    }
   });
 
   users.prototype.generateToken = function (id) {
     const accessToken = jwt.sign(
       {
-        id: id.toString()
+        "id": id
       },
       process.env.ACCESS_TOKEN_SECRET,
       {
@@ -36,6 +40,20 @@ module.exports = (sequelize, DataTypes) => {
     );
     return accessToken
   };
+
+  users.prototype.generateRefreshToken = function (id) {
+    const refreshToken = jwt.sign(
+      {
+        "id":id
+      },
+      process.env.ACCESS_REFRESH_TOKEN,
+      {
+        expiresIn: '1d',
+      }
+    );
+    
+    return refreshToken
+  }
 
   return users;
 };

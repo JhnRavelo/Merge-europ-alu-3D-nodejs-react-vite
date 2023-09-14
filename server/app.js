@@ -1,21 +1,23 @@
 const express = require('express');
-const { join } = require('path');
-const { exec } = require('child_process');
+const cookieParser = require('cookie-parser');
 require('dotenv').config();
 const db = require('./database/models');
-const bodyParser = require('body-parser');
-var jsonParser = bodyParser.json();
 const cors = require('cors');
-const session = require('./session/index.js');
+const verifyJWT = require('./middlewares/verifyJWT');
+// const session = require('./session/index.js');
+const bodyParser = require('body-parser');
+
 const app = express();
 app.use(cors());
-app.use(session());
+app.use(cookieParser());
 
 db.sequelize.sync().then(() => {
   app.listen(process.env.PORT, () => {
     console.log(`http://127.0.0.1:${process.env.PORT}`);
   });
 });
+// app.use(session());
+app.use(bodyParser.json());
 
 const userRoutes = require('./routes/Users.js');
 app.use('/auth', userRoutes);
@@ -24,5 +26,9 @@ const trakerRoutes = require('./routes/Trakers.js');
 app.use('/traker', trakerRoutes);
 
 const pageRoutes = require('./routes/Pages.js');
-const users = require('./database/models/users');
 app.use('/page', pageRoutes);
+
+app.use(verifyJWT);
+
+const refreshRoutes = require('./routes/Refresh.js');
+app.use('/refresh', refreshRoutes);
