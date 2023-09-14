@@ -57,7 +57,6 @@ router.post('/login', jsonParser, async (req, res) => {
 
 router.post('/', jsonParser, async (req, res) => {
   const { name, email, phone, password } = await req.body;
-  console.log(req.body);
   var userName;
   if (email) {
     userName = await users.findOne({
@@ -79,35 +78,23 @@ router.post('/', jsonParser, async (req, res) => {
       });
     });
 
-    const accessToken = jwt.sign(
-      {
-        userName: name,
-        userEmail: email,
-        userPhone: phone,
-      },
-      process.env.ACCESS_TOKEN_SECRET,
-      {
-        expiresIn: '600s',
-      }
-    );
-
-    const refreshToken = jwt.sign(
-      {
-        userName: name,
-        userEmail: email,
-        userPhone: phone,
-      },
-      process.env.ACCESS_REFRESH_TOKEN,
-      {
-        expiresIn: '1d',
-      }
-    );
-    req.session.isAuth = true;
-    req.session.user = {
-      name,
-      email,
-      phone,
-    };
+    // const refreshToken = jwt.sign(
+    //   {
+    //     userName: name,
+    //     userEmail: email,
+    //     userPhone: phone,
+    //   },
+    //   process.env.ACCESS_REFRESH_TOKEN,
+    //   {
+    //     expiresIn: '1d',
+    //   }
+    // );
+    // req.session.isAuth = true;
+    // req.session.user = {
+    //   name,
+    //   email,
+    //   phone,
+    // };
     res.json('Votre compte a été créer');
   } else {
     res.json('Suivant');

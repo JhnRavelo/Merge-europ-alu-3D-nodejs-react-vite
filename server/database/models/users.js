@@ -23,6 +23,19 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
   });
+
+  users.prototype.generateToken = function (id) {
+    const accessToken = jwt.sign(
+      {
+        id: id.toString()
+      },
+      process.env.ACCESS_TOKEN_SECRET,
+      {
+        expiresIn: '600s',
+      }
+    );
+    return accessToken
+  };
+
   return users;
 };
-

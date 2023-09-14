@@ -24,4 +24,5 @@ const trakerRoutes = require('./routes/Trakers.js');
 app.use('/traker', trakerRoutes);
 
 const pageRoutes = require('./routes/Pages.js');
+const users = require('./database/models/users');
 app.use('/page', pageRoutes);

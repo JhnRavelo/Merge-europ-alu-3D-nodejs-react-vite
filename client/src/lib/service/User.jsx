@@ -1,9 +1,9 @@
-import axios from 'axios';
+import defaultAxios from "../../api/axios";
 
 export const addUser = async (body) => {
   return new Promise((onSucces, onFail) => {
-    axios
-      .post('http://127.0.0.1:5000/auth', body)
+    defaultAxios
+      .post('/auth', body)
       .then((response) => {
         if (!response) {
           onFail(`Probleme de connexion au serveur`);
@@ -21,8 +21,8 @@ export const addUser = async (body) => {
 
 export const getUser = async () => {
   return new Promise((onSucces, onFail) => {
-    axios
-      .get('http://127.0.0.1:5000/auth')
+    defaultAxios
+      .get('/auth')
       .then((response) => {
         if (!response) {
           onFail(`Probleme de connexion au serveur`);
