@@ -29,6 +29,10 @@ const userRegistration = async (req, res) => {
     );
     const accessToken = users.prototype.generateToken(userRegister.ID_user);
 
+    userRegister.refreshToken = refreshToken;
+
+    userRegister.save();
+
     res.cookie('jwt', refreshToken, {
       httpOnly: true,
       sameSite: 'none',
@@ -72,13 +76,32 @@ const userLogin = async (req, res) => {
   //   phone: userName.phone,
   // };
   // res.json('');
-}
+};
 
-const userLogout = async(req, res) => {
+const userLogout = async (req, res) => {
+  const cookie = req.cookie;
+  if (!cookie?.jwt) return res.sendStatus(204);
 
-}
+  const refreshToken = cookie.jwt;
+
+  const user = await users.findOne({
+    where: {
+      refreshToken: refreshToken,
+    },
+  });
+
+  if (!user) {
+    res.clearCookie('jwt', { httpOnly: true, sameSite: 'none', secure: true });
+    return res.sendStatus(204);
+  }
+
+  user.refreshToken = '';
+  await user.save();
+
+  res.clearCookie('jwt', { httpOnly: true, sameSite: 'none', secure: true });
+};
 
 module.exports = {
   userRegistration,
-  userLogin
-}
+  userLogin,
+};

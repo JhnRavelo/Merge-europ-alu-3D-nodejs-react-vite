@@ -1,14 +1,15 @@
 const express = require('express')
 const router = express.Router()
 const { pages } = require('../database/models')
-const bodyParser = require('body-parser')
-const session = require('../session/index.js')
 
-var jsonParser = bodyParser.json()
+// const session = require('../session/index.js')
+// const bodyParser = require('body-parser')
 
-router.use(session())
+// var jsonParser = bodyParser.json()
 
-router.post('/', jsonParser, async (req, res) => {
+// router.use(session())
+
+router.post('/', async (req, res) => {
 
     const {page} = await req.body
     if(page){
