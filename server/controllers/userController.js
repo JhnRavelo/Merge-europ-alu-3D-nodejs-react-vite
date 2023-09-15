@@ -30,7 +30,7 @@ const userRegistration = async (req, res) => {
 
       const accessToken = users.prototype.generateToken(userRegister.ID_user);
 
-      console.log(accessToken);
+      // console.log(accessToken);
 
       userRegister.refreshToken = refreshToken;
 
@@ -61,7 +61,7 @@ const userRegistration = async (req, res) => {
 const userLogin = async (req, res) => {
   const { email, password } = await req.body;
   const cookie = req.cookie;
-  console.log(cookie);
+  // console.log(cookie);
 
   if (cookie?.jwt) {
     res.clearCookie('jwt', { httpOnly: true, 
@@ -75,7 +75,7 @@ const userLogin = async (req, res) => {
     },
   });
 
-  console.log(userName);
+  // console.log(userName);
   if (!userName) {
     return res.json(`Connexion invalide`);
   }
@@ -111,7 +111,21 @@ const userLogin = async (req, res) => {
   // res.json('');
 };
 
-const userRead = async(req, res) => {
+const userRead = async (req, res) => {
+const cookie = req.cookies
+console.log(req.user);
+if (!cookie?.jwt) return res.sendStatus(401);
+const refreshToken = cookie.jwt
+
+const user = await users.findOne({
+  where: {
+    refreshToken: refreshToken,
+  },
+})
+
+if(!user) return res.sendStatus(401)
+
+res.json({"name":user.name, "email":user.email, "phone":user.phone})
 
 }
 

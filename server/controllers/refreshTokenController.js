@@ -4,13 +4,14 @@ const { users } = require('../database/models');
 
 handleRefreshToken = async (req, res) => {
   const cookie = req.cookies;
-  console.log('here refresh');
+  
   if (!cookie?.jwt) return res.sendStatus(401);
 
   const refreshToken = cookie.jwt;
   res.clearCookie('jwt', { httpOnly: true, 
-    sameSite: 'none', 
-    secure: true });
+    // sameSite: 'none', 
+    // secure: true 
+  });
 
   const user = await users.findOne({
     where: {
@@ -24,7 +25,7 @@ handleRefreshToken = async (req, res) => {
       process.env.REFRESH_TOKEN_SECRET,
       async (err, decoded) => {
         if (err) {
-          console.log('here error');
+          
           return res.sendStatus(403)
         };
         const hackedUser = users.findOne({
@@ -36,7 +37,7 @@ handleRefreshToken = async (req, res) => {
         await hackedUser.save();
       }
     );
-    console.log('here not user');
+    
     return res.sendStatus(403);
   }
 
