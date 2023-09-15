@@ -9,7 +9,9 @@ const {
   userRegistration,
   userLogin,
   userLogout,
+  userRead,
 } = require('../controllers/userController');
+const verifyJWT = require('../middlewares/verifyJWT');
 
 // var jsonParser = bodyParser.json();
 
@@ -32,7 +34,9 @@ const {
 //     });
 //   }
 // });
-router.get('/logout', userLogout)
+router.get('/', verifyJWT, userRead)
+
+router.get('/logout', verifyJWT, userLogout)
 
 router.post('/login', userLogin);
 

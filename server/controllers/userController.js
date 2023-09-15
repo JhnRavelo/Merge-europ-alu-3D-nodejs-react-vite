@@ -16,18 +16,21 @@ const userRegistration = async (req, res) => {
     res.json(`L'utilisateur existe déjà`);
   } else if (name && email && !userName && phone && password) {
     let userRegister;
-    bcrypt.hash(password, 10).then(async (hash) => {
+
       userRegister = await users.create({
         name,
         email,
         phone,
-        password: hash,
+        password: await bcrypt.hash(password, 10),
       });
-      console.log(userRegister);
+
       const refreshToken = users.prototype.generateRefreshToken(
         userRegister.ID_user
       );
+
       const accessToken = users.prototype.generateToken(userRegister.ID_user);
+
+      console.log(accessToken);
 
       userRegister.refreshToken = refreshToken;
 
@@ -35,11 +38,12 @@ const userRegistration = async (req, res) => {
 
       res.cookie('jwt', refreshToken, {
         httpOnly: true,
-        sameSite: 'none',
+        // sameSite: 'none',
         secure: true,
         maxAge: 24 * 60 * 60 * 1000,
       });
-    });
+
+      res.json({"token":accessToken})
 
     // req.session.isAuth = true;
     // req.session.user = {
@@ -47,18 +51,22 @@ const userRegistration = async (req, res) => {
     //   email,
     //   phone,
     // };
-    res.json('Votre compte a été créer');
-  } else {
-    res.json('Suivant');
-  }
+    // res.json('Votre compte a été créer');
+  } 
+  // else {
+  //   res.json('Suivant');
+  // }
 };
 
 const userLogin = async (req, res) => {
   const { email, password } = await req.body;
   const cookie = req.cookie;
+  console.log(cookie);
 
   if (cookie?.jwt) {
-    res.clearCookie('jwt', { httpOnly: true, sameSite: 'none', secure: true });
+    res.clearCookie('jwt', { httpOnly: true, 
+      // sameSite: 'none', 
+      secure: true });
   }
 
   const userName = await users.findOne({
@@ -83,17 +91,16 @@ const userLogin = async (req, res) => {
 
   userName.refreshToken = refreshToken;
 
-  userName.save();
+  await userName.save();
 
   res.cookie('jwt', refreshToken, {
     httpOnly: true,
-    sameSite: 'none',
-    secure: true,
+    // sameSite: 'none',
+    // secure: true,
     maxAge: 24 * 60 * 60 * 1000,
   });
 
   res.json(accessToken);
-  res.sendStatus(200);
 
   // req.session.isAuth = true;
   // req.session.user = {
@@ -104,8 +111,14 @@ const userLogin = async (req, res) => {
   // res.json('');
 };
 
+const userRead = async(req, res) => {
+
+}
+
 const userLogout = async (req, res) => {
-  const cookie = req.cookie;
+
+  const cookie = req.cookies;
+
   if (!cookie?.jwt) return res.sendStatus(204);
 
   const refreshToken = cookie.jwt;
@@ -117,18 +130,29 @@ const userLogout = async (req, res) => {
   });
 
   if (!user) {
-    res.clearCookie('jwt', { httpOnly: true, sameSite: 'none', secure: true });
+    res.clearCookie('jwt', { 
+      httpOnly: true, 
+      // sameSite: 'none', 
+      // secure: true 
+    });
     return res.sendStatus(204);
   }
 
   user.refreshToken = '';
   await user.save();
 
-  res.clearCookie('jwt', { httpOnly: true, sameSite: 'none', secure: true });
+  res.clearCookie('jwt', { 
+    httpOnly: true, 
+    // sameSite: 'none', 
+    // secure: true 
+  });
+
+  return res.json('SUCCESS')
 };
 
 module.exports = {
   userRegistration,
   userLogin,
   userLogout,
+  userRead,
 };

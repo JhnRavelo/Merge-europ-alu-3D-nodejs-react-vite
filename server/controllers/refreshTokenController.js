@@ -3,11 +3,14 @@ require('dotenv').config();
 const { users } = require('../database/models');
 
 handleRefreshToken = async (req, res) => {
-  const cookie = req.cookie;
+  const cookie = req.cookies;
+  console.log('here refresh');
   if (!cookie?.jwt) return res.sendStatus(401);
 
   const refreshToken = cookie.jwt;
-  res.clearCookie('jwt', { httpOnly: true, sameSite: 'none', secure: true });
+  res.clearCookie('jwt', { httpOnly: true, 
+    sameSite: 'none', 
+    secure: true });
 
   const user = await users.findOne({
     where: {
@@ -20,7 +23,10 @@ handleRefreshToken = async (req, res) => {
       refreshToken,
       process.env.REFRESH_TOKEN_SECRET,
       async (err, decoded) => {
-        if (err) return res.sendStatus(403);
+        if (err) {
+          console.log('here error');
+          return res.sendStatus(403)
+        };
         const hackedUser = users.findOne({
           where: {
             ID_user: decoded.id,
@@ -30,6 +36,7 @@ handleRefreshToken = async (req, res) => {
         await hackedUser.save();
       }
     );
+    console.log('here not user');
     return res.sendStatus(403);
   }
 
@@ -52,8 +59,8 @@ handleRefreshToken = async (req, res) => {
 
       res.cookie('jwt', newRefreshToken, {
         httpOnly: true,
-        sameSite: 'none',
-        secure: true,
+        // sameSite: 'none',
+        // secure: true,
         maxAge: 24 * 60 * 60 * 1000,
       });
 

@@ -1,4 +1,5 @@
-import jwt from 'jsonwebtoken'
+const jwt = require('jsonwebtoken')
+require('dotenv').config()
 
 module.exports = (sequelize, DataTypes) => {
   const users = sequelize.define('users', {
@@ -48,7 +49,7 @@ module.exports = (sequelize, DataTypes) => {
       {
         "id":id
       },
-      process.env.ACCESS_REFRESH_TOKEN,
+      process.env.REFRESH_TOKEN_SECRET,
       {
         expiresIn: '1d',
       }
