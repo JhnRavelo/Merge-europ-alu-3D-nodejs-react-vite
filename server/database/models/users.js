@@ -1,3 +1,5 @@
+import jwt from 'jsonwebtoken'
+
 module.exports = (sequelize, DataTypes) => {
   const users = sequelize.define('users', {
     ID_user: {

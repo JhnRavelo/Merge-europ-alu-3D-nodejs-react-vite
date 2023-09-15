@@ -1,4 +1,5 @@
 const { users } = require('../database/models');
+const bcrypt = require('bcrypt');
 
 const userRegistration = async (req, res) => {
   const { name, email, phone, password } = await req.body;
@@ -22,23 +23,24 @@ const userRegistration = async (req, res) => {
         phone,
         password: hash,
       });
+      console.log(userRegister);
+      const refreshToken = users.prototype.generateRefreshToken(
+        userRegister.ID_user
+      );
+      const accessToken = users.prototype.generateToken(userRegister.ID_user);
+
+      userRegister.refreshToken = refreshToken;
+
+      await userRegister.save();
+
+      res.cookie('jwt', refreshToken, {
+        httpOnly: true,
+        sameSite: 'none',
+        secure: true,
+        maxAge: 24 * 60 * 60 * 1000,
+      });
     });
 
-    const refreshToken = users.prototype.generateRefreshToken(
-      userRegister.ID_user
-    );
-    const accessToken = users.prototype.generateToken(userRegister.ID_user);
-
-    userRegister.refreshToken = refreshToken;
-
-    userRegister.save();
-
-    res.cookie('jwt', refreshToken, {
-      httpOnly: true,
-      sameSite: 'none',
-      secure: true,
-      maxAge: 24 * 60 * 60 * 1000,
-    });
     // req.session.isAuth = true;
     // req.session.user = {
     //   name,
@@ -53,21 +55,45 @@ const userRegistration = async (req, res) => {
 
 const userLogin = async (req, res) => {
   const { email, password } = await req.body;
+  const cookie = req.cookie;
+
+  if (cookie?.jwt) {
+    res.clearCookie('jwt', { httpOnly: true, sameSite: 'none', secure: true });
+  }
+
   const userName = await users.findOne({
     where: {
       email: email,
     },
   });
 
-  const match = await bcrypt.compare(password, userName.password);
-
+  console.log(userName);
   if (!userName) {
     return res.json(`Connexion invalide`);
-  } else if (match) {
-    return res.json(`Vous êtes connecté`);
-  } else if (!match) {
+  }
+
+  const match = await bcrypt.compare(password, userName.password);
+
+  if (!match) {
     return res.json('Connexion invalide');
   }
+
+  const refreshToken = users.prototype.generateRefreshToken(userName.ID_user);
+  const accessToken = users.prototype.generateToken(userName.ID_user);
+
+  userName.refreshToken = refreshToken;
+
+  userName.save();
+
+  res.cookie('jwt', refreshToken, {
+    httpOnly: true,
+    sameSite: 'none',
+    secure: true,
+    maxAge: 24 * 60 * 60 * 1000,
+  });
+
+  res.json(accessToken);
+  res.sendStatus(200);
 
   // req.session.isAuth = true;
   // req.session.user = {
@@ -104,4 +130,5 @@ const userLogout = async (req, res) => {
 module.exports = {
   userRegistration,
   userLogin,
+  userLogout,
 };

@@ -8,8 +8,6 @@ const verifyJWT = require('./middlewares/verifyJWT');
 const bodyParser = require('body-parser');
 
 const app = express();
-app.use(cors());
-app.use(cookieParser());
 
 db.sequelize.sync().then(() => {
   app.listen(process.env.PORT, () => {
@@ -17,7 +15,10 @@ db.sequelize.sync().then(() => {
   });
 });
 // app.use(session());
+app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cors());
+app.use(cookieParser());
 
 const userRoutes = require('./routes/Users.js');
 app.use('/auth', userRoutes);

@@ -8,20 +8,21 @@ const jwt = require('jsonwebtoken');
 const {
   userRegistration,
   userLogin,
+  userLogout,
 } = require('../controllers/userController');
 
 // var jsonParser = bodyParser.json();
 
 // router.use(session());
 
-router.get('/', async (req, res) => {
-  console.log(req.session);
-  if (req.session.isAuth) {
-    res.json(req.session.user);
-  } else {
-    res.json(false);
-  }
-});
+// router.get('/', async (req, res) => {
+//   console.log(req.session);
+//   if (req.session.isAuth) {
+//     res.json(req.session.user);
+//   } else {
+//     res.json(false);
+//   }
+// });
 
 // router.get('/logout', async (req, res) => {
 //   if (req.session.isAuth) {
@@ -31,6 +32,7 @@ router.get('/', async (req, res) => {
 //     });
 //   }
 // });
+router.get('/logout', userLogout)
 
 router.post('/login', userLogin);
 
