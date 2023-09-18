@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { addUser } from '../service/User';
+import axios from 'axios';
 
 const phoneRegEx =
   /^((\+\d{1,3}(-|)?\(?\d\)?(-|)?\d{1,3})|(\(?\d{2,3}\)?))(-|)?(\d{3,4})(-|)?(\d{4})((x|ext)\d{1,5}){0,1}$/;
@@ -15,14 +15,16 @@ const validate = Yup.object({
       message: () => `L'utilisateur existe déjà`,
       test: async function (value) {
         // const body = JSON.stringify(value);
-        const res = await addUser({ email: value });
-        if (res == `L'utilisateur existe déjà`) {
+        const res = await axios.post('http://127.0.0.1:5000/auth', { email: value } )
+        // addUser({ email: value });
+        if (res.data == `L'utilisateur existe déjà`) {
           return false;
         } else {
           return true;
         }
       },
-    }),
+    })
+    ,
   password: Yup.string()
     .min(8, 'Le mot de passe doit avoir au moins 8 caractères')
     .matches(

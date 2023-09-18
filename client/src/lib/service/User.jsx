@@ -22,7 +22,7 @@ export const addUser = async (body) => {
 export const getUser = async () => {
   return new Promise((onSucces, onFail) => {
     defaultAxios
-      .get('/auth')
+      .get(`/auth`)
       .then((response) => {
         if (!response) {
           onFail(`Probleme de connexion au serveur`);

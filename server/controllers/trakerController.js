@@ -1,3 +1,5 @@
+const {trakers} = require('../database/models')
+
 const addTraker = async (req, res) => {
   const { name, email, checked, phone } = await req.body;
   console.log(name);

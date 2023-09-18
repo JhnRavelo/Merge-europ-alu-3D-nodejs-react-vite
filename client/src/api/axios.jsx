@@ -1,8 +1,19 @@
 import axios from 'axios'
 
+const url = "http://localhost:5000"
+
 const defaultAxios = axios.create({
-  baseURL:"http://127.0.0.1:5000"
+  baseURL:url,
+  withCredentials: true,
+})
+
+const privateAxios = axios.create({
+  baseURL:url,
+  withCredentials: true,
+  headers:{"Content-Type":'application/json'}
 })
 
 export default defaultAxios
+
+export {privateAxios}
 

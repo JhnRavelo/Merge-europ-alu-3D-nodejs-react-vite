@@ -3,16 +3,34 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons';
 import propTypes from 'prop-types';
 import userForm from '../../assets/json/userForm.json';
+import { useEffect, useRef } from 'react';
 
 const icon = [faUser, faEnvelope, '', faPhone];
 
 const SignupStepTemplate = ({ index }) => {
-  // console.log(userForm[index].name);
+  const fieldRef = useRef()
+
+useEffect(()=>{
+const fieldError = fieldRef.current.childNodes[1]
+
+if(fieldError){
+  fieldError.style.display = 'none'
+}
+
+},[index])
+
+const handleClick = () => {
+  const fieldError = fieldRef.current.childNodes[1]
+
+  if(fieldError){
+    fieldError.style.display = 'block'
+  }
+}
 
   return (
     <>
-    <div className='fields'>
-      <div className='username'>
+    <div className='fields' ref={fieldRef}>
+      <div className='username' onClick={handleClick}>
         <FontAwesomeIcon icon={icon[index]} className='fa fa-user' />
         <Field
           type={userForm[index].type}

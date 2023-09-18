@@ -15,12 +15,10 @@ db.sequelize.sync().then(() => {
   });
 });
 // app.use(session());
-
-app.use(express.urlencoded({ origin: [`http://127.0.0.1:${process.env.PORT}`, `http://127.0.0.1:${process.env.REACT_PORT}`], extended: false }));
-app.use(bodyParser.json());
-app.use(cors({credentials:true}));
-
 app.use(cookieParser());
+app.use(express.urlencoded({  extended: false}));
+app.use(bodyParser.json());
+app.use(cors({credentials:true, origin:'http://localhost:5173'}));
 
 const userRoutes = require('./routes/Users.js');
 app.use('/auth', userRoutes);
@@ -35,3 +33,4 @@ app.use(verifyJWT);
 
 const refreshRoutes = require('./routes/Refresh.js');
 app.use('/refresh', refreshRoutes);
+

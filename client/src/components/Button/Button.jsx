@@ -3,6 +3,7 @@ import './Button.css';
 import FormField from '../Form/Form';
 import ButtonContext from './ButtonContext';
 import { getUser } from '../../lib/service/User';
+import axios from 'axios'
 
 const Button = () => {
   const btnRef = useRef();
@@ -18,8 +19,25 @@ const Button = () => {
   };
 
   const handleClick = async() => {
-    const res = await getUser()
+    try {
+      const res = await getUser()
     console.log(res);
+    } catch (error) {
+      if(error){
+        console.log(error);
+      }
+    }
+    
+    try {
+      const response = await axios.post('http://localhost:5000/auth/cookie', {},{
+        withCredentials: true, // Permet d'inclure les cookies dans la requête
+      });
+  
+      console.log('Réponse du serveur :', response.data);
+    } catch (error) {
+      console.error('Erreur lors de la récupération du cookie :', error);
+    }
+
     showForm();
     const corps = document.querySelector('.corps');
     corps.classList.add('none');
