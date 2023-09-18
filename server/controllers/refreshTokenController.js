@@ -8,6 +8,7 @@ handleRefreshToken = async (req, res) => {
   if (!cookie?.jwt) return res.sendStatus(401);
 
   const refreshToken = cookie.jwt;
+
   res.clearCookie('jwt', { httpOnly: true, 
     // sameSite: 'none', 
     // secure: true 
@@ -24,8 +25,7 @@ handleRefreshToken = async (req, res) => {
       refreshToken,
       process.env.REFRESH_TOKEN_SECRET,
       async (err, decoded) => {
-        if (err) {
-          
+        if (err) {         
           return res.sendStatus(403)
         };
         const hackedUser = users.findOne({
@@ -37,7 +37,7 @@ handleRefreshToken = async (req, res) => {
         await hackedUser.save();
       }
     );
-    
+
     return res.sendStatus(403);
   }
 

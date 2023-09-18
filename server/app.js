@@ -15,9 +15,11 @@ db.sequelize.sync().then(() => {
   });
 });
 // app.use(session());
+
 app.use(express.urlencoded({ origin: [`http://127.0.0.1:${process.env.PORT}`, `http://127.0.0.1:${process.env.REACT_PORT}`], extended: false }));
 app.use(bodyParser.json());
 app.use(cors({credentials:true}));
+
 app.use(cookieParser());
 
 const userRoutes = require('./routes/Users.js');

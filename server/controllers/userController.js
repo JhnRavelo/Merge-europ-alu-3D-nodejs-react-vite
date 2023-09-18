@@ -30,8 +30,6 @@ const userRegistration = async (req, res) => {
 
       const accessToken = users.prototype.generateToken(userRegister.ID_user);
 
-      // console.log(accessToken);
-
       userRegister.refreshToken = refreshToken;
 
       await userRegister.save();
@@ -45,29 +43,23 @@ const userRegistration = async (req, res) => {
 
       res.json({"token":accessToken})
 
-    // req.session.isAuth = true;
-    // req.session.user = {
-    //   name,
-    //   email,
-    //   phone,
-    // };
-    // res.json('Votre compte a été créer');
   } 
-  // else {
-  //   res.json('Suivant');
-  // }
+
 };
 
 const userLogin = async (req, res) => {
+
   const { email, password } = await req.body;
-  const cookie = req.cookie;
-  // console.log(cookie);
+  const cookie = req.cookies;
 
   if (cookie?.jwt) {
-    res.clearCookie('jwt', { httpOnly: true, 
+    res.clearCookie('jwt', { 
+      httpOnly: true, 
       // sameSite: 'none', 
-      secure: true });
+      // secure: true 
+    });
   }
+
 
   const userName = await users.findOne({
     where: {
@@ -75,7 +67,6 @@ const userLogin = async (req, res) => {
     },
   });
 
-  // console.log(userName);
   if (!userName) {
     return res.json(`Connexion invalide`);
   }
@@ -98,7 +89,7 @@ const userLogin = async (req, res) => {
     // sameSite: 'none',
     // secure: true,
     maxAge: 24 * 60 * 60 * 1000,
-  });
+  }); 
 
   res.json(accessToken);
 
@@ -109,7 +100,8 @@ const userLogin = async (req, res) => {
   //   phone: userName.phone,
   // };
   // res.json('');
-};
+}
+  
 
 const userRead = async (req, res) => {
 const cookie = req.cookies
@@ -169,4 +161,4 @@ module.exports = {
   userLogin,
   userLogout,
   userRead,
-};
+}

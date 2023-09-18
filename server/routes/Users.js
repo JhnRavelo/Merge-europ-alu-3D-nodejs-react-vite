@@ -13,10 +13,6 @@ const {
 } = require('../controllers/userController');
 const verifyJWT = require('../middlewares/verifyJWT');
 
-// var jsonParser = bodyParser.json();
-
-// router.use(session());
-
 // router.get('/', async (req, res) => {
 //   console.log(req.session);
 //   if (req.session.isAuth) {
