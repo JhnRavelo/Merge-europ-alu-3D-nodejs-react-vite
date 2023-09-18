@@ -19,10 +19,10 @@ export const addUser = async (body) => {
   });
 };
 
-export const getUser = async () => {
+export const getUser = async (axiosPrivate) => {
   return new Promise((onSucces, onFail) => {
-    defaultAxios
-      .get(`/auth`)
+    axiosPrivate
+      .get('/auth')
       .then((response) => {
         if (!response) {
           onFail(`Probleme de connexion au serveur`);

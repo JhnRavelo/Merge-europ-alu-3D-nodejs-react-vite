@@ -35,20 +35,20 @@ const userRegistration = async (req, res) => {
     await userRegister.save();
 
     res.cookie("jwt", refreshToken, {
-      maxAge: 900000,
+      maxAge: 24 * 60 * 60 * 1000,
       httpOnly: true,
       sameSite: "None",
       secure: true,
     });
 
-    res.json({ token: accessToken });
+    res.json(accessToken);
   } else {
     res.json("Suivant");
   }
 };
 
 const userLogin = async (req, res) => {
-  const { email, password } = await req.body;
+  const { loginMail, loginPassword } = await req.body;
   const cookie = req.cookies;
 
   if (cookie?.jwt) {
@@ -61,7 +61,7 @@ const userLogin = async (req, res) => {
 
   const userName = await users.findOne({
     where: {
-      email: email,
+      email: loginMail,
     },
   });
 
@@ -69,7 +69,7 @@ const userLogin = async (req, res) => {
     return res.json(`Connexion invalide`);
   }
 
-  const match = await bcrypt.compare(password, userName.password);
+  const match = await bcrypt.compare(loginPassword, userName.password);
 
   if (!match) {
     return res.json("Connexion invalide");

@@ -7,10 +7,10 @@ import ButtonContext from "../Button/ButtonContext";
 import { addUser } from "../../lib/service/User";
 import { validate } from "../../lib/utils/validationSchema";
 import { addTraker } from "../../lib/service/Trakers";
-import AuthContext from "../../context/AuthProvider";
+import useAuth from "../../hooks/useAuth";
 
 const FormField = () => {
-  const { setAuth } = useContext(AuthContext);
+  const { setAuth } = useAuth();
   const buttonContext = useContext(ButtonContext);
   const iniatialValues = {
     name: "",
@@ -20,15 +20,16 @@ const FormField = () => {
     phone: "",
     checked: [buttonContext[0]],
     checkbox: true,
+    loginMail: "",
+    loginPassword: "",
   };
 
   const onSubmit = async (values) => {
+    console.log('click');
     try {
-      const res = await addUser(values, true);
-      const token = res?.token;
-
-      setAuth(token);
-      console.log(res.token);
+      const res = await addUser(values);
+      console.log(res.data);
+      setAuth(res.data);
       const track = await addTraker(values);
       console.log(track);
     } catch (error) {

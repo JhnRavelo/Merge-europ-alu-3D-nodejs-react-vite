@@ -4,11 +4,13 @@ import FormField from '../Form/Form';
 import ButtonContext from './ButtonContext';
 import { getUser } from '../../lib/service/User';
 import axios from 'axios'
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
 const Button = () => {
   const btnRef = useRef();
   const [product, setProduct] = useState();
   const [show, setShow] = useState(false);
+  const axiosPrivate = useAxiosPrivate()
 
   const showForm = () => {
     if (show === false) {
@@ -20,7 +22,8 @@ const Button = () => {
 
   const handleClick = async() => {
     try {
-      const res = await getUser()
+      console.log(axiosPrivate);
+      const res = await axiosPrivate.get('/auth')
     console.log(res);
     } catch (error) {
       if(error){
