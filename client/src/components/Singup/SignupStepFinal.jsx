@@ -78,7 +78,7 @@ const SignupStepFinal = () => {
       const res = await addUser(formContext[1]);
       console.log(res);
       if(res!=`L'utilisateur existe déjà`){
-        setAuth(res.data);
+        setAuth(res);
       }
       
       const track = await addTraker(formContext[1]);

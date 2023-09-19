@@ -21,6 +21,8 @@ const Button = () => {
       setShow(true);
     } else {
       setShow(false);
+      const corps = document.querySelector(".corps");
+      corps.classList.remove("none");
     }
   };
 

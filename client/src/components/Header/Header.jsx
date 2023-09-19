@@ -2,7 +2,6 @@ import "./Header.css";
 import Logo from "../../assets/Logo_aluhd.png";
 import { useEffect, useRef } from "react";
 import { NavLink, Link, useLocation } from "react-router-dom";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
@@ -58,12 +57,12 @@ const Header = () => {
       showProfileRef.current.style.pointerEvents = "all";
     }
 
-    
   }, [location.pathname]);
 
   const onOpenMenu = () => {
     headerRef.current.classList.toggle("menu-is-open");
   };
+
   const showOption = () => {
     showProfileRef.current.classList.toggle("showed");
     showLogoutRef.current.classList.toggle("showed");

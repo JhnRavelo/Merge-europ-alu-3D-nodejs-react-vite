@@ -5,6 +5,9 @@ import fenetre2 from "../../../public/images/FENÊTRES/PNG/FENÊTRE OSCILLO-BATT
 // import fenetre3 from "../../../public/images/FENÊTRES/PNG/SOUFFLET.png"
 
 const Cart = () => {
+
+
+
   return (
     <>
         <div className="pannier">
@@ -38,15 +41,6 @@ const Cart = () => {
                 <img src={fenetre2} alt="image du produit" />
               </div>
             </div>
-            
-            {/* <div className="cart-item">
-              <div className="title__cart__item">
-                <h1>Fenêtres à Souffltet</h1>
-              </div>
-              <div className="img__cart__item">
-                <img src={fenetre3} alt="image du produit" />
-              </div>
-            </div> */}
 
         </div>
     </>
