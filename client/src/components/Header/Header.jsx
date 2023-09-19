@@ -9,7 +9,7 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import useAuth from "../../hooks/useAuth";
 
 const Header = () => {
-  const {auth} = useAuth()
+  const { auth } = useAuth();
   const headerRef = useRef();
   const showLogoutRef = useRef();
   const showProfileRef = useRef();
@@ -44,6 +44,7 @@ const Header = () => {
   }
 
   useEffect(() => {
+    console.log('render');
     document.body.addEventListener("click", menuIsClosed);
 
     return () => document.body.removeEventListener("click", menuIsClosed);
@@ -69,9 +70,12 @@ const Header = () => {
   };
 
   useEffect(() => {
+    const controller = new AbortController();
     const connected = async () => {
       try {
-        const res = await axiosPrivate.get("/auth");
+        const res = await axiosPrivate.get("/auth", {
+          signal: controller.signal,
+        });
         console.log(res.data.name);
         if (res.data.name) {
           userRef.current.classList.add("connected");
@@ -81,9 +85,9 @@ const Header = () => {
       }
     };
     console.log("renderhead");
-    connected()
+    connected();
 
-    
+    return () => controller?.abort;
   }, [auth]);
 
   return (
