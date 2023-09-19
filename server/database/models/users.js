@@ -38,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       process.env.ACCESS_TOKEN_SECRET,
       {
-        expiresIn: '90s',
+        expiresIn: '30s',
       }
     );
     return accessToken
@@ -51,7 +51,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       process.env.REFRESH_TOKEN_SECRET,
       {
-        expiresIn: '1d',
+        expiresIn: '300s',
       }
     );
     

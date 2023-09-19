@@ -92,17 +92,10 @@ const userLogin = async (req, res) => {
 
   res.json(accessToken);
 
-  // req.session.isAuth = true;
-  // req.session.user = {
-  //   name,
-  //   email,
-  //   phone: userName.phone,
-  // };
-  // res.json('');
 };
 
 const userRead = async (req, res) => {
-  const cookie = req.cookies;
+  const cookie = await req.cookies;
   if (!cookie?.jwt) return res.sendStatus(401);
   const refreshToken = cookie.jwt;
 

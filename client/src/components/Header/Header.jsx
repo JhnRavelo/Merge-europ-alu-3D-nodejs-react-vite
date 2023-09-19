@@ -69,6 +69,7 @@ const Header = () => {
   };
 
   useEffect(() => {
+    console.log(auth);
     const controller = new AbortController();
     const connected = async () => {
       try {

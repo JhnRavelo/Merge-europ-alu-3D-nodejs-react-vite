@@ -12,28 +12,32 @@ const addTraker = async (req, res) => {
       var isTraker = await trakers.findOne({
         where: {
           email: email,
-          page: track,
+          product: track,
         },
       });
       if (!isTraker) {
-        trakers.create({
+        const response = await trakers.create({
           name,
           email,
-          page: track,
+          product: track,
           phone,
           date,
           day,
           month,
           year,
         });
+        if(response){
+          res.json("Produit ajouté");
+        }
+        
       }
     });
-    res.json("Produit ajouté");
+    
   }
 };
 
 const getTraker = async (req, res) => {
-  const cookie = req.cookies;
+  const cookie = await req.cookies;
 
   if (!cookie?.jwt) {
     return res.sendStatus(401);

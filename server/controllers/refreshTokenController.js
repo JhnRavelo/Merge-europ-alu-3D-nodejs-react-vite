@@ -3,7 +3,7 @@ require("dotenv").config();
 const { users } = require("../database/models");
 
 handleRefreshToken = async (req, res) => {
-  const cookie = req.cookies;
+  const cookie = await req.cookies;
 
   if (!cookie?.jwt) return res.sendStatus(401);
 

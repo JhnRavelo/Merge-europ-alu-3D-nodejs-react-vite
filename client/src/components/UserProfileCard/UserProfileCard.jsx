@@ -3,11 +3,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faPlus} from "@fortawesome/free-solid-svg-icons"
 import { Fragment, useEffect, useRef, useState } from "react";
 import avatars from "../../assets/json/avatar.json"
-// import avatar0 from '../../assets/avatar/User-avatar.png'
-// import avatar1 from '../../assets/avatar/Avatar-Profile.png'
-// import avatar2 from '../../assets/avatar/user-profile.png'
-// import avatar3 from '../../assets/avatar/woman-business.png'
-// import avatar4 from '../../assets/avatar/woman-users.png'
 
 const UserProfileCard = () => {
   const showChangeAvatarRef = useRef();
