@@ -2,8 +2,6 @@ import { useRef, useState } from 'react';
 import './Button.css';
 import FormField from '../Form/Form';
 import ButtonContext from './ButtonContext';
-import { getUser } from '../../lib/service/User';
-import axios from 'axios'
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
 const Button = () => {
@@ -22,23 +20,12 @@ const Button = () => {
 
   const handleClick = async() => {
     try {
-      console.log(axiosPrivate);
       const res = await axiosPrivate.get('/auth')
-    console.log(res);
+      console.log(res.data);
     } catch (error) {
       if(error){
         console.log(error);
       }
-    }
-    
-    try {
-      const response = await axios.post('http://localhost:5000/auth/cookie', {},{
-        withCredentials: true, // Permet d'inclure les cookies dans la requête
-      });
-  
-      console.log('Réponse du serveur :', response.data);
-    } catch (error) {
-      console.error('Erreur lors de la récupération du cookie :', error);
     }
 
     showForm();

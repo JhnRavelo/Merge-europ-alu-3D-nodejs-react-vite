@@ -49,6 +49,7 @@ const userRegistration = async (req, res) => {
 
 const userLogin = async (req, res) => {
   const { loginMail, loginPassword } = await req.body;
+  console.log(req.body);
   const cookie = req.cookies;
 
   if (cookie?.jwt) {
@@ -102,7 +103,6 @@ const userLogin = async (req, res) => {
 
 const userRead = async (req, res) => {
   const cookie = req.cookies;
-  console.log(req.user);
   if (!cookie?.jwt) return res.sendStatus(401);
   const refreshToken = cookie.jwt;
 
@@ -118,6 +118,7 @@ const userRead = async (req, res) => {
 };
 
 const userLogout = async (req, res) => {
+  console.log('marche');
   const cookie = req.cookies;
   console.log("logout");
   console.log(cookie);
@@ -152,16 +153,9 @@ const userLogout = async (req, res) => {
   return res.json("SUCCESS");
 };
 
-const userCookie = (req, res) => {
-  res.cookie("monCookie", "valeurDuCookie", { maxAge: 24 * 60 * 60 * 1000, httpOnly: true });
-
-  res.send("Cookie défini avec succès");
-};
-
 module.exports = {
   userRegistration,
   userLogin,
   userLogout,
-  userRead,
-  userCookie,
+  userRead
 };

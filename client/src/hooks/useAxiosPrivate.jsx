@@ -6,13 +6,13 @@ import useAuth from "./useAuth";
 const useAxiosPrivate = () => {
     const refresh = useRefresh();
     const { auth } = useAuth();
-
+    // console.log(auth.data);
     useEffect(() => {
 
         const requestIntercept = privateAxios.interceptors.request.use(
             config => {
                 if (!config.headers['Authorization']) {
-                    config.headers['Authorization'] = `Bearer ${auth?.accessToken}`;
+                    config.headers['Authorization'] = `Bearer ${auth}`;
                 }
                 return config;
             }, (error) => Promise.reject(error)
@@ -25,6 +25,7 @@ const useAxiosPrivate = () => {
                 if (error?.response?.status === 403 && !prevRequest?.sent) {
                     prevRequest.sent = true;
                     const newAccessToken = await refresh();
+                    console.log(newAccessToken);
                     prevRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
                     return privateAxios(prevRequest);
                 }

@@ -20,6 +20,9 @@ app.use(express.urlencoded({  extended: false}));
 app.use(bodyParser.json());
 app.use(cors({credentials:true, origin:'http://localhost:5173'}));
 
+const refreshRoutes = require('./routes/Refresh.js');
+app.use('/refresh', refreshRoutes);
+
 const userRoutes = require('./routes/Users.js');
 app.use('/auth', userRoutes);
 
@@ -29,8 +32,5 @@ app.use('/traker', trakerRoutes);
 const pageRoutes = require('./routes/Pages.js');
 app.use('/page', pageRoutes);
 
-app.use(verifyJWT);
 
-const refreshRoutes = require('./routes/Refresh.js');
-app.use('/refresh', refreshRoutes);
 

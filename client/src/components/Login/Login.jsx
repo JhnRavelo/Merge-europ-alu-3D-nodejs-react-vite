@@ -3,8 +3,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ErrorMessage, Field } from "formik";
 import { useContext, useEffect, useRef } from "react";
 import FormContext from "../Form/FormContext";
+import defaultAxios from "../../api/axios";
+import useAuth from "../../hooks/useAuth";
 
 const Login = () => {
+  const {setAuth} = useAuth()
   const formContext = useContext(FormContext);
   const btnLoginRef = useRef();
   const { loginMail, loginPassword } = formContext[1];
@@ -23,8 +26,18 @@ const Login = () => {
     }
   }, [loginMail, loginPassword, errors]);
 
-  const handleClick = () => {
-    
+  const handleClick = async() => {
+    const body = {"loginMail":loginMail, "loginPassword":loginPassword}
+    try {
+      const res = await defaultAxios.post('/auth/login', body)
+      setAuth(res.data)
+      console.log(res);
+      
+    } catch (error) {
+      if(error){
+        console.log(error);
+      }
+    }
   }
   return (
     <>

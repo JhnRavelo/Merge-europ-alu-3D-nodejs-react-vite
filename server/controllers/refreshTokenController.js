@@ -49,7 +49,7 @@ handleRefreshToken = async (req, res) => {
         user.refreshToken = '';
         await user.save();
       }
-
+      
       if (err || user.ID_user !== decoded.id) return res.sendStatus(403);
 
       const newRefreshToken = users.prototype.generateRefreshToken(decoded.id);
@@ -60,11 +60,11 @@ handleRefreshToken = async (req, res) => {
 
       res.cookie('jwt', newRefreshToken, {
         httpOnly: true,
-        // sameSite: 'none',
-        // secure: true,
+        sameSite: 'None',
+        secure: true,
         maxAge: 24 * 60 * 60 * 1000,
       });
-
+      console.log('here');
       res.json(accessToken);
     }
   );
