@@ -22,16 +22,16 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    gallery: {
-      type: DataTypes.STRING,
-      allowNull: false,
+    // gallery: {
+    //   type: DataTypes.STRING,
+    //   allowNull: false,
       //   get() {
       //     return this.getDataValue("gallery").split(";");
       //   },
       //   set(val) {
       //     this.setDataValue("gallery", val.join(";"));
       //   },
-    },
+    // },
   });
   return products;
 };

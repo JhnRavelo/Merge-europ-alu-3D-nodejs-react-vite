@@ -18,6 +18,22 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    minYAngle: {
+        type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    maxYAngle: {
+        type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    minXAngle: {
+        type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    minXAngle: {
+        type: DataTypes.INTEGER,
+      allowNull: false,
+    },
   });
   return pages;
 };
