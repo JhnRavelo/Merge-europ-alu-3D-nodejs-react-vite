@@ -3,45 +3,45 @@ import {
   faEnvelope,
   faPhone,
   faUser,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Fragment, useContext, useEffect, useRef, useState } from 'react';
-import ProductContext from '../Products/ProductContext';
-import page from '../../assets/json/pages.json';
-import ButtonContext from '../Button/ButtonContext';
-import FormContext from '../Form/FormContext';
-import { ErrorMessage, Field } from 'formik';
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Fragment, useContext, useEffect, useRef, useState } from "react";
+import productContext from "../Products/ProductContext";
+import page from "../../assets/json/pages.json";
+import ButtonContext from "../Button/ButtonContext";
+import FormContext from "../Form/FormContext";
+import { ErrorMessage, Field } from "formik";
+import { addUser } from "../../lib/service/User";
+import { addTraker } from "../../lib/service/Trakers";
+import useAuth from "../../hooks/useAuth";
 
 const SignupStepFinal = () => {
-  const productCategoryIndex = useContext(ProductContext);
-  const productContext = useContext(ButtonContext);
+  const productCategoryIndex = useContext(productContext);
+  const buttonContext = useContext(ButtonContext);
   const formContext = useContext(FormContext);
   const btnListRef = useRef();
   const btnSubmitRef = useRef();
-  const [productSelected, setproductSelected] = useState(productContext[0]);
   const checkboxRef = useRef([]);
-
+  const [productSelected, setproductSelected] = useState(buttonContext[0]);
+  const { setAuth } = useAuth();
+  const errors = formContext[0];
   checkboxRef.current = [];
 
-  const { name, email, phone, checked} = formContext[1];
-  const validation = formContext[2];
+  const { name, email, phone, checked } = formContext[1];
   const productTypes = page[productCategoryIndex].products;
-  // console.log(productTypes);
-  // console.log(productSelected);
-
+  console.log(checked);
   useEffect(() => {
     var btnSubmit = btnSubmitRef.current;
-    if (!validation) {
-      btnSubmit.classList.add('desabledBtn');
+    if (errors.checked || errors.checkbox) {
+      btnSubmit.classList.add("desabledBtn");
     } else {
-      btnSubmit.classList.remove('desabledBtn');
+      btnSubmit.classList.remove("desabledBtn");
     }
-  }, [validation]);
+  }, [errors]);
 
   const handleListClick = () => {
     const btnList = btnListRef.current;
-    btnList.classList.toggle('open');
-    console.log(checked);
+    btnList.classList.toggle("open");
   };
 
   const addtoRefsCheck = (el) => {
@@ -65,60 +65,81 @@ const SignupStepFinal = () => {
       }
     }, 0);
     if (!arrayChecked.includes(true)) {
-      setproductSelected('Aucun produit selectionné');
+      setproductSelected("Aucun produit selectionné");
     } else if (count > 1) {
       setproductSelected(`${count} produits selectionnés`);
     }
     console.log(arrayChecked);
   };
 
+  const onSubmit = async () => {
+    console.log("click");
+    try {
+      const res = await addUser(formContext[1]);
+      console.log(res);
+      if(res!=`L'utilisateur existe déjà`){
+        setAuth(res.data);
+      }
+      
+      const track = await addTraker(formContext[1]);
+      console.log(track);
+      if(res || track){
+        buttonContext[1]()
+      }
+    } catch (error) {
+      if (!error?.response) {
+        console.log(error);
+      }
+    }
+  };
+
   return (
     <>
-      <div className='pre-info'>
-        <div className='nom'>
-          <FontAwesomeIcon icon={faUser} className='fa fa-user' />
-          <p id='nom'>{name}</p>
+      <div className="pre-info">
+        <div className="nom">
+          <FontAwesomeIcon icon={faUser} className="fa fa-user" />
+          <p id="nom">{name}</p>
         </div>
-        <div className='email'>
-          <FontAwesomeIcon icon={faEnvelope} className='fa fa-user' />
-          <p id='email'>{email}</p>
+        <div className="email">
+          <FontAwesomeIcon icon={faEnvelope} className="fa fa-user" />
+          <p id="email">{email}</p>
         </div>
-        <div className='phone'>
-          <FontAwesomeIcon icon={faPhone} className='fa fa-user' />
-          <p id='phone'>{phone}</p>
+        <div className="phone">
+          <FontAwesomeIcon icon={faPhone} className="fa fa-user" />
+          <p id="phone">{phone}</p>
         </div>
       </div>
-      <div className='menu-deroulant'>
+      <div className="menu-deroulant">
         <label>Produits qui vous Intérèssent :</label>
 
-        <div className='container'>
+        <div className="container">
           <div
-            className='select-btn'
+            className="select-btn"
             ref={btnListRef}
             onClick={handleListClick}
           >
-            <span className='btn-text'>{productSelected}</span>
-            <span className='arrow-dwn'>
+            <span className="btn-text">{productSelected}</span>
+            <span className="arrow-dwn">
               <FontAwesomeIcon
                 icon={faChevronDown}
-                className='fa-solid fa-chevron-down'
+                className="fa-solid fa-chevron-down"
               />
             </span>
           </div>
 
-          <ul className='list-items'>
+          <ul className="list-items">
             {productTypes.map((product, index) => {
               return (
                 <Fragment key={index}>
-                  <label className='item' ref={addtoRefsCheck}>
+                  <label className="item" ref={addtoRefsCheck}>
                     <Field
-                      className='checkbox'
-                      type='checkbox'
-                      name='checked'
+                      className="checkbox"
+                      type="checkbox"
+                      name="checked"
                       value={product.title}
                       onClick={handleClickList}
                     />
-                    <span className='item-text'>{product.title}</span>
+                    <span className="item-text">{product.title}</span>
                   </label>
                 </Fragment>
               );
@@ -128,35 +149,32 @@ const SignupStepFinal = () => {
       </div>
 
       <ErrorMessage
-        name='checked'
-        component={'p'}
-        className='notSelectedProduit'
+        name="checked"
+        component={"p"}
+        className="notSelectedProduit"
       />
 
-      <div className='check'>
+      <div className="check">
         <label>
-          <Field
-            id='acceptCheckbox'
-            type='checkbox'
-            name='checkbox'
-          />
+          <Field id="acceptCheckbox" type="checkbox" name="checkbox" />
           {"Cette action va vous créer un compte chez Europ'Alu"}
         </label>
       </div>
-      <div className='buttons'>
+      <div className="buttons">
         <button
           ref={btnSubmitRef}
-          id='submitBtn'
-          type='submit'
-          className='form-button signin-button'
+          id="submitBtn"
+          type="button"
+          className="form-button signin-button"
+          onClick={onSubmit}
         >
           Envoyer
         </button>
       </div>
       <ErrorMessage
-        component={'p'}
-        name='checkbox'
-        className='errorNotChecked'
+        component={"p"}
+        name="checkbox"
+        className="errorNotChecked"
       />
     </>
   );

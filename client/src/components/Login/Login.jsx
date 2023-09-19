@@ -5,10 +5,12 @@ import { useContext, useEffect, useRef } from "react";
 import FormContext from "../Form/FormContext";
 import defaultAxios from "../../api/axios";
 import useAuth from "../../hooks/useAuth";
+import ButtonContext from "../Button/ButtonContext";
 
 const Login = () => {
   const {setAuth} = useAuth()
   const formContext = useContext(FormContext);
+  const buttonContext = useContext(ButtonContext)
   const btnLoginRef = useRef();
   const { loginMail, loginPassword } = formContext[1];
   const errors = formContext[0];
@@ -26,13 +28,15 @@ const Login = () => {
     }
   }, [loginMail, loginPassword, errors]);
 
-  const handleClick = async() => {
+  const handleLogin = async() => {
     const body = {"loginMail":loginMail, "loginPassword":loginPassword}
     try {
       const res = await defaultAxios.post('/auth/login', body)
       setAuth(res.data)
       console.log(res);
-      
+      if(res.data){
+        buttonContext[1]()
+      }
     } catch (error) {
       if(error){
         console.log(error);
@@ -80,11 +84,11 @@ const Login = () => {
       </div>
       <div className="buttons">
         <button
-          type="submit"
+          type="button"
           ref={btnLoginRef}
           id="login-btn"
           className="form-button signin-button"
-          onClick={handleClick}
+          onClick={handleLogin}
         >
           Se connecter
         </button>

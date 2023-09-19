@@ -44,14 +44,12 @@ const Header = () => {
   }
 
   useEffect(() => {
-    console.log('render');
     document.body.addEventListener("click", menuIsClosed);
 
     return () => document.body.removeEventListener("click", menuIsClosed);
   }, []);
 
   useEffect(() => {
-    document.body.removeEventListener("clcik", menuIsClosed);
     if (location.pathname == "/page/profile") {
       showProfileRef.current.style.opacity = 0;
       showProfileRef.current.style.pointerEvents = "none";
@@ -59,6 +57,8 @@ const Header = () => {
       showProfileRef.current.style.opacity = 1;
       showProfileRef.current.style.pointerEvents = "all";
     }
+
+    
   }, [location.pathname]);
 
   const onOpenMenu = () => {
@@ -79,8 +79,11 @@ const Header = () => {
         console.log(res.data.name);
         if (res.data.name) {
           userRef.current.classList.add("connected");
+        }else {
+          userRef.current.classList.remove("connected");
         }
       } catch (error) {
+        userRef.current.classList.remove("connected")
         console.log(error);
       }
     };
@@ -89,6 +92,16 @@ const Header = () => {
 
     return () => controller?.abort;
   }, [auth]);
+
+const handleLogOut = async () => {
+  try {
+    const res = await axiosPrivate.get('/auth/logout')
+    userRef.current.classList.remove("connected")
+    console.log(res);
+  } catch (error) {
+    console.log(error);
+  }
+}
 
   return (
     <>
@@ -109,7 +122,7 @@ const Header = () => {
               </div>
             </div>
             <div className="userOption">
-              <div className="logout" ref={showLogoutRef}>
+              <div className="logout" ref={showLogoutRef} onClick={handleLogOut}>
                 <p>Se déconnecter</p>
               </div>
               <div className="profile" ref={showProfileRef}>
