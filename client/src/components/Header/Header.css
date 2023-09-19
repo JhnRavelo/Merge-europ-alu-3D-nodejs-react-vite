@@ -235,7 +235,7 @@ header .header {
     backdrop-filter: blur(5px);
 }
 
-/* .login__logout {
+.login__logout {
     opacity: 0;
     pointer-events: none;
 }
@@ -243,7 +243,7 @@ header .header {
 .login__logout.connected{
     pointer-events: all;
     opacity: 1;
-} */
+}
 
 
 .deco {

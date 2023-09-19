@@ -9,9 +9,10 @@ handleRefreshToken = async (req, res) => {
 
   const refreshToken = cookie.jwt;
 
-  res.clearCookie('jwt', { httpOnly: true, 
-    // sameSite: 'none', 
-    // secure: true 
+  res.clearCookie('jwt', { 
+    httpOnly: true, 
+    sameSite: 'None', 
+    secure: true 
   });
 
   const user = await users.findOne({
@@ -28,11 +29,12 @@ handleRefreshToken = async (req, res) => {
         if (err) {         
           return res.sendStatus(403)
         };
-        const hackedUser = users.findOne({
+        const hackedUser = await users.findOne({
           where: {
             ID_user: decoded.id,
           },
         });
+        console.log(hackedUser);
         hackedUser.refreshToken = '';
         await hackedUser.save();
       }
