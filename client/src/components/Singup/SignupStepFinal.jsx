@@ -78,16 +78,15 @@ const SignupStepFinal = () => {
       const res = await addUser(formContext[1]);
 
       const role = res.data.role,
-        token = res.data.accessToken;
-
+      accessToken = res.data.accessToken;
       console.log(role);
       if (res != `L'utilisateur existe déjà`) {
-        setAuth({ role, token });
+        setAuth({role, accessToken});
       }
 
       const track = await addTraker(formContext[1]);
       // console.log(track);
-      if (res.data || track.data) {
+      if (role && track.data) {
         buttonContext[1]();
       }
     } catch (error) {

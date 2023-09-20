@@ -69,14 +69,16 @@ const Header = () => {
   };
 
   useEffect(() => {
+
     console.log(auth);
+
     const controller = new AbortController();
     const connected = async () => {
       try {
         const res = await axiosPrivate.get("/auth", {
           signal: controller.signal,
         });
-        console.log(res.data.name);
+        console.log(auth);
         if (res.data.name) {
           userRef.current.classList.add("connected");
         }else {
@@ -87,11 +89,11 @@ const Header = () => {
         console.log(error);
       }
     };
-    console.log("renderhead");
+  
     connected();
 
     return () => controller?.abort;
-  }, [auth]);
+  }, [auth, axiosPrivate]);
 
 const handleLogOut = async () => {
   try {

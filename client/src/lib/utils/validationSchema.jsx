@@ -49,6 +49,7 @@ const validate = Yup.object({
   loginMail: Yup.string()
     .required("Vous devez mettre votre adresse email")
     .email(`l'adresse email est invalide`),
+
   loginPassword: Yup.string()
     .min(8, "Le mot de passe doit avoir au moins 8 caractères")
     .matches(
@@ -56,7 +57,23 @@ const validate = Yup.object({
       "Le mot de passe doit contenir au moins une lettre majuscule"
     )
     .matches(/[0-9]/, "Le mot de passe doit contenir au moins un chiffre")
-    .required("Le mot de passe est requis"),
+    .required("Le mot de passe est requis")
+    .test({
+      message: () => `Connexion invalide`,
+      test: async function (value) {
+        const res = await axios.post("http://127.0.0.1:5000/auth/login", {
+          loginPassword: value,
+          loginMail: this.parent.loginMail,
+        });
+        if (res.data == `Connexion invalide`) {
+          return false;
+        } else {
+          return true;
+        }
+        // console.log(value);
+        // console.log(this.parent.loginPassword);
+      },
+    }),
 });
 
 export { validate };

@@ -33,10 +33,10 @@ const Login = () => {
     try {
       const res = await defaultAxios.post("/auth/login", body),
         role = res.data.role,
-        token = res.data.accessToken;
-
-      setAuth({ role, token });
-      console.log(res);
+        accessToken = res.data.accessToken;
+      console.log(role);
+      setAuth({role, accessToken});
+      
       if (role) {
         buttonContext[1]();
       }
@@ -70,9 +70,9 @@ const Login = () => {
         <div className="username" style={{ marginTop: "15px" }}>
           <FontAwesomeIcon icon={faKey} className="fa" />
           <Field
-            type="loginPassword"
+            type="password"
             name="loginPassword"
-            inputMode="loginPassword"
+            inputMode="password"
             className="user-input"
             placeholder="Mot de passe"
             autoComplete="off"
