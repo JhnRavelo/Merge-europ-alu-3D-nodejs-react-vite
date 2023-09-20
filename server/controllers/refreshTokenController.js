@@ -12,10 +12,8 @@ handleRefreshToken = async (req, res) => {
   res.clearCookie("jwt", {
     httpOnly: true,
     sameSite: "None",
-    secure: true,
+    // secure: true,
   });
-
-  console.log(refreshToken);
 
   const user = await users.findOne({
     where: {
@@ -56,8 +54,10 @@ handleRefreshToken = async (req, res) => {
 
       if (err || user.ID_user !== decoded.id) return res.sendStatus(403);
 
-      const newRefreshToken = users.prototype.generateRefreshToken(decoded.id);
-      const accessToken = users.prototype.generateToken(decoded.id);
+      const id = user.ID_user,
+        role = user.role,
+        newRefreshToken = users.prototype.generateRefreshToken(decoded.id),
+        accessToken = users.prototype.generateToken(id, role);
 
       user.refreshToken = newRefreshToken;
       await user.save();
@@ -65,11 +65,11 @@ handleRefreshToken = async (req, res) => {
       res.cookie("jwt", newRefreshToken, {
         httpOnly: true,
         sameSite: "None",
-        secure: true,
+        // secure: true,
         maxAge: 24 * 60 * 60 * 1000,
       });
-      console.log("here");
-      res.json(accessToken);
+
+      res.json({ role, accessToken });
     }
   );
 };

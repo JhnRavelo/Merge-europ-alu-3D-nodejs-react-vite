@@ -15,20 +15,18 @@ const userRegistration = async (req, res) => {
   if (userName) {
     res.json(`L'utilisateur existe déjà`);
   } else if (name && email && !userName && phone && password) {
-    let userRegister;
 
-    userRegister = await users.create({
+    const userRegister = await users.create({
       name,
       email,
       phone,
       password: await bcrypt.hash(password, 10),
     });
 
-    const refreshToken = users.prototype.generateRefreshToken(
-      userRegister.ID_user
-    );
-
-    const accessToken = users.prototype.generateToken(userRegister.ID_user);
+    const id = userRegister.ID_user,
+      role = userRegister.role,
+      refreshToken = users.prototype.generateRefreshToken(id),
+      accessToken = users.prototype.generateToken(id, role);
 
     userRegister.refreshToken = refreshToken;
 
@@ -38,10 +36,10 @@ const userRegistration = async (req, res) => {
       maxAge: 24 * 60 * 60 * 1000,
       httpOnly: true,
       sameSite: "None",
-      secure: true,
+      // secure: true,
     });
 
-    res.json(accessToken);
+    res.json({role, accessToken});
   } else {
     res.json("Suivant");
   }
@@ -51,14 +49,6 @@ const userLogin = async (req, res) => {
   const { loginMail, loginPassword } = await req.body;
   console.log(req.body);
   const cookie = req.cookies;
-
-  if (cookie?.jwt) {
-    res.clearCookie("jwt", {
-      httpOnly: true,
-      sameSite: "None",
-      secure: true,
-    });
-  }
 
   const userName = await users.findOne({
     where: {
@@ -75,23 +65,45 @@ const userLogin = async (req, res) => {
   if (!match) {
     return res.json("Connexion invalide");
   }
+  const id = userName.ID_user;
+  const role = userName.role;
 
-  const refreshToken = users.prototype.generateRefreshToken(userName.ID_user);
-  const accessToken = users.prototype.generateToken(userName.ID_user);
+  if (!role) res.sendStatus(401);
 
-  userName.refreshToken = refreshToken;
+  let newRefreshToken = users.prototype.generateRefreshToken(id);
+  const accessToken = users.prototype.generateToken(id, role);
+
+  if (cookie?.jwt) {
+    const refreshToken = cookie.jwt;
+    const foundUser = await users.findOne({
+      where: {
+        refreshToken: refreshToken,
+      },
+    });
+
+    if (!foundUser) {
+      newRefreshToken = "";
+    }
+
+    res.clearCookie("jwt", {
+      httpOnly: true,
+      sameSite: "None",
+      // secure: true,
+    });
+  }
+
+  userName.refreshToken = newRefreshToken;
 
   await userName.save();
 
-  res.cookie("jwt", refreshToken, {
+  res.cookie("jwt", newRefreshToken, {
     httpOnly: true,
-    sameSite: 'None',
-    secure: true,
+    sameSite: "None",
+    // secure: true,
     maxAge: 24 * 60 * 60 * 1000,
   });
 
-  res.json(accessToken);
-
+  res.json({ role, accessToken });
 };
 
 const userRead = async (req, res) => {
@@ -111,9 +123,7 @@ const userRead = async (req, res) => {
 };
 
 const userLogout = async (req, res) => {
-  console.log('marche');
   const cookie = req.cookies;
-  console.log("logout");
   console.log(cookie);
   if (!cookie?.jwt) return res.sendStatus(204);
 
@@ -128,8 +138,8 @@ const userLogout = async (req, res) => {
   if (!user) {
     res.clearCookie("jwt", {
       httpOnly: true,
-      sameSite: 'None',
-      secure: true
+      sameSite: "None",
+      // secure: true,
     });
     return res.sendStatus(204);
   }
@@ -139,8 +149,8 @@ const userLogout = async (req, res) => {
 
   res.clearCookie("jwt", {
     httpOnly: true,
-    sameSite: 'None',
-    secure: true
+    sameSite: "None",
+    // secure: true,
   });
 
   return res.json("SUCCESS");
@@ -150,5 +160,5 @@ module.exports = {
   userRegistration,
   userLogin,
   userLogout,
-  userRead
+  userRead,
 };

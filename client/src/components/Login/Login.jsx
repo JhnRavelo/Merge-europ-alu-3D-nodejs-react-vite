@@ -8,9 +8,9 @@ import useAuth from "../../hooks/useAuth";
 import ButtonContext from "../Button/ButtonContext";
 
 const Login = () => {
-  const {setAuth} = useAuth()
+  const { setAuth } = useAuth();
   const formContext = useContext(FormContext);
-  const buttonContext = useContext(ButtonContext)
+  const buttonContext = useContext(ButtonContext);
   const btnLoginRef = useRef();
   const { loginMail, loginPassword } = formContext[1];
   const errors = formContext[0];
@@ -28,21 +28,24 @@ const Login = () => {
     }
   }, [loginMail, loginPassword, errors]);
 
-  const handleLogin = async() => {
-    const body = {"loginMail":loginMail, "loginPassword":loginPassword}
+  const handleLogin = async () => {
+    const body = { loginMail: loginMail, loginPassword: loginPassword };
     try {
-      const res = await defaultAxios.post('/auth/login', body)
-      setAuth(res.data)
+      const res = await defaultAxios.post("/auth/login", body),
+        role = res.data.role,
+        token = res.data.accessToken;
+
+      setAuth({ role, token });
       console.log(res);
-      if(res.data){
-        buttonContext[1]()
+      if (role) {
+        buttonContext[1]();
       }
     } catch (error) {
-      if(error){
+      if (error) {
         console.log(error);
       }
     }
-  }
+  };
   return (
     <>
       <div className="fields">

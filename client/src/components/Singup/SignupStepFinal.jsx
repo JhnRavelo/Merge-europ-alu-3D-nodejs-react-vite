@@ -76,15 +76,19 @@ const SignupStepFinal = () => {
     console.log("click");
     try {
       const res = await addUser(formContext[1]);
-      console.log(res);
-      if(res!=`L'utilisateur existe déjà`){
-        setAuth(res);
+
+      const role = res.data.role,
+        token = res.data.accessToken;
+
+      console.log(role);
+      if (res != `L'utilisateur existe déjà`) {
+        setAuth({ role, token });
       }
-      
+
       const track = await addTraker(formContext[1]);
-      console.log(track);
-      if(res || track){
-        buttonContext[1]()
+      // console.log(track);
+      if (res.data || track.data) {
+        buttonContext[1]();
       }
     } catch (error) {
       if (!error?.response) {

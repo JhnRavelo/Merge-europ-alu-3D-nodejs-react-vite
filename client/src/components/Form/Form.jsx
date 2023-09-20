@@ -4,13 +4,11 @@ import SignupTemplate from "../Singup/SignupTemplate";
 import FormContext from "./FormContext";
 import { useContext } from "react";
 import ButtonContext from "../Button/ButtonContext";
-// import { addUser } from "../../lib/service/User";
 import { validate } from "../../lib/utils/validationSchema";
-// import { addTraker } from "../../lib/service/Trakers";
-// import useAuth from "../../hooks/useAuth";
+
 
 const FormField = () => {
-  // const { setAuth } = useAuth();
+
   const buttonContext = useContext(ButtonContext);
   const {name, email, phone} = buttonContext[2]
   const iniatialValues = {

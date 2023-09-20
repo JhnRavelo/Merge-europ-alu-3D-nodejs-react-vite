@@ -3,20 +3,30 @@ const { pages } = require("../database/models");
 const addPage = async (req, res) => {
   const { page, icon, position, minYAngle, maxYAngle, minXAngle, maxXAngle } =
     await req.body;
-  if (page) {
-    const result = await pages.create({
-      page,
-      icon,
-      position,
-      minYAngle,
-      maxYAngle,
-      minXAngle,
-      maxXAngle,
-    });
 
-    if (result) {
-      res.json("Page ajouté");
-    }
+  if (
+    !page ||
+    !icon ||
+    !position ||
+    !minXAngle ||
+    !minYAngle ||
+    !maxXAngle ||
+    !maxYAngle
+  )
+    return res.json("Aucun ne doit être vide");
+
+  const result = await pages.create({
+    page,
+    icon,
+    position,
+    minYAngle,
+    maxYAngle,
+    minXAngle,
+    maxXAngle,
+  });
+
+  if (result) {
+    return res.json("Page ajouté");
   }
 };
 
@@ -37,7 +47,7 @@ const updatePage = async (req, res) => {
         ID_page: id,
       },
     });
-
+    if(!updatePage) return res.json(`La table n'existe pas`)
     updatePage.set(
       page,
       icon,
@@ -54,4 +64,4 @@ const updatePage = async (req, res) => {
   }
 };
 
-module.exports = { addPage };
+module.exports = { addPage, updatePage };

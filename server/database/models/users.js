@@ -28,17 +28,24 @@ module.exports = (sequelize, DataTypes) => {
     refreshToken: {
       type: DataTypes.STRING,
       allowNull: true,
+    },
+    role: {
+      type: DataTypes.INTEGER,
+      defaultValue: process.env.USER
     }
   });
 
-  users.prototype.generateToken = function (id) {
+  users.prototype.generateToken = function (id, role) {
     const accessToken = jwt.sign(
-      {
-        "id": id
+      {"userInfo":{
+        "id": id,
+        "role":role,
+      }
+        
       },
       process.env.ACCESS_TOKEN_SECRET,
       {
-        expiresIn: '30s',
+        expiresIn: '60s',
       }
     );
     return accessToken
