@@ -47,7 +47,7 @@ const updatePage = async (req, res) => {
         ID_page: id,
       },
     });
-    if(!updatePage) return res.json(`La table n'existe pas`)
+    if (!updatePage) return res.json(`La table n'existe pas`);
     updatePage.set(
       page,
       icon,

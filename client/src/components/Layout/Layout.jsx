@@ -1,18 +1,18 @@
-import Chemins from '../../routers/Chemins';
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
-import Grids from '../Grids/Grids';
-import ScrollToTop from '../ScrollToTop/ScrollToTop';
+import Chemins from "../../routers/Chemins";
+import Grids from "./Grids/Grids";
+import Header from "./Header/Header";
+import ScrollToTop from "./ScrollToTop/ScrollToTop";
+import Footer from "./Footer/Footer";
 
 const Layout = () => {
   return (
     <>
       <ScrollToTop />
-      <div className='corps'>
-      <Header />
+      <div className="corps">
+        <Header />
         <Grids />
         <Chemins />
-      <Footer />
+        <Footer />
       </div>
     </>
   );

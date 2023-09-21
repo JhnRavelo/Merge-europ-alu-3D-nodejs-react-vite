@@ -14,11 +14,9 @@ const validate = Yup.object({
     .test({
       message: () => `L'utilisateur existe déjà`,
       test: async function (value) {
-        // const body = JSON.stringify(value);
         const res = await axios.post("http://127.0.0.1:5000/auth", {
           email: value,
         });
-        // addUser({ email: value });
         if (res.data == `L'utilisateur existe déjà`) {
           return false;
         } else {
@@ -59,7 +57,7 @@ const validate = Yup.object({
     .matches(/[0-9]/, "Le mot de passe doit contenir au moins un chiffre")
     .required("Le mot de passe est requis")
     .test({
-      message: () => `Connexion invalide`,
+      message: () => `Mot de passe ou email incorrect`,
       test: async function (value) {
         const res = await axios.post("http://127.0.0.1:5000/auth/login", {
           loginPassword: value,
@@ -70,8 +68,6 @@ const validate = Yup.object({
         } else {
           return true;
         }
-        // console.log(value);
-        // console.log(this.parent.loginPassword);
       },
     }),
 });
