@@ -1,11 +1,14 @@
-import './App.css'
-import Layout from './components/Layout/Layout'
+
+import "./App.css";
+import AppRouter from "./routers/AppRouter";
 
 function App() {
 
   return (
-    <Layout/>
-  )
+    <>
+      <AppRouter/>
+    </>
+  );
 }
 
-export default App
+export default App;
