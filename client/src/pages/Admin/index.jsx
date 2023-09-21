@@ -9,7 +9,7 @@ const Admin = () => {
   return (
     <div className="main">
       <Header />
-      <div className="container">
+      <div className="containerAdmin">
         <div className="menuContainer">
           <Menu />
         </div>
