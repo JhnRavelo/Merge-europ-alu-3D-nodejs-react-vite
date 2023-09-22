@@ -49,7 +49,6 @@ const FormAdd = (props) => {
                   item.field !== "createdAt"
               )
               .map((column, index) => {
-                console.log(column.headerName);
                 if (column.headerName == "Type") {
                   return (
                     <div className="item" key={index}>

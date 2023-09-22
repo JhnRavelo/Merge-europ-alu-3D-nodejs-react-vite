@@ -4,6 +4,10 @@ import axios from "axios";
 const phoneRegEx =
   /^((\+\d{1,3}(-|)?\(?\d\)?(-|)?\d{1,3})|(\(?\d{2,3}\)?))(-|)?(\d{3,4})(-|)?(\d{4})((x|ext)\d{1,5}){0,1}$/;
 
+var prevValue = "",
+  prevValueLogin = "",
+  prevValuePass = "";
+
 const validate = Yup.object({
   name: Yup.string()
     .required("Vous devez mettre votre nom")
@@ -14,16 +18,20 @@ const validate = Yup.object({
     .test({
       message: () => `L'utilisateur existe déjà`,
       test: async function (value) {
-        
-          const res = await axios.post("http://127.0.0.1:5000/auth", {
-            email: value,
-          });
-          if (res.data == `L'utilisateur existe déjà`) {
-            return false;
-          } else {
-            return true;
-          }
-        
+      
+          if (value !== prevValue) {
+            const res = await axios.post("http://127.0.0.1:5000/auth", {
+               email: value,
+             });
+             prevValue = value;
+             console.log(res.data);
+             // if(res.data == 'Suivant') return true
+             if (res.data == `L'utilisateur existe déjà`) {
+               return false
+             } else {
+               return true
+             }
+        }
       },
     }),
   password: Yup.string()
@@ -61,21 +69,26 @@ const validate = Yup.object({
     .test({
       message: () => `Mot de passe ou email incorrect`,
       test: async function (value) {
-        const res = await axios.post("http://127.0.0.1:5000/auth/login", {
-          loginPassword: value,
-          loginMail: this.parent.loginMail,
-        });
-        if (res.data == `Connexion invalide`) {
-          return false;
-        } else {
-          return true;
+        if (
+          value !== prevValuePass ||
+          this.parent.loginMail !== prevValueLogin
+        ) {
+          const res = await axios.post("http://127.0.0.1:5000/auth/login", {
+            loginPassword: value,
+            loginMail: this.parent.loginMail,
+          });
+          if (res.data == `Connexion invalide`) {
+            return false;
+          } else {
+            return true;
+          }
         }
       },
     }),
-    type: Yup.array()
+  type: Yup.array()
     .of(Yup.string())
     .min(1, "Selectionnez un type")
-    .max(1, "Selectionnez seulement un type")
+    .max(1, "Selectionnez seulement un type"),
 });
 
 export { validate };

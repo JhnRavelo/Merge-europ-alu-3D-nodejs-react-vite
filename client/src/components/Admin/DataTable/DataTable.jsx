@@ -10,7 +10,13 @@ const DataTable = (props) => {
     // mutation.mutate(id)
   };
 
-
+const colums = [...props.columns]
+// props.columns.filter((item)=>{
+//     console.log(item);
+//     item.field!=="password"})
+const filterColums = colums.filter((item)=>  item.field !== "password")
+console.log(filterColums);
+// console.log([...filterColums]);
 
   const actionColumn = {
     field: "action",
@@ -37,11 +43,11 @@ const DataTable = (props) => {
       <DataGrid
         className="dataGrid"
         rows={props.rows}
-        columns={[...props.columns, actionColumn]}
+        columns={[...filterColums, actionColumn]}
         initialState={{
           pagination: {
             paginationModel: {
-              pageSize: 10,
+              pageSize: 7,
             },
           },
         }}
