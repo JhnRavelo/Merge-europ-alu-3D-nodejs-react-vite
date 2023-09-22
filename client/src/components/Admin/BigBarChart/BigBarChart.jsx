@@ -31,7 +31,7 @@ import {
   };
 
 BigChartBox.propTypes = {
-    chartData: propTypes.object,
+    chartData: propTypes.any,
     dataKey: propTypes.string,
     color: propTypes.string
 }

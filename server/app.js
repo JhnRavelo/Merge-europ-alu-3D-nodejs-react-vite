@@ -8,7 +8,7 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
-db.sequelize.sync().then(() => {
+db.sequelize.sync({force:true}).then(() => {
   app.listen(process.env.PORT, () => {
     console.log(`http://127.0.0.1:${process.env.PORT}`);
   });

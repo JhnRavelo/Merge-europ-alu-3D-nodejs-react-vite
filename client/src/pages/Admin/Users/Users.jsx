@@ -7,37 +7,53 @@ import DataTable from "../../../components/Admin/DataTable/DataTable";
 
 
 const columns= [
-  { field: "id", headerName: "ID", width: 90 },
+  { field: "id", headerName: "ID", width: 40 },
   {
     field: "img",
     headerName: "Avatar",
     width: 100,
     renderCell: (params) => {
-      return <img src={params.row.img || "/noavatar.png"} alt="" />;
+      return <img src={params.row.img || "/public/avatar/User-avatar.png"} alt="" />;
     },
   },
   {
-    field: "firstName",
+    field: "name",
     type: "string",
-    headerName: "First name",
+    inputMode: "text",
+    headerName: "Nom",
+    placeholder: "Votre Nom",
     width: 90,
   },
   {
-    field: "lastName",
+    field: "type",
     type: "string",
-    headerName: "Last name",
+    inputMode: "text",
+    headerName: "Type",
+    placeholder: "Type de User",
     width: 90,
   },
   {
     field: "email",
-    type: "string",
+    type: "email",
+    inputMode: "email",
     headerName: "Email",
+    placeholder: "Votre Email",
+    width: 200,
+  },
+  {
+    field: "password",
+    type: "password",
+    inputMode: "password",
+    headerName: "Mot de passe",
+    placeholder: "Votre mot de passe",
     width: 200,
   },
   {
     field: "phone",
     type: "string",
+    inputMode: "number",
     headerName: "Phone",
+    placeholder: "Votre Numéro",
     width: 120,
   },
   {
@@ -47,25 +63,15 @@ const columns= [
     type: "string",
   },
   {
-    field: "verified",
-    headerName: "Verified",
-    width: 70,
+    field: "connected",
+    headerName: "Connected",
+    width: 90,
     type: "boolean",
   },
 ];
 
 const Users = () => {
   const [open, setOpen] = useState(false);
-
-  // TEST THE API
-
-  // const { isLoading, data } = useQuery({
-  //   queryKey: ["allusers"],
-  //   queryFn: () =>
-  //     fetch("http://localhost:8800/api/users").then(
-  //       (res) => res.json()
-  //     ),
-  // });
 
   return (
     <div className="users">
@@ -74,13 +80,7 @@ const Users = () => {
         <button onClick={() => setOpen(true)}>Add New User</button>
       </div>
       <DataTable slug="users" columns={columns} rows={userRows} />
-      {/* TEST THE API */}
 
-      {/* {isLoading ? (
-        "Loading..."
-      ) : (
-        <DataTable slug="users" columns={columns} rows={data} />
-      )} */}
       {open && <Form slug="user" columns={columns} setOpen={setOpen} />}
     </div>
   );

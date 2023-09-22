@@ -14,14 +14,16 @@ const validate = Yup.object({
     .test({
       message: () => `L'utilisateur existe déjà`,
       test: async function (value) {
-        const res = await axios.post("http://127.0.0.1:5000/auth", {
-          email: value,
-        });
-        if (res.data == `L'utilisateur existe déjà`) {
-          return false;
-        } else {
-          return true;
-        }
+        
+          const res = await axios.post("http://127.0.0.1:5000/auth", {
+            email: value,
+          });
+          if (res.data == `L'utilisateur existe déjà`) {
+            return false;
+          } else {
+            return true;
+          }
+        
       },
     }),
   password: Yup.string()
@@ -70,6 +72,10 @@ const validate = Yup.object({
         }
       },
     }),
+    type: Yup.array()
+    .of(Yup.string())
+    .min(1, "Selectionnez un type")
+    .max(1, "Selectionnez seulement un type")
 });
 
 export { validate };

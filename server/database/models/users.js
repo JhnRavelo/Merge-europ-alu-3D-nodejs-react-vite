@@ -32,6 +32,10 @@ module.exports = (sequelize, DataTypes) => {
     role: {
       type: DataTypes.INTEGER,
       defaultValue: process.env.USER
+    },
+    type: {
+      type: DataTypes.STRING,
+      allowNull: false,
     }
   });
 

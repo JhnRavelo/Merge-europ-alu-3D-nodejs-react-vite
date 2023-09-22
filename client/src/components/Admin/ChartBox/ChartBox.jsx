@@ -71,9 +71,9 @@ ChartBox.propTypes = {
   icon: propTypes.string,
   title: propTypes.string,
   dataKey: propTypes.string,
-  number: propTypes.number | propTypes.string,
+  number: propTypes.any,
   percentage: propTypes.number,
-  chartData: propTypes.object,
+  chartData: propTypes.any,
 };
 
 CustomTooltip.propTypes = {
