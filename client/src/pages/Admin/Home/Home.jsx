@@ -3,6 +3,8 @@ import TopProduct from '../../../components/Admin/TopProduct/TopProduct'
 import './Home.scss'
 import { chartBoxUser, chartBoxProduct, barChartBoxVisit } from '../../../assets/js/data'
 import BigChartBox from '../../../components/Admin/BigBarChart/BigBarChart'
+import PieChartBox from '../../../components/Admin/ChartPie/ChartPie'
+
 
 const Home = () => {
   return (
@@ -16,7 +18,9 @@ const Home = () => {
       <div className="box box3">
         <ChartBox {...chartBoxProduct}/>
       </div>
-      <div className="box box4"></div>
+      <div className="box box4">
+        <PieChartBox/>
+      </div>
       <div className="box box7">
         <BigChartBox {...barChartBoxVisit}/>
       </div>
