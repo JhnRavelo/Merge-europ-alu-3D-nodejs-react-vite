@@ -16,7 +16,7 @@ const Menu =  () => {
     <div className="menu">
         <div className="item">
             <span className="title">MAIN</span>
-            <Link to="/" className="listItem">
+            <Link to="/admin/" className="listItem">
                 <img src={home} alt="" />
                 <span className="listItemTitle">Home</span>
             </Link>
@@ -33,7 +33,7 @@ const Menu =  () => {
                 <img src={product} alt="product" />
                 <span className="listItemTitle">Produits</span>
             </Link>
-            <Link to="/" className="listItem">
+            <Link to="/admin/user" className="listItem">
                 <img src={profile} alt="users" />
                 <span className="listItemTitle">Utilisateurs</span>
             </Link>
