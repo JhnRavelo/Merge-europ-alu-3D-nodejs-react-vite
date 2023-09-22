@@ -1,14 +1,30 @@
 import { Link } from "react-router-dom";
 import "./chartBox.scss";
 import { Line, LineChart, ResponsiveContainer, Tooltip } from "recharts";
-import propTypes from 'prop-types'
+import propTypes from "prop-types";
+
+const CustomTooltip = ({ active, payload}) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="custom-tooltip">
+        {payload.map((item, index) => {
+          return (
+            <p key={index} className={`data ${item.dataKey}`}>
+              {`${item.payload.name}: ${item.value}`}
+            </p>
+          );
+        })}
+      </div>
+    );
+  }
+};
 
 const ChartBox = (props) => {
   return (
     <div className="chartBox">
       <div className="boxInfo">
         <div className="title">
-          <img src={props.icon} alt="" className="ChartIcon"/>
+          <img src={props.icon} alt="" className="ChartIcon" />
           <span>{props.title}</span>
         </div>
         <h1>{props.number}</h1>
@@ -24,6 +40,7 @@ const ChartBox = (props) => {
                 contentStyle={{ background: "transparent", border: "none" }}
                 labelStyle={{ display: "none" }}
                 position={{ x: 10, y: 70 }}
+                content={<CustomTooltip />}
               />
               <Line
                 type="monotone"
@@ -57,6 +74,11 @@ ChartBox.propTypes = {
   number: propTypes.number | propTypes.string,
   percentage: propTypes.number,
   chartData: propTypes.object,
+};
+
+CustomTooltip.propTypes = {
+  active: propTypes.any,
+  payload: propTypes.array
 }
 
 export default ChartBox;

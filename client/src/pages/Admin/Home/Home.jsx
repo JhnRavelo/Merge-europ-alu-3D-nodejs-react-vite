@@ -1,7 +1,8 @@
 import ChartBox from '../../../components/Admin/ChartBox/ChartBox'
 import TopProduct from '../../../components/Admin/TopProduct/TopProduct'
 import './Home.scss'
-import { chartBoxUser, chartBoxProduct } from '../../../assets/js/data'
+import { chartBoxUser, chartBoxProduct, barChartBoxVisit } from '../../../assets/js/data'
+import BigChartBox from '../../../components/Admin/BigBarChart/BigBarChart'
 
 const Home = () => {
   return (
@@ -16,7 +17,9 @@ const Home = () => {
         <ChartBox {...chartBoxProduct}/>
       </div>
       <div className="box box4"></div>
-      <div className="box box7"></div>
+      <div className="box box7">
+        <BigChartBox {...barChartBoxVisit}/>
+      </div>
     </div>
   )
 }
