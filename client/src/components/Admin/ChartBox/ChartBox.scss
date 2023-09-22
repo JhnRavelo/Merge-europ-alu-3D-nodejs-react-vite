@@ -23,6 +23,10 @@
       align-items: center;
       gap: 10px;
 
+      .ChartIcon {
+        width: 20px;
+        height: 20px;
+      }
       @include xxl{
         font-size: 14px;
       }

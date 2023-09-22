@@ -7,7 +7,7 @@ const TopProduct = () => {
   console.log(product);
   return (
     <div className="topBox">
-      <h1>Les produits les plus intéréssant</h1>
+      <h1>Top Produits</h1>
       <div className="list">
         {product.map((prod, index) => {
           return (

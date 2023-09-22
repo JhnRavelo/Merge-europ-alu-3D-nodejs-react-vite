@@ -1,64 +1,62 @@
 import { Link } from "react-router-dom";
-import "./ChartBox.scss";
-import {
-  CartesianGrid,
-  Legend,
-  Line,
-  LineChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
+import "./chartBox.scss";
+import { Line, LineChart, ResponsiveContainer, Tooltip } from "recharts";
+import propTypes from 'prop-types'
 
-const ChartBox = () => {
-  const data = {};
+const ChartBox = (props) => {
   return (
-    <div className="charBox">
+    <div className="chartBox">
       <div className="boxInfo">
         <div className="title">
-          <img src="" alt="" />
-          <span>{"Total d'Utilisateur"}</span>
+          <img src={props.icon} alt="" className="ChartIcon"/>
+          <span>{props.title}</span>
         </div>
-        <h1>20000</h1>
-        <Link to="/user">Visionner</Link>
+        <h1>{props.number}</h1>
+        <Link to="/" style={{ color: props.color }}>
+          Visionner
+        </Link>
       </div>
-      <div className="chatInfo">
+      <div className="chartInfo">
         <div className="chart">
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart
-              width={500}
-              height={300}
-              data={data}
-              margin={{
-                top: 5,
-                right: 30,
-                left: 20,
-                bottom: 5,
-              }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
+          <ResponsiveContainer width="99%" height="100%">
+            <LineChart data={props.chartData}>
+              <Tooltip
+                contentStyle={{ background: "transparent", border: "none" }}
+                labelStyle={{ display: "none" }}
+                position={{ x: 10, y: 70 }}
+              />
               <Line
                 type="monotone"
-                dataKey="pv"
-                stroke="#8884d8"
-                activeDot={{ r: 8 }}
+                dataKey={props.dataKey}
+                stroke={props.color}
+                strokeWidth={2}
+                dot={false}
               />
-              <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
             </LineChart>
           </ResponsiveContainer>
         </div>
         <div className="texts">
-          <span className="percentage">30%</span>
+          <span
+            className="percentage"
+            style={{ color: props.percentage < 0 ? "tomato" : "limegreen" }}
+          >
+            {props.percentage}%
+          </span>
           <span className="duration">Ce mois</span>
         </div>
       </div>
     </div>
   );
 };
+
+ChartBox.propTypes = {
+  color: propTypes.string,
+  icon: propTypes.string,
+  title: propTypes.string,
+  dataKey: propTypes.string,
+  number: propTypes.number | propTypes.string,
+  percentage: propTypes.number,
+  chartData: propTypes.object,
+}
 
 export default ChartBox;
