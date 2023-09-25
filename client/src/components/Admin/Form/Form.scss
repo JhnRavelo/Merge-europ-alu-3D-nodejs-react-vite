@@ -17,8 +17,10 @@
     background-color: $main-bg;
     position: relative;
 
-
-    
+    .desabledBtn {
+      background-color: lightgray !important;
+      pointer-events: none;
+    }
 
     .error {
         padding-top: 3px;

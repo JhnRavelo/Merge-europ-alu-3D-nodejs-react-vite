@@ -124,7 +124,7 @@ const userRead = async (req, res) => {
 
 const userLogout = async (req, res) => {
   const cookie = req.cookies;
-  console.log(cookie);
+  
   if (!cookie?.jwt) return res.sendStatus(204);
 
   const refreshToken = cookie.jwt;
@@ -156,9 +156,40 @@ const userLogout = async (req, res) => {
   return res.json("SUCCESS");
 };
 
+const addUser = async (req,res)=>{
+  const { name, email, phone, password, type } = await req.body;
+  var userName;
+  if (email) {
+    userName = await users.findOne({
+      where: {
+        email: email,
+      },
+    });
+  }
+
+  if (userName) {
+    res.json(`L'utilisateur existe déjà`);
+  } else if (name && email && !userName && phone && password) {
+
+    await users.create({
+      name,
+      email,
+      phone,
+      password: await bcrypt.hash(password, 10),
+      type:type[0]
+    });
+    res.json(`Utilisateur ajouté`)
+}
+}
+
+getUsers = async()=>{
+
+}
+
 module.exports = {
   userRegistration,
   userLogin,
   userLogout,
   userRead,
+  addUser,
 };

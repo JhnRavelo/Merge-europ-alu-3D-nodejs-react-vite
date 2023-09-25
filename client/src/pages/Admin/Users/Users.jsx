@@ -1,19 +1,23 @@
 import "./User.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Form from "../../../components/Admin/Form/Form";
 import { userRows } from "../../../assets/js/data.js";
 import DataTable from "../../../components/Admin/DataTable/DataTable";
-// import { useQuery } from "@tanstack/react-query";
 
-
-const columns= [
-  { field: "id", headerName: "ID", width: 40 },
+const columns = [
+  {
+    field: "id",
+    headerName: "ID",
+    width: 40,
+  },
   {
     field: "img",
     headerName: "Avatar",
     width: 100,
     renderCell: (params) => {
-      return <img src={params.row.img || "/public/avatar/User-avatar.png"} alt="" />;
+      return (
+        <img src={params.row.img || "/public/avatar/User-avatar.png"} alt="" />
+      );
     },
   },
   {
@@ -22,7 +26,7 @@ const columns= [
     inputMode: "text",
     headerName: "Nom",
     placeholder: "Votre Nom",
-    width: 90,
+    width: 200,
   },
   {
     field: "type",
@@ -72,6 +76,10 @@ const columns= [
 
 const Users = () => {
   const [open, setOpen] = useState(false);
+
+useEffect(()=>{
+  
+})
 
   return (
     <div className="users">

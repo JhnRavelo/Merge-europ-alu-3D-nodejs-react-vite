@@ -10,6 +10,7 @@ const {
   userLogin,
   userLogout,
   userRead,
+  addUser,
 } = require("../controllers/userController");
 const verifyJWT = require("../middlewares/verifyJWT");
 const verifyRole = require("../middlewares/verifyRole");
@@ -21,5 +22,7 @@ router.get("/logout", verifyJWT, userLogout);
 router.post("/login", userLogin);
 
 router.post("/", userRegistration);
+
+router.post("/addUser", addUser)
 
 module.exports = router;

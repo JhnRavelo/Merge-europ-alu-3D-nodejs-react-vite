@@ -85,7 +85,7 @@ const SignupStepFinal = () => {
       }
 
       const track = await addTraker(formContext[1]);
-      // console.log(track);
+
       if (role && track.data) {
         buttonContext[1]();
       }

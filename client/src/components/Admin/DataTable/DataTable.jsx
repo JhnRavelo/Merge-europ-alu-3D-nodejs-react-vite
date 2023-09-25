@@ -15,7 +15,7 @@ const colums = [...props.columns]
 //     console.log(item);
 //     item.field!=="password"})
 const filterColums = colums.filter((item)=>  item.field !== "password")
-console.log(filterColums);
+// console.log(filterColums);
 // console.log([...filterColums]);
 
   const actionColumn = {

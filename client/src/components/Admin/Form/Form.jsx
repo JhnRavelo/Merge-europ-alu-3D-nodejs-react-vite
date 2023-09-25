@@ -1,11 +1,13 @@
-import { ErrorMessage, Field, Form, Formik } from "formik";
+import { ErrorMessage, Field, Form, Formik, useFormikContext } from "formik";
 import "./Form.scss";
 import propTypes from "prop-types";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { validate } from "../../../lib/utils/validationSchema";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
-// import '../../../components/Pages/Form/Form.css'
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import axios from "axios";
+import defaultAxios from "../../../api/axios";
 
 const iniatialValues = {
     name:"",
@@ -15,13 +17,36 @@ const iniatialValues = {
     type:[]
 }
 
+const FormContent = ({btn}) =>{
+  const {errors} = useFormikContext()
+  // const btnSubmitRef = useRef()
+
+  useEffect(()=>{
+const btnSubmit = btn.current
+    if(errors.name || errors.email || errors.password || errors.type || errors.phone){
+      btnSubmit.classList.add('desabledBtn')
+    }else{
+      btnSubmit.classList.remove('desabledBtn')
+    }
+  },[errors, btn])
+}
+
 const FormAdd = (props) => {
   const btnListRef = useRef();
   const typeRef = useRef();
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    props.setOpen(false);
+  const btnSubmitRef = useRef()
+  const axiosPrivate = useAxiosPrivate()
+ 
+  const onSubmit = async (values) => {
+   try {
+    const res = await defaultAxios.post('/auth/addUser', values)
+    if(res.data == `Utilisateur ajouté`){
+      props.setOpen(false)
+    }
+   } catch (error) {
+    console.log(error);
+   }
+    
   };
 
   const handleListClick = () => {
@@ -38,8 +63,11 @@ const FormAdd = (props) => {
           X
         </span>
         <h1>Ajouter nouveau {props.slug}</h1>
-        <Formik onSubmit={handleSubmit} validationSchema={validate} initialValues={iniatialValues}>
-          {({values})=><Form>
+        <Formik validationSchema={validate} initialValues={iniatialValues} >
+          
+          {({values, errors})=>
+          <Form>
+            <FormContent btn={btnSubmitRef}/>
             {props.columns
               .filter(
                 (item) =>
@@ -117,7 +145,7 @@ const FormAdd = (props) => {
                   );
                 }
               })}
-            <button>Send</button>
+            <button ref={btnSubmitRef} onClick={()=>{onSubmit(values, errors)}} type="button">Envoyer</button>
           </Form>}
         </Formik>
       </div>
