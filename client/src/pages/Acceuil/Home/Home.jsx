@@ -1,6 +1,5 @@
-import './Home.css'
-import logo from '../../../assets/Logo_ea.png'
-// import logo1 from '../../../assets/Logo_aluhd.png'
+import "./Home.scss";
+import logo from "../../../assets/Logo_ea.png";
 
 const Home = () => {
   return (
@@ -9,26 +8,28 @@ const Home = () => {
       <div className="header__home__page">
         <div className="logo__home">
           <img src={logo} alt="logo" />
-          {/* <img src={logo1} alt="logo" /> */}
         </div>
-        {/* <div className="connexion"><h1>Se connecter</h1></div> */}
       </div>
       <div className="body__home__page">
-          <div className="intro">
-            <h1 className="intro__h1">
-              Innovation Continue <span>.</span>
-            </h1>
-            <p className="intro__p">
-            La menuiserie aluminium qui révolutionne la construction à Madagascar, avec des produits de qualité, sur mesure et conformes aux normes européennes.
-            </p>
-            <div className="button__intro">
-              <button className="start">Commencer</button>
-              <button className="start connect">Se conneter</button>
+        <div className="intro">
+          <h1 className="intro__h1">
+            Innovation Continue <span>.</span>
+          </h1>
+          <p className="intro__p">
+            La menuiserie aluminium qui révolutionne la construction à
+            Madagascar, avec des produits de qualité, sur mesure et conformes
+            aux normes européennes.
+          </p>
+          <div className="button button__intro">
+            <div className="start">
+              Commencer
             </div>
+            <div className="start connect">Se conneter</div>
           </div>
+        </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
