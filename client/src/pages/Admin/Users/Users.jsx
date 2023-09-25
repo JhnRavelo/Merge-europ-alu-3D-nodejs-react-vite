@@ -99,7 +99,7 @@ const Users = () => {
   const getAllUsers = async () => {
     try {
       const res = await defaultAxios.get("/auth/getUsers");
-      console.log(res.data);
+      // console.log(res.data);
       const newTable = res.data.map((user) => {
         var connected,
         createdAt
@@ -120,7 +120,7 @@ const Users = () => {
           connected,
         };
       });
-      console.log(newTable);
+      // console.log(newTable);
       
       setRows(newTable)
       return res.data;
@@ -129,15 +129,23 @@ const Users = () => {
     }
   };
 
+  // const showForm = () => {
+  //   if (open === false) {
+  //     setOpen(true);
+  //   } else {
+  //     setOpen(false);
+  //   }
+  // };
+
   return (
     <div className="users">
       <div className="info">
         <h1>Users</h1>
         <button onClick={() => setOpen(true)}>Add New User</button>
       </div>
-      <DataTable slug="users" columns={columns} rows={rows} setOpen={setOpen} setEditRow={setEditRow}/>
+      <DataTable slug="users" columns={columns} rows={rows} setOpen={setOpen} setEditRow={(value)=> setEditRow(value)}/>
 
-      {open && <Form slug="user" columns={columns} setOpen={setOpen} editRow={editRow} setEditRow={setEditRow} />}
+      {open && <Form slug="user" columns={columns} setOpen={setOpen} editRow={editRow} setEditRow={(value)=> setEditRow(value)} />}
     </div>
   );
 };

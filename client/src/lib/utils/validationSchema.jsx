@@ -32,7 +32,7 @@ const validate = Yup.object({
       "Le mot de passe doit contenir au moins une lettre majuscule"
     )
     .matches(/[0-9]/, "Le mot de passe doit contenir au moins un chiffre")
-    .required("Le mot de passe est requis"),
+    .required("Le mot de passe est requis sauf en cas de modification"),
   confirmPassword: Yup.string()
     .oneOf([Yup.ref("password"), null], "Le mot de passe doit être le même")
     .required("Le mot de passe doit être confirmer"),

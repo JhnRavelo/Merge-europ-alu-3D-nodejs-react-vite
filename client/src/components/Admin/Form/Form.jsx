@@ -5,32 +5,40 @@ import { useEffect, useRef, useState } from "react";
 import { validate } from "../../../lib/utils/validationSchema";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
-import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+// import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import defaultAxios from "../../../api/axios";
 
 const userInitialValue = {
-  name: "fgd",
+  name: "",
   email: "",
   phone: "",
   password: "",
   type: [],
 };
 
-const FormContent = ({ btn }) => {
+const FormContent = ({ btn, editRow, slug }) => {
   const { errors } = useFormikContext();
   // const btnSubmitRef = useRef()
   useEffect(() => {
     const btnSubmit = btn.current;
-    if (
-      errors.name ||
-      errors.email ||
-      errors.password ||
-      errors.type ||
-      errors.phone
-    ) {
-      btnSubmit.classList.add("desabledBtn");
-    } else {
-      btnSubmit.classList.remove("desabledBtn");
+    if (slug == "user" && !editRow) {
+      if (
+        errors.name ||
+        errors.email ||
+        errors.password ||
+        errors.type ||
+        errors.phone
+      ) {
+        btnSubmit.classList.add("desabledBtn");
+      } else {
+        btnSubmit.classList.remove("desabledBtn");
+      }
+    } else if (slug == "user" && editRow) {
+      if (errors.name || errors.email || errors.type || errors.phone) {
+        btnSubmit.classList.add("desabledBtn");
+      } else {
+        btnSubmit.classList.remove("desabledBtn");
+      }
     }
   }, [errors, btn]);
 };
@@ -39,16 +47,21 @@ const FormAdd = (props) => {
   const btnListRef = useRef();
   const typeRef = useRef();
   const btnSubmitRef = useRef();
-  const axiosPrivate = useAxiosPrivate();
+  // const axiosPrivate = useAxiosPrivate();
   const [btnName, setbtnName] = useState("Envoyer");
   const [formTitle, setFormTitle] = useState("Ajouter nouveau");
+  const [placeholder, setPlaceholder] = useState();
+  const valueRef = useRef()
   
+  useEffect(() => {
+    
+    handleTitle();
+  }, []);
+
   const handleInitialValue = () => {
-    var initial 
+    var initial;
     if (props.editRow) {
-      console.log(props.editRow);
       const value = props.editRow;
-      props.setEditRow(null);
       if (props.slug == "user") {
         initial = {
           name: value.name,
@@ -59,32 +72,27 @@ const FormAdd = (props) => {
         };
       }
     } else {
-      props.setEditRow(null);
       if (props.slug == "user") {
-       initial =userInitialValue;
+        initial = userInitialValue;
       }
     }
-    return initial
-    
+    return initial;
   };
   
-  const initialValues = handleInitialValue()
-  
-  console.log(initialValues);
+  valueRef.current = handleInitialValue()
+
   const onSubmit = async (values) => {
     try {
       const res = await defaultAxios.post("/auth/addUser", values);
       if (res.data == `Utilisateur ajouté`) {
         props.setOpen(false);
+        props.setEditRow(null)
       }
     } catch (error) {
       console.log(error);
     }
   };
 
-  useEffect(() => {
-    handleTitle();
-  }, []);
 
   const handleListClick = () => {
     const btnList = btnListRef.current;
@@ -103,21 +111,36 @@ const FormAdd = (props) => {
     }
   };
 
- 
+  // const handlePlaceholder = (columns) => {
+  //   console.log(columns);
+  //   var place;
+  //   if (columns.field == "password" && props.editRow) {
+  //     (place = `Le mot de passe ne changera pas si vide`);
+  //   } else {
+  //     (place = columns.placeholder);
+  //   }
+  //   return place;
+  // };
 
   return (
     <div className="add">
       <div className="modal">
-        <span className="close" onClick={() => props.setOpen(false)}>
+        <span className="close" onClick={() => {
+          props.setEditRow(null)
+          props.setOpen(false)}}>
           X
         </span>
         <h1>
           {formTitle} {props.slug}
         </h1>
-        <Formik validationSchema={validate} initialValues={initialValues}>
+        <Formik validationSchema={validate} initialValues={valueRef.current}>
           {({ values, errors }) => (
             <Form>
-              <FormContent btn={btnSubmitRef} />
+              <FormContent
+                btn={btnSubmitRef}
+                slug={props.slug}
+                editRow={props.editRow}
+              />
               {props.columns
                 .filter(
                   (item) =>
@@ -201,8 +224,10 @@ const FormAdd = (props) => {
                   onSubmit(values, errors);
                 }}
                 type="button"
+  
               >
                 {btnName}
+                
               </button>
             </Form>
           )}
