@@ -89,7 +89,8 @@ const columns = [
 
 const Users = () => {
   const [open, setOpen] = useState(false);
-  const [rows, setRows] = useState();
+  const [rows, setRows] = useState([]);
+  const [editRow, setEditRow] = useState(null)
 
   useEffect(() => {
     getAllUsers();
@@ -119,6 +120,7 @@ const Users = () => {
           connected,
         };
       });
+      console.log(newTable);
       
       setRows(newTable)
       return res.data;
@@ -133,9 +135,9 @@ const Users = () => {
         <h1>Users</h1>
         <button onClick={() => setOpen(true)}>Add New User</button>
       </div>
-      <DataTable slug="users" columns={columns} rows={rows} />
+      <DataTable slug="users" columns={columns} rows={rows} setOpen={setOpen} setEditRow={setEditRow}/>
 
-      {open && <Form slug="user" columns={columns} setOpen={setOpen} />}
+      {open && <Form slug="user" columns={columns} setOpen={setOpen} editRow={editRow} setEditRow={setEditRow} />}
     </div>
   );
 };
