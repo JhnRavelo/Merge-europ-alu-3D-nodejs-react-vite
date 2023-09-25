@@ -9,6 +9,11 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true,
       primaryKey: true,
     },
+    avatar: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: "/avatar/User-avatar.png",
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: false,

@@ -182,8 +182,10 @@ const addUser = async (req,res)=>{
 }
 }
 
-getUsers = async()=>{
+const getUsers = async(req, res)=>{
+  const result = await users.findAll()
 
+  res.json(result)
 }
 
 module.exports = {
@@ -192,4 +194,5 @@ module.exports = {
   userLogout,
   userRead,
   addUser,
+  getUsers
 };

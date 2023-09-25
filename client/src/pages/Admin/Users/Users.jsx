@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Form from "../../../components/Admin/Form/Form";
 import { userRows } from "../../../assets/js/data.js";
 import DataTable from "../../../components/Admin/DataTable/DataTable";
+import defaultAxios from "../../../api/axios";
 
 const columns = [
   {
@@ -74,12 +75,57 @@ const columns = [
   },
 ];
 
+// const body = {
+//   id:"",
+//   img:"",
+//   name:"",
+//   type:"",
+//   email:"",
+//   phone:"",
+//   createdAt:"",
+//   connected:false,
+
+// }
+
 const Users = () => {
   const [open, setOpen] = useState(false);
+  const [rows, setRows] = useState();
 
-useEffect(()=>{
-  
-})
+  useEffect(() => {
+    getAllUsers();
+  }, [open]);
+
+  const getAllUsers = async () => {
+    try {
+      const res = await defaultAxios.get("/auth/getUsers");
+      console.log(res.data);
+      const newTable = res.data.map((user) => {
+        var connected,
+        createdAt
+        if(!user.refreshToken){
+          connected=false
+        }else {
+          connected = true
+        }
+        createdAt = user.createdAt.slice(0,10)
+        return {
+          id: user.ID_user,
+          img: user.avatar,
+          name: user.name,
+          type: user.type,
+          email: user.email,
+          phone: user.phone,
+          createdAt,
+          connected,
+        };
+      });
+      
+      setRows(newTable)
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="users">
@@ -87,7 +133,7 @@ useEffect(()=>{
         <h1>Users</h1>
         <button onClick={() => setOpen(true)}>Add New User</button>
       </div>
-      <DataTable slug="users" columns={columns} rows={userRows} />
+      <DataTable slug="users" columns={columns} rows={rows} />
 
       {open && <Form slug="user" columns={columns} setOpen={setOpen} />}
     </div>
