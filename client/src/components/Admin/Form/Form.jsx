@@ -18,7 +18,7 @@ const userInitialValue = {
 
 const FormContent = ({ btn, editRow, slug }) => {
   const { errors } = useFormikContext();
-  // const btnSubmitRef = useRef()
+
   useEffect(() => {
     const btnSubmit = btn.current;
     if (slug == "user" && !editRow) {
@@ -51,10 +51,9 @@ const FormAdd = (props) => {
   const [btnName, setbtnName] = useState("Envoyer");
   const [formTitle, setFormTitle] = useState("Ajouter nouveau");
   const [placeholder, setPlaceholder] = useState();
-  const valueRef = useRef()
-  
+  const valueRef = useRef();
+
   useEffect(() => {
-    
     handleTitle();
   }, []);
 
@@ -78,21 +77,25 @@ const FormAdd = (props) => {
     }
     return initial;
   };
-  
-  valueRef.current = handleInitialValue()
+
+  valueRef.current = handleInitialValue();
 
   const onSubmit = async (values) => {
     try {
-      const res = await defaultAxios.post("/auth/addUser", values);
-      if (res.data == `Utilisateur ajouté`) {
-        props.setOpen(false);
-        props.setEditRow(null)
+      if (props.editRow) {
+        const res = await defaultAxios.put("/auth/updateUser", values);
+        console.log(res.data);
+      } else {
+        const res = await defaultAxios.post("/auth/addUser", values);
+        if (res.data == `Utilisateur ajouté`) {
+          props.setOpen(false);
+          props.setEditRow(null);
+        }
       }
     } catch (error) {
       console.log(error);
     }
   };
-
 
   const handleListClick = () => {
     const btnList = btnListRef.current;
@@ -111,30 +114,23 @@ const FormAdd = (props) => {
     }
   };
 
-  // const handlePlaceholder = (columns) => {
-  //   console.log(columns);
-  //   var place;
-  //   if (columns.field == "password" && props.editRow) {
-  //     (place = `Le mot de passe ne changera pas si vide`);
-  //   } else {
-  //     (place = columns.placeholder);
-  //   }
-  //   return place;
-  // };
-
   return (
     <div className="add">
       <div className="modal">
-        <span className="close" onClick={() => {
-          props.setEditRow(null)
-          props.setOpen(false)}}>
+        <span
+          className="close"
+          onClick={() => {
+            props.setEditRow(null);
+            props.setOpen(false);
+          }}
+        >
           X
         </span>
         <h1>
           {formTitle} {props.slug}
         </h1>
         <Formik validationSchema={validate} initialValues={valueRef.current}>
-          {({ values, errors }) => (
+          {({ values }) => (
             <Form>
               <FormContent
                 btn={btnSubmitRef}
@@ -150,6 +146,7 @@ const FormAdd = (props) => {
                     item.field !== "createdAt"
                 )
                 .map((column, index) => {
+                  // handlePlaceholder(column)
                   if (column.headerName == "Type") {
                     return (
                       <div className="item" key={index}>
@@ -200,6 +197,12 @@ const FormAdd = (props) => {
                       </div>
                     );
                   } else {
+                    if (column.field == "password" && props.editRow) {
+                      column.placeholder = "ne changera pas si vide";
+                    } else if (column.field == "password" && !props.editRow) {
+                      column.placeholder = "Mot de passe";
+                    }
+
                     return (
                       <div className="item" key={index}>
                         <label>{column.headerName}</label>
@@ -221,13 +224,11 @@ const FormAdd = (props) => {
               <button
                 ref={btnSubmitRef}
                 onClick={() => {
-                  onSubmit(values, errors);
+                  onSubmit(values);
                 }}
                 type="button"
-  
               >
                 {btnName}
-                
               </button>
             </Form>
           )}
