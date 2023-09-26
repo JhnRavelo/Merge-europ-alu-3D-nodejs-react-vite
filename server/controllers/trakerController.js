@@ -33,6 +33,8 @@ const addTraker = async (req, res) => {
       }
     });
     
+  }else {
+    res.json("")
   }
 };
 

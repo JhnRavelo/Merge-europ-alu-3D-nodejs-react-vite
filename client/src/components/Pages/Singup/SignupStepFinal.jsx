@@ -24,12 +24,34 @@ const SignupStepFinal = () => {
   const checkboxRef = useRef([]);
   const [productSelected, setproductSelected] = useState(buttonContext[0]);
   const { setAuth } = useAuth();
+  const productTypeRef = useRef()
   const errors = formContext[0];
   checkboxRef.current = [];
-
+  // console.log(page[productCategoryIndex].products)
+  const handleProductType = () => {
+    var initial
+    console.log(productCategoryIndex)
+    if(productCategoryIndex!==undefined){
+      initial = [...page[productCategoryIndex].products];
+    }
+    return initial
+  }
+  productTypeRef.current = handleProductType()
+  console.log(productTypeRef.current)
+  // const [productTypes, setProductTypes] = useState(()=>{
+  //   return handleProductType()
+  // })
   const { name, email, phone, checked } = formContext[1];
-  const productTypes = page[productCategoryIndex].products;
-  console.log(checked);
+  
+  
+  
+  // console.log(checked);
+
+// useEffect(()=>{
+//   console.log(productTypes)
+// },[productTypes])
+
+
   useEffect(() => {
     var btnSubmit = btnSubmitRef.current;
     if (errors.checked || errors.checkbox) {
@@ -76,17 +98,17 @@ const SignupStepFinal = () => {
     console.log("click");
     try {
       const res = await addUser(formContext[1]);
-
-      const role = res.data.role,
-        accessToken = res.data.accessToken;
-      console.log(role);
+      let track
+      const role = res.role,
+        accessToken = res.accessToken;
       if (res != `L'utilisateur existe déjà`) {
         setAuth({ role, accessToken });
       }
-
-      const track = await addTraker(formContext[1]);
-
-      if (role && track.data) {
+      console.log(checked[0])
+      if(checked[0] ==! ""){
+        track = await addTraker(formContext[1]);
+      }
+      if (role || track) {
         buttonContext[1]();
       }
     } catch (error) {
@@ -112,7 +134,7 @@ const SignupStepFinal = () => {
           <p id="phone">{phone}</p>
         </div>
       </div>
-      <div className="menu-deroulant">
+      {productTypeRef.current && <div className="menu-deroulant">
         <label>Produits qui vous Intérèssent :</label>
 
         <div className="container">
@@ -131,7 +153,7 @@ const SignupStepFinal = () => {
           </div>
 
           <ul className="list-items">
-            {productTypes.map((product, index) => {
+            {productTypeRef.current.map((product, index) => {
               return (
                 <Fragment key={index}>
                   <label className="item" ref={addtoRefsCheck}>
@@ -149,7 +171,7 @@ const SignupStepFinal = () => {
             })}
           </ul>
         </div>
-      </div>
+      </div>}
 
       <ErrorMessage
         name="checked"

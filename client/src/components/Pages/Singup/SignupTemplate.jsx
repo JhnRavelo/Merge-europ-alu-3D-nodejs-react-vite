@@ -115,7 +115,9 @@ const SignupTemplate = () => {
 
   const formClosed = () => {
     const corps = document.querySelector(".corps");
-    corps.classList.remove("none");
+    if (corps) {
+      corps.classList.remove("none");
+    }
     buttonContext[1]();
   };
 
