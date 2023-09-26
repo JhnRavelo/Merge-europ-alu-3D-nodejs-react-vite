@@ -1,9 +1,11 @@
 import "./Home.scss";
 import logo from "../../../assets/Logo_ea.png";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
     <div id="home__page">
+      <div className="body"></div>
       <div className="flou"></div>
       <div className="header__home__page">
         <div className="logo__home">
@@ -21,9 +23,11 @@ const Home = () => {
             aux normes européennes.
           </p>
           <div className="button button__intro">
-            <div className="start">
-              Commencer
-            </div>
+            <Link to="/page/fenetre">
+              <div className="start">
+                Commencer
+              </div>
+            </Link>
             <div className="start connect">Se conneter</div>
           </div>
         </div>

@@ -1,5 +1,5 @@
 import './Footer.css'
-import LogoEuro from "../../../assets/Logo_Euro.png"
+import LogoEuro from "../../../assets/Logo_aluhd.png"
 
 const Footer = () => {
 
