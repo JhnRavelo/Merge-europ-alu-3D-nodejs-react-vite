@@ -2,7 +2,8 @@ const { trakers, users } = require("../database/models");
 
 const addTraker = async (req, res) => {
   const { name, email, checked, phone } = await req.body;
-  if (checked && name && email) {
+  console.log(checked)
+  if (checked && name && email && checked[0] !=="") {
     checked.map(async (track) => {
       var date = new Date();
       var day = date.getDate();
@@ -26,16 +27,14 @@ const addTraker = async (req, res) => {
           month,
           year,
         });
-        if(response){
-          res.json("Produit ajouté");
-        }
+        
+        
         
       }
     });
     
-  }else {
-    res.json("")
   }
+  res.json("Produit ajouté");
 };
 
 const getTraker = async (req, res) => {

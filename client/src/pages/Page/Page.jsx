@@ -7,34 +7,36 @@ import Products from '../../components/Pages/Products/Products';
 import HeaderProduct from '../../components/Pages/HeaderProduct/HeaderProduct';
 
 const Page = () => {
-  const location = useLocation();
-  const handleIndex = ()=>{
-    var index
-    if(location.pathname =='/page/habillage'){
-      index = 1
-    }else if(location.pathname =='/page/fenetre'){
-      index = 0
-    }
-    return index
-  }
- const [index, setInddex] = useState(()=>{
-  return handleIndex()
- })
+//   const location = useLocation();
+//   const handleIndex = ()=>{
+//     var index
+//     if(location.pathname =='/page/habillage'){
+//       index = 1
+//     }else if(location.pathname =='/page/fenetre'){
+//       index = 0
+//     }
+//     return index
+//   }
+//  const [index, setInddex] = useState(()=>{
+//   return handleIndex()
+//  })
 
-useEffect(()=>{
-  if(location.pathname =='/page/habillage'){
-    setInddex(1)
-  }else if(location.pathname =='/page/fenetre'){
-    setInddex(0)
-  }
-},[location])
+// useEffect(()=>{
+//   if(location.pathname =='/page/habillage'){
+//     setInddex(1)
+//   }else if(location.pathname =='/page/fenetre'){
+//     setInddex(0)
+//   }
+// },[location])
   
   return (
-    <ProductContext.Provider value={index}>
+    // <ProductContext.Provider value={index}>
+    <>
       <Home />
       <HeaderProduct />
       <Products />
-    </ProductContext.Provider>
+    </>
+    // </ProductContext.Provider>
   );
 };
 

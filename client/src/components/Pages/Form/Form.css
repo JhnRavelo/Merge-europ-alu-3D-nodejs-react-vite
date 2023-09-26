@@ -132,6 +132,7 @@
 }
 .list-items{
   position: absolute;
+  z-index: 10;
   margin-top: 5px;
   width: 100%;
   max-height: 180px;
@@ -272,6 +273,7 @@
 
 .corps.none {
   pointer-events: none;
+  overflow: hidden;
 }
 
 #form.active .modal-box {

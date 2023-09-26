@@ -5,6 +5,7 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import FormContext from "../Form/FormContext";
 import ButtonContext from "../Button/ButtonContext";
 import errorShake from "../../../lib/utils/errorShake";
+import useButtonContext from "../../../hooks/useButtonContext";
 // import propTypes from 'prop-types';
 // import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
@@ -14,7 +15,8 @@ const SignupTemplate = () => {
   const nextBtnRef = useRef();
   const btnStepRef = useRef();
   const formContext = useContext(FormContext);
-  const buttonContext = useContext(ButtonContext);
+  const {body, showForm } = useButtonContext()
+  // const buttonContext = useContext(ButtonContext);
   // const axiosPrivate = useAxiosPrivate()
   const [title, setTitle] = useState(`S'enregistrer`);
   const errors = [
@@ -118,18 +120,19 @@ const SignupTemplate = () => {
     if (corps) {
       corps.classList.remove("none");
     }
-    buttonContext[1]();
+    showForm()
+    // buttonContext[1]();
   };
 
   useEffect(() => {
-    if (buttonContext[2].name != "") {
+    if (body.name != "") {
       setIndex(4);
       btnStepRef.current.style.display = "none";
     } else {
       setIndex(0);
       btnStepRef.current.style.display = "flex";
     }
-  }, [buttonContext]);
+  }, [body]);
   return (
     <div className="card" data-step>
       <div className="modal-box register-form">

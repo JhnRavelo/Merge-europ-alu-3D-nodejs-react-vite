@@ -228,6 +228,10 @@
   .button__intro .start.connect {
     border: 2px solid #06001a44;
   }
+  
+  .body__home__page {
+    height: 90vh;
+  }
 }
 
 @media only screen and (max-width: 420px) {
@@ -246,6 +250,7 @@
   .flou {
     backdrop-filter: blur(1px);
   }
+
 }
 
 @media screen and (max-width: 720px) and (min-height: 1000px) {
