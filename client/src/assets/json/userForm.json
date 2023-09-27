@@ -3,7 +3,7 @@
     "type": "text",
     "name": "name",
     "inputMode": "text",
-    "placeholder": "Nom complet (ou Entreprise)"
+    "placeholder": "Nom"
   },
   {
     "type": "email",

@@ -3,7 +3,6 @@ import SignupStep from "./SignupStep";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import FormContext from "../Form/FormContext";
-import ButtonContext from "../Button/ButtonContext";
 import errorShake from "../../../lib/utils/errorShake";
 import useButtonContext from "../../../hooks/useButtonContext";
 // import propTypes from 'prop-types';
