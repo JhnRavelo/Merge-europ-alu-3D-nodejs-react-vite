@@ -7,10 +7,12 @@ const ButtonProvider = ({ children }) => {
   const [show, setShow] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState("");
   const [body, setBody] = useState({ name: "", email: "", phone: "" });
+  const [open, setOpen] = useState(false)
 
   const showForm = () => {
     if (show === false) {
       setShow(true);
+      setOpen(true)
       const corps = document.querySelector(".corps");
       const userIcon = document.querySelector(".login__logout");
       if (corps) {
@@ -20,7 +22,10 @@ const ButtonProvider = ({ children }) => {
         userIcon.style.pointerEvents = "none";
       }
     } else {
-      setShow(false);
+      setOpen(false)
+      setTimeout(() => {
+        setShow(false);
+      }, 200);
       const corps = document.querySelector(".corps");
       const userIcon = document.querySelector(".login__logout");
       if (corps) {
@@ -41,6 +46,7 @@ const ButtonProvider = ({ children }) => {
         setBody,
         showForm,
         show,
+        open
       }}
     >
       {children}

@@ -7,22 +7,23 @@ import { validate } from "../../../lib/utils/validationSchema";
 import useButtonContext from "../../../hooks/useButtonContext";
 
 const FormField = () => {
-  const { show, selectedProduct, body } = useButtonContext();
+  const { open, selectedProduct, body } = useButtonContext();
   const formRef = useRef();
 
   const { name, email, phone } = body;
 
   useEffect(() => {
     const form = formRef.current;
-    console.log(show);
+    console.log(open);
 
-    if (show) {
-      form.classList.add("active");
+    if (open) {
+      setTimeout(() => {
+        form.classList.add("active");
+      }, 200);
     } else {
-      form.classList.remove("active");
+        form.classList.remove("active");
     }
-  
-  }, [show]);
+  }, [open]);
 
   const iniatialValues = {
     name,
