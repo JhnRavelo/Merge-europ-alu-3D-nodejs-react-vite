@@ -15,7 +15,6 @@ const userRegistration = async (req, res) => {
   if (userName) {
     res.json(`L'utilisateur existe déjà`);
   } else if (name && email && !userName && phone && password) {
-
     const userRegister = await users.create({
       name,
       email,
@@ -39,7 +38,7 @@ const userRegistration = async (req, res) => {
       secure: true,
     });
 
-    res.json({role, accessToken});
+    res.json({ role, accessToken });
   } else {
     res.json("Suivant");
   }
@@ -124,7 +123,7 @@ const userRead = async (req, res) => {
 
 const userLogout = async (req, res) => {
   const cookie = req.cookies;
-  
+
   if (!cookie?.jwt) return res.sendStatus(204);
 
   const refreshToken = cookie.jwt;
@@ -156,7 +155,7 @@ const userLogout = async (req, res) => {
   return res.json("SUCCESS");
 };
 
-const addUser = async (req,res)=>{
+const addUser = async (req, res) => {
   const { name, email, phone, password, type } = await req.body;
   var userName;
   if (email) {
@@ -170,31 +169,56 @@ const addUser = async (req,res)=>{
   if (userName) {
     res.json(`L'utilisateur existe déjà`);
   } else if (name && email && !userName && phone && password) {
-
     await users.create({
       name,
       email,
       phone,
       password: await bcrypt.hash(password, 10),
-      type:type[0]
+      type: type[0],
     });
-    res.json(`Utilisateur ajouté`)
-}
-}
-
-const getUsers = async(req, res)=>{
-  const result = await users.findAll()
-
-  res.json(result)
-}
-
-const updateUser = async(req, res)=>{
-  const {name, email, phone, password, type} = await req.body
-
-  if(password = "" && name && email && phone && type){
-    
+    res.json(`Utilisateur ajouté`);
   }
-}
+};
+
+const getUsers = async (req, res) => {
+  const result = await users.findAll();
+
+  res.json(result);
+};
+
+const updateUser = async (req, res) => {
+  const { name, email, phone, password, type, id } = await req.body;
+
+  if (password == "" && name && email && phone && type && id) {
+    const user = await users.findOne({ where: { ID_user: id } });
+
+    if (user) {
+      user.set({ name, email, phone, type: type[0] });
+      const result = await user.save();
+      if (result) {
+        res.json("Utilisateur modifié");
+      } else {
+        res.json("Utilisateur non modifié");
+      }
+    } else {
+      res.json("Utilisateur introuvable");
+    }
+  } else if (!password == "" && name && email && phone && type && id) {
+    const user = await users.findOne({ where: { ID_user: id } });
+
+    if (user) {
+      user.set({ name, email, phone, type: type[0], password });
+      const result = await user.save();
+      if (result) {
+        res.json("Utilisateur modifié");
+      } else {
+        res.json("Utilisateur non modifié");
+      }
+    } else {
+      res.json("Utilisateur introuvable");
+    }
+  }
+};
 
 module.exports = {
   userRegistration,
@@ -202,5 +226,6 @@ module.exports = {
   userLogout,
   userRead,
   addUser,
-  getUsers
-}
+  getUsers,
+  updateUser,
+};

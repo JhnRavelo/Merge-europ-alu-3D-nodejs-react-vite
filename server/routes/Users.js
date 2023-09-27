@@ -12,9 +12,11 @@ const {
   userRead,
   addUser,
   getUsers,
+  updateUser,
 } = require("../controllers/userController");
 const verifyJWT = require("../middlewares/verifyJWT");
 const verifyRole = require("../middlewares/verifyRole");
+const { updatePage } = require("../controllers/pageController");
 
 router.get("/", verifyJWT, userRead);
 
@@ -25,6 +27,8 @@ router.post("/login", userLogin);
 router.post("/", userRegistration);
 
 router.post("/User", addUser)
+
+router.put("/User", updateUser)
 
 router.get("/getUsers", getUsers)
 

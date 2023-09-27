@@ -81,10 +81,17 @@ const FormAdd = (props) => {
   valueRef.current = handleInitialValue();
 
   const onSubmit = async (values) => {
+    values.id = props.editRow.id
+
+    console.log(values);
     try {
       if (props.editRow) {
         const res = await defaultAxios.put(`${props.url}`, values);
         console.log(res.data);
+        if(res.data=="Utilisateur modifié"){
+          props.setOpen(false);
+          props.setEditRow(null);
+        }
       } else {
         const res = await defaultAxios.post(`${props.url}`, values);
         if (res.data == `Utilisateur ajouté`) {
