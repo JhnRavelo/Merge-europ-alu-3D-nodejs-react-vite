@@ -55,7 +55,6 @@ const FormAdd = (props) => {
   // const axiosPrivate = useAxiosPrivate();
   const [btnName, setbtnName] = useState("Envoyer");
   const [formTitle, setFormTitle] = useState("Ajouter nouveau");
-  const [placeholder, setPlaceholder] = useState();
   const valueRef = useRef();
 
   useEffect(() => {
