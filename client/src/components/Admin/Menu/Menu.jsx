@@ -25,7 +25,7 @@ const Menu =  () => {
                 <span className="listItemTitle">Profile</span>
             </Link>
             <span className="title">Gestion</span>
-            <Link to="/" className="listItem">
+            <Link to="/admin/page" className="listItem">
                 <img src={page} alt="users" />
                 <span className="listItemTitle">Pages</span>
             </Link>

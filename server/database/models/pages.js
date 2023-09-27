@@ -19,19 +19,23 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     minYAngle: {
-        type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     maxYAngle: {
-        type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     minXAngle: {
-        type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     minXAngle: {
-        type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    home: {
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
   });

@@ -1,7 +1,7 @@
 const { pages } = require("../database/models");
 
 const addPage = async (req, res) => {
-  const { page, icon, position, minYAngle, maxYAngle, minXAngle, maxXAngle } =
+  const { page, icon, home, position, minYAngle, maxYAngle, minXAngle, maxXAngle } =
     await req.body;
 
   if (
@@ -11,7 +11,8 @@ const addPage = async (req, res) => {
     !minXAngle ||
     !minYAngle ||
     !maxXAngle ||
-    !maxYAngle
+    !maxYAngle ||
+    !home
   )
     return res.json("Aucun ne doit être vide");
 
@@ -23,6 +24,7 @@ const addPage = async (req, res) => {
     maxYAngle,
     minXAngle,
     maxXAngle,
+    home
   });
 
   if (result) {
@@ -40,6 +42,7 @@ const updatePage = async (req, res) => {
     maxYAngle,
     minXAngle,
     maxXAngle,
+    home
   } = await req.body;
   if (id) {
     const updatePage = await findOne({
@@ -55,7 +58,8 @@ const updatePage = async (req, res) => {
       minXAngle,
       minYAngle,
       maxXAngle,
-      maxYAngle
+      maxYAngle,
+      home
     );
     const result = await updatePage.save();
     if (result) {
@@ -64,4 +68,10 @@ const updatePage = async (req, res) => {
   }
 };
 
-module.exports = { addPage, updatePage };
+const getPages = async(req, res)=>{
+  const result = await pages.findAll()
+
+  res.json(result)
+}
+
+module.exports = { addPage, updatePage, getPages };

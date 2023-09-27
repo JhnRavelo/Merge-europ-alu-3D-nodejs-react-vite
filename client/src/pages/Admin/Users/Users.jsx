@@ -17,7 +17,7 @@ const columns = [
     width: 100,
     renderCell: (params) => {
       return (
-        <img src={params.row.img || "/public/avatar/User-avatar.png"} alt="" />
+        <img src={params.row.img} alt="" />
       );
     },
   },
