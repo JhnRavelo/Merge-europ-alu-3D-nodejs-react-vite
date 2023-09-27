@@ -1,49 +1,57 @@
 import "./SignupType.scss";
 import particular from "../../../assets/particular.png";
 import entreprise from "../../../assets/entreprise.png";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { ErrorMessage, Field} from "formik";
+import FormContext from "../Form/FormContext";
 
 const SignupType = () => {
-  const [choixUser, setChoixUser] = useState(null);
+  const formContext = useContext(FormContext);
+  const [choixUser, setChoixUser] = useState(formContext[1].typeUser);
+  const changeField = formContext[2]
 
   const handleChoixUser = (choix) => {
     setChoixUser(choix);
+    changeField("typeUser", choix)
   };
 
   return (
-    <div className="type">
-      <input className="input__type"
-        type="radio"
-        name="type"
-        value="Regular"
-        id="entreprise"
-        checked={choixUser === "entreprise"}
-        onChange={() => handleChoixUser("entreprise")}
-      />
-      <label
-        className={choixUser === "entreprise" ? "selected" : ""}
-        htmlFor="entreprise"
-      >
-        <img src={entreprise} alt="logoentre" />
-        <span>Entreprise</span>
-      </label>
-
-      <input className="input__type"
-        type="radio"
-        name="type"
-        value="Medium"
-        id="particuler"
-        checked={choixUser === "particulier"}
-        onChange={() => handleChoixUser("particulier")}
-      />
-      <label
-        className={choixUser === "particulier" ? "selected" : ""}
-        htmlFor="particuler"
-      >
-        <img src={particular} alt="logopart" />
-        <span>Particulier</span>
-      </label>
-    </div>
+    <>
+      <div className="type" role="group" aria-labelledby="my-radio-group">
+        <label
+          onClick={() => handleChoixUser("Entreprise")}
+          className={choixUser === "Entreprise" ? "selected" : ""}
+        >
+          <Field
+            className="input__type"
+            type="radio"
+            name="typeUser"
+            value="Entreprise"
+            id="entreprise"
+            // checked={choixUser === "Entreprise"}
+          />
+          <img src={entreprise} alt="logoentre" />
+          <span>Entreprise</span>
+        </label>
+        <label
+          onClick={() => handleChoixUser("Particulier")}
+          className={choixUser === "Particulier" ? "selected" : ""}
+        >
+          <Field
+            className="input__type"
+            type="radio"
+            name="typeUser"
+            value="Particulier"
+            id="particuler"
+          />
+          <img src={particular} alt="logopart" />
+          <span>Particulier</span>
+        </label>
+      </div>
+      <div>
+        <ErrorMessage className="error" name="type" component={"p"} />
+      </div>
+    </>
   );
 };
 

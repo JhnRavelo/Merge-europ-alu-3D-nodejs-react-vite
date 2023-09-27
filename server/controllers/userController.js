@@ -2,7 +2,7 @@ const { users } = require("../database/models");
 const bcrypt = require("bcrypt");
 
 const userRegistration = async (req, res) => {
-  const { name, email, phone, password } = await req.body;
+  const { name, email, phone, password, typeUser } = await req.body;
   var userName;
   if (email) {
     userName = await users.findOne({
@@ -14,12 +14,13 @@ const userRegistration = async (req, res) => {
 
   if (userName) {
     res.json(`L'utilisateur existe déjà`);
-  } else if (name && email && !userName && phone && password) {
+  } else if (name && email && !userName && phone && password && typeUser) {
     const userRegister = await users.create({
       name,
       email,
       phone,
       password: await bcrypt.hash(password, 10),
+      type:typeUser
     });
 
     const id = userRegister.ID_user,

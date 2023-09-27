@@ -35,14 +35,15 @@ const FormField = () => {
     checkbox: true,
     loginMail: "",
     loginPassword: "",
+    typeUser:"Particulier",
   };
   return (
     <section id="form" ref={formRef}>
       <div className="overlay"></div>
       <div className="multi-step-form">
         <Formik initialValues={iniatialValues} validationSchema={validate}>
-          {({ errors, values }) => (
-            <FormContext.Provider value={[errors, values]}>
+          {({ errors, values, setFieldValue }) => (
+            <FormContext.Provider value={[errors, values, setFieldValue]}>
               <Form>
                 <SignupTemplate />
               </Form>
