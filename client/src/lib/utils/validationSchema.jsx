@@ -32,7 +32,7 @@ const validate = Yup.object({
       "Le mot de passe doit contenir au moins une lettre majuscule"
     )
     .matches(/[0-9]/, "Le mot de passe doit contenir au moins un chiffre")
-    .required("Le mot de passe est requis sauf en cas de modification"),
+    .required("Le mot de passe est requis"),
   confirmPassword: Yup.string()
     .oneOf([Yup.ref("password"), null], "Le mot de passe doit être le même")
     .required("Le mot de passe doit être confirmer"),
@@ -75,6 +75,16 @@ const validate = Yup.object({
     .of(Yup.string())
     .min(1, "Selectionnez un type")
     .max(1, "Selectionnez seulement un type"),
+  updatePassword: Yup.string()
+    .min(8, "Le mot de passe doit avoir au moins 8 caractères")
+    .matches(
+      /[A-Z]/,
+      "Le mot de passe doit contenir au moins une lettre majuscule"
+    )
+    .matches(/[0-9]/, "Le mot de passe doit contenir au moins un chiffre"),
+  updateEmail: Yup.string()
+    .required("Vous devez mettre votre adresse email")
+    .email(`l'adresse email est invalide`),
 });
 
 export { validate };

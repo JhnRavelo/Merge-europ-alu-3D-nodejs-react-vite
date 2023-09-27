@@ -187,13 +187,13 @@ const getUsers = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  const { name, email, phone, password, type, id } = await req.body;
-
-  if (password == "" && name && email && phone && type && id) {
+  const { name, updateEmail, phone, updatePassword, type, id } = await req.body;
+  console.log(updatePassword);
+  if (updatePassword == "" && name && updateEmail && phone && type && id) {
     const user = await users.findOne({ where: { ID_user: id } });
 
     if (user) {
-      user.set({ name, email, phone, type: type[0] });
+      user.set({ name, email:updateEmail, phone, type: type[0] });
       const result = await user.save();
       if (result) {
         res.json("Utilisateur modifié");
@@ -203,11 +203,18 @@ const updateUser = async (req, res) => {
     } else {
       res.json("Utilisateur introuvable");
     }
-  } else if (!password == "" && name && email && phone && type && id) {
+  } else if (!updatePassword == "" && name && updateEmail && phone && type && id) {
+    console.log("update");
     const user = await users.findOne({ where: { ID_user: id } });
 
     if (user) {
-      user.set({ name, email, phone, type: type[0], password });
+      user.set({
+        name,
+        email:updateEmail,
+        phone,
+        type: type[0],
+        password: await bcrypt.hash(updatePassword, 10),
+      });
       const result = await user.save();
       if (result) {
         res.json("Utilisateur modifié");

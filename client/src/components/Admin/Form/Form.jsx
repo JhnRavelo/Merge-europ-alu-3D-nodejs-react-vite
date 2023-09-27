@@ -31,22 +31,27 @@ const FormContent = ({ btn, editRow, slug }) => {
       ) {
         btnSubmit.classList.add("desabledBtn");
       } else {
+        console.log("add");
         btnSubmit.classList.remove("desabledBtn");
       }
     } else if (slug == "user" && editRow) {
-      if (errors.name || errors.email || errors.type || errors.phone) {
+      console.log(errors);
+      if (errors.name || errors.updateEmail || errors.type || errors.phone) {
         btnSubmit.classList.add("desabledBtn");
       } else {
+        console.log("update");
         btnSubmit.classList.remove("desabledBtn");
       }
     }
-  }, [errors, btn]);
+  }, [errors, editRow, slug, btn]);
 };
 
 const FormAdd = (props) => {
   const btnListRef = useRef();
   const typeRef = useRef();
   const btnSubmitRef = useRef();
+  const emailRef = useRef();
+  const passwordRef = useRef();
   // const axiosPrivate = useAxiosPrivate();
   const [btnName, setbtnName] = useState("Envoyer");
   const [formTitle, setFormTitle] = useState("Ajouter nouveau");
@@ -60,17 +65,19 @@ const FormAdd = (props) => {
   const handleInitialValue = () => {
     var initial;
     if (props.editRow) {
+      console.log("edit");
       const value = props.editRow;
       if (props.slug == "user") {
         initial = {
           name: value.name,
-          email: value.email,
+          updateEmail: value.email,
           phone: value.phone,
           password: "",
           type: [value.type],
         };
       }
     } else {
+      console.log("red");
       if (props.slug == "user") {
         initial = userInitialValue;
       }
@@ -81,19 +88,20 @@ const FormAdd = (props) => {
   valueRef.current = handleInitialValue();
 
   const onSubmit = async (values) => {
-    values.id = props.editRow.id
-
     console.log(values);
     try {
       if (props.editRow) {
+        console.log(props.url);
+        values.id = props.editRow.id;
         const res = await defaultAxios.put(`${props.url}`, values);
         console.log(res.data);
-        if(res.data=="Utilisateur modifié"){
+        if (res.data == "Utilisateur modifié") {
           props.setOpen(false);
           props.setEditRow(null);
         }
       } else {
         const res = await defaultAxios.post(`${props.url}`, values);
+        console.log(res.data);
         if (res.data == `Utilisateur ajouté`) {
           props.setOpen(false);
           props.setEditRow(null);
@@ -120,6 +128,34 @@ const FormAdd = (props) => {
       setbtnName("Envoyer");
     }
   };
+
+  const handlePassword = () => {
+    if (props.editRow) {
+      console.log("updatePassword");
+      return {
+        placeholder: "ne changera pas si vide",
+        name: "updatePassword",
+      };
+    } else {
+      console.log("password");
+      return {
+        placeholder: "Mot de passe",
+        name: "password",
+      };
+    }
+  };
+  const handleEmail = () => {
+    var mail;
+    if (props.editRow) {
+      mail = "updateEmail";
+    } else {
+      mail = "email";
+    }
+    return mail;
+  };
+
+  emailRef.current = handleEmail();
+  passwordRef.current = handlePassword();
 
   return (
     <div className="add">
@@ -203,13 +239,41 @@ const FormAdd = (props) => {
                         </div>
                       </div>
                     );
+                  } else if (column.field == "email") {
+                    return (
+                      <div className="item" key={index}>
+                        <label>{column.headerName}</label>
+                        <Field
+                          type={column.type}
+                          name={emailRef.current}
+                          inputMode={column.inputMode}
+                          placeholder={column.placeholder}
+                        />
+                        <ErrorMessage
+                          name={emailRef.current}
+                          component={"p"}
+                          className="error"
+                        />
+                      </div>
+                    );
+                  } else if (column.field == "password") {
+                    return (
+                      <div className="item" key={index}>
+                        <label>{column.headerName}</label>
+                        <Field
+                          type={column.type}
+                          name={passwordRef.current.name}
+                          inputMode={column.inputMode}
+                          placeholder={passwordRef.current.placeholder}
+                        />
+                        <ErrorMessage
+                          name={passwordRef.current.name}
+                          component={"p"}
+                          className="error"
+                        />
+                      </div>
+                    );
                   } else {
-                    if (column.field == "password" && props.editRow) {
-                      column.placeholder = "ne changera pas si vide";
-                    } else if (column.field == "password" && !props.editRow) {
-                      column.placeholder = "Mot de passe";
-                    }
-
                     return (
                       <div className="item" key={index}>
                         <label>{column.headerName}</label>
