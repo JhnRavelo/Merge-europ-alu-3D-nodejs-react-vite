@@ -8,7 +8,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Fragment, useContext, useEffect, useRef, useState } from "react";
 import productContext from "../Products/ProductContext";
 import page from "../../../assets/json/pages.json";
-import ButtonContext from "../Button/ButtonContext";
 import FormContext from "../Form/FormContext";
 import { ErrorMessage, Field } from "formik";
 import { addUser } from "../../../lib/service/User";
@@ -19,18 +18,15 @@ import useButtonContext from "../../../hooks/useButtonContext";
 const SignupStepFinal = () => {
   const productCategoryIndex = useContext(productContext);
   const {selectedProduct, showForm} = useButtonContext()
-  // const buttonContext = useContext(ButtonContext);
   const formContext = useContext(FormContext);
   const btnListRef = useRef();
   const btnSubmitRef = useRef();
   const checkboxRef = useRef([]);
-  // const [productSelected, setproductSelected] = useState(buttonContext[0]);
   const [productSelected, setproductSelected] = useState(selectedProduct)
   const { setAuth } = useAuth();
   const productTypeRef = useRef()
   const errors = formContext[0];
   checkboxRef.current = [];
-  // console.log(page[productCategoryIndex].products)
   const handleProductType = () => {
     var initial
     console.log(productCategoryIndex)
@@ -45,15 +41,6 @@ const SignupStepFinal = () => {
   //   return handleProductType()
   // })
   const { name, email, phone, checked } = formContext[1];
-  
-  console.log(checked)
-  
-  
-
-// useEffect(()=>{
-//   console.log(productTypes)
-// },[productTypes])
-
 
   useEffect(() => {
     var btnSubmit = btnSubmitRef.current;
@@ -108,8 +95,9 @@ const SignupStepFinal = () => {
       if (res != `L'utilisateur existe déjà`) {
         setAuth({ role, accessToken });
       }
-
-      if(checked[0] ==! ""){
+      // console.log(res);
+      // console.log(!checked[0]=="");
+      if(!checked[0] == ""){
         track = await addTraker(formContext[1]);
         console.log(formContext[1].checked)
       }

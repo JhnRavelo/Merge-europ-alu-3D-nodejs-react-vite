@@ -6,11 +6,13 @@ import FormContext from "../Form/FormContext";
 import defaultAxios from "../../../api/axios";
 import useAuth from "../../../hooks/useAuth";
 import ButtonContext from "../Button/ButtonContext";
+import useButtonContext from "../../../hooks/useButtonContext";
 
 const Login = () => {
   const { setAuth } = useAuth();
   const formContext = useContext(FormContext);
-  const buttonContext = useContext(ButtonContext);
+  // const buttonContext = useContext(ButtonContext);
+  const {showForm} = useButtonContext()
   const btnLoginRef = useRef();
   const { loginMail, loginPassword } = formContext[1];
   const errors = formContext[0];
@@ -38,7 +40,7 @@ const Login = () => {
       setAuth({role, accessToken});
       
       if (role) {
-        buttonContext[1]();
+        showForm()
       }
     } catch (error) {
       if (error) {

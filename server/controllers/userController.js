@@ -188,6 +188,14 @@ const getUsers = async(req, res)=>{
   res.json(result)
 }
 
+const updateUser = async(req, res)=>{
+  const {name, email, phone, password, type} = await req.body
+
+  if(password = "" && name && email && phone && type){
+    
+  }
+}
+
 module.exports = {
   userRegistration,
   userLogin,

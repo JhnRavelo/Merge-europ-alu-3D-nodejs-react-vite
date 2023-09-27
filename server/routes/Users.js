@@ -24,7 +24,7 @@ router.post("/login", userLogin);
 
 router.post("/", userRegistration);
 
-router.post("/addUser", addUser)
+router.post("/User", addUser)
 
 router.get("/getUsers", getUsers)
 

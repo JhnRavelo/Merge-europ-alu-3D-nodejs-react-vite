@@ -83,10 +83,10 @@ const FormAdd = (props) => {
   const onSubmit = async (values) => {
     try {
       if (props.editRow) {
-        const res = await defaultAxios.put("/auth/updateUser", values);
+        const res = await defaultAxios.put(`${props.url}`, values);
         console.log(res.data);
       } else {
-        const res = await defaultAxios.post("/auth/addUser", values);
+        const res = await defaultAxios.post(`${props.url}`, values);
         if (res.data == `Utilisateur ajouté`) {
           props.setOpen(false);
           props.setEditRow(null);
@@ -244,6 +244,7 @@ FormAdd.propTypes = {
   slug: propTypes.string,
   editRow: propTypes.any,
   setEditRow: propTypes.any,
+  url: propTypes.string,
 };
 
 export default FormAdd;

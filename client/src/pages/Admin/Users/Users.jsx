@@ -129,6 +129,7 @@ const Users = () => {
     }
   };
 
+
   // const showForm = () => {
   //   if (open === false) {
   //     setOpen(true);
@@ -145,7 +146,7 @@ const Users = () => {
       </div>
       <DataTable slug="users" columns={columns} rows={rows} setOpen={setOpen} setEditRow={(value)=> setEditRow(value)}/>
 
-      {open && <Form slug="user" columns={columns} setOpen={setOpen} editRow={editRow} setEditRow={(value)=> setEditRow(value)} />}
+      {open && <Form slug="user" columns={columns} setOpen={setOpen} editRow={editRow} setEditRow={(value)=> setEditRow(value)} url="/auth/User" />}
     </div>
   );
 };
