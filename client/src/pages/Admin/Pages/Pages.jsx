@@ -44,7 +44,7 @@ const columns = [
     type: "string",
     inputMode: "numeric",
     headerName: "Position",
-    placeholder: "Position de l'icône",
+    placeholder: "Position de forme x,y,z",
     width: 90,
   },
   {
@@ -100,6 +100,7 @@ const Pages = () => {
   const getAllUsers = async () => {
     try {
       const res = await defaultAxios.get("/page");
+      console.log(res.data);
       const newTable = res.data.map((user) => {
         var 
         createdAt
@@ -126,15 +127,6 @@ const Pages = () => {
       console.log(error);
     }
   };
-
-
-  // const showForm = () => {
-  //   if (open === false) {
-  //     setOpen(true);
-  //   } else {
-  //     setOpen(false);
-  //   }
-  // };
 
   return (
     <div className="users">

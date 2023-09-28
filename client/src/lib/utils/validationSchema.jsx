@@ -88,4 +88,15 @@ const validate = Yup.object({
     typeUser: Yup.string().required("Vous devez choisir")
 });
 
-export { validate };
+const validationPage = Yup.object({
+  page: Yup.string().required("Page est requis"),
+  home: Yup.mixed().required("Home est requis"),
+  icon: Yup.mixed().required("Icône est requis"),
+  position: Yup.string().required("Position requis").matches(/^(\d+(\.\d+)?,){2}\d+(\.\d+)?$/, "Doit etre de forme x,y,z"),
+  minYAngle: Yup.string().required("Requis").matches(/^-?\d+(\.\d+)?$/),
+  maxYAngle: Yup.string().required("Requis").matches(/^-?\d+(\.\d+)?$/),
+  maxXAngle: Yup.string().required("Requis").matches(/^-?\d+(\.\d+)?$/),
+  minXAngle: Yup.string().required("Requis").matches(/^-?\d+(\.\d+)?$/),
+})
+
+export { validate, validationPage };

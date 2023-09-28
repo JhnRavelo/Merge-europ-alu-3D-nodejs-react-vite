@@ -1,3 +1,5 @@
+
+
 .dataTable{
     padding-bottom: 10px;
     .dataGrid{
@@ -6,6 +8,9 @@
   
       .MuiDataGrid-toolbarContainer{
         flex-direction: row-reverse;
+      }
+      .MuiDataGrid-virtualScrollerRenderZone{
+        background-color: rgb(233, 230, 230);
       }
   
       img{

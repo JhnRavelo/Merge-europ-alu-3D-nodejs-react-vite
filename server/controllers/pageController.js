@@ -1,20 +1,27 @@
 const { pages } = require("../database/models");
+require("dotenv").config()
 
 const addPage = async (req, res) => {
-  const { page, icon, home, position, minYAngle, maxYAngle, minXAngle, maxXAngle } =
-    await req.body;
+  const { page, position, minYAngle, maxYAngle, minXAngle, maxXAngle } =
+  await req.body;
+
+  const icon = `${process.env.SERVER_PATH}/img/icon/${req.files.icon[0].filename}`
+  const home = `${process.env.SERVER_PATH}/img/home/${req.files.home[0].filename}`
+console.log(icon);
+console.log(home);
 
   if (
     !page ||
-    !icon ||
     !position ||
     !minXAngle ||
     !minYAngle ||
     !maxXAngle ||
     !maxYAngle ||
+    !icon ||
     !home
-  )
+  ) {
     return res.json("Aucun ne doit être vide");
+  }
 
   const result = await pages.create({
     page,
@@ -42,7 +49,7 @@ const updatePage = async (req, res) => {
     maxYAngle,
     minXAngle,
     maxXAngle,
-    home
+    home,
   } = await req.body;
   if (id) {
     const updatePage = await findOne({
@@ -68,10 +75,10 @@ const updatePage = async (req, res) => {
   }
 };
 
-const getPages = async(req, res)=>{
-  const result = await pages.findAll()
+const getPages = async (req, res) => {
+  const result = await pages.findAll();
 
-  res.json(result)
-}
+  res.json(result);
+};
 
 module.exports = { addPage, updatePage, getPages };

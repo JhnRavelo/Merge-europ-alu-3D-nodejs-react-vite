@@ -2,11 +2,12 @@ import { ErrorMessage, Field, Form, Formik, useFormikContext } from "formik";
 import "./Form.scss";
 import propTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
-import { validate } from "../../../lib/utils/validationSchema";
+import { validate, validationPage } from "../../../lib/utils/validationSchema";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 // import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import defaultAxios from "../../../api/axios";
+import FileField from "./FileField";
 
 const userInitialValue = {
   name: "",
@@ -14,6 +15,18 @@ const userInitialValue = {
   phone: "",
   password: "",
   type: [],
+};
+
+const pageInitialValue = {
+  page: "",
+  home: null,
+  icon: null,
+  position: "",
+  minYAngle: "",
+  maxYAngle: "",
+  maxXAngle: "",
+  minXAngle: "",
+  // createdAt: "",
 };
 
 const FormContent = ({ btn, editRow, slug }) => {
@@ -31,15 +44,18 @@ const FormContent = ({ btn, editRow, slug }) => {
       ) {
         btnSubmit.classList.add("desabledBtn");
       } else {
-        console.log("add");
         btnSubmit.classList.remove("desabledBtn");
       }
     } else if (slug == "user" && editRow) {
-      console.log(errors);
       if (errors.name || errors.updateEmail || errors.type || errors.phone) {
         btnSubmit.classList.add("desabledBtn");
       } else {
-        console.log("update");
+        btnSubmit.classList.remove("desabledBtn");
+      }
+    } else {
+      if (Object.keys(errors).length !== 0) {
+        btnSubmit.classList.add("desabledBtn");
+      } else {
         btnSubmit.classList.remove("desabledBtn");
       }
     }
@@ -47,6 +63,7 @@ const FormContent = ({ btn, editRow, slug }) => {
 };
 
 const FormAdd = (props) => {
+  const validateRef = useRef();
   const btnListRef = useRef();
   const typeRef = useRef();
   const btnSubmitRef = useRef();
@@ -74,11 +91,27 @@ const FormAdd = (props) => {
           password: "",
           type: [value.type],
         };
+      } else if (props.slug == "page") {
+        initial = {
+          page: value.page,
+          home: null,
+          icon: null,
+          position: value.position,
+          minYAngle: value.minYAngle,
+          maxYAngle: value.maxYAngle,
+          maxXAngle: value.maxXAngle,
+          minXAngle: value.minXAngle,
+        };
       }
     } else {
-      console.log("red");
       if (props.slug == "user") {
         initial = userInitialValue;
+      }
+      // else {
+      //   initial = {}
+      // }
+      else if (props.slug == "page") {
+        initial = pageInitialValue;
       }
     }
     return initial;
@@ -87,23 +120,56 @@ const FormAdd = (props) => {
   valueRef.current = handleInitialValue();
 
   const onSubmit = async (values) => {
-    console.log(values);
     try {
       if (props.editRow) {
-        console.log(props.url);
-        values.id = props.editRow.id;
-        const res = await defaultAxios.put(`${props.url}`, values);
-        console.log(res.data);
-        if (res.data == "Utilisateur modifié") {
-          props.setOpen(false);
-          props.setEditRow(null);
+        if (props.slug == "user") {
+          values.id = props.editRow.id;
+          const res = await defaultAxios.put(`${props.url}`, values);
+          console.log(res.data);
+          if (res.data == "Utilisateur modifié") {
+            props.setOpen(false);
+            props.setEditRow(null);
+          }
+        } else if (props.slug == "page") {
+          const formData = new FormData();
+          formData.append("id", props.editRow.id);
+          formData.append("home", values.home);
+          formData.append("icon", values.icon);
+          formData.append("page", values.page);
+          formData.append("position", values.position);
+          formData.append("minYAngle", values.minYAngle);
+          formData.append("maxYAngle", values.maxYAngle);
+          formData.append("maxXAngle", values.maxXAngle);
+          formData.append("minXAngle", values.minXAngle);
+          const res = await defaultAxios.put(`${props.url}`, formData);
+          if (res.data == `Page modifié`) {
+            props.setOpen(false);
+            props.setEditRow(null);
+          }
         }
       } else {
-        const res = await defaultAxios.post(`${props.url}`, values);
-        console.log(res.data);
-        if (res.data == `Utilisateur ajouté`) {
-          props.setOpen(false);
-          props.setEditRow(null);
+        if (props.slug == "user") {
+          const res = await defaultAxios.post(`${props.url}`, values);
+          console.log(res.data);
+          if (res.data == `Utilisateur ajouté`) {
+            props.setOpen(false);
+            props.setEditRow(null);
+          }
+        } else if (props.slug == "page") {
+          const formData = new FormData();
+          formData.append("home", values.home);
+          formData.append("icon", values.icon);
+          formData.append("page", values.page);
+          formData.append("position", values.position);
+          formData.append("minYAngle", values.minYAngle);
+          formData.append("maxYAngle", values.maxYAngle);
+          formData.append("maxXAngle", values.maxXAngle);
+          formData.append("minXAngle", values.minXAngle);
+          const res = await defaultAxios.post(`${props.url}`, formData);
+          if (res.data == `Page ajouté`) {
+            props.setOpen(false);
+            props.setEditRow(null);
+          }
         }
       }
     } catch (error) {
@@ -128,15 +194,21 @@ const FormAdd = (props) => {
     }
   };
 
+  const handleValidate = () => {
+    if (props.slug == "user") {
+      return validate;
+    } else if (props.slug == "page") {
+      return validationPage;
+    }
+  };
+
   const handlePassword = () => {
     if (props.editRow) {
-      console.log("updatePassword");
       return {
         placeholder: "ne changera pas si vide",
         name: "updatePassword",
       };
     } else {
-      console.log("password");
       return {
         placeholder: "Mot de passe",
         name: "password",
@@ -153,6 +225,7 @@ const FormAdd = (props) => {
     return mail;
   };
 
+  validateRef.current = handleValidate();
   emailRef.current = handleEmail();
   passwordRef.current = handlePassword();
 
@@ -171,8 +244,11 @@ const FormAdd = (props) => {
         <h1>
           {formTitle} {props.slug}
         </h1>
-        <Formik validationSchema={validate} initialValues={valueRef.current}>
-          {({ values }) => (
+        <Formik
+          validationSchema={validateRef.current}
+          initialValues={valueRef.current}
+        >
+          {({ values, setFieldValue }) => (
             <Form>
               <FormContent
                 btn={btnSubmitRef}
@@ -272,6 +348,17 @@ const FormAdd = (props) => {
                         />
                       </div>
                     );
+                  } else if (column.field == "home" || column.field == "icon") {
+                    return (
+                      <div className="item" key={index}>
+                        <label>{column.headerName}</label>
+                        <FileField
+                          name={column.field}
+                          setFieldValue={setFieldValue}
+                          accept={"image/png, .svg, .jpeg, .jpg"}
+                        />
+                      </div>
+                    );
                   } else {
                     return (
                       <div className="item" key={index}>
@@ -297,6 +384,7 @@ const FormAdd = (props) => {
                   onSubmit(values);
                 }}
                 type="button"
+                className="desabledBtn"
               >
                 {btnName}
               </button>
