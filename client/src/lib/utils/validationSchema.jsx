@@ -17,7 +17,6 @@ const validate = Yup.object({
         const res = await axios.post("http://127.0.0.1:5000/auth", {
           email: value,
         });
-
         if (res.data == `L'utilisateur existe déjà`) {
           return false;
         } else {
@@ -85,18 +84,28 @@ const validate = Yup.object({
   updateEmail: Yup.string()
     .required("Vous devez mettre votre adresse email")
     .email(`l'adresse email est invalide`),
-    typeUser: Yup.string().required("Vous devez choisir")
+  typeUser: Yup.string().required("Vous devez choisir"),
 });
 
 const validationPage = Yup.object({
   page: Yup.string().required("Page est requis"),
   home: Yup.mixed().required("Home est requis"),
   icon: Yup.mixed().required("Icône est requis"),
-  position: Yup.string().required("Position requis").matches(/^(\d+(\.\d+)?,){2}\d+(\.\d+)?$/, "Doit etre de forme x,y,z"),
-  minYAngle: Yup.string().required("Requis").matches(/^-?\d+(\.\d+)?$/),
-  maxYAngle: Yup.string().required("Requis").matches(/^-?\d+(\.\d+)?$/),
-  maxXAngle: Yup.string().required("Requis").matches(/^-?\d+(\.\d+)?$/),
-  minXAngle: Yup.string().required("Requis").matches(/^-?\d+(\.\d+)?$/),
-})
+  position: Yup.string()
+    .required("Position requis")
+    .matches(/^(\d+(\.\d+)?,){2}\d+(\.\d+)?$/, "Doit être de forme x,y,z"),
+  minYAngle: Yup.string()
+    .required("Requis")
+    .matches(/^-?\d+(\.\d+)?$/),
+  maxYAngle: Yup.string()
+    .required("Requis")
+    .matches(/^-?\d+(\.\d+)?$/),
+  maxXAngle: Yup.string()
+    .required("Requis")
+    .matches(/^-?\d+(\.\d+)?$/),
+  minXAngle: Yup.string()
+    .required("Requis")
+    .matches(/^-?\d+(\.\d+)?$/),
+});
 
 export { validate, validationPage };

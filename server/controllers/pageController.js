@@ -4,6 +4,13 @@ require("dotenv").config();
 const addPage = async (req, res) => {
   const { page, position, minYAngle, maxYAngle, minXAngle, maxXAngle } =
     await req.body;
+
+  const addPage = await pages.findOne({
+    where: {
+      page: page,
+    },
+  });
+  if (addPage) return res.json("Page existe déjà");
   let icon, home;
   if (req?.files?.icon) {
     icon = `${process.env.SERVER_PATH}/img/icon/${req.files.icon[0].filename}`;
