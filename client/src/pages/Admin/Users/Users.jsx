@@ -4,6 +4,7 @@ import Form from "../../../components/Admin/Form/Form";
 import { userRows } from "../../../assets/js/data.js";
 import DataTable from "../../../components/Admin/DataTable/DataTable";
 import defaultAxios from "../../../api/axios";
+import ModalDelete from "../../../components/Admin/ModalDelete/ModalDelete";
 
 const columns = [
   {
@@ -16,9 +17,7 @@ const columns = [
     headerName: "Avatar",
     width: 100,
     renderCell: (params) => {
-      return (
-        <img src={params.row.img} alt="" />
-      );
+      return <img src={params.row.img} alt="" />;
     },
   },
   {
@@ -90,7 +89,8 @@ const columns = [
 const Users = () => {
   const [open, setOpen] = useState(false);
   const [rows, setRows] = useState([]);
-  const [editRow, setEditRow] = useState(null)
+  const [editRow, setEditRow] = useState(null);
+  const [deleteOpen, setDeleteOpen] = useState(false);
 
   useEffect(() => {
     getAllUsers();
@@ -101,14 +101,13 @@ const Users = () => {
       const res = await defaultAxios.get("/auth/getUsers");
       // console.log(res.data);
       const newTable = res.data.map((user) => {
-        var connected,
-        createdAt
-        if(!user.refreshToken){
-          connected=false
-        }else {
-          connected = true
+        var connected, createdAt;
+        if (!user.refreshToken) {
+          connected = false;
+        } else {
+          connected = true;
         }
-        createdAt = user.createdAt.slice(0,10)
+        createdAt = user.createdAt.slice(0, 10);
         return {
           id: user.ID_user,
           img: user.avatar,
@@ -121,14 +120,13 @@ const Users = () => {
         };
       });
       // console.log(newTable);
-      
-      setRows(newTable)
+
+      setRows(newTable);
       return res.data;
     } catch (error) {
       console.log(error);
     }
   };
-
 
   // const showForm = () => {
   //   if (open === false) {
@@ -139,15 +137,34 @@ const Users = () => {
   // };
 
   return (
-    <div className="users">
-      <div className="info">
-        <h1>Users</h1>
-        <button onClick={() => setOpen(true)}>Add New User</button>
-      </div>
-      <DataTable slug="users" columns={columns} rows={rows} setOpen={setOpen} setEditRow={(value)=> setEditRow(value)}/>
+    <>
+      <div className="users">
+        <div className="info">
+          <h1>Users</h1>
+          <button onClick={() => setOpen(true)}>Add New User</button>
+        </div>
+        <DataTable
+          slug="users"
+          columns={columns}
+          rows={rows}
+          setOpen={setOpen}
+          setEditRow={(value) => setEditRow(value)}
+          setDeleteOpen={setDeleteOpen}
+        />
 
-      {open && <Form slug="user" columns={columns} setOpen={setOpen} editRow={editRow} setEditRow={(value)=> setEditRow(value)} url="/auth/User" />}
-    </div>
+        {open && (
+          <Form
+            slug="user"
+            columns={columns}
+            setOpen={setOpen}
+            editRow={editRow}
+            setEditRow={(value) => setEditRow(value)}
+            url="/auth/User"
+          />
+        )}
+      </div>
+      {deleteOpen && <ModalDelete />}
+    </>
   );
 };
 

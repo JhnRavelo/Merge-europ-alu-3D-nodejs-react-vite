@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Form from "../../../components/Admin/Form/Form";
 import DataTable from "../../../components/Admin/DataTable/DataTable";
 import defaultAxios from "../../../api/axios";
+import ModalDelete from "../../../components/Admin/ModalDelete/ModalDelete";
 
 const columns = [
   {
@@ -92,6 +93,7 @@ const Pages = () => {
   const [open, setOpen] = useState(false);
   const [rows, setRows] = useState([]);
   const [editRow, setEditRow] = useState(null)
+  const [deleteOpen, setDeleteOpen] = useState(false)
 
   useEffect(() => {
     getAllUsers();
@@ -134,9 +136,10 @@ const Pages = () => {
         <h1>Pages</h1>
         <button onClick={() => setOpen(true)}>Add New Page</button>
       </div>
-      <DataTable slug="pages" columns={columns} rows={rows} setOpen={setOpen} setEditRow={(value)=> setEditRow(value)}/>
+      <DataTable slug="pages" columns={columns} rows={rows} setOpen={setOpen} setEditRow={(value)=> setEditRow(value)} setDeleteOpen={setDeleteOpen}/>
 
       {open && <Form slug="page" columns={columns} setOpen={setOpen} editRow={editRow} setEditRow={(value)=> setEditRow(value)} url="/page" />}
+    {deleteOpen && <ModalDelete setDeleteOpen={setDeleteOpen}/> }
     </div>
   );
 };

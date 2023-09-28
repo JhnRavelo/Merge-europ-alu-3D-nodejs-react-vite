@@ -10,6 +10,7 @@ const DataTable = (props) => {
     props.setOpen(true)
   }
   const handleDelete = (id) => {
+    props.setDeleteOpen(true)
   console.log(id);
   };
 
@@ -80,6 +81,7 @@ DataTable.propTypes = {
   columns: propTypes.any,
   setOpen: propTypes.any,
   setEditRow: propTypes.any,
+  setDeleteOpen: propTypes.any
 };
 
 export default DataTable;
