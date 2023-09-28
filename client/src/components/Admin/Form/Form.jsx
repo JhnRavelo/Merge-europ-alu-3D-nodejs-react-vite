@@ -52,6 +52,19 @@ const FormContent = ({ btn, editRow, slug }) => {
       } else {
         btnSubmit.classList.remove("desabledBtn");
       }
+    } else if (slug == "page" && editRow) {
+      if (
+        errors.page ||
+        errors.position ||
+        errors.minXAngle ||
+        errors.maxXAngle ||
+        errors.minYAngle ||
+        errors.maxYAngle
+      ) {
+        btnSubmit.classList.add("desabledBtn");
+      } else {
+        btnSubmit.classList.remove("desabledBtn");
+      }
     } else {
       if (Object.keys(errors).length !== 0) {
         btnSubmit.classList.add("desabledBtn");

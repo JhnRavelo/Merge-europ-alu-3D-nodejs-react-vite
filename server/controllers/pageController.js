@@ -1,14 +1,19 @@
 const { pages } = require("../database/models");
-require("dotenv").config()
+require("dotenv").config();
 
 const addPage = async (req, res) => {
   const { page, position, minYAngle, maxYAngle, minXAngle, maxXAngle } =
-  await req.body;
+    await req.body;
+  let icon, home;
+  if (req?.files?.icon) {
+    icon = `${process.env.SERVER_PATH}/img/icon/${req.files.icon[0].filename}`;
+  } else icon = null;
+  if (req?.files?.home) {
+    home = `${process.env.SERVER_PATH}/img/home/${req.files.home[0].filename}`;
+  } else home = null;
 
-  const icon = `${process.env.SERVER_PATH}/img/icon/${req.files.icon[0].filename}`
-  const home = `${process.env.SERVER_PATH}/img/home/${req.files.home[0].filename}`
-console.log(icon);
-console.log(home);
+  console.log(icon);
+  console.log(home);
 
   if (
     !page ||
@@ -31,7 +36,7 @@ console.log(home);
     maxYAngle,
     minXAngle,
     maxXAngle,
-    home
+    home,
   });
 
   if (result) {
@@ -40,37 +45,86 @@ console.log(home);
 };
 
 const updatePage = async (req, res) => {
-  const {
-    id,
-    page,
-    icon,
-    position,
-    minYAngle,
-    maxYAngle,
-    minXAngle,
-    maxXAngle,
-    home,
-  } = await req.body;
+  const { id, page, position, minYAngle, maxYAngle, minXAngle, maxXAngle } =
+    await req.body;
+  let icon, home;
+  if (req?.files?.icon) {
+    icon = `${process.env.SERVER_PATH}/img/icon/${req.files.icon[0].filename}`;
+  } else icon = null;
+  if (req?.files?.home) {
+    home = `${process.env.SERVER_PATH}/img/home/${req.files.home[0].filename}`;
+  } else home = null;
+  console.log(home);
+  console.log(icon);
   if (id) {
-    const updatePage = await findOne({
+    const updatePage = await pages.findOne({
       where: {
         ID_page: id,
       },
     });
-    if (!updatePage) return res.json(`La table n'existe pas`);
-    updatePage.set(
-      page,
-      icon,
-      position,
-      minXAngle,
-      minYAngle,
-      maxXAngle,
-      maxYAngle,
-      home
-    );
-    const result = await updatePage.save();
-    if (result) {
-      res.json("Page ajouté");
+
+    if (!updatePage) {
+      return res.json(`La table n'existe pas`);
+    } else {
+      if (icon && home) {
+        updatePage.set({
+          page,
+          icon,
+          position,
+          minXAngle,
+          minYAngle,
+          maxXAngle,
+          maxYAngle,
+          home,
+        });
+        const result = await updatePage.save();
+        if (result) {
+          res.json("Page modifié");
+        }
+      } else if (!icon && home) {
+        updatePage.set({
+          page,
+          position,
+          minXAngle,
+          minYAngle,
+          maxXAngle,
+          maxYAngle,
+          home,
+        });
+        const result = await updatePage.save();
+        if (result) {
+          res.json("Page modifié");
+        }
+      } else if (icon && !home) {
+        updatePage.set({
+          page,
+          position,
+          minXAngle,
+          minYAngle,
+          maxXAngle,
+          maxYAngle,
+          icon,
+        });
+        const result = await updatePage.save();
+        if (result) {
+          res.json("Page modifié");
+        }
+      } else if (!icon && !home) {
+        // console.log(updatePage);
+
+        updatePage.set({
+          page,
+          position,
+          minXAngle,
+          minYAngle,
+          maxXAngle,
+          maxYAngle,
+        });
+        const result = await updatePage.save();
+        if (result) {
+          res.json("Page modifié");
+        }
+      }
     }
   }
 };
