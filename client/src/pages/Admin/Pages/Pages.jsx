@@ -38,7 +38,7 @@ const columns = [
     inputMode: "text",
     headerName: "Page",
     placeholder: "Votre Page",
-    width: 150,
+    width: 100,
   },
   {
     field: "position",
@@ -54,7 +54,7 @@ const columns = [
     inputMode: "numeric",
     headerName: "minYAngle",
     placeholder: "minYAngle de l'icône",
-    width: 90,
+    width: 80,
   },
   {
     field: "maxYAngle",
@@ -62,7 +62,7 @@ const columns = [
     inputMode: "numeric",
     headerName: "maxYAngle",
     placeholder: "maxYAngle de l'icône",
-    width: 90,
+    width: 80,
   },
   {
     field: "minXAngle",
@@ -70,7 +70,7 @@ const columns = [
     inputMode: "numeric",
     headerName: "minXAngle",
     placeholder: "minXAngle de l'icône",
-    width: 90,
+    width: 80,
   },
   {
     field: "maxXAngle",
@@ -78,7 +78,7 @@ const columns = [
     inputMode: "numeric",
     headerName: "maxXAngle",
     placeholder: "maxXAngle de l'icône",
-    width: 90,
+    width: 80,
   },
   {
     field: "url",
@@ -86,7 +86,7 @@ const columns = [
     inputMode: "text",
     headerName: "URL",
     placeholder: "url de la page",
-    width: 90,
+    width: 120,
   },
   {
     field: "createdAt",

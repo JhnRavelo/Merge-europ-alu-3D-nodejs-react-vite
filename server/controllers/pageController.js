@@ -2,7 +2,7 @@ const { pages } = require("../database/models");
 require("dotenv").config();
 
 const addPage = async (req, res) => {
-  const { page, position, minYAngle, maxYAngle, minXAngle, maxXAngle } =
+  const { page, position, minYAngle, maxYAngle, minXAngle, maxXAngle, url } =
     await req.body;
 
   const addPage = await pages.findOne({
@@ -30,7 +30,8 @@ const addPage = async (req, res) => {
     !maxXAngle ||
     !maxYAngle ||
     !icon ||
-    !home
+    !home ||
+    !url
   ) {
     return res.json("Aucun ne doit être vide");
   }
@@ -44,6 +45,7 @@ const addPage = async (req, res) => {
     minXAngle,
     maxXAngle,
     home,
+    url,
   });
 
   if (result) {
@@ -52,8 +54,16 @@ const addPage = async (req, res) => {
 };
 
 const updatePage = async (req, res) => {
-  const { id, page, position, minYAngle, maxYAngle, minXAngle, maxXAngle } =
-    await req.body;
+  const {
+    id,
+    page,
+    position,
+    minYAngle,
+    maxYAngle,
+    minXAngle,
+    maxXAngle,
+    url,
+  } = await req.body;
   let icon, home;
   if (req?.files?.icon) {
     icon = `${process.env.SERVER_PATH}/img/icon/${req.files.icon[0].filename}`;
@@ -83,6 +93,7 @@ const updatePage = async (req, res) => {
           maxXAngle,
           maxYAngle,
           home,
+          url,
         });
         const result = await updatePage.save();
         if (result) {
@@ -97,6 +108,7 @@ const updatePage = async (req, res) => {
           maxXAngle,
           maxYAngle,
           home,
+          url,
         });
         const result = await updatePage.save();
         if (result) {
@@ -111,6 +123,7 @@ const updatePage = async (req, res) => {
           maxXAngle,
           maxYAngle,
           icon,
+          url,
         });
         const result = await updatePage.save();
         if (result) {
@@ -126,6 +139,7 @@ const updatePage = async (req, res) => {
           minYAngle,
           maxXAngle,
           maxYAngle,
+          url,
         });
         const result = await updatePage.save();
         if (result) {
@@ -133,7 +147,7 @@ const updatePage = async (req, res) => {
         }
       }
     }
-  }
+  } else res.json("Page non modifié");
 };
 
 const getPages = async (req, res) => {
@@ -143,21 +157,23 @@ const getPages = async (req, res) => {
 };
 
 const deletePage = async (req, res) => {
-  const id = await req?.params?.id
-console.log(id);
-  if(!id) return res.json("Pas d'identifiant")
+  const id = await req?.params?.id;
+  console.log(id);
+  if (!id) return res.json("Pas d'identifiant");
 
-  const page = await pages.findOne({where:{
-    ID_page: id
-  }})
+  const page = await pages.findOne({
+    where: {
+      ID_page: id,
+    },
+  });
 
-  if(!page) return res.json("Page n'existe pas")
+  if (!page) return res.json("Page n'existe pas");
 
-  const result = await page.destroy()
+  const result = await page.destroy();
 
-  if(result) return res.json("supprimé")
+  if (result) return res.json("supprimé");
 
-  res.json("non supprimé")
-}
+  res.json("non supprimé");
+};
 
 module.exports = { addPage, updatePage, getPages, deletePage };

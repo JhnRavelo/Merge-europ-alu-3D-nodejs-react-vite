@@ -88,6 +88,7 @@ const FormAdd = (props) => {
   const [btnName, setbtnName] = useState("Envoyer");
   const [formTitle, setFormTitle] = useState("Ajouter nouveau");
   const valueRef = useRef();
+  const folderRef = useRef()
 
   useEffect(() => {
     handleTitle();
@@ -116,6 +117,7 @@ const FormAdd = (props) => {
           maxYAngle: value.maxYAngle,
           maxXAngle: value.maxXAngle,
           minXAngle: value.minXAngle,
+          url: value.url
         };
       }
     } else {
@@ -156,6 +158,7 @@ const FormAdd = (props) => {
           formData.append("maxYAngle", values.maxYAngle);
           formData.append("maxXAngle", values.maxXAngle);
           formData.append("minXAngle", values.minXAngle);
+          formData.append("url", values.url);
           const res = await defaultAxios.put(`${props.url}`, formData);
           if (res.data == `Page modifié`) {
             props.setOpen(false);
@@ -180,6 +183,7 @@ const FormAdd = (props) => {
           formData.append("maxYAngle", values.maxYAngle);
           formData.append("maxXAngle", values.maxXAngle);
           formData.append("minXAngle", values.minXAngle);
+          formData.append("url", values.url);
           const res = await defaultAxios.post(`${props.url}`, formData);
           if (res.data == `Page ajouté`) {
             props.setOpen(false);
@@ -364,6 +368,10 @@ const FormAdd = (props) => {
                       </div>
                     );
                   } else if (column.field == "home" || column.field == "icon") {
+                    
+                    if(column == "home" || column == "icon"){
+                      folderRef.current = false
+                    }
                     return (
                       <div className="item" key={index}>
                         <label>{column.headerName}</label>
@@ -371,6 +379,7 @@ const FormAdd = (props) => {
                           name={column.field}
                           setFieldValue={setFieldValue}
                           accept={"image/png, .svg, .jpeg, .jpg"}
+                          folder={folderRef.current}
                         />
                       </div>
                     );
