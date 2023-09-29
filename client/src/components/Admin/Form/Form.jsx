@@ -26,6 +26,7 @@ const pageInitialValue = {
   maxYAngle: "",
   maxXAngle: "",
   minXAngle: "",
+  url:"",
   // createdAt: "",
 };
 
@@ -59,7 +60,8 @@ const FormContent = ({ btn, editRow, slug }) => {
         errors.minXAngle ||
         errors.maxXAngle ||
         errors.minYAngle ||
-        errors.maxYAngle
+        errors.maxYAngle ||
+        errors.url
       ) {
         btnSubmit.classList.add("desabledBtn");
       } else {

@@ -81,6 +81,14 @@ const columns = [
     width: 90,
   },
   {
+    field: "url",
+    type: "string",
+    inputMode: "text",
+    headerName: "URL",
+    placeholder: "url de la page",
+    width: 90,
+  },
+  {
     field: "createdAt",
     headerName: "Created At",
     width: 100,
@@ -94,6 +102,7 @@ const Pages = () => {
   const [rows, setRows] = useState([]);
   const [editRow, setEditRow] = useState(null)
   const [deleteOpen, setDeleteOpen] = useState(false)
+  const [deleteRow, setDeleteRow] = useState(null);
 
   useEffect(() => {
     getAllUsers();
@@ -118,6 +127,7 @@ const Pages = () => {
           maxXAngle:user.maxXAngle,
           minXAngle:user.minXAngle,
           createdAt,
+          url:user.url,
 
         };
       });
@@ -136,10 +146,18 @@ const Pages = () => {
         <h1>Pages</h1>
         <button onClick={() => setOpen(true)}>Add New Page</button>
       </div>
-      <DataTable slug="pages" columns={columns} rows={rows} setOpen={setOpen} setEditRow={(value)=> setEditRow(value)} setDeleteOpen={setDeleteOpen}/>
+      <DataTable slug="pages" columns={columns} rows={rows} setOpen={setOpen} setEditRow={(value)=> setEditRow(value)} setDeleteOpen={setDeleteOpen} setDeleteRow={setDeleteRow}/>
 
       {open && <Form slug="page" columns={columns} setOpen={setOpen} editRow={editRow} setEditRow={(value)=> setEditRow(value)} url="/page" />}
-    {deleteOpen && <ModalDelete setDeleteOpen={setDeleteOpen}/> }
+      {deleteOpen && (
+        <ModalDelete
+          setDeleteOpen={setDeleteOpen}
+          setDeleteRow={setDeleteRow}
+          deleteRow={deleteRow}
+          url="/page"
+          title="ce page"
+        />
+      )}
     </div>
   );
 };

@@ -142,4 +142,22 @@ const getPages = async (req, res) => {
   res.json(result);
 };
 
-module.exports = { addPage, updatePage, getPages };
+const deletePage = async (req, res) => {
+  const id = await req?.params?.id
+console.log(id);
+  if(!id) return res.json("Pas d'identifiant")
+
+  const page = await pages.findOne({where:{
+    ID_page: id
+  }})
+
+  if(!page) return res.json("Page n'existe pas")
+
+  const result = await page.destroy()
+
+  if(result) return res.json("supprimé")
+
+  res.json("non supprimé")
+}
+
+module.exports = { addPage, updatePage, getPages, deletePage };

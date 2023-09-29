@@ -147,8 +147,10 @@ const Users = () => {
       {deleteOpen && (
         <ModalDelete
           setDeleteOpen={setDeleteOpen}
+          setDeleteRow={setDeleteRow}
           deleteRow={deleteRow}
           url="/auth/User"
+          title="cet utilisateur"
         />
       )}
     </>

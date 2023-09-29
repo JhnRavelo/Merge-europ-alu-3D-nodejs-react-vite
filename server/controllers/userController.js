@@ -241,9 +241,9 @@ const updateUser = async (req, res) => {
 };
 
 const deleteUser = async (req, res) => {
+
   if (req?.params?.id) {
     const id = await req.params.id;
-    console.log(id);
     const user = await users.findOne({
       where: {
         ID_user: id,

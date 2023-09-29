@@ -4,6 +4,7 @@ const {
   addPage,
   getPages,
   updatePage,
+  deletePage,
 } = require("../controllers/pageController");
 const verifyRole = require("../middlewares/verifyRole");
 require("dotenv").config();
@@ -14,9 +15,7 @@ const imgPath = path.join(__dirname, "..", "public", "img");
 
 const storage = multer.diskStorage({
   destination: function (req, file, callback) {
-
     if (file.fieldname == "home") {
-     
       const homeImg = path.join(imgPath, "home");
       callback(null, homeImg);
     } else if (file.fieldname == "icon") {
@@ -24,11 +23,10 @@ const storage = multer.diskStorage({
       callback(null, Icon);
     }
   },
-  
+
   filename: function (req, file, callback) {
     callback(null, file.originalname);
   },
-  
 });
 
 const upload = multer({ storage: storage });
@@ -40,5 +38,7 @@ router
   .post(multipleField, addPage)
   .get(getPages)
   .put(multipleField, updatePage);
+
+router.delete("/:id", deletePage);
 
 module.exports = router;

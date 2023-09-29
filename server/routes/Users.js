@@ -26,12 +26,9 @@ router.post("/login", userLogin);
 
 router.post("/", userRegistration);
 
-router
-  .route("/User")
-  .put(updateUser)
-  .post(addUser)
-  
-  router.delete("/User/:id", deleteUser);
+router.route("/User").put(updateUser).post(addUser);
+
+router.delete("/User/:id", deleteUser);
 
 router.get("/getUsers", getUsers);
 
