@@ -6,10 +6,6 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       allowNull: false,
     },
-    page: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
     title: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -22,24 +18,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    gallery: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
     pub:{
       type: DataTypes.STRING,
       allowNull: true,
     },
-    // gallery: {
-    //   type: DataTypes.STRING,
-    //   allowNull: false,
-      //   get() {
-      //     return this.getDataValue("gallery").split(";");
-      //   },
-      //   set(val) {
-      //     this.setDataValue("gallery", val.join(";"));
-      //   },
-    // },
   });
 
   return products;
