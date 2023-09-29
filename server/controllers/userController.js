@@ -1,4 +1,4 @@
-const { users } = require("../database/models");
+const { users, trakers } = require("../database/models");
 const bcrypt = require("bcrypt");
 
 const userRegistration = async (req, res) => {
@@ -20,7 +20,7 @@ const userRegistration = async (req, res) => {
       email,
       phone,
       password: await bcrypt.hash(password, 10),
-      type:typeUser
+      type: typeUser,
     });
 
     const id = userRegister.ID_user,
@@ -194,9 +194,14 @@ const updateUser = async (req, res) => {
     const user = await users.findOne({ where: { ID_user: id } });
 
     if (user) {
-      user.set({ name, email:updateEmail, phone, type: type[0] });
+      user.set({ name, email: updateEmail, phone, type: type[0] });
       const result = await user.save();
       if (result) {
+        const updateTraker = await trakers.findAll({
+          where: {
+            name: name,
+          },
+        });
         res.json("Utilisateur modifié");
       } else {
         res.json("Utilisateur non modifié");
@@ -204,14 +209,21 @@ const updateUser = async (req, res) => {
     } else {
       res.json("Utilisateur introuvable");
     }
-  } else if (!updatePassword == "" && name && updateEmail && phone && type && id) {
+  } else if (
+    !updatePassword == "" &&
+    name &&
+    updateEmail &&
+    phone &&
+    type &&
+    id
+  ) {
     console.log("update");
     const user = await users.findOne({ where: { ID_user: id } });
 
     if (user) {
       user.set({
         name,
-        email:updateEmail,
+        email: updateEmail,
         phone,
         type: type[0],
         password: await bcrypt.hash(updatePassword, 10),
@@ -228,6 +240,20 @@ const updateUser = async (req, res) => {
   }
 };
 
+const deleteUser = async (req, res) => {
+  if (req?.params?.id) {
+    const id = await req.params.id;
+    console.log(id);
+    const user = await users.findOne({
+      where: {
+        ID_user: id,
+      },
+    });
+    const result = await user.destroy();
+    if (result) return res.json("supprimé");
+  } else res.json("non supprimé");
+};
+
 module.exports = {
   userRegistration,
   userLogin,
@@ -236,4 +262,5 @@ module.exports = {
   addUser,
   getUsers,
   updateUser,
+  deleteUser,
 };

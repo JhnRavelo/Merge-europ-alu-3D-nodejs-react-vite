@@ -96,16 +96,17 @@ const validationPage = Yup.object({
     .matches(/^(\d+(\.\d+)?,){2}\d+(\.\d+)?$/, "Doit être de forme x,y,z"),
   minYAngle: Yup.string()
     .required("Requis")
-    .matches(/^-?\d+(\.\d+)?$/),
+    .matches(/^-?\d+(\.\d+)?$/, "Doit être un nombre, peut être décimal"),
   maxYAngle: Yup.string()
     .required("Requis")
-    .matches(/^-?\d+(\.\d+)?$/),
+    .matches(/^-?\d+(\.\d+)?$/, "Doit être un nombre, peut être décimal"),
   maxXAngle: Yup.string()
     .required("Requis")
-    .matches(/^-?\d+(\.\d+)?$/),
+    .matches(/^-?\d+(\.\d+)?$/, "Doit être un nombre, peut être décimal"),
   minXAngle: Yup.string()
     .required("Requis")
-    .matches(/^-?\d+(\.\d+)?$/),
+    .matches(/^-?\d+(\.\d+)?$/, "Doit être un nombre, peut être décimal"),
+    url: Yup.string().required("Requis").matches(/^\/[^\s/$.?#].[^\s]*$/, "Format url")
 });
 
 export { validate, validationPage };

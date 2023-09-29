@@ -1,12 +1,17 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 require('dotenv').config();
-const db = require('./database/models');
+const db= require('./database/models');
+const {users, products, trakers, galleries} = require("./database/models")
 const cors = require('cors');
 const verifyJWT = require('./middlewares/verifyJWT');
 const bodyParser = require('body-parser');
 
 const app = express();
+
+users.belongsToMany(products, { through: trakers, onDelete: 'CASCADE', foreignKey:"userId" });
+products.belongsToMany(users, { through: trakers, onDelete: 'CASCADE', foreignKey:"productId" });
+products.hasMany(galleries, {onDelete: 'CASCADE'} )
 
 db.sequelize.sync({alter:true}).then(() => {
   app.listen(process.env.PORT, () => {

@@ -13,10 +13,10 @@ const {
   addUser,
   getUsers,
   updateUser,
+  deleteUser,
 } = require("../controllers/userController");
 const verifyJWT = require("../middlewares/verifyJWT");
 const verifyRole = require("../middlewares/verifyRole");
-const { updatePage } = require("../controllers/pageController");
 
 router.get("/", verifyJWT, userRead);
 
@@ -26,10 +26,13 @@ router.post("/login", userLogin);
 
 router.post("/", userRegistration);
 
-router.post("/User", addUser)
+router
+  .route("/User")
+  .put(updateUser)
+  .post(addUser)
+  
+  router.delete("/User/:id", deleteUser);
 
-router.put("/User", updateUser)
-
-router.get("/getUsers", getUsers)
+router.get("/getUsers", getUsers);
 
 module.exports = router;

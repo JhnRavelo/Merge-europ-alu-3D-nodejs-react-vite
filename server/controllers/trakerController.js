@@ -1,21 +1,30 @@
-const { trakers, users } = require("../database/models");
+const { trakers, users, products } = require("../database/models");
 
 const addTraker = async (req, res) => {
   const { name, email, checked, phone } = await req.body;
-  console.log(checked)
-  if (checked && name && email && checked[0] !=="") {
+  const {ID_user} = req.user
+
+
+  if (checked && name && email && checked[0] !== "") {
     checked.map(async (track) => {
       var date = new Date();
       var day = date.getDate();
       var month = date.getMonth() + 1;
       var year = date.getFullYear();
 
-      var isTraker = await trakers.findOne({
+      const product = await products.findOne({where: {
+        title: track
+      }})
+
+      if(!product) return res.json("produit non trouvé")
+
+      const isTraker = await trakers.findOne({
         where: {
           email: email,
           product: track,
         },
       });
+
       if (!isTraker) {
         const response = await trakers.create({
           name,
@@ -26,15 +35,15 @@ const addTraker = async (req, res) => {
           day,
           month,
           year,
+          userId: ID_user,
+          productId: product.ID_product,
         });
-        
-        
-        
-      }
+        if (response) {
+          res.json("Produit ajouté");
+        }
+      }else res.json("Produits déjà ajouté")
     });
-    
-  }
-  res.json("Produit ajouté");
+  }else res.json("Produits non ajouté")
 };
 
 const getTraker = async (req, res) => {

@@ -11,6 +11,7 @@ const DataTable = (props) => {
   }
   const handleDelete = (id) => {
     props.setDeleteOpen(true)
+    props.setDeleteRow(id)
   console.log(id);
   };
 
@@ -30,7 +31,7 @@ const DataTable = (props) => {
           <div className="delete" onClick={() => handleDelete(params.row.id)}>
             <img src="/src/assets/svg/delete.svg" alt="" />
           </div>
-          {props.slug == "users" && (
+          {props.slug == "products" && (
               <Link to={`/${props.slug}/${params.row.id}`}>
                 <img
                   src="/src/assets/svg/barChart.svg"
@@ -79,9 +80,10 @@ DataTable.propTypes = {
   slug: propTypes.string,
   rows: propTypes.any,
   columns: propTypes.any,
-  setOpen: propTypes.any,
-  setEditRow: propTypes.any,
-  setDeleteOpen: propTypes.any
+  setOpen: propTypes.func,
+  setEditRow: propTypes.func,
+  setDeleteOpen: propTypes.func,
+  setDeleteRow: propTypes.func,
 };
 
 export default DataTable;

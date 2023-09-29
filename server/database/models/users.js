@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     role: {
       type: DataTypes.INTEGER,
-      defaultValue: process.env.USER
+      defaultValue: process.env.PRIME3
     },
     type: {
       type: DataTypes.STRING,
@@ -74,6 +74,11 @@ module.exports = (sequelize, DataTypes) => {
     
     return refreshToken
   }
+
+  // users.associate = (models) => {
+  // users.belongsToMany(models.product, { through: models.commande, onDelete: 'CASCADE' });
+// Produit.belongsToMany(Client, { through: Commande, onDelete: 'CASCADE' });
+  // }
 
   return users;
 };

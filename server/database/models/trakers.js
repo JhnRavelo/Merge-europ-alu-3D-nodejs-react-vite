@@ -1,5 +1,10 @@
 module.exports = (sequelize,DataTypes) => {
     const trakers = sequelize.define('trakers', {
+        id:{
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            primaryKey: true
+        },
         name: {
             type: DataTypes.STRING,
             allowNull: false,

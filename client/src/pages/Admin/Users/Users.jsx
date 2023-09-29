@@ -1,7 +1,6 @@
 import "./User.scss";
 import { useEffect, useState } from "react";
 import Form from "../../../components/Admin/Form/Form";
-import { userRows } from "../../../assets/js/data.js";
 import DataTable from "../../../components/Admin/DataTable/DataTable";
 import defaultAxios from "../../../api/axios";
 import ModalDelete from "../../../components/Admin/ModalDelete/ModalDelete";
@@ -74,32 +73,21 @@ const columns = [
   },
 ];
 
-// const body = {
-//   id:"",
-//   img:"",
-//   name:"",
-//   type:"",
-//   email:"",
-//   phone:"",
-//   createdAt:"",
-//   connected:false,
-
-// }
-
 const Users = () => {
   const [open, setOpen] = useState(false);
   const [rows, setRows] = useState([]);
   const [editRow, setEditRow] = useState(null);
   const [deleteOpen, setDeleteOpen] = useState(false);
+  const [deleteRow, setDeleteRow] = useState(null);
 
   useEffect(() => {
     getAllUsers();
-  }, [open]);
+  }, [open, deleteOpen]);
 
   const getAllUsers = async () => {
     try {
       const res = await defaultAxios.get("/auth/getUsers");
-      // console.log(res.data);
+
       const newTable = res.data.map((user) => {
         var connected, createdAt;
         if (!user.refreshToken) {
@@ -128,14 +116,6 @@ const Users = () => {
     }
   };
 
-  // const showForm = () => {
-  //   if (open === false) {
-  //     setOpen(true);
-  //   } else {
-  //     setOpen(false);
-  //   }
-  // };
-
   return (
     <>
       <div className="users">
@@ -150,6 +130,7 @@ const Users = () => {
           setOpen={setOpen}
           setEditRow={(value) => setEditRow(value)}
           setDeleteOpen={setDeleteOpen}
+          setDeleteRow={setDeleteRow}
         />
 
         {open && (
@@ -163,7 +144,13 @@ const Users = () => {
           />
         )}
       </div>
-      {deleteOpen && <ModalDelete />}
+      {deleteOpen && (
+        <ModalDelete
+          setDeleteOpen={setDeleteOpen}
+          deleteRow={deleteRow}
+          url="/auth/User"
+        />
+      )}
     </>
   );
 };
