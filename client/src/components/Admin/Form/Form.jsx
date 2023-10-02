@@ -2,7 +2,11 @@ import { ErrorMessage, Field, Form, Formik, useFormikContext } from "formik";
 import "./Form.scss";
 import propTypes from "prop-types";
 import { Fragment, useEffect, useRef, useState } from "react";
-import { validate, validationPage, validationProduct } from "../../../lib/utils/validationSchema";
+import {
+  validate,
+  validationPage,
+  validationProduct,
+} from "../../../lib/utils/validationSchema";
 // import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import defaultAxios from "../../../api/axios";
 import FileField from "./FileField";
@@ -57,6 +61,12 @@ const FormContent = ({ btn, editRow, slug }) => {
       }
     } else if (slug == "user" && editRow) {
       if (errors.name || errors.updateEmail || errors.type || errors.phone) {
+        btnSubmit.classList.add("desabledBtn");
+      } else {
+        btnSubmit.classList.remove("desabledBtn");
+      }
+    } else if (slug == "product" && editRow) {
+      if (errors.page || errors.title || errors.description) {
         btnSubmit.classList.add("desabledBtn");
       } else {
         btnSubmit.classList.remove("desabledBtn");
@@ -126,6 +136,15 @@ const FormAdd = (props) => {
           maxXAngle: value.maxXAngle,
           minXAngle: value.minXAngle,
           url: value.url,
+        };
+      } else if (props.slug == "product") {
+        initial = {
+          page: [value.page],
+          png: null,
+          title: value.title,
+          description: value.description,
+          pub: null,
+          gallery: null,
         };
       }
     } else {
@@ -204,14 +223,17 @@ const FormAdd = (props) => {
           formData.append("page", values.page);
           formData.append("png", values.png);
           formData.append("pub", values.pub);
-          // formData.append("gallery", values.gallery);
           formData.append("description", values.description);
           formData.append("title", values.title);
           for (let i = 0; i < values.gallery.length; i++) {
             formData.append("gallery", values.gallery[i]);
           }
-
-          console.log(formData);
+          const res = await defaultAxios.post(`${props.url}`, formData);
+          console.log(res.data);
+          if (res.data == "Produit ajouté") {
+            props.setOpen(false);
+            props.setEditRow(null);
+          }
         }
       }
     } catch (error) {
@@ -234,8 +256,8 @@ const FormAdd = (props) => {
       return validate;
     } else if (props.slug == "page") {
       return validationPage;
-    }else if (props.slug == "product"){
-      return validationProduct
+    } else if (props.slug == "product") {
+      return validationProduct;
     }
   };
 

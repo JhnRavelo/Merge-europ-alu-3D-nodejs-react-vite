@@ -11,7 +11,20 @@
       }
       .MuiDataGrid-virtualScrollerRenderZone{
         background-color: rgb(233, 230, 230);
+        // white-space: wrap;
+
+        .MuiDataGrid-row {
+          // min-height: 150px;
+          // max-height: 150px;
+          .MuiDataGrid-cell{
+            white-space: wrap;
+            overflow: auto;
+          }
+        }
       }
+
+      
+        
   
       img{
         width: 32px;

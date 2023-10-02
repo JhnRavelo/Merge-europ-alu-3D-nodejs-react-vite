@@ -13,6 +13,7 @@ users.belongsToMany(products, { through: trakers, onDelete: 'CASCADE', foreignKe
 products.belongsToMany(users, { through: trakers, onDelete: 'CASCADE', foreignKey:"productId" });
 products.hasMany(galleries, {onDelete: 'CASCADE', foreignKey:"productId"} )
 pages.hasMany(products, {onDelete: 'CASCADE', foreignKey:"pageId"})
+products.belongsTo(pages, {onDelete: 'CASCADE', foreignKey:"pageId"})
 
 db.sequelize.sync({alter:true}).then(() => {
   app.listen(process.env.PORT, () => {

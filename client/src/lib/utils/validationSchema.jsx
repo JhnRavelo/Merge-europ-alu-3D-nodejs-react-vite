@@ -117,7 +117,7 @@ const validationProduct = Yup.object({
   gallery: Yup.mixed().required("Requis"),
   page: Yup.array()
     .of(Yup.string())
-    .min(1, "Selectionnez un type")
+    .min(1, "Selectionnez une page")
     .max(1, "Selectionnez seulement un type"),
   description: Yup.string().required("Requis"),
   title: Yup.string().required("Requis"),

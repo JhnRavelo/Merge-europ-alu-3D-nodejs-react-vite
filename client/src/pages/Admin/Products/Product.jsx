@@ -43,7 +43,7 @@ const columns = [
     inputMode: "text",
     headerName: "Description",
     placeholder: "Description du produit",
-    width: 300,
+    width: 200,
   },
   {
     field: "pub",
@@ -58,14 +58,17 @@ const columns = [
     field: "gallery",
     type: "file",
     headerName: "Gallery",
-    width: 90,
-    // renderCell: (params) => {
-    //   return(
-    //     <div className="galleryContainer">
-    //       {}
-    //     </div>
-    //   )
-    // },
+    witdh: 150,
+    renderCell: (params) => {
+      const galleries = params.row.gallery.split(",")
+      return(
+        <div className="galleryContainer">
+          {galleries.map((gallery, index)=>(
+            <img src={gallery} alt="" key={index}/>
+          ))}
+        </div>
+      )
+    },
   },
   {
     field: "createdAt",
@@ -94,8 +97,8 @@ const Pages = () => {
         var createdAt;
         createdAt = product.createdAt.slice(0, 10);
         return {
-          id: product.id,
-          page: product.page,
+          id: product.ID_product,
+          page: product.page.page,
           png: product.png,
           title: product.title,
           description: product.description,
