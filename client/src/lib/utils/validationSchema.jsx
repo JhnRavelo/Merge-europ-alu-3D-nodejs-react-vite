@@ -106,7 +106,21 @@ const validationPage = Yup.object({
   minXAngle: Yup.string()
     .required("Requis")
     .matches(/^-?\d+(\.\d+)?$/, "Doit être un nombre, peut être décimal"),
-    url: Yup.string().required("Requis").matches(/^\/[^\s/$.?#].[^\s]*$/, "Format url")
+  url: Yup.string()
+    .required("Requis")
+    .matches(/^\/[^\s/$.?#].[^\s]*$/, "Format url"),
 });
 
-export { validate, validationPage };
+const validationProduct = Yup.object({
+  png: Yup.mixed().required("Requis"),
+  pub: Yup.mixed().required("Requis"),
+  gallery: Yup.mixed().required("Requis"),
+  page: Yup.array()
+    .of(Yup.string())
+    .min(1, "Selectionnez un type")
+    .max(1, "Selectionnez seulement un type"),
+  description: Yup.string().required("Requis"),
+  title: Yup.string().required("Requis"),
+});
+
+export { validate, validationPage, validationProduct };

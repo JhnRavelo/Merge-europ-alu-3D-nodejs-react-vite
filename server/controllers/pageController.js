@@ -151,6 +151,7 @@ const updatePage = async (req, res) => {
 };
 
 const getPages = async (req, res) => {
+  console.log("page");
   const result = await pages.findAll();
 
   res.json(result);

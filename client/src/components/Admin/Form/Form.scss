@@ -144,6 +144,7 @@
                 transition: 0.3s;
                 padding: 0 15px;
                 border-radius: 8px;
+                margin-top: 0px;
               }
               .type:hover{
                 background-color: #e7edfe;
@@ -176,6 +177,24 @@
           outline: none;
           border: 1px solid $soft-color;
           border-radius: 3px;
+        }
+
+        .labelInput {
+          padding: 10px;
+          background-color: transparent;
+          color: #717273;
+          outline: none;
+          border: 1px solid $soft-color;
+          border-radius: 3px;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          gap: 10px;
+          cursor: pointer;
+
+          img{
+            width: 20px;
+          }
         }
       }
       button {

@@ -1,13 +1,12 @@
 import { ErrorMessage, Field, Form, Formik, useFormikContext } from "formik";
 import "./Form.scss";
 import propTypes from "prop-types";
-import { useEffect, useRef, useState } from "react";
-import { validate, validationPage } from "../../../lib/utils/validationSchema";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { Fragment, useEffect, useRef, useState } from "react";
+import { validate, validationPage, validationProduct } from "../../../lib/utils/validationSchema";
 // import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import defaultAxios from "../../../api/axios";
 import FileField from "./FileField";
+import ListCheckboxField from "./ListCheckboxField";
 
 const userInitialValue = {
   name: "",
@@ -31,7 +30,7 @@ const pageInitialValue = {
 };
 
 const productInitialValue = {
-  page: null,
+  page: "",
   png: null,
   title: "",
   description: "",
@@ -88,8 +87,6 @@ const FormContent = ({ btn, editRow, slug }) => {
 
 const FormAdd = (props) => {
   const validateRef = useRef();
-  const btnListRef = useRef();
-  const typeRef = useRef();
   const btnSubmitRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -98,9 +95,11 @@ const FormAdd = (props) => {
   const [formTitle, setFormTitle] = useState("Ajouter nouveau");
   const valueRef = useRef();
   const folderRef = useRef();
+  const listPageRef = useRef([]);
 
   useEffect(() => {
     handleTitle();
+    handleListPage();
   }, []);
 
   const handleInitialValue = () => {
@@ -138,6 +137,8 @@ const FormAdd = (props) => {
       // }
       else if (props.slug == "page") {
         initial = pageInitialValue;
+      } else if (props.slug == "product") {
+        initial = productInitialValue;
       }
     }
     return initial;
@@ -198,18 +199,24 @@ const FormAdd = (props) => {
             props.setOpen(false);
             props.setEditRow(null);
           }
+        } else if (props.slug == "product") {
+          const formData = new FormData();
+          formData.append("page", values.page);
+          formData.append("png", values.png);
+          formData.append("pub", values.pub);
+          // formData.append("gallery", values.gallery);
+          formData.append("description", values.description);
+          formData.append("title", values.title);
+          for (let i = 0; i < values.gallery.length; i++) {
+            formData.append("gallery", values.gallery[i]);
+          }
+
+          console.log(formData);
         }
       }
     } catch (error) {
       console.log(error);
     }
-  };
-
-  const handleListClick = () => {
-    const btnList = btnListRef.current;
-    const typeList = typeRef.current;
-    btnList.classList.toggle("open");
-    typeList.classList.toggle("open");
   };
 
   const handleTitle = () => {
@@ -227,6 +234,8 @@ const FormAdd = (props) => {
       return validate;
     } else if (props.slug == "page") {
       return validationPage;
+    }else if (props.slug == "product"){
+      return validationProduct
     }
   };
 
@@ -253,9 +262,28 @@ const FormAdd = (props) => {
     return mail;
   };
 
+  const handleListPage = async () => {
+    // const pageArrays = new Array()
+    listPageRef.current = [];
+    try {
+      if (props.slug == "product") {
+        const res = await defaultAxios.get("/page");
+
+        res.data.map((res) => {
+          if (res?.page) {
+            listPageRef.current.push(res.page);
+          }
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   validateRef.current = handleValidate();
   emailRef.current = handleEmail();
   passwordRef.current = handlePassword();
+  // listPageRef.current = handleListPage()
 
   return (
     <div className="add">
@@ -295,52 +323,30 @@ const FormAdd = (props) => {
                   // handlePlaceholder(column)
                   if (column.headerName == "Type") {
                     return (
-                      <div className="item" key={index}>
-                        <div className="menu-deroulant">
-                          <label>Type</label>
-
-                          <div className="container">
-                            <div
-                              className="select-btn"
-                              ref={btnListRef}
-                              onClick={handleListClick}
-                            >
-                              <span className="btn-text">{values.type}</span>
-                              <span className="arrow-dwn">
-                                <FontAwesomeIcon
-                                  icon={faChevronDown}
-                                  className="fa-solid fa-chevron-down"
-                                />
-                              </span>
-                            </div>
-                            <ul className="list-type" ref={typeRef}>
-                              <label className="type">
-                                <Field
-                                  className="checkbox"
-                                  type="checkbox"
-                                  name="type"
-                                  value="Entreprise"
-                                />
-                                <span className="item-text">Entreprise</span>
-                              </label>
-                              <label className="type">
-                                <Field
-                                  className="checkbox"
-                                  type="checkbox"
-                                  name="type"
-                                  value="Particulier"
-                                />
-                                <span className="item-text">Particulier</span>
-                              </label>
-                              <ErrorMessage
-                                name="type"
-                                component={"p"}
-                                className="error"
-                              />
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
+                      <Fragment key={index}>
+                        <ListCheckboxField
+                          type={values.type}
+                          title="Type"
+                          arrays={["Entreprise", "Particulier"]}
+                          name="type"
+                        />
+                      </Fragment>
+                    );
+                  } else if (
+                    column.field == "page" &&
+                    props.slug == "product"
+                  ) {
+                    return (
+                      <Fragment key={index}>
+                        <ListCheckboxField
+                          type={values.page ? values.page : ""}
+                          title="Page"
+                          arrays={
+                            listPageRef.current ? listPageRef.current : []
+                          }
+                          name="page"
+                        />
+                      </Fragment>
                     );
                   } else if (column.field == "email") {
                     return (
@@ -376,9 +382,17 @@ const FormAdd = (props) => {
                         />
                       </div>
                     );
-                  } else if (column.field == "home" || column.field == "icon") {
-                    if (column == "home" || column == "icon") {
+                  } else if (
+                    column.field == "home" ||
+                    column.field == "icon" ||
+                    column.field == "png" ||
+                    column.field == "pub" ||
+                    column.field == "gallery"
+                  ) {
+                    if (column.field !== "gallery") {
                       folderRef.current = false;
+                    } else {
+                      folderRef.current = true;
                     }
                     return (
                       <div className="item" key={index}>

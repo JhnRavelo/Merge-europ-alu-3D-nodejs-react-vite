@@ -1,5 +1,4 @@
 const { products } = require("../database/models");
-const products = require("../database/models/products");
 
 const addProduct = async (req, res) => {
   const { page, title, description, png } = await req.body;
@@ -38,11 +37,11 @@ const updateProduct = async (req, res) => {
   }
 };
 
-const readProduct = async (req, res) => {
-  const products = await products.findAll();
+const getProducts = async (req, res) => {
+  const allProducts = await products.findAll();
 
-  if (products) {
-    res.send(products);
+  if (allProducts) {
+    res.json(allProducts);
   }
 };
 
@@ -62,4 +61,4 @@ const deleteProduct = async (req, res) => {
   }
 };
 
-module.exports = { addProduct, updateProduct, readProduct, deleteProduct };
+module.exports = { addProduct, updateProduct, getProducts, deleteProduct };
