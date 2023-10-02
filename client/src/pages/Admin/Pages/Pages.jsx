@@ -15,7 +15,7 @@ const columns = [
     field: "icon",
     headerName: "Icône",
     type:"file",
-    width: 100,
+    width: 80,
     renderCell: (params) => {
       return (
         <img src={params.row.icon} alt="" />
@@ -25,7 +25,7 @@ const columns = [
     field: "home",
     headerName: "Home",
     type:"file",
-    width: 100,
+    width: 80,
     renderCell: (params) => {
       return (
         <img src={params.row.home} alt="" />
@@ -38,7 +38,7 @@ const columns = [
     inputMode: "text",
     headerName: "Page",
     placeholder: "Votre Page",
-    width: 100,
+    width: 80,
   },
   {
     field: "position",
@@ -46,7 +46,7 @@ const columns = [
     inputMode: "numeric",
     headerName: "Position",
     placeholder: "Position de forme x,y,z",
-    width: 90,
+    width: 150,
   },
   {
     field: "minYAngle",

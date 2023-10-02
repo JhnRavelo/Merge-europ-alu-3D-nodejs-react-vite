@@ -22,6 +22,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
+    gallery:{
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   });
 
   return products;

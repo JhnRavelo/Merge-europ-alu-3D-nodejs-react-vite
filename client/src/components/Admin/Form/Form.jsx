@@ -26,8 +26,17 @@ const pageInitialValue = {
   maxYAngle: "",
   maxXAngle: "",
   minXAngle: "",
-  url:"",
+  url: "",
   // createdAt: "",
+};
+
+const productInitialValue = {
+  page: null,
+  png: null,
+  title: "",
+  description: "",
+  pub: null,
+  gallery: null,
 };
 
 const FormContent = ({ btn, editRow, slug }) => {
@@ -88,7 +97,7 @@ const FormAdd = (props) => {
   const [btnName, setbtnName] = useState("Envoyer");
   const [formTitle, setFormTitle] = useState("Ajouter nouveau");
   const valueRef = useRef();
-  const folderRef = useRef()
+  const folderRef = useRef();
 
   useEffect(() => {
     handleTitle();
@@ -117,7 +126,7 @@ const FormAdd = (props) => {
           maxYAngle: value.maxYAngle,
           maxXAngle: value.maxXAngle,
           minXAngle: value.minXAngle,
-          url: value.url
+          url: value.url,
         };
       }
     } else {
@@ -368,9 +377,8 @@ const FormAdd = (props) => {
                       </div>
                     );
                   } else if (column.field == "home" || column.field == "icon") {
-                    
-                    if(column == "home" || column == "icon"){
-                      folderRef.current = false
+                    if (column == "home" || column == "icon") {
+                      folderRef.current = false;
                     }
                     return (
                       <div className="item" key={index}>

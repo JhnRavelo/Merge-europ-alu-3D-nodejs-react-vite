@@ -4,6 +4,7 @@ import Form from "../../../components/Admin/Form/Form";
 import DataTable from "../../../components/Admin/DataTable/DataTable";
 import defaultAxios from "../../../api/axios";
 import ModalDelete from "../../../components/Admin/ModalDelete/ModalDelete";
+import "./Product.scss"
 
 const columns = [
   {
@@ -21,6 +22,14 @@ const columns = [
     },
   },
   {
+    field: "page",
+    headerName: "Page",
+    inputMode: "string",
+    placeholder: "Votre produit",
+    type: "string",
+    width: 90,
+  },
+  {
     field: "title",
     headerName: "Nom du produit",
     inputMode: "text",
@@ -34,7 +43,7 @@ const columns = [
     inputMode: "text",
     headerName: "Description",
     placeholder: "Description du produit",
-    width: 500,
+    width: 300,
   },
   {
     field: "pub",
@@ -45,7 +54,25 @@ const columns = [
       return <img src={params.row.pub} alt="" />;
     },
   },
-  
+  {
+    field: "gallery",
+    type: "file",
+    headerName: "Gallery",
+    width: 90,
+    // renderCell: (params) => {
+    //   return(
+    //     <div className="galleryContainer">
+    //       {}
+    //     </div>
+    //   )
+    // },
+  },
+  {
+    field: "createdAt",
+    headerName: "Created At",
+    width: 100,
+    type: "string",
+  },
 ];
 
 const Pages = () => {
@@ -61,23 +88,20 @@ const Pages = () => {
 
   const getAllUsers = async () => {
     try {
-      const res = await defaultAxios.get("/page");
+      const res = await defaultAxios.get("/product");
       console.log(res.data);
-      const newTable = res.data.map((user) => {
+      const newTable = res.data.map((product) => {
         var createdAt;
-        createdAt = user.createdAt.slice(0, 10);
+        createdAt = product.createdAt.slice(0, 10);
         return {
-          id: user.ID_page,
-          page: user.page,
-          home: user.home,
-          icon: user.icon,
-          position: user.position,
-          minYAngle: user.minYAngle,
-          maxYAngle: user.maxYAngle,
-          maxXAngle: user.maxXAngle,
-          minXAngle: user.minXAngle,
+          id: product.id,
+          page: product.page,
+          png: product.png,
+          title: product.title,
+          description: product.description,
+          pub: product.pub,
+          gallery: product.gallery,
           createdAt,
-          url: user.url,
         };
       });
       // console.log(newTable);
@@ -107,12 +131,12 @@ const Pages = () => {
 
       {open && (
         <Form
-          slug="page"
+          slug="product"
           columns={columns}
           setOpen={setOpen}
           editRow={editRow}
           setEditRow={(value) => setEditRow(value)}
-          url="/page"
+          url="/product"
         />
       )}
       {deleteOpen && (
@@ -120,8 +144,8 @@ const Pages = () => {
           setDeleteOpen={setDeleteOpen}
           setDeleteRow={setDeleteRow}
           deleteRow={deleteRow}
-          url="/page"
-          title="ce page"
+          url="/product"
+          title="ce produit"
         />
       )}
     </div>
