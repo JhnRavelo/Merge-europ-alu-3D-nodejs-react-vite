@@ -3,6 +3,7 @@ const {
   getProducts,
   addProduct,
   updateProduct,
+  deleteProduct,
 } = require("../controllers/productController");
 const router = express.Router();
 const path = require("path");
@@ -47,12 +48,13 @@ const multipleField = upload.fields([
   { name: "pub" },
   { name: "gallery" },
 ]);
-// upload.any()
 
 router
   .route("/")
   .get(getProducts)
   .post(multipleField, addProduct)
   .put(multipleField, updateProduct);
+
+  router.delete("/:id", deleteProduct)
 
 module.exports = router;

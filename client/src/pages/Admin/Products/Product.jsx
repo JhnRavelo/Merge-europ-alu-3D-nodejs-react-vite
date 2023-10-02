@@ -87,7 +87,7 @@ const Pages = () => {
 
   useEffect(() => {
     getAllUsers();
-  }, [open]);
+  }, [open, deleteOpen]);
 
   const getAllUsers = async () => {
     try {

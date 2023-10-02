@@ -83,23 +83,15 @@ const updatePage = async (req, res) => {
     if (!updatePage) {
       return res.json(`La table n'existe pas`);
     } else {
-      if (icon && home) {
-        updatePage.set({
-          page,
-          icon,
-          position,
-          minXAngle,
-          minYAngle,
-          maxXAngle,
-          maxYAngle,
-          home,
-          url,
-        });
-        const result = await updatePage.save();
-        if (result) {
-          res.json("Page modifié");
-        }
-      } else if (!icon && home) {
+      if (
+        page &&
+        position &&
+        minXAngle &&
+        maxXAngle &&
+        minYAngle &&
+        maxYAngle &&
+        url
+      ) {
         updatePage.set({
           page,
           position,
@@ -107,44 +99,15 @@ const updatePage = async (req, res) => {
           minYAngle,
           maxXAngle,
           maxYAngle,
-          home,
           url,
         });
-        const result = await updatePage.save();
-        if (result) {
-          res.json("Page modifié");
-        }
-      } else if (icon && !home) {
-        updatePage.set({
-          page,
-          position,
-          minXAngle,
-          minYAngle,
-          maxXAngle,
-          maxYAngle,
-          icon,
-          url,
-        });
-        const result = await updatePage.save();
-        if (result) {
-          res.json("Page modifié");
-        }
-      } else if (!icon && !home) {
-        // console.log(updatePage);
+      }
+      if (icon) updatePage.icon = icon;
+      if (home) updatePage.home = home;
 
-        updatePage.set({
-          page,
-          position,
-          minXAngle,
-          minYAngle,
-          maxXAngle,
-          maxYAngle,
-          url,
-        });
-        const result = await updatePage.save();
-        if (result) {
-          res.json("Page modifié");
-        }
+      const result = await updatePage.save();
+      if (result) {
+        res.json("Page modifié");
       }
     }
   } else res.json("Page non modifié");

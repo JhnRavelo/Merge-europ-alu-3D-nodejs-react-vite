@@ -4,7 +4,7 @@ import folderImg from "../../../assets/png/folder.png";
 import fileImg from "../../../assets/png/gallery.png";
 
 const FileField = ({ name, accept, setFieldValue, folder, value }) => {
-  console.log(value[name]);
+
   if (!folder) {
     return (
       <>
@@ -22,7 +22,7 @@ const FileField = ({ name, accept, setFieldValue, folder, value }) => {
         />
         <label htmlFor={name} className="labelInput">
           <img src={fileImg} alt="" />
-          <span style={value[name] && {fontSize:"10px"}}>{value[name] ? value[name].name : "Ajouter Image"}</span>
+          <span style={value[name] && {fontSize:"9px"}}>{value[name] ? value[name].name : "Ajouter Image"}</span>
         </label>
         <ErrorMessage component={"p"} className="error" name={name} />
       </>
@@ -48,7 +48,7 @@ const FileField = ({ name, accept, setFieldValue, folder, value }) => {
         />
         <label htmlFor="fileFolder" className="labelInput">
           <img src={folderImg} alt="" />
-          <span style={value[name] && {fontSize:"10px"}}>
+          <span style={value[name] && {fontSize:"9px"}}>
             {value[name] ? value[name][0].webkitRelativePath.split("/")[0] : "Ajouter Image"}
           </span>
         </label>

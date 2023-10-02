@@ -131,7 +131,7 @@ const getProducts = async (req, res) => {
 };
 
 const deleteProduct = async (req, res) => {
-  const { id } = await req.body;
+  const id = await req?.params?.id;
 
   if (id) {
     const result = await products.destroy({
@@ -141,9 +141,9 @@ const deleteProduct = async (req, res) => {
     });
 
     if (result) {
-      res.json("Produit supprimé");
+      res.json("supprimé");
     }
-  }
+  }else res.json("Pas d'identifiant")
 };
 
 module.exports = { addProduct, updateProduct, getProducts, deleteProduct };
