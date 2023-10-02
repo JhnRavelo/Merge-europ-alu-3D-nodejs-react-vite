@@ -193,6 +193,25 @@ const FormAdd = (props) => {
             props.setOpen(false);
             props.setEditRow(null);
           }
+        } else if (props.slug == "product") {
+          const formData = new FormData();
+          formData.append("id", props.editRow.id);
+          formData.append("page", values.page);
+          formData.append("png", values.png);
+          formData.append("pub", values.pub);
+          formData.append("description", values.description);
+          formData.append("title", values.title);
+          if (values?.gallery?.length) {
+            for (let i = 0; i < values.gallery.length; i++) {
+              formData.append("gallery", values.gallery[i]);
+            }
+          }
+          const res = await defaultAxios.put(`${props.url}`, formData);
+          console.log(res.data);
+          if (res.data == "Produit modifié") {
+            props.setOpen(false);
+            props.setEditRow(null);
+          }
         }
       } else {
         if (props.slug == "user") {
@@ -424,6 +443,7 @@ const FormAdd = (props) => {
                           setFieldValue={setFieldValue}
                           accept={"image/png, .svg, .jpeg, .jpg"}
                           folder={folderRef.current}
+                          value={values}
                         />
                       </div>
                     );

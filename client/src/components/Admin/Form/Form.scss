@@ -192,9 +192,16 @@
           align-items: center;
           gap: 10px;
           cursor: pointer;
+          overflow: hidden;
 
           img{
             width: 20px;
+          }
+
+          span {
+            min-width: 150px;
+            max-width: 150px;
+            font-size: 13px;
           }
         }
       }

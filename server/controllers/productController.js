@@ -59,7 +59,9 @@ const addProduct = async (req, res) => {
 };
 
 const updateProduct = async (req, res) => {
-  const { id, page, title, description, png } = await req.body;
+  const { id, title, description, page } = await req.body;
+
+  let png, pub, gallery
 
   if (req?.files?.png) {
     png = `${process.env.SERVER_PATH}/img/png/${req.files.png[0].filename}`;
@@ -75,9 +77,10 @@ const updateProduct = async (req, res) => {
         `${process.env.SERVER_PATH}/img/gallery/${file.filename}`
       );
     });
-
     gallery = galleryArray.join(",");
   }
+
+  console.log(png);
 
   if (id) {
     const product = await products.findOne({
@@ -87,28 +90,19 @@ const updateProduct = async (req, res) => {
     });
     if (!product) return res.json("Produit n'existe pas");
 
-    if (page && title && description) {
-      product.set({ page, title, description});
+    const findPage = await pages.findOne({where:{
+      page: page
+    }})
+
+    if(!findPage) return res.json("Page non trouvé")
+
+    if (title && description) {
+      product.set({ pageId: findPage.ID_page, title, description});
     } 
 
-    if(!png) product.png = png
-    if(!pub) product.pub = pub
-    if(!gallery) product.gallery = gallery
-    // else if (png && !pub && !gallery) {
-    //   product.set({ page, title, description, png });
-    // }
-    // else if (!png && pub && !gallery) {
-    //   product.set({ page, title, description, pub });
-    // }
-    // else if (!png && !pub && gallery) {
-    //   product.set({ page, title, description, gallery });
-    // }
-    // else if (png && !pub && !gallery) {
-    //   product.set({ page, title, description, png });
-    // }
-    // else if (png && !pub && !gallery) {
-    //   product.set({ page, title, description, png });
-    // }
+    if(png) product.png = png
+    if(pub) product.pub = pub
+    if(gallery) product.gallery = gallery
 
     const result = await product.save();
 

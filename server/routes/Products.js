@@ -1,5 +1,9 @@
 const express = require("express");
-const { getProducts, addProduct, updateProduct } = require("../controllers/productController");
+const {
+  getProducts,
+  addProduct,
+  updateProduct,
+} = require("../controllers/productController");
 const router = express.Router();
 const path = require("path");
 const multer = require("multer");
@@ -8,7 +12,7 @@ const imgPath = path.join(__dirname, "..", "public", "img");
 
 const storage = multer.diskStorage({
   destination: function (req, file, callback) {
-    console.log(file);
+    // console.log(file);
     if (file.fieldname == "png") {
       const homeImg = path.join(imgPath, "png");
       callback(null, homeImg);
@@ -22,11 +26,21 @@ const storage = multer.diskStorage({
   },
 
   filename: function (req, file, callback) {
-    callback(null, file.originalname);
+    callback(null, Buffer.from(file.originalname, "latin1").toString("utf8"));
   },
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({
+  storage: storage,
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype.startsWith("image/")) {
+      cb(null, true);
+    } else {
+      cb(new Error("Seules les images sont autorisées."));
+    }
+  },
+  encoding: "utf-8",
+});
 
 const multipleField = upload.fields([
   { name: "png" },
@@ -35,6 +49,10 @@ const multipleField = upload.fields([
 ]);
 // upload.any()
 
-router.route("/").get(getProducts).post(multipleField, addProduct).put(multipleField, updateProduct);
+router
+  .route("/")
+  .get(getProducts)
+  .post(multipleField, addProduct)
+  .put(multipleField, updateProduct);
 
 module.exports = router;
