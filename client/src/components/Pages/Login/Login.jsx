@@ -5,17 +5,19 @@ import { useContext, useEffect, useRef } from "react";
 import FormContext from "../Form/FormContext";
 import defaultAxios from "../../../api/axios";
 import useAuth from "../../../hooks/useAuth";
-import ButtonContext from "../Button/ButtonContext";
 import useButtonContext from "../../../hooks/useButtonContext";
+import { useNavigate } from "react-router-dom";
+
+const prime = import.meta.env.VITE_PRIME.split(" ");
 
 const Login = () => {
   const { setAuth } = useAuth();
   const formContext = useContext(FormContext);
-  // const buttonContext = useContext(ButtonContext);
   const {showForm} = useButtonContext()
   const btnLoginRef = useRef();
   const { loginMail, loginPassword } = formContext[1];
   const errors = formContext[0];
+  const navigate = useNavigate()
   useEffect(() => {
     const btnLogin = btnLoginRef.current;
     if (
@@ -36,10 +38,13 @@ const Login = () => {
       const res = await defaultAxios.post("/auth/login", body),
         role = res.data.role,
         accessToken = res.data.accessToken;
-      console.log(role);
-      setAuth({role, accessToken});
+      
       
       if (role) {
+        setAuth({role, accessToken});
+        if(role == prime[0]){
+          navigate("/admin")
+        }
         showForm()
       }
     } catch (error) {
@@ -67,7 +72,6 @@ const Login = () => {
           component={"p"}
           className="error login-name-error"
         />
-        {/* <p className='error login-name-error'></p> */}
 
         <div className="username" style={{ marginTop: "15px" }}>
           <FontAwesomeIcon icon={faKey} className="fa" />
@@ -85,7 +89,7 @@ const Login = () => {
           component={"p"}
           className="error login-loginMail-error"
         />
-        {/* <p className='error login-loginMail-error'></p> */}
+       
       </div>
       <div className="buttons">
         <button

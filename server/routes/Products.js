@@ -8,6 +8,8 @@ const {
 const router = express.Router();
 const path = require("path");
 const multer = require("multer");
+const verifyJWT = require("../middlewares/verifyJWT");
+const verifyRole = require("../middlewares/verifyRole");
 
 const imgPath = path.join(__dirname, "..", "public", "img");
 
@@ -49,12 +51,17 @@ const multipleField = upload.fields([
   { name: "gallery" },
 ]);
 
+router.get("/", getProducts);
+
+router.use(verifyJWT);
+
+router.use(verifyRole(process.env.PRIME1));
+
 router
   .route("/")
-  .get(getProducts)
   .post(multipleField, addProduct)
   .put(multipleField, updateProduct);
 
-  router.delete("/:id", deleteProduct)
+router.delete("/:id", deleteProduct);
 
 module.exports = router;

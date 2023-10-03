@@ -2,8 +2,9 @@ import "../Users/User.scss";
 import { useEffect, useState } from "react";
 import Form from "../../../components/Admin/Form/Form";
 import DataTable from "../../../components/Admin/DataTable/DataTable";
-import defaultAxios from "../../../api/axios";
+// import defaultAxios from "../../../api/axios";
 import ModalDelete from "../../../components/Admin/ModalDelete/ModalDelete";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
 const columns = [
   {
@@ -72,6 +73,7 @@ const Commercials = () => {
   const [editRow, setEditRow] = useState(null);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [deleteRow, setDeleteRow] = useState(null);
+  const privateAxios = useAxiosPrivate()
 
   useEffect(() => {
     getAllUsers();
@@ -80,7 +82,7 @@ const Commercials = () => {
   const getAllUsers = async () => {
     try {
       let res;
-      res = await defaultAxios.get("/auth/getCommercials");
+      res = await privateAxios.get("/auth/getCommercials");
       const newTable = res.data.map((user) => {
         var connected, createdAt;
         if (!user.refreshToken) {
@@ -99,7 +101,6 @@ const Commercials = () => {
           connected,
         };
       });
-      // console.log(newTable);
 
       setRows(newTable);
       return res.data;

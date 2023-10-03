@@ -9,7 +9,7 @@ const PrivateRoutes = ({ prime }) => {
   return auth?.role == prime ? (
     <Outlet />
   ) : auth?.user ? (
-    <Navigate to="/error" state={{ from: location }} replace />
+    <Navigate to="/" state={{ from: location }} replace />
   ) : (
     <Navigate to="/" state={{ from: location }} replace />
   );

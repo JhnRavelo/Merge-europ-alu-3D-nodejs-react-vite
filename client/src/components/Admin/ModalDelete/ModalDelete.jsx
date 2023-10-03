@@ -1,13 +1,21 @@
 import "./ModalDelete.css";
 import Trash from "../../../assets/poubelle.png";
 import propTypes from "prop-types";
-import defaultAxios from "../../../api/axios";
+// import defaultAxios from "../../../api/axios";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
-const ModalDelete = ({ setDeleteOpen, deleteRow, url, setDeleteRow, title }) => {
+const ModalDelete = ({
+  setDeleteOpen,
+  deleteRow,
+  url,
+  setDeleteRow,
+  title,
+}) => {
+  const privateAxios = useAxiosPrivate();
   const handleDelete = async () => {
     console.log(deleteRow);
     try {
-      const res = await defaultAxios.delete(`${url}/${deleteRow}`);
+      const res = await privateAxios.delete(`${url}/${deleteRow}`);
       console.log(res.data);
       if (res.data == "supprimé") {
         setDeleteOpen(false);
@@ -64,7 +72,7 @@ ModalDelete.propTypes = {
   deleteRow: propTypes.any,
   url: propTypes.string,
   setDeleteRow: propTypes.any,
-  title: propTypes.string
+  title: propTypes.string,
 };
 
 export default ModalDelete;

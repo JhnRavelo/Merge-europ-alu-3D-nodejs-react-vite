@@ -10,6 +10,7 @@ const verifyRole = require("../middlewares/verifyRole");
 require("dotenv").config();
 const multer = require("multer");
 const path = require("path");
+const verifyJWT = require("../middlewares/verifyJWT");
 
 const imgPath = path.join(__dirname, "..", "public", "img");
 
@@ -43,10 +44,15 @@ const upload = multer({
 
 const multipleField = upload.fields([{ name: "home" }, { name: "icon" }]);
 
+router.get("/", getPages)
+
+router.use(verifyJWT);
+
+router.use(verifyRole(process.env.PRIME1));
+
 router
   .route("/")
   .post(multipleField, addPage)
-  .get(getPages)
   .put(multipleField, updatePage);
 
 router.delete("/:id", deletePage);

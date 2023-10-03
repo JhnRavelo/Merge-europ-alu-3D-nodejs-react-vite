@@ -15,7 +15,7 @@ const {
 const verifyJWT = require("../middlewares/verifyJWT");
 const verifyRole = require("../middlewares/verifyRole");
 const multer = require("multer");
-const path = require("path")
+const path = require("path");
 
 const imgPath = path.join(__dirname, "..", "public", "img");
 
@@ -24,7 +24,7 @@ const storage = multer.diskStorage({
     if (file.fieldname == "avatar") {
       const homeImg = path.join(imgPath, "avatar");
       callback(null, homeImg);
-    } 
+    }
   },
 
   filename: function (req, file, callback) {
@@ -46,13 +46,17 @@ const upload = multer({
 
 const multipleField = upload.fields([{ name: "avatar" }]);
 
-router.get("/", verifyJWT, userRead);
-
-router.get("/logout", verifyJWT, userLogout);
-
 router.post("/login", userLogin);
 
 router.post("/", userRegistration);
+
+router.use(verifyJWT);
+
+router.get("/", userRead);
+
+router.get("/logout", userLogout);
+
+router.use(verifyRole(process.env.PRIME1));
 
 router
   .route("/User")

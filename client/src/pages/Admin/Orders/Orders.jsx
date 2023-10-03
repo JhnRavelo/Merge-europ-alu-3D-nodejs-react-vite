@@ -1,8 +1,9 @@
 import "../Users/User.scss";
 import { useEffect, useState } from "react";
 import DataTable from "../../../components/Admin/DataTable/DataTable";
-import defaultAxios from "../../../api/axios";
+// import defaultAxios from "../../../api/axios";
 import useButtonContext from "../../../hooks/useButtonContext";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
 const columns = [
   {
@@ -67,9 +68,10 @@ const columns = [
   
 ];
 
-const Commercials = () => {
+const Orders = () => {
   const [rows, setRows] = useState([]);
   const {show} = useButtonContext()
+  const privateAxios = useAxiosPrivate()
 
   useEffect(() => {
     getAllTrakers();
@@ -78,7 +80,7 @@ const Commercials = () => {
   const getAllTrakers = async () => {
     try {
       let res;
-      res = await defaultAxios.get("/trakers/all");
+      res = await privateAxios.get("/trakers/all");
       console.log(res.data);
       const newTable = res.data.map((tarker) => {
         var createdAt;
@@ -107,7 +109,7 @@ const Commercials = () => {
     <>
       <div className="users">
         <div className="info">
-          <h1>Users</h1>
+          <h1>Commandes</h1>
         </div>
         <DataTable
           slug="orders"
@@ -119,4 +121,4 @@ const Commercials = () => {
   );
 };
 
-export default Commercials;
+export default Orders;

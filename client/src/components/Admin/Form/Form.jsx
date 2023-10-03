@@ -7,8 +7,8 @@ import {
   validationPage,
   validationProduct,
 } from "../../../lib/utils/validationSchema";
-// import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
-import defaultAxios from "../../../api/axios";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import defaultAxios, { privateAxios } from "../../../api/axios";
 import FileField from "./FileField";
 import ListCheckboxField from "./ListCheckboxField";
 
@@ -128,7 +128,7 @@ const FormAdd = (props) => {
   const btnSubmitRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
-  // const axiosPrivate = useAxiosPrivate();
+  const axiosPrivate = useAxiosPrivate();
   const [btnName, setbtnName] = useState("Envoyer");
   const [formTitle, setFormTitle] = useState("Ajouter nouveau");
   const valueRef = useRef();
@@ -224,7 +224,7 @@ const FormAdd = (props) => {
           }
           formData.append("phone", values.phone);
 
-          const res = await defaultAxios.put(`${props.url}`, formData);
+          const res = await privateAxios.put(`${props.url}`, formData);
           console.log(res.data);
           if (res.data == "Utilisateur modifié") {
             props.setOpen(false);
@@ -242,7 +242,7 @@ const FormAdd = (props) => {
           formData.append("maxXAngle", values.maxXAngle);
           formData.append("minXAngle", values.minXAngle);
           formData.append("url", values.url);
-          const res = await defaultAxios.put(`${props.url}`, formData);
+          const res = await privateAxios.put(`${props.url}`, formData);
           if (res.data == `Page modifié`) {
             props.setOpen(false);
             props.setEditRow(null);
@@ -260,7 +260,7 @@ const FormAdd = (props) => {
               formData.append("gallery", values.gallery[i]);
             }
           }
-          const res = await defaultAxios.put(`${props.url}`, formData);
+          const res = await privateAxios.put(`${props.url}`, formData);
           console.log(res.data);
           if (res.data == "Produit modifié") {
             props.setOpen(false);
@@ -284,7 +284,7 @@ const FormAdd = (props) => {
           formData.append("avatar", values.avatar);
           formData.append("phone", values.phone);
 
-          const res = await defaultAxios.post(`${props.url}`, formData);
+          const res = await privateAxios.post(`${props.url}`, formData);
           console.log(res.data);
           if (res.data == `Utilisateur ajouté`) {
             props.setOpen(false);
@@ -301,7 +301,7 @@ const FormAdd = (props) => {
           formData.append("maxXAngle", values.maxXAngle);
           formData.append("minXAngle", values.minXAngle);
           formData.append("url", values.url);
-          const res = await defaultAxios.post(`${props.url}`, formData);
+          const res = await privateAxios.post(`${props.url}`, formData);
           if (res.data == `Page ajouté`) {
             props.setOpen(false);
             props.setEditRow(null);
@@ -316,7 +316,7 @@ const FormAdd = (props) => {
           for (let i = 0; i < values.gallery.length; i++) {
             formData.append("gallery", values.gallery[i]);
           }
-          const res = await defaultAxios.post(`${props.url}`, formData);
+          const res = await privateAxios.post(`${props.url}`, formData);
           console.log(res.data);
           if (res.data == "Produit ajouté") {
             props.setOpen(false);

@@ -5,6 +5,7 @@ import DataTable from "../../../components/Admin/DataTable/DataTable";
 import defaultAxios from "../../../api/axios";
 import ModalDelete from "../../../components/Admin/ModalDelete/ModalDelete";
 import useButtonContext from "../../../hooks/useButtonContext";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
 const columns = [
   {
@@ -81,6 +82,7 @@ const Users = () => {
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [deleteRow, setDeleteRow] = useState(null);
   const {show} = useButtonContext()
+  const privateAxios = useAxiosPrivate()
 
   useEffect(() => {
     getAllUsers();
@@ -89,7 +91,7 @@ const Users = () => {
   const getAllUsers = async () => {
     try {
       let res;
-      res = await defaultAxios.get("/auth/getUsers");
+      res = await privateAxios.get("/auth/getUsers");
       const newTable = res.data.map((user) => {
         var connected, createdAt;
         if (!user.refreshToken) {
@@ -109,7 +111,6 @@ const Users = () => {
           connected,
         };
       });
-      // console.log(newTable);
 
       setRows(newTable);
       return res.data;

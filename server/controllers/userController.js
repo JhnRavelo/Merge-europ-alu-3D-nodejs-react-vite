@@ -113,7 +113,7 @@ const userLogin = async (req, res) => {
     maxAge: 24 * 60 * 60 * 1000,
   });
 
-  await sessions.create({ ID_session: id, day, month, year });
+  await sessions.create({ userId: id, day, month, year });
 
   res.json({ role, accessToken });
 };
