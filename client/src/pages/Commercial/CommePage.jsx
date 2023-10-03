@@ -1,9 +1,11 @@
-import './CommePage.scss' 
+import "./CommePage.scss";
+// import Home from "../../components/Messanger/Home";
 
 const CommePage = () => {
   return (
-    <div>CommePage</div>
-  )
-}
+    // <Home/>
+    <h1>rien</h1>
+  );
+};
 
-export default CommePage
+export default CommePage;
