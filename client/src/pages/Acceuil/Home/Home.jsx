@@ -2,29 +2,27 @@ import "./Home.scss";
 import logo from "../../../assets/Logo_ea.png";
 import { Link } from "react-router-dom";
 import Form from "../../../components/Pages/Form/Form";
-import { useState } from "react";
-import ButtonContext from "../../../components/Pages/Button/ButtonContext";
 import useButtonContext from "../../../hooks/useButtonContext";
-
-const body = {
-  name: "",
-  email: "",
-  phone: "",
-};
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import { useEffect } from "react";
 
 const Home = () => {
-  const {show, showForm } = useButtonContext()
-  // const [open, setOpen] = useState(false);
+  const { show, showForm } = useButtonContext();
+  const privateAxios = useAxiosPrivate();
 
-  // const showForm = () => {
-  //   if (open === false) {
-  //     setOpen(true);
-  //   } else {
-  //     setOpen(false);
-      // const corps = document.querySelector(".home__page");
-      // corps.classList.remove("none");
-  //   }
-  // };
+  useEffect(() => {
+    handleLogout();
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      const res = await privateAxios.get("/auth/logout");
+
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div id="home__page">
@@ -60,11 +58,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-        {show && (
-          // <ButtonContext.Provider value={["", showForm, body]}>
-            <Form />
-          // </ButtonContext.Provider>
-        )}
+      {show && <Form />}
     </div>
   );
 };

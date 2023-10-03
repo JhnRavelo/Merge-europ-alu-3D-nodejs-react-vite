@@ -2,7 +2,6 @@ import "./User.scss";
 import { useEffect, useState } from "react";
 import Form from "../../../components/Admin/Form/Form";
 import DataTable from "../../../components/Admin/DataTable/DataTable";
-import defaultAxios from "../../../api/axios";
 import ModalDelete from "../../../components/Admin/ModalDelete/ModalDelete";
 import useButtonContext from "../../../hooks/useButtonContext";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
