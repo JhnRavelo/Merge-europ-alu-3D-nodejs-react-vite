@@ -2,6 +2,7 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import "./dataTable.scss";
 import { Link } from "react-router-dom";
 import propTypes from "prop-types";
+import { useEffect } from "react";
 
 const DataTable = (props) => {
   const handleEdit = (id) => {
@@ -16,13 +17,14 @@ const DataTable = (props) => {
 
   const colums = [...props.columns];
   const filterColums = colums.filter((item) => item.field !== "password");
+useEffect(()=>{
 
+})
   const actionColumn = {
     field: "action",
     headerName: "Action",
     width: 200,
     renderCell: (params) => {
-      if (props.slug !== "orders") {
         return (
           <div className="action">
             <div onClick={() => handleEdit(params.row)}>
@@ -39,7 +41,6 @@ const DataTable = (props) => {
           </div>
         );
       }
-    },
   };
 
   return (
@@ -47,7 +48,7 @@ const DataTable = (props) => {
       <DataGrid
         className="dataGrid"
         rows={props.rows}
-        columns={[...filterColums, actionColumn]}
+        columns={props.slug == "orders" ? [...filterColums] : [...filterColums, actionColumn]}
         initialState={{
           pagination: {
             paginationModel: {

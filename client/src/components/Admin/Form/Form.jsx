@@ -12,12 +12,22 @@ import defaultAxios from "../../../api/axios";
 import FileField from "./FileField";
 import ListCheckboxField from "./ListCheckboxField";
 
+const prime = import.meta.env.VITE_PRIME.split(" ");
+
 const userInitialValue = {
   name: "",
   email: "",
   phone: "",
   password: "",
   type: [],
+};
+
+const commercialInitialValue = {
+  name: "",
+  email: "",
+  phone: "",
+  password: "",
+  avatar: null,
 };
 
 const pageInitialValue = {
@@ -55,6 +65,24 @@ const FormContent = ({ btn, editRow, slug }) => {
         errors.type ||
         errors.phone
       ) {
+        btnSubmit.classList.add("desabledBtn");
+      } else {
+        btnSubmit.classList.remove("desabledBtn");
+      }
+    } else if (slug == "commercial" && !editRow) {
+      if (
+        errors.name ||
+        errors.email ||
+        errors.password ||
+        errors.avatar ||
+        errors.phone
+      ) {
+        btnSubmit.classList.add("desabledBtn");
+      } else {
+        btnSubmit.classList.remove("desabledBtn");
+      }
+    } else if (slug == "commercial" && editRow) {
+      if (errors.name || errors.updateEmail || errors.phone) {
         btnSubmit.classList.add("desabledBtn");
       } else {
         btnSubmit.classList.remove("desabledBtn");
@@ -122,8 +150,16 @@ const FormAdd = (props) => {
           name: value.name,
           updateEmail: value.email,
           phone: value.phone,
-          password: "",
+          updatePassword: "",
           type: [value.type],
+        };
+      } else if (props.slug == "commercial") {
+        initial = {
+          name: value.name,
+          updateEmail: value.email,
+          phone: value.phone,
+          updatePassword: "",
+          avatar: null,
         };
       } else if (props.slug == "page") {
         initial = {
@@ -150,11 +186,9 @@ const FormAdd = (props) => {
     } else {
       if (props.slug == "user") {
         initial = userInitialValue;
-      }
-      // else {
-      //   initial = {}
-      // }
-      else if (props.slug == "page") {
+      } else if (props.slug == "commercial") {
+        initial = commercialInitialValue;
+      } else if (props.slug == "page") {
         initial = pageInitialValue;
       } else if (props.slug == "product") {
         initial = productInitialValue;
@@ -167,10 +201,30 @@ const FormAdd = (props) => {
 
   const onSubmit = async (values) => {
     try {
+      console.log(props.editRow);
       if (props.editRow) {
-        if (props.slug == "user") {
-          values.id = props.editRow.id;
-          const res = await defaultAxios.put(`${props.url}`, values);
+        if (props.slug == "user" || props.slug == "commercial") {
+          console.log(values);
+          const formData = new FormData();
+          formData.append("id", props.editRow.id);
+          formData.append("name", values.name);
+          if (props.slug == "commercial") {
+            formData.append("role", prime[1]);
+            // formData.append("type", undefined);
+          } else {
+            // formData.append("role", undefined);
+            formData.append("type", values.type);
+          }
+          formData.append("updateEmail", values.updateEmail);
+          if (values.updatePassword !== "") {
+            formData.append("updatePassword", values.updatePassword);
+          }
+          if (values.avatar) {
+            formData.append("avatar", values.avatar);
+          }
+          formData.append("phone", values.phone);
+
+          const res = await defaultAxios.put(`${props.url}`, formData);
           console.log(res.data);
           if (res.data == "Utilisateur modifié") {
             props.setOpen(false);
@@ -214,8 +268,23 @@ const FormAdd = (props) => {
           }
         }
       } else {
-        if (props.slug == "user") {
-          const res = await defaultAxios.post(`${props.url}`, values);
+        if (props.slug == "user" || props.slug == "commercial") {
+          console.log(values);
+          const formData = new FormData();
+          formData.append("name", values.name);
+          if (props.slug == "commercial") {
+            formData.append("role", prime[1]);
+            // formData.append("type", undefined);
+          } else {
+            // formData.append("role", undefined);
+            formData.append("type", values.type);
+          }
+          formData.append("email", values.email);
+          formData.append("password", values.password);
+          formData.append("avatar", values.avatar);
+          formData.append("phone", values.phone);
+
+          const res = await defaultAxios.post(`${props.url}`, formData);
           console.log(res.data);
           if (res.data == `Utilisateur ajouté`) {
             props.setOpen(false);
@@ -271,7 +340,7 @@ const FormAdd = (props) => {
   };
 
   const handleValidate = () => {
-    if (props.slug == "user") {
+    if (props.slug == "user" || props.slug == "commercial") {
       return validate;
     } else if (props.slug == "page") {
       return validationPage;
@@ -304,7 +373,6 @@ const FormAdd = (props) => {
   };
 
   const handleListPage = async () => {
-    // const pageArrays = new Array()
     listPageRef.current = [];
     try {
       if (props.slug == "product") {
@@ -428,7 +496,8 @@ const FormAdd = (props) => {
                     column.field == "icon" ||
                     column.field == "png" ||
                     column.field == "pub" ||
-                    column.field == "gallery"
+                    column.field == "gallery" ||
+                    column.field == "avatar"
                   ) {
                     if (column.field !== "gallery") {
                       folderRef.current = false;
@@ -441,7 +510,7 @@ const FormAdd = (props) => {
                         <FileField
                           name={column.field}
                           setFieldValue={setFieldValue}
-                          accept={"image/png, .svg, .jpeg, .jpg"}
+                          accept={"image/png, .svg, .jpeg, .jpg, .webp"}
                           folder={folderRef.current}
                           value={values}
                         />

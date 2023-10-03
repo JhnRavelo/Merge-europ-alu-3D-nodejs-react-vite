@@ -93,7 +93,7 @@ const getTrakers = async(req, res)=>{
     ]
   })
 
-  console.log(allTrakers);
+   console.log(allTrakers);
 
   res.json(allTrakers)
 }

@@ -1,5 +1,11 @@
-const { users, trakers, sessions } = require("../database/models");
+const { users, sessions } = require("../database/models");
 const bcrypt = require("bcrypt");
+require("dotenv").config();
+
+var date = new Date();
+var day = date.getDate();
+var month = date.getMonth() + 1;
+var year = date.getFullYear();
 
 const userRegistration = async (req, res) => {
   const { name, email, phone, password, typeUser } = await req.body;
@@ -28,11 +34,6 @@ const userRegistration = async (req, res) => {
       refreshToken = users.prototype.generateRefreshToken(id),
       accessToken = users.prototype.generateToken(id, role);
 
-    var date = new Date();
-    var day = date.getDate();
-    var month = date.getMonth() + 1;
-    var year = date.getFullYear();
-
     userRegister.refreshToken = refreshToken;
 
     const result = await userRegister.save();
@@ -56,7 +57,7 @@ const userRegistration = async (req, res) => {
 
 const userLogin = async (req, res) => {
   const { loginMail, loginPassword } = await req.body;
-  console.log(req.body);
+
   const cookie = req.cookies;
 
   const userName = await users.findOne({
@@ -111,11 +112,6 @@ const userLogin = async (req, res) => {
     secure: true,
     maxAge: 24 * 60 * 60 * 1000,
   });
-
-  var date = new Date();
-  var day = date.getDate();
-  var month = date.getMonth() + 1;
-  var year = date.getFullYear();
 
   await sessions.create({ ID_session: id, day, month, year });
 
@@ -173,8 +169,12 @@ const userLogout = async (req, res) => {
 };
 
 const addUser = async (req, res) => {
-  const { name, email, phone, password, type } = await req.body;
+  const { name, email, phone, password, type, role } = await req.body;
   var userName;
+
+  console.log(req.files.avatar);
+
+  console.log(`${type}`);
   if (email) {
     userName = await users.findOne({
       where: {
@@ -184,66 +184,69 @@ const addUser = async (req, res) => {
   }
 
   if (userName) {
-    res.json(`L'utilisateur existe déjà`);
-  } else if (name && email && !userName && phone && password) {
-    await users.create({
+    return res.json(`L'utilisateur existe déjà`);
+  } else if (name && email && phone && password) {
+    const userAdd = await users.create({
       name,
       email,
       phone,
       password: await bcrypt.hash(password, 10),
-      type: type[0],
     });
-    res.json(`Utilisateur ajouté`);
+
+    if (type) {
+      userAdd.type = type;
+    }
+    if (role) {
+      userAdd.role = role;
+    }
+    if (req?.files?.avatar) {
+      userAdd.avatar = `${process.env.SERVER_PATH}/img/avatar/${req.files.avatar[0].filename}`;
+    }
+
+    const result = await userAdd.save();
+
+    console.log(result);
+
+    if (result) {
+      await sessions.create({ userId: userAdd.ID_user, day, month, year });
+      res.json(`Utilisateur ajouté`);
+    }
   }
 };
 
 const getUsers = async (req, res) => {
-  const result = await users.findAll();
+  const result = await users.findAll({where:{
+    role: process.env.PRIME3
+  }});
 
   res.json(result);
 };
 
 const updateUser = async (req, res) => {
-  const { name, updateEmail, phone, updatePassword, type, id } = await req.body;
-  console.log(updatePassword);
-  if (updatePassword == "" && name && updateEmail && phone && type && id) {
+  const { name, updateEmail, phone, updatePassword, type, id, role } =
+    await req.body;
+
+  if (id) {
     const user = await users.findOne({ where: { ID_user: id } });
 
     if (user) {
-      user.set({ name, email: updateEmail, phone, type: type[0] });
-      const result = await user.save();
-      if (result) {
-        const updateTraker = await trakers.findAll({
-          where: {
-            name: name,
-          },
-        });
-        res.json("Utilisateur modifié");
-      } else {
-        res.json("Utilisateur non modifié");
+      user.set({ name, email: updateEmail, phone });
+
+      if (type) {
+        user.type = type;
       }
-    } else {
-      res.json("Utilisateur introuvable");
-    }
-  } else if (
-    !updatePassword == "" &&
-    name &&
-    updateEmail &&
-    phone &&
-    type &&
-    id
-  ) {
-    console.log("update");
-    const user = await users.findOne({ where: { ID_user: id } });
 
-    if (user) {
-      user.set({
-        name,
-        email: updateEmail,
-        phone,
-        type: type[0],
-        password: await bcrypt.hash(updatePassword, 10),
-      });
+      if (role) {
+        user.role = role;
+      }
+
+      if (req?.files?.avatar) {
+        user.avatar = `${process.env.SERVER_PATH}/img/avatar/${req.files.avatar[0].filename}`;
+      }
+      if (updatePassword) {
+        console.log(updatePassword);
+        user.password = await bcrypt.hash(updatePassword, 10);
+      }
       const result = await user.save();
       if (result) {
         res.json("Utilisateur modifié");
@@ -269,6 +272,16 @@ const deleteUser = async (req, res) => {
   } else res.json("non supprimé");
 };
 
+const getCommercials = async (req, res) => {
+  const result = await users.findAll({
+    where: {
+      role: process.env.PRIME2,
+    },
+  });
+
+  res.json(result);
+};
+
 module.exports = {
   userRegistration,
   userLogin,
@@ -278,4 +291,5 @@ module.exports = {
   getUsers,
   updateUser,
   deleteUser,
+  getCommercials,
 };

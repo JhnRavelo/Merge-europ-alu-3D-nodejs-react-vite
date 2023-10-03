@@ -25,11 +25,21 @@ const storage = multer.diskStorage({
   },
 
   filename: function (req, file, callback) {
-    callback(null, file.originalname);
+    callback(null, Buffer.from(file.originalname, "latin1").toString("utf8"));
   },
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({
+  storage: storage,
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype.startsWith("image/")) {
+      cb(null, true);
+    } else {
+      cb(new Error("Seules les images sont autorisées."));
+    }
+  },
+  encoding: "utf-8",
+});
 
 const multipleField = upload.fields([{ name: "home" }, { name: "icon" }]);
 

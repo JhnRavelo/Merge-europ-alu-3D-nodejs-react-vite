@@ -19,7 +19,7 @@ const Menu =  () => {
                 <img src={home} alt="" />
                 <span className="listItemTitle">Home</span>
             </Link>
-            <Link to="/profile" className="listItem">
+            <Link to="/admin/profile" className="listItem">
                 <img src={admin} alt="admin" />
                 <span className="listItemTitle">Profile</span>
             </Link>
@@ -36,12 +36,12 @@ const Menu =  () => {
                 <img src={profile} alt="users" />
                 <span className="listItemTitle">Utilisateurs</span>
             </Link>
-            <Link to="/admin/user" className="listItem">
+            <Link to="/admin/commercial" className="listItem">
                 <img src={seller} alt="product" />
                 <span className="listItemTitle">Commercials</span>
             </Link>
             <span className="title">Listes</span>
-            <Link to="/profile" className="listItem">
+            <Link to="/admin/order" className="listItem">
                 <img src={order} alt="product" />
                 <span className="listItemTitle">Commandes</span>
             </Link>

@@ -85,6 +85,7 @@ const validate = Yup.object({
     .required("Vous devez mettre votre adresse email")
     .email(`l'adresse email est invalide`),
   typeUser: Yup.string().required("Vous devez choisir"),
+  avatar: Yup.mixed().required("Requis"),
 });
 
 const validationPage = Yup.object({

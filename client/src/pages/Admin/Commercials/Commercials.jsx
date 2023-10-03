@@ -1,10 +1,9 @@
-import "./User.scss";
+import "../Users/User.scss";
 import { useEffect, useState } from "react";
 import Form from "../../../components/Admin/Form/Form";
 import DataTable from "../../../components/Admin/DataTable/DataTable";
 import defaultAxios from "../../../api/axios";
 import ModalDelete from "../../../components/Admin/ModalDelete/ModalDelete";
-import useButtonContext from "../../../hooks/useButtonContext";
 
 const columns = [
   {
@@ -13,11 +12,12 @@ const columns = [
     width: 40,
   },
   {
-    field: "img",
+    field: "avatar",
     headerName: "Avatar",
+    type: "file",
     width: 100,
     renderCell: (params) => {
-      return <img src={params.row.img} alt="" />;
+      return <img src={params.row.avatar} alt="" />;
     },
   },
   {
@@ -27,14 +27,6 @@ const columns = [
     headerName: "Nom",
     placeholder: "Votre Nom",
     width: 200,
-  },
-  {
-    field: "type",
-    type: "string",
-    inputMode: "text",
-    headerName: "Type",
-    placeholder: "Type de User",
-    width: 90,
   },
   {
     field: "email",
@@ -74,22 +66,21 @@ const columns = [
   },
 ];
 
-const Users = () => {
+const Commercials = () => {
   const [open, setOpen] = useState(false);
   const [rows, setRows] = useState([]);
   const [editRow, setEditRow] = useState(null);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [deleteRow, setDeleteRow] = useState(null);
-  const {show} = useButtonContext()
 
   useEffect(() => {
     getAllUsers();
-  }, [open, deleteOpen, show]);
+  }, [open, deleteOpen]);
 
   const getAllUsers = async () => {
     try {
       let res;
-      res = await defaultAxios.get("/auth/getUsers");
+      res = await defaultAxios.get("/auth/getCommercials");
       const newTable = res.data.map((user) => {
         var connected, createdAt;
         if (!user.refreshToken) {
@@ -100,9 +91,8 @@ const Users = () => {
         createdAt = user.createdAt.slice(0, 10);
         return {
           id: user.ID_user,
-          img: user.avatar,
+          avatar: user.avatar,
           name: user.name,
-          type: user.type,
           email: user.email,
           phone: user.phone,
           createdAt,
@@ -123,10 +113,10 @@ const Users = () => {
       <div className="users">
         <div className="info">
           <h1>Users</h1>
-          <button onClick={() => setOpen(true)}>Add New User</button>
+          <button onClick={() => setOpen(true)}>Add New Commercial</button>
         </div>
         <DataTable
-          slug="users"
+          slug="commercials"
           columns={columns}
           rows={rows}
           setOpen={setOpen}
@@ -137,7 +127,7 @@ const Users = () => {
 
         {open && (
           <Form
-            slug="user"
+            slug="commercial"
             columns={columns}
             setOpen={setOpen}
             editRow={editRow}
@@ -152,11 +142,11 @@ const Users = () => {
           setDeleteRow={setDeleteRow}
           deleteRow={deleteRow}
           url="/auth/User"
-          title="cet utilisateur"
+          title="ce Commercial"
         />
       )}
     </>
   );
 };
 
-export default Users;
+export default Commercials;
