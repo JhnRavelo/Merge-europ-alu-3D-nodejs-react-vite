@@ -40,8 +40,6 @@ const addProduct = async (req, res) => {
     gallery = galleryArray.join(",");
   }
 
-  console.log(gallery);
-
   if (page && title && description && png && gallery && pub) {
     const result = await products.create({
       pageId: findPage.ID_page,

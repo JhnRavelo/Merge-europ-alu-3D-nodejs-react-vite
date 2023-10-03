@@ -1,20 +1,24 @@
 module.exports = (sequelize, DataTypes) => {
-    const galleries = sequelize.define('galleries', {
-        ID_gallery:{
+    const sessions = sequelize.define('sessions', {
+        ID_session:{
             type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
             allowNull: false
         },
-        title:{
+        day:{
             type: DataTypes.STRING,
             allowNull: false,
         },
-        src:{
+        month:{
             type: DataTypes.STRING,
             allowNull: false,
-        }
+        },
+        year:{
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
 
     })
-    return galleries
+    return sessions
 }

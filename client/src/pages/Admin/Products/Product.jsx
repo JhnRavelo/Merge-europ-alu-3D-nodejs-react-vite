@@ -78,7 +78,7 @@ const columns = [
   },
 ];
 
-const Pages = () => {
+const Products = () => {
   const [open, setOpen] = useState(false);
   const [rows, setRows] = useState([]);
   const [editRow, setEditRow] = useState(null);
@@ -86,10 +86,10 @@ const Pages = () => {
   const [deleteRow, setDeleteRow] = useState(null);
 
   useEffect(() => {
-    getAllUsers();
+    getAllProducts();
   }, [open, deleteOpen]);
 
-  const getAllUsers = async () => {
+  const getAllProducts = async () => {
     try {
       const res = await defaultAxios.get("/product");
       console.log(res.data);
@@ -155,4 +155,4 @@ const Pages = () => {
   );
 };
 
-export default Pages;
+export default Products;

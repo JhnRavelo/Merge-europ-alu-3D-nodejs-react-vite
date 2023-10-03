@@ -6,7 +6,6 @@ import product from '../../../assets/svg/product.svg'
 import order from '../../../assets/svg/order.svg'
 import log from '../../../assets/svg/log.svg'
 import seller from '../../../assets/svg/seller.svg'
-import gallery from '../../../assets/svg/gallery.svg'
 import page from '../../../assets/svg/page.svg'
 import admin from '../../../assets/svg/admin.svg'
 
@@ -45,10 +44,6 @@ const Menu =  () => {
             <Link to="/profile" className="listItem">
                 <img src={order} alt="product" />
                 <span className="listItemTitle">Commandes</span>
-            </Link>
-            <Link to="/profile" className="listItem">
-                <img src={gallery} alt="product" />
-                <span className="listItemTitle">Galleries</span>
             </Link>
             <span className="title">Evènements</span>
             <Link to="/profile" className="listItem">

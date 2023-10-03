@@ -1,4 +1,4 @@
-const { users, trakers } = require("../database/models");
+const { users, trakers, sessions } = require("../database/models");
 const bcrypt = require("bcrypt");
 
 const userRegistration = async (req, res) => {
@@ -28,9 +28,18 @@ const userRegistration = async (req, res) => {
       refreshToken = users.prototype.generateRefreshToken(id),
       accessToken = users.prototype.generateToken(id, role);
 
+    var date = new Date();
+    var day = date.getDate();
+    var month = date.getMonth() + 1;
+    var year = date.getFullYear();
+
     userRegister.refreshToken = refreshToken;
 
-    await userRegister.save();
+    const result = await userRegister.save();
+
+    if (!result) return res.json("Utilisateur non enregistré");
+
+    await sessions.create({ ID_session: id, day, month, year });
 
     res.cookie("jwt", refreshToken, {
       maxAge: 24 * 60 * 60 * 1000,
@@ -102,6 +111,13 @@ const userLogin = async (req, res) => {
     secure: true,
     maxAge: 24 * 60 * 60 * 1000,
   });
+
+  var date = new Date();
+  var day = date.getDate();
+  var month = date.getMonth() + 1;
+  var year = date.getFullYear();
+
+  await sessions.create({ ID_session: id, day, month, year });
 
   res.json({ role, accessToken });
 };
@@ -241,7 +257,6 @@ const updateUser = async (req, res) => {
 };
 
 const deleteUser = async (req, res) => {
-
   if (req?.params?.id) {
     const id = await req.params.id;
     const user = await users.findOne({

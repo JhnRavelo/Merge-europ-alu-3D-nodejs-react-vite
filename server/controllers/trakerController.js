@@ -1,4 +1,4 @@
-const { trakers, users, products } = require("../database/models");
+const { trakers, users, products, pages } = require("../database/models");
 
 const addTraker = async (req, res) => {
   const { name, email, checked, phone } = await req.body;
@@ -27,10 +27,6 @@ const addTraker = async (req, res) => {
 
       if (!isTraker) {
         const response = await trakers.create({
-          name,
-          email,
-          product: track,
-          phone,
           date,
           day,
           month,
@@ -74,7 +70,32 @@ const getTraker = async (req, res) => {
     return res.json("No Page");
   }
 
-  res.send(traker);
+  res.json(traker);
 };
 
-module.exports = { addTraker, getTraker };
+const getTrakers = async(req, res)=>{
+  const allTrakers = await trakers.findAll({
+    include:[
+      {
+        model: users,
+        attributes: ["name", "email", "type"],
+      },
+      {
+        model: products,
+        attributes: ["title"],
+        include: [
+          {
+            model: pages,
+            attributes: ["page"]
+          }
+        ]
+      }
+    ]
+  })
+
+  console.log(allTrakers);
+
+  res.json(allTrakers)
+}
+
+module.exports = { addTraker, getTraker, getTrakers };

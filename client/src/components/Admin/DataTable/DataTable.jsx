@@ -4,15 +4,14 @@ import { Link } from "react-router-dom";
 import propTypes from "prop-types";
 
 const DataTable = (props) => {
-
   const handleEdit = (id) => {
-    props.setEditRow(id)
-    props.setOpen(true)
-  }
+    props.setEditRow(id);
+    props.setOpen(true);
+  };
   const handleDelete = (id) => {
-    props.setDeleteOpen(true)
-    props.setDeleteRow(id)
-  console.log(id);
+    props.setDeleteOpen(true);
+    props.setDeleteRow(id);
+    console.log(id);
   };
 
   const colums = [...props.columns];
@@ -23,26 +22,23 @@ const DataTable = (props) => {
     headerName: "Action",
     width: 200,
     renderCell: (params) => {
-      return (
-        <div className="action">
-          <div onClick={()=>handleEdit(params.row)}>
-            <img src="/src/assets/svg/view.svg" alt="" />
-          </div>
-          <div className="delete" onClick={() => handleDelete(params.row.id)}>
-            <img src="/src/assets/svg/delete.svg" alt="" />
-          </div>
-          {props.slug == "products" && (
+      if (props.slug !== "orders") {
+        return (
+          <div className="action">
+            <div onClick={() => handleEdit(params.row)}>
+              <img src="/src/assets/svg/view.svg" alt="" />
+            </div>
+            <div className="delete" onClick={() => handleDelete(params.row.id)}>
+              <img src="/src/assets/svg/delete.svg" alt="" />
+            </div>
+            {props.slug == "products" && (
               <Link to={`/${props.slug}/${params.row.id}`}>
-                <img
-                  src="/src/assets/svg/barChart.svg"
-                  alt=""
-                  style={{padding:'px',height:''}}
-                />
+                <img src="/src/assets/svg/barChart.svg" alt="" />
               </Link>
-
-          )}
-        </div>
-      );
+            )}
+          </div>
+        );
+      }
     },
   };
 
