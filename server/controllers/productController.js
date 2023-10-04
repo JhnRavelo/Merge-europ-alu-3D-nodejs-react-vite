@@ -5,12 +5,14 @@ const addProduct = async (req, res) => {
   const { page, title, description } = await req.body;
 
   let png, pub, gallery;
+  console.log(req.files);
 
   const findProduct = await products.findOne({
     where: {
       title: title,
     },
   });
+  console.log(req.body);
 
   if (findProduct) return res.json("product déjà ajouté");
 

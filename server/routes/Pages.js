@@ -16,6 +16,7 @@ const imgPath = path.join(__dirname, "..", "public", "img");
 
 const storage = multer.diskStorage({
   destination: function (req, file, callback) {
+    console.log(file);
     if (file.fieldname == "home") {
       const homeImg = path.join(imgPath, "home");
       callback(null, homeImg);
@@ -46,14 +47,17 @@ const multipleField = upload.fields([{ name: "home" }, { name: "icon" }]);
 
 router.get("/", getPages)
 
+
 router.use(verifyJWT);
 
 router.use(verifyRole(process.env.PRIME1));
 
+router.use(multipleField)
+
 router
   .route("/")
-  .post(multipleField, addPage)
-  .put(multipleField, updatePage);
+  .post(addPage)
+  .put(updatePage);
 
 router.delete("/:id", deletePage);
 

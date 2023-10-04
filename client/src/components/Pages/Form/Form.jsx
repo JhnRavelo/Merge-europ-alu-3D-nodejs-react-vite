@@ -14,7 +14,6 @@ const FormField = () => {
 
   useEffect(() => {
     const form = formRef.current;
-    console.log(open);
 
     if (open) {
       setTimeout(() => {

@@ -41,7 +41,13 @@ const userRegistration = async (req, res) => {
     if (!result) return res.json("Utilisateur non enregistré");
 
     if (userRegister.role == process.env.PRIME3) {
-      await sessions.create({ userId: userAdd.ID_user, day, month, year });
+      const sess = await sessions.create({
+        userId: userAdd.ID_user,
+        day,
+        month,
+        year,
+      });
+      console.log(sess);
     }
 
     res.cookie("jwt", refreshToken, {
@@ -55,6 +61,50 @@ const userRegistration = async (req, res) => {
   } else {
     res.json("Suivant");
   }
+};
+
+const validationRegister = async (req, res) => {
+  const { email } = await req.body;
+  var userName;
+  if (email) {
+    userName = await users.findOne({
+      where: {
+        email: email,
+      },
+    });
+  }
+
+  if (userName) {
+    return res.json(`L'utilisateur existe déjà`);
+  }
+
+  res.json("User");
+};
+
+const validationLogin = async (req, res) => {
+  const { loginMail, loginPassword } = await req.body;
+
+  if(!loginMail || !loginPassword){
+    return res.jon("Connexion invalide")
+  }
+
+    const userName = await users.findOne({
+      where: {
+        email: loginMail,
+      },
+    });
+
+  if (!userName) {
+    return res.json(`Connexion invalide`);
+  }
+
+  const match = await bcrypt.compare(loginPassword, userName.password);
+
+  if (!match) {
+    return res.json("Connexion invalide");
+  }
+  console.log("res");
+  res.json("Login");
 };
 
 const userLogin = async (req, res) => {
@@ -116,7 +166,13 @@ const userLogin = async (req, res) => {
   });
 
   if (userName.role == process.env.PRIME3) {
-    await sessions.create({ userId: userAdd.ID_user, day, month, year });
+    const sess = await sessions.create({
+      userId: userName.ID_user,
+      day,
+      month,
+      year,
+    });
+    console.log(sess);
   }
 
   res.json({ role, accessToken });
@@ -135,7 +191,12 @@ const userRead = async (req, res) => {
 
   if (!user) return res.sendStatus(401);
 
-  res.json({ name: user.name, email: user.email, phone: user.phone });
+  res.json({
+    name: user.name,
+    email: user.email,
+    phone: user.phone,
+    avatar: user.avatar,
+  });
 };
 
 const userLogout = async (req, res) => {
@@ -300,4 +361,6 @@ module.exports = {
   updateUser,
   deleteUser,
   getCommercials,
+  validationLogin,
+  validationRegister,
 };

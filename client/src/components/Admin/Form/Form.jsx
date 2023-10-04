@@ -201,7 +201,6 @@ const FormAdd = (props) => {
 
   const onSubmit = async (values) => {
     try {
-      console.log(props.editRow);
       if (props.editRow) {
         if (props.slug == "user" || props.slug == "commercial") {
           console.log(values);
@@ -242,6 +241,7 @@ const FormAdd = (props) => {
           formData.append("maxXAngle", values.maxXAngle);
           formData.append("minXAngle", values.minXAngle);
           formData.append("url", values.url);
+          
           const res = await privateAxios.put(`${props.url}`, formData);
           if (res.data == `Page modifié`) {
             props.setOpen(false);
@@ -269,7 +269,6 @@ const FormAdd = (props) => {
         }
       } else {
         if (props.slug == "user" || props.slug == "commercial") {
-          console.log(values);
           const formData = new FormData();
           formData.append("name", values.name);
           if (props.slug == "commercial") {
@@ -301,6 +300,9 @@ const FormAdd = (props) => {
           formData.append("maxXAngle", values.maxXAngle);
           formData.append("minXAngle", values.minXAngle);
           formData.append("url", values.url);
+
+          console.log(values.icon);
+          console.log(values.home);
           const res = await privateAxios.post(`${props.url}`, formData);
           if (res.data == `Page ajouté`) {
             props.setOpen(false);

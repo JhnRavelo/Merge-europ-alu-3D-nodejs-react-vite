@@ -38,7 +38,7 @@ const Login = () => {
       const res = await defaultAxios.post("/auth/login", body),
         role = res.data.role,
         accessToken = res.data.accessToken;
-      
+      console.log(res.data);
       
       if (role) {
         setAuth({role, accessToken});

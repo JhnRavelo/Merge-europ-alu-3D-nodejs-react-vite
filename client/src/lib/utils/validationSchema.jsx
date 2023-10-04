@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import axios from "axios";
+import defaultAxios from "../../api/axios";
 
 const phoneRegEx =
   /^((\+\d{1,3}(-|)?\(?\d\)?(-|)?\d{1,3})|(\(?\d{2,3}\)?))(-|)?(\d{3,4})(-|)?(\d{4})((x|ext)\d{1,5}){0,1}$/;
@@ -14,13 +14,13 @@ const validate = Yup.object({
     .test({
       message: () => `L'utilisateur existe déjà`,
       test: async function (value) {
-        const res = await axios.post("http://127.0.0.1:5000/auth", {
+        const res = await defaultAxios.post("/auth/validationRegister", {
           email: value,
         });
-        if (res.data == `L'utilisateur existe déjà`) {
-          return false;
-        } else {
+        if (res.data == `User`) {
           return true;
+        } else {
+          return false;
         }
       },
     }),
@@ -59,14 +59,14 @@ const validate = Yup.object({
     .test({
       message: () => `Mot de passe ou email incorrect`,
       test: async function (value) {
-        const res = await axios.post("http://127.0.0.1:5000/auth/login", {
+        const res = await defaultAxios.post("/auth/validationLogin", {
           loginPassword: value,
           loginMail: this.parent.loginMail,
         });
-        if (res.data == `Connexion invalide`) {
-          return false;
-        } else {
+        if (res.data == `Login`) {
           return true;
+        } else {
+          return false;
         }
       },
     }),
