@@ -34,14 +34,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({
   storage: storage,
-  fileFilter: (req, file, cb) => {
-    if (file.mimetype.startsWith("image/")) {
-      cb(null, true);
-    } else {
-      cb(new Error("Seules les images sont autorisées."));
-    }
-  },
-  encoding: "utf-8",
 });
 
 const multipleField = upload.fields([{ name: "home" }, { name: "icon" }]);
@@ -52,12 +44,6 @@ router
   .route("/upload")
   .post(multipleField, uploadPageImage)
   .put(multipleField, uploadPageImage);
-
-// router.use(verifyJWT);
-
-// router.use(verifyRole(process.env.PRIME1));
-
-// router.use(multipleField)
 
 router
   .route("/")

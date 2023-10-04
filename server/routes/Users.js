@@ -13,6 +13,7 @@ const {
   getCommercials,
   validationLogin,
   validationRegister,
+  uploadUserImage,
 } = require("../controllers/userController");
 const verifyJWT = require("../middlewares/verifyJWT");
 const verifyRole = require("../middlewares/verifyRole");
@@ -48,13 +49,18 @@ const upload = multer({
 
 const multipleField = upload.fields([{ name: "avatar" }]);
 
-router.post("/validationLogin", validationLogin)
+router.post("/validationLogin", validationLogin);
 
-router.post("/validationRegister", validationRegister)
+router.post("/validationRegister", validationRegister);
 
 router.post("/login", userLogin);
 
 router.post("/", userRegistration);
+
+router
+  .route("/User/upload")
+  .post(multipleField, uploadUserImage)
+  .put(multipleField, uploadUserImage);
 
 // router.use(verifyJWT);
 
@@ -69,10 +75,20 @@ router
   .put(verifyJWT, verifyRole(process.env.PRIME1), updateUser)
   .post(verifyJWT, verifyRole(process.env.PRIME1), addUser);
 
-router.delete("/User/:id", verifyJWT, verifyRole(process.env.PRIME1), deleteUser);
+router.delete(
+  "/User/:id",
+  verifyJWT,
+  verifyRole(process.env.PRIME1),
+  deleteUser
+);
 
 router.get("/getUsers", verifyJWT, verifyRole(process.env.PRIME1), getUsers);
 
-router.get("/getCommercials", verifyJWT, verifyRole(process.env.PRIME1), getCommercials);
+router.get(
+  "/getCommercials",
+  verifyJWT,
+  verifyRole(process.env.PRIME1),
+  getCommercials
+);
 
 module.exports = router;

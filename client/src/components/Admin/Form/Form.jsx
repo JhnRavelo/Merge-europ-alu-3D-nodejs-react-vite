@@ -143,7 +143,6 @@ const FormAdd = (props) => {
   const handleInitialValue = () => {
     var initial;
     if (props.editRow) {
-      console.log("edit");
       const value = props.editRow;
       if (props.slug == "user") {
         initial = {
@@ -203,7 +202,6 @@ const FormAdd = (props) => {
     try {
       if (props.editRow) {
         if (props.slug == "user" || props.slug == "commercial") {
-          console.log(values);
           const formData = new FormData();
           formData.append("id", props.editRow.id);
           formData.append("name", values.name);
@@ -225,6 +223,12 @@ const FormAdd = (props) => {
 
           const res = await privateAxios.put(`${props.url}`, formData);
           console.log(res.data);
+          const result = await defaultAxios.put(
+            `${props.url}/upload`,
+            formData
+          );
+
+          console.log(result);
           if (res.data == "Utilisateur modifié") {
             props.setOpen(false);
             props.setEditRow(null);
@@ -241,12 +245,15 @@ const FormAdd = (props) => {
           formData.append("maxXAngle", values.maxXAngle);
           formData.append("minXAngle", values.minXAngle);
           formData.append("url", values.url);
-          
+
           const res = await privateAxios.put(`${props.url}`, formData);
 
           console.log(res.data);
-          
-          const result = await defaultAxios.put(`${props.url}/upload`, formData)
+
+          const result = await defaultAxios.put(
+            `${props.url}/upload`,
+            formData
+          );
 
           console.log(result);
           if (res.data == `Page modifié`) {
@@ -267,9 +274,9 @@ const FormAdd = (props) => {
             }
           }
           const res = await axiosPrivate.put(`${props.url}`, formData);
-          
+
           console.log(res.data);
-          await defaultAxios.put("/product/upload", formData)
+          await defaultAxios.put("/product/upload", formData);
           if (res.data == "Produit modifié") {
             props.setOpen(false);
             props.setEditRow(null);
@@ -293,6 +300,11 @@ const FormAdd = (props) => {
 
           const res = await privateAxios.post(`${props.url}`, formData);
           console.log(res.data);
+          const result = await defaultAxios.put(
+            `${props.url}/upload`,
+            formData
+          );
+          console.log(result);
           if (res.data == `Utilisateur ajouté`) {
             props.setOpen(false);
             props.setEditRow(null);
@@ -311,7 +323,10 @@ const FormAdd = (props) => {
 
           const res = await privateAxios.post(`${props.url}`, formData);
 
-          const result = await defaultAxios.post(`${props.url}/upload`, formData)
+          const result = await defaultAxios.post(
+            `${props.url}/upload`,
+            formData
+          );
           console.log(result);
           if (res.data == `Page ajouté`) {
             props.setOpen(false);
@@ -329,7 +344,10 @@ const FormAdd = (props) => {
           }
           const res = await privateAxios.post(`${props.url}`, formData);
           console.log(res.data);
-          const result = await defaultAxios.post(`${props.url}/upload`, formData)
+          const result = await defaultAxios.post(
+            `${props.url}/upload`,
+            formData
+          );
           console.log(result);
           if (res.data == "Produit ajouté") {
             props.setOpen(false);

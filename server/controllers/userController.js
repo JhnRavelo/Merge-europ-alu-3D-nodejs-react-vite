@@ -237,8 +237,6 @@ const addUser = async (req, res) => {
   const { name, email, phone, password, type, role } = await req.body;
   var userName;
 
-  console.log(req.files.avatar);
-
   console.log(`${type}`);
   if (email) {
     userName = await users.findOne({
@@ -264,9 +262,9 @@ const addUser = async (req, res) => {
     if (role) {
       userAdd.role = role;
     }
-    if (req?.files?.avatar) {
-      userAdd.avatar = `${process.env.SERVER_PATH}/img/avatar/${req.files.avatar[0].filename}`;
-    }
+    // if (req?.files?.avatar) {
+    //   userAdd.avatar = `${process.env.SERVER_PATH}/img/avatar/${req.files.avatar[0].filename}`;
+    // }
 
     const result = await userAdd.save();
 
@@ -278,6 +276,44 @@ const addUser = async (req, res) => {
       }
       res.json(`Utilisateur ajouté`);
     }
+  }
+};
+
+const uploadUserImage = async (req, res) => {
+  let avatar, userUpload;
+  const { id, email, updateEmail } = req.body;
+
+  if (id) {
+    userUpload = await users.findOne({
+      where: {
+        ID_user: id,
+      },
+    });
+  } else if (!id && email) {
+    userUpload = await users.findOne({
+      where: {
+        email: email,
+      },
+    });
+  }
+  else {
+    return res.json("Aucun")
+  }
+
+  if (!userUpload) return res.json("Non trouvé");
+
+  if (req?.files?.avatar) {
+    if (req.files.avatar[0].mimetype.split("/")[0] == "image") {
+      avatar = `${process.env.SERVER_PATH}/img/avatar/${req.files.avatar[0].filename}`;
+    }
+  }
+
+  if (avatar) userUpload.avatar = avatar;
+
+  const result = await userUpload.save();
+
+  if(result){
+    res.json("Upload product")
   }
 };
 
@@ -309,9 +345,10 @@ const updateUser = async (req, res) => {
         user.role = role;
       }
 
-      if (req?.files?.avatar) {
-        user.avatar = `${process.env.SERVER_PATH}/img/avatar/${req.files.avatar[0].filename}`;
-      }
+      // if (req?.files?.avatar) {
+      //   user.avatar = `${process.env.SERVER_PATH}/img/avatar/${req.files.avatar[0].filename}`;
+      // }
+
       if (updatePassword) {
         console.log(updatePassword);
         user.password = await bcrypt.hash(updatePassword, 10);
@@ -363,4 +400,5 @@ module.exports = {
   getCommercials,
   validationLogin,
   validationRegister,
+  uploadUserImage,
 };
