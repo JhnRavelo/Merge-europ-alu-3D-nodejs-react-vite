@@ -40,7 +40,9 @@ const userRegistration = async (req, res) => {
 
     if (!result) return res.json("Utilisateur non enregistré");
 
-    await sessions.create({ ID_session: id, day, month, year });
+    if (userRegister.role == process.env.PRIME3) {
+      await sessions.create({ userId: userAdd.ID_user, day, month, year });
+    }
 
     res.cookie("jwt", refreshToken, {
       maxAge: 24 * 60 * 60 * 1000,
@@ -113,7 +115,9 @@ const userLogin = async (req, res) => {
     maxAge: 24 * 60 * 60 * 1000,
   });
 
-  await sessions.create({ userId: id, day, month, year });
+  if (userName.role == process.env.PRIME3) {
+    await sessions.create({ userId: userAdd.ID_user, day, month, year });
+  }
 
   res.json({ role, accessToken });
 };
@@ -208,16 +212,20 @@ const addUser = async (req, res) => {
     console.log(result);
 
     if (result) {
-      await sessions.create({ userId: userAdd.ID_user, day, month, year });
+      if (userAdd.role == process.env.PRIME3) {
+        await sessions.create({ userId: userAdd.ID_user, day, month, year });
+      }
       res.json(`Utilisateur ajouté`);
     }
   }
 };
 
 const getUsers = async (req, res) => {
-  const result = await users.findAll({where:{
-    role: process.env.PRIME3
-  }});
+  const result = await users.findAll({
+    where: {
+      role: process.env.PRIME3,
+    },
+  });
 
   res.json(result);
 };

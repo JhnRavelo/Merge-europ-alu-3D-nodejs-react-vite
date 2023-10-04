@@ -1,12 +1,10 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import Acceuil from "../pages/Acceuil";
 import Layout from "../components/Layout/Layout";
 import Admin from "../pages/Admin";
 import PrivateRoutes from "../components/Private/PrivateRoutes";
 import Error from "../pages/Error/Error";
 import CommePage from "../pages/Commercial/CommePage";
-
-// import ModalDeleteButton from "../components/Admin/ModalDelete/ModalDeleteButton";
 import ModalDelete from "../components/Admin/ModalDelete/ModalDelete";
 
 const prime = import.meta.env.VITE_PRIME.split(" ");
@@ -21,7 +19,7 @@ const AppRouter = () => {
       {/* <Route element={<PrivateRoutes prime={prime[2]} />}> */}
         <Route path="/admin/*" element={<Admin />} />
       {/* </Route> */}
-      <Route path="*" element={<Error />} />
+      <Route path="*" element={<Navigate to={"/"} />} />
     </Routes>
   );
 };
