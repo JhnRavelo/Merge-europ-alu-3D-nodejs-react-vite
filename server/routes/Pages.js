@@ -5,6 +5,7 @@ const {
   getPages,
   updatePage,
   deletePage,
+  uploadPageImage,
 } = require("../controllers/pageController");
 const verifyRole = require("../middlewares/verifyRole");
 require("dotenv").config();
@@ -45,8 +46,12 @@ const upload = multer({
 
 const multipleField = upload.fields([{ name: "home" }, { name: "icon" }]);
 
-router.get("/", getPages)
+router.get("/", getPages);
 
+router
+  .route("/upload")
+  .post(multipleField, uploadPageImage)
+  .put(multipleField, uploadPageImage);
 
 // router.use(verifyJWT);
 
@@ -56,9 +61,9 @@ router.get("/", getPages)
 
 router
   .route("/")
-  .post(addPage)
-  .put(updatePage);
+  .post(verifyJWT, verifyRole(process.env.PRIME1), addPage)
+  .put(verifyJWT, verifyRole(process.env.PRIME1), updatePage);
 
-router.delete("/:id", deletePage);
+router.delete("/:id", verifyJWT, verifyRole(process.env.PRIME1), deletePage);
 
 module.exports = router;

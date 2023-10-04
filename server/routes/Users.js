@@ -58,21 +58,21 @@ router.post("/", userRegistration);
 
 // router.use(verifyJWT);
 
-router.get("/", userRead);
+router.get("/", verifyJWT, userRead);
 
-router.get("/logout", userLogout);
+router.get("/logout", verifyJWT, userLogout);
 
 // router.use(verifyRole(process.env.PRIME1));
 
 router
   .route("/User")
-  .put(multipleField, updateUser)
-  .post(multipleField, addUser);
+  .put(verifyJWT, verifyRole(process.env.PRIME1), updateUser)
+  .post(verifyJWT, verifyRole(process.env.PRIME1), addUser);
 
-router.delete("/User/:id", deleteUser);
+router.delete("/User/:id", verifyJWT, verifyRole(process.env.PRIME1), deleteUser);
 
-router.get("/getUsers", getUsers);
+router.get("/getUsers", verifyJWT, verifyRole(process.env.PRIME1), getUsers);
 
-router.get("/getCommercials", getCommercials);
+router.get("/getCommercials", verifyJWT, verifyRole(process.env.PRIME1), getCommercials);
 
 module.exports = router;

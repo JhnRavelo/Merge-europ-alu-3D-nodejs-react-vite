@@ -243,6 +243,12 @@ const FormAdd = (props) => {
           formData.append("url", values.url);
           
           const res = await privateAxios.put(`${props.url}`, formData);
+
+          console.log(res.data);
+          
+          const result = await defaultAxios.put(`${props.url}/upload`, formData)
+
+          console.log(result);
           if (res.data == `Page modifié`) {
             props.setOpen(false);
             props.setEditRow(null);
@@ -303,9 +309,10 @@ const FormAdd = (props) => {
           formData.append("minXAngle", values.minXAngle);
           formData.append("url", values.url);
 
-          console.log(values.icon);
-          console.log(values.home);
           const res = await privateAxios.post(`${props.url}`, formData);
+
+          const result = await defaultAxios.post(`${props.url}/upload`, formData)
+          console.log(result);
           if (res.data == `Page ajouté`) {
             props.setOpen(false);
             props.setEditRow(null);
@@ -322,7 +329,7 @@ const FormAdd = (props) => {
           }
           const res = await privateAxios.post(`${props.url}`, formData);
           console.log(res.data);
-          const result = await defaultAxios.post("/product/upload", formData)
+          const result = await defaultAxios.post(`${props.url}/upload`, formData)
           console.log(result);
           if (res.data == "Produit ajouté") {
             props.setOpen(false);

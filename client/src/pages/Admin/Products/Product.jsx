@@ -100,7 +100,6 @@ const Products = () => {
   const getAllProducts = async () => {
     try {
       const res = await defaultAxios.get("/product");
-      console.log(res.data);
       const newTable = res.data.map((product) => {
         var createdAt;
         createdAt = product.createdAt.slice(0, 10);

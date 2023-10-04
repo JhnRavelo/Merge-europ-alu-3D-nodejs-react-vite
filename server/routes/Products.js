@@ -63,8 +63,8 @@ router
 
 router
   .route("/")
-  .post(addProduct)
-  .put(updateProduct);
+  .post(verifyJWT, verifyRole(process.env.PRIME1), addProduct)
+  .put(verifyJWT, verifyRole(process.env.PRIME1), updateProduct);
 
 router.delete("/:id", deleteProduct);
 

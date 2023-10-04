@@ -5,8 +5,16 @@ import propTypes from "prop-types";
 import { useEffect, useState } from "react";
 
 const DataTable = (props) => {
-  const [pagination, setPagination] = useState(7)
-  const [height, setHeight] = useState(50)
+  const [pagination, setPagination] = useState(()=>{
+    if(props.slug == "products"){
+      return 5
+    }else return 7
+  })
+  const [height, setHeight] = useState(()=>{
+    if(props.slug == "products"){
+      return 70
+    }else return 50
+  })
 
   const handleEdit = (id) => {
     props.setEditRow(id);
@@ -28,6 +36,8 @@ if(props.slug == "products"){
   setPagination(7)
   setHeight(50)
 }
+console.log(pagination);
+
 },[props.slug])
   const actionColumn = {
     field: "action",
@@ -73,7 +83,7 @@ if(props.slug == "products"){
             quickFilterProps: { debounceMs: 500 },
           },
         }}
-        pageSizeOptions={[7]}
+        pageSizeOptions={[pagination]}
         disableRowSelectionOnClickpx
         disableColumnFilter
         disableDensitySelector
