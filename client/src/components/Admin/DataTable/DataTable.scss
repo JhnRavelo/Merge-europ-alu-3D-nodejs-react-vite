@@ -23,7 +23,10 @@
         }
       }
 
-      
+      .imgprod {
+        border-radius: 5px;
+        object-fit: fill;
+    }
         
   
       img{
@@ -35,7 +38,7 @@
   
       .action{
         display: flex;
-        gap: 15px;
+        gap: 5px;
   
         img{
           width: 20px;

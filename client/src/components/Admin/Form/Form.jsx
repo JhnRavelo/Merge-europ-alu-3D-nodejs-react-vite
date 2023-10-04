@@ -260,8 +260,10 @@ const FormAdd = (props) => {
               formData.append("gallery", values.gallery[i]);
             }
           }
-          const res = await privateAxios.put(`${props.url}`, formData);
+          const res = await axiosPrivate.put(`${props.url}`, formData);
+          
           console.log(res.data);
+          await defaultAxios.put("/product/upload", formData)
           if (res.data == "Produit modifié") {
             props.setOpen(false);
             props.setEditRow(null);
@@ -320,6 +322,8 @@ const FormAdd = (props) => {
           }
           const res = await privateAxios.post(`${props.url}`, formData);
           console.log(res.data);
+          const result = await defaultAxios.post("/product/upload", formData)
+          console.log(result);
           if (res.data == "Produit ajouté") {
             props.setOpen(false);
             props.setEditRow(null);

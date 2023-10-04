@@ -4,15 +4,11 @@ require("dotenv").config();
 const addProduct = async (req, res) => {
   const { page, title, description } = await req.body;
 
-  let png, pub, gallery;
-  console.log(req.files);
-
   const findProduct = await products.findOne({
     where: {
       title: title,
     },
   });
-  console.log(req.body);
 
   if (findProduct) return res.json("product déjà ajouté");
 
@@ -24,32 +20,11 @@ const addProduct = async (req, res) => {
 
   if (!findPage) return res.json("Page non trouvé");
 
-  if (req?.files?.png) {
-    png = `${process.env.SERVER_PATH}/img/png/${req.files.png[0].filename}`;
-  }
-  if (req?.files?.pub) {
-    pub = `${process.env.SERVER_PATH}/img/pub/${req.files.pub[0].filename}`;
-  }
-  if (req?.files?.gallery) {
-    const galleryArray = new Array();
-
-    req.files.gallery.map((file) => {
-      galleryArray.push(
-        `${process.env.SERVER_PATH}/img/gallery/${file.filename}`
-      );
-    });
-
-    gallery = galleryArray.join(",");
-  }
-
-  if (page && title && description && png && gallery && pub) {
+  if (page && title && description) {
     const result = await products.create({
       pageId: findPage.ID_page,
       title,
       description,
-      png,
-      gallery,
-      pub,
     });
 
     if (result) {
@@ -58,29 +33,65 @@ const addProduct = async (req, res) => {
   }
 };
 
-const updateProduct = async (req, res) => {
-  const { id, title, description, page } = await req.body;
+const uploadProductImage = async (req, res) => {
+  let png, pub, gallery, productUpload;
+  const { id, title } = req.body;
 
-  let png, pub, gallery
+  if (id) {
+    productUpload = await products.findOne({
+      where: {
+        ID_product: id,
+      },
+    });
+  } else if (!id && title) {
+    productUpload = await products.findOne({
+      where: {
+        title: title,
+      },
+    });
+  }else {
+    res.json("Aucun")
+  }
+
+  if (!productUpload) return res.json("Non trouvé");
 
   if (req?.files?.png) {
-    png = `${process.env.SERVER_PATH}/img/png/${req.files.png[0].filename}`;
+    if (req.files.png[0].mimetype.split("/")[0] == "image") {
+      png = `${process.env.SERVER_PATH}/img/png/${req.files.png[0].filename}`;
+    }
   }
   if (req?.files?.pub) {
-    pub = `${process.env.SERVER_PATH}/img/pub/${req.files.pub[0].filename}`;
+    if (req.files.pub[0].mimetype.split("/")[0] == "image") {
+      pub = `${process.env.SERVER_PATH}/img/pub/${req.files.pub[0].filename}`;
+    }
   }
   if (req?.files?.gallery) {
     const galleryArray = new Array();
 
     req.files.gallery.map((file) => {
-      galleryArray.push(
-        `${process.env.SERVER_PATH}/img/gallery/${file.filename}`
-      );
+      console.log(file.mimetype.split("/")[0] == "image");
+      if (file.mimetype.split("/")[0] == "image") {
+        galleryArray.push(
+          `${process.env.SERVER_PATH}/img/gallery/${file.filename}`
+        );
+      }
     });
     gallery = galleryArray.join(",");
   }
 
-  console.log(png);
+  if (png) productUpload.png = png;
+  if (pub) productUpload.pub = pub;
+  if (gallery) productUpload.gallery = gallery;
+
+  const result = await productUpload.save();
+
+  if(result){
+    res.json("Upload product")
+  }
+};
+
+const updateProduct = async (req, res) => {
+  const { id, title, description, page } = await req.body;
 
   if (id) {
     const product = await products.findOne({
@@ -90,19 +101,17 @@ const updateProduct = async (req, res) => {
     });
     if (!product) return res.json("Produit n'existe pas");
 
-    const findPage = await pages.findOne({where:{
-      page: page
-    }})
+    const findPage = await pages.findOne({
+      where: {
+        page: page,
+      },
+    });
 
-    if(!findPage) return res.json("Page non trouvé")
+    if (!findPage) return res.json("Page non trouvé");
 
     if (title && description) {
-      product.set({ pageId: findPage.ID_page, title, description});
-    } 
-
-    if(png) product.png = png
-    if(pub) product.pub = pub
-    if(gallery) product.gallery = gallery
+      product.set({ pageId: findPage.ID_page, title, description });
+    }
 
     const result = await product.save();
 
@@ -143,7 +152,7 @@ const deleteProduct = async (req, res) => {
     if (result) {
       res.json("supprimé");
     }
-  }else res.json("Pas d'identifiant")
+  } else res.json("Pas d'identifiant");
 };
 
-module.exports = { addProduct, updateProduct, getProducts, deleteProduct };
+module.exports = { addProduct, updateProduct, getProducts, deleteProduct, uploadProductImage };

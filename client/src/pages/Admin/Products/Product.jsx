@@ -11,15 +11,17 @@ const columns = [
     field: "id",
     headerName: "ID",
     width: 40,
+    
   },
   {
     field: "png",
     headerName: "Image",
     type: "file",
-    width: 100,
+    width: 80,
     renderCell: (params) => {
-      return <img src={params.row.png} alt="" />;
+      return <img src={params.row.png} alt="" className="imgprod"/>;
     },
+    
   },
   {
     field: "page",
@@ -28,6 +30,7 @@ const columns = [
     placeholder: "Votre produit",
     type: "string",
     width: 90,
+    
   },
   {
     field: "title",
@@ -35,7 +38,8 @@ const columns = [
     inputMode: "text",
     placeholder: "Votre produit",
     type: "string",
-    width: 150,
+    width: 120,
+    
   },
   {
     field: "description",
@@ -43,38 +47,42 @@ const columns = [
     inputMode: "text",
     headerName: "Description",
     placeholder: "Description du produit",
-    width: 200,
+    width: 250,
+    
   },
   {
     field: "pub",
     headerName: "Publicité",
     type: "file",
-    width: 100,
+    width: 80,
     renderCell: (params) => {
-      return <img src={params.row.pub} alt="" />;
+      return <img src={params.row.pub} alt="" className="imgprod"/>;
     },
+    
   },
   {
     field: "gallery",
     type: "file",
     headerName: "Gallery",
-    witdh: 150,
+    width: 200,
     renderCell: (params) => {
       const galleries = params.row.gallery.split(",")
       return(
         <div className="galleryContainer">
           {galleries.map((gallery, index)=>(
-            <img src={gallery} alt="" key={index}/>
+            <img src={gallery} alt="" key={index} className="imgprod"/>
           ))}
         </div>
       )
     },
+    
   },
   {
     field: "createdAt",
     headerName: "Created At",
     width: 100,
     type: "string",
+    
   },
 ];
 

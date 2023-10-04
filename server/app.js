@@ -4,7 +4,6 @@ require('dotenv').config();
 const db= require('./database/models');
 const {users, products, trakers, pages, sessions} = require("./database/models")
 const cors = require('cors');
-const verifyJWT = require('./middlewares/verifyJWT');
 const bodyParser = require('body-parser');
 
 const app = express();
@@ -21,7 +20,7 @@ db.sequelize.sync({alter:true}).then(() => {
     console.log(`http://127.0.0.1:${process.env.PORT}`);
   });
 });
-// app.use(session());
+
 app.use(express.static('public'))
 app.use(cookieParser());
 app.use(express.urlencoded({  extended: false}));
@@ -36,8 +35,6 @@ app.use('/auth', userRoutes);
 
 const trakerRoutes = require('./routes/Trakers.js');
 app.use('/traker', trakerRoutes);
-
-// app.use(verifyJWT)
 
 const pageRoutes = require('./routes/Pages.js');
 app.use('/page', pageRoutes);

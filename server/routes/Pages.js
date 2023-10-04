@@ -48,11 +48,11 @@ const multipleField = upload.fields([{ name: "home" }, { name: "icon" }]);
 router.get("/", getPages)
 
 
-router.use(verifyJWT);
+// router.use(verifyJWT);
 
-router.use(verifyRole(process.env.PRIME1));
+// router.use(verifyRole(process.env.PRIME1));
 
-router.use(multipleField)
+// router.use(multipleField)
 
 router
   .route("/")

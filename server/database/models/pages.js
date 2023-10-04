@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     icon: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     position: {
       type: DataTypes.STRING,
@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     home: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     url: {
       type: DataTypes.STRING,

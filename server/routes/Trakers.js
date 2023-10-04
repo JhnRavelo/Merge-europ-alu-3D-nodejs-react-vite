@@ -12,7 +12,7 @@ const verifyRole = require("../middlewares/verifyRole");
 
 router.post("/", verifyUserExist, addTraker);
 
-router.use(verifyJWT);
+// router.use(verifyJWT);
 
 router.get("/", getTraker);
 

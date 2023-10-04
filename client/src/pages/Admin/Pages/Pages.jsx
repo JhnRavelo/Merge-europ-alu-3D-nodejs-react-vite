@@ -18,7 +18,7 @@ const columns = [
     width: 80,
     renderCell: (params) => {
       return (
-        <img src={params.row.icon} alt="" />
+        <img src={params.row.icon} alt="" className="imgprod"/>
       );
     },
   },{
@@ -28,7 +28,7 @@ const columns = [
     width: 80,
     renderCell: (params) => {
       return (
-        <img src={params.row.home} alt="" />
+        <img src={params.row.home} alt="" className="imgprod"/>
       );
     },
   },

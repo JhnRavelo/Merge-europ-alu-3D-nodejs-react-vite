@@ -56,13 +56,13 @@ router.post("/login", userLogin);
 
 router.post("/", userRegistration);
 
-router.use(verifyJWT);
+// router.use(verifyJWT);
 
 router.get("/", userRead);
 
 router.get("/logout", userLogout);
 
-router.use(verifyRole(process.env.PRIME1));
+// router.use(verifyRole(process.env.PRIME1));
 
 router
   .route("/User")
