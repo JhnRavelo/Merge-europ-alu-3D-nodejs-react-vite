@@ -6,6 +6,7 @@ const {
   updatePage,
   deletePage,
   uploadPageImage,
+  getPage,
 } = require("../controllers/pageController");
 const verifyRole = require("../middlewares/verifyRole");
 require("dotenv").config();
@@ -39,6 +40,7 @@ const upload = multer({
 const multipleField = upload.fields([{ name: "home" }, { name: "icon" }]);
 
 router.get("/", getPages);
+router.get("/getPage/:id", getPage)
 
 router
   .route("/upload")

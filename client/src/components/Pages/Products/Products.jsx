@@ -2,30 +2,48 @@ import './Product.css';
 import pages from '../../../assets/json/pages.json';
 import propTypes from 'prop-types';
 import ProductContext from './ProductContext';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Template from '../Template/Template';
 import Habillage from '../Habillage/Habillage';
+import { useParams } from 'react-router-dom';
+import defaultAxios from '../../../api/axios';
 
 const Products = () => {
-  const indexContext = useContext(ProductContext);
-  const products = pages[indexContext].products;
-  const title = pages[indexContext].title;
-  const productsLenght = products.length;
+
+  const [data, setData] = useState([]);
+  const { id } = useParams();
+
+  useEffect(() => {
+    fetchData();
+  }, [id]);
+
+  const fetchData = async () => {
+    try {
+      const res = await defaultAxios.get(`/product/getProduct/${id}`);
+      console.log(res.data);
+      console.log(Object.keys(res.data).length);
+      setData(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+ 
+  console.log(id != 7);
 
   return (
     <>
       <section id='produit'>
-        {title !== 'Habillage' ? (
+        {id != 7 ? (
           <Template
-            products={products}
-            productsLenght={productsLenght}
-            title={title}
+            products={data}
+            productsLenght={Object.keys(data).length}
+            title={id}
           />
         ) : (
           <Habillage
-            products={products}
-            productsLenght={productsLenght}
-            title={title}
+            products={data}
+            productsLenght={Object.keys(data).length}
+            title={id}
           />
         )}
       </section>

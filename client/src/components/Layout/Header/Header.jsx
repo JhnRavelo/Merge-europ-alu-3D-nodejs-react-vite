@@ -1,11 +1,12 @@
 import "./Header.css";
 import Logo from "../../../assets/Logo_aluhd.png";
-import { useEffect, useRef } from "react";
-import { NavLink, Link, useLocation } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { NavLink, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import useAuth from "../../../hooks/useAuth";
+import defaultAxios from "../../../api/axios";
 
 const Header = () => {
   const { auth } = useAuth();
@@ -15,6 +16,7 @@ const Header = () => {
   const location = useLocation();
   const axiosPrivate = useAxiosPrivate();
   const userRef = useRef();
+  const [data, setData] = useState([]);
 
   function menuIsClosed(e) {
     const profile = showProfileRef.current;
@@ -42,9 +44,22 @@ const Header = () => {
     }
   }
 
+  const fetchData = async () => {
+    try {
+      const res = await defaultAxios.get("/page");
+      setData(res.data);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   useEffect(() => {
     document.body.addEventListener("click", menuIsClosed);
-
     return () => document.body.removeEventListener("click", menuIsClosed);
   }, []);
 
@@ -56,7 +71,6 @@ const Header = () => {
       showProfileRef.current.style.opacity = 1;
       showProfileRef.current.style.pointerEvents = "all";
     }
-
   }, [location.pathname]);
 
   const onOpenMenu = () => {
@@ -69,41 +83,38 @@ const Header = () => {
   };
 
   useEffect(() => {
-
-    console.log(auth);
-
     const controller = new AbortController();
     const connected = async () => {
       try {
         const res = await axiosPrivate.get("/auth", {
           signal: controller.signal,
         });
-        console.log(auth);
+
         if (res.data.name) {
           userRef.current.classList.add("connected");
-        }else {
+        } else {
           userRef.current.classList.remove("connected");
         }
       } catch (error) {
-        userRef.current.classList.remove("connected")
+        userRef.current.classList.remove("connected");
         console.log(error);
       }
     };
-  
+
     connected();
 
     return () => controller?.abort;
   }, [auth, axiosPrivate]);
 
-const handleLogOut = async () => {
-  try {
-    const res = await axiosPrivate.get('/auth/logout')
-    userRef.current.classList.remove("connected")
-    console.log(res);
-  } catch (error) {
-    console.log(error);
-  }
-}
+  const handleLogOut = async () => {
+    try {
+      const res = await axiosPrivate.get("/auth/logout");
+      userRef.current.classList.remove("connected");
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -124,7 +135,11 @@ const handleLogOut = async () => {
               </div>
             </div>
             <div className="userOption">
-              <div className="logout" ref={showLogoutRef} onClick={handleLogOut}>
+              <div
+                className="logout"
+                ref={showLogoutRef}
+                onClick={handleLogOut}
+              >
                 <p>Se déconnecter</p>
               </div>
               <div className="profile" ref={showProfileRef}>
@@ -154,46 +169,15 @@ const handleLogOut = async () => {
                   <h1>Acceuil</h1>
                 </NavLink>
               </li>
-              <li>
-                <NavLink to="/page/porte">
-                  <h1>Porte</h1>
-                </NavLink>
-              </li>
-              <li>
-                <Link to="/page/fenetre">
-                  <h1>Fenêtre</h1>
-                </Link>
-              </li>
-              <li>
-                <Link to="/page/habillage">
-                  <h1>Habillage Façade</h1>
-                </Link>
-              </li>
-              <li>
-                <NavLink to="/page/Baies">
-                  <h1>Baies</h1>
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/page/GardeCorps">
-                  <h1>Garde Corps</h1>
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/page/AménagementIntérieur">
-                  <h1>Aménagement Intérieur</h1>
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/page/AménagementExtérieur">
-                  <h1>Aménagement Extérieur</h1>
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/page/Fermeture Extérieu">
-                  <h1>Fermeture Extérieu</h1>
-                </NavLink>
-              </li>
+              {data.map((page, index) => {
+                return (
+                  <li key={index}>
+                    <NavLink to={`/page/${page.ID_page}`}>
+                      <h1>{page.page}</h1>
+                    </NavLink>
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </nav>

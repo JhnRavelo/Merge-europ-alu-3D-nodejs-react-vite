@@ -129,7 +129,7 @@ const getProducts = async (req, res) => {
       {
         model: pages,
         required: true,
-        attributes: ["page"],
+        attributes: ["page", "home", "url"],
       },
     ],
   });
@@ -155,4 +155,18 @@ const deleteProduct = async (req, res) => {
   } else res.json("Pas d'identifiant");
 };
 
-module.exports = { addProduct, updateProduct, getProducts, deleteProduct, uploadProductImage };
+const getProductByPage = async(req, res)=>{
+  const id = await req?.params?.id;
+
+  const allProducts = await products.findAll({
+    where: {
+      pageId: id,
+    }
+  });
+
+  if (allProducts) {
+    res.json(allProducts);
+  }
+}
+
+module.exports = { addProduct, updateProduct, getProducts, deleteProduct, uploadProductImage, getProductByPage };

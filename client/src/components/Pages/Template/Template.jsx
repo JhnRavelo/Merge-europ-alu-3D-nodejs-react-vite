@@ -35,7 +35,7 @@ const Template = ({ products, productsLenght, title }) => {
             }
 
             if (
-              title !== 'Habillage' &&
+              title != 7 &&
               imgRefs.current[index] &&
               imgRefs.current[index].className !==
                 'float_right simple-parallax-initialized'
@@ -46,7 +46,7 @@ const Template = ({ products, productsLenght, title }) => {
                 orientation: 'up',
                 scale: 1.8,
               });
-            } else if (title == 'Habillage' && imgRefs.current[index]) {
+            } else if (title == 7 && imgRefs.current[index]) {
               new SimpleParallax(imgRefs.current[index], {
                 scale: 1.5,
               });
@@ -77,7 +77,7 @@ const Template = ({ products, productsLenght, title }) => {
                     </div>
                   </div>
                 </div>
-                <Gallery indexCategory={index} />
+                <Gallery gallery={product.gallery.split(",")} indexCategory={index} />
               </div>
               {productsLenght > index + 1 && <Separation />}
             </Fragment>

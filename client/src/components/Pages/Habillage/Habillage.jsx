@@ -14,6 +14,7 @@ const Habillage = ({ products, productsLenght, title }) => {
     imgRefs.current = [];
     presRefs.current = [];
   }, []);
+  console.log(title);
 
   return (
     <>
@@ -33,7 +34,7 @@ const Habillage = ({ products, productsLenght, title }) => {
               imgRefs.current.push(el);
             }
             
-            if (title !== 'Habillage' && imgRefs.current[index]) {
+            if (title != 7 && imgRefs.current[index]) {
               console.log(imgRefs.current[index].className)
               new SimpleParallax(imgRefs.current[index], {
                 overflow: true,
@@ -41,7 +42,7 @@ const Habillage = ({ products, productsLenght, title }) => {
                 scale: 1.8,
               });
             } else if (
-              title == 'Habillage' &&
+              title == 7 &&
               imgRefs.current[index] &&
               imgRefs.current[index].className !==
                 'image_parallaxe simple-parallax-initialized'
@@ -81,7 +82,7 @@ const Habillage = ({ products, productsLenght, title }) => {
                   <div></div>
                 </div>
               </div>
-              <Gallery indexCategory={index} />
+              <Gallery gallery={product.gallery.split(",")} indexCategory={index} />
               {productsLenght > index + 1 && <Separation />}
             </Fragment>
           );

@@ -155,9 +155,7 @@ const updatePage = async (req, res) => {
 };
 
 const getPages = async (req, res) => {
-  console.log("page");
   const result = await pages.findAll();
-
   res.json(result);
 };
 
@@ -181,4 +179,16 @@ const deletePage = async (req, res) => {
   res.json("non supprimé");
 };
 
-module.exports = { addPage, updatePage, getPages, deletePage, uploadPageImage };
+const getPage = async(req, res) => {
+const id = req.params.id
+
+  const result = await pages.findOne({
+    where:{
+      ID_page: id
+    }
+  })
+
+  res.json(result)
+}
+
+module.exports = { addPage, updatePage, getPages, deletePage, uploadPageImage, getPage };

@@ -5,6 +5,7 @@ const {
   updateProduct,
   deleteProduct,
   uploadProductImage,
+  getProductByPage,
 } = require("../controllers/productController");
 const router = express.Router();
 const path = require("path");
@@ -49,6 +50,7 @@ const multipleField = upload.fields([
 ]);
 
 router.get("/", getProducts);
+router.get("/getProduct/:id", getProductByPage)
 
 router
   .route("/upload")
