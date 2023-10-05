@@ -1,27 +1,52 @@
 import "./Profile.scss";
-import AdminPhoto from "/admin.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import useAdminContext from "../../../hooks/useAdminContext";
+import FormAdd from "../../../components/Admin/Form/Form";
+import { useState } from "react";
+
+const columns = [
+  {
+    field: "avatar",
+    headerName: "Avatar",
+    type: "file",
+  },
+  {
+    field: "name",
+    type: "string",
+    inputMode: "text",
+    headerName: "Nom",
+    placeholder: "Votre Nom",
+  },
+]
 
 const Profile = () => {
+const {data, setOpen, open} = useAdminContext()
+const [editRow, setEditRow]=useState(null)
+
+const handleClick = ()=> {
+  setOpen(true)
+}
+
   return (
+    <>
     <div id="profile">
       <h1>Profile</h1>
       <div className="edit__admin">
         <h2>Modifier votre profile</h2>
-        <button className="edit__profile">
+        <button className="edit__profile" onClick={handleClick}>
           <FontAwesomeIcon icon={faEdit} beat />
           éditer
         </button>
       </div>
       <div className="admin__card">
         <div className="admin__img">
-          <img src={AdminPhoto} alt="sary" />
+          <img src={data.avatar} alt="sary" />
         </div>
         <div className="info__admin">
-          <h1 className="admin__name">Sylvestre Hardy</h1>
-          <h2 className="admin__email">hardy@gmail.com</h2>
+          <h1 className="admin__name">{data.name}</h1>
+          <h2 className="admin__email">{data.email}</h2>
           <h1 className="user__admin">- Administrateur</h1>
         </div>
       </div>
@@ -30,6 +55,17 @@ const Profile = () => {
         Se déconnecter
       </button>
     </div>
+      {open && (
+          <FormAdd
+            slug="profile"
+            columns={columns}
+            setOpen={setOpen}
+            editRow={data}
+            setEditRow={(value) => setEditRow(value)}
+            url="/auth/User"
+          />
+        )}
+        </>
   );
 };
 

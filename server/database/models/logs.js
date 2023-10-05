@@ -1,27 +1,23 @@
 module.exports = (sequelize, DataTypes) => {
-    const homes = sequelize.define('homes', {
-        ID_home:{
+    const logs = sequelize.define('logs', {
+        ID_Log:{
             type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
             allowNull: false
         },
-        page:{
+        event:{
             type: DataTypes.STRING,
             allowNull: false,
         },
-        title:{
+        unRead:{
+            type: DataTypes.BOOLEAN,
+            defaultValue: true,
+        },
+        model:{
             type: DataTypes.STRING,
             allowNull: false,
-        },
-        img:{
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        src:{
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
+        }
     })
-    return homes
+    return logs
 }

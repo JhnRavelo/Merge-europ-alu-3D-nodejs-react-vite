@@ -69,6 +69,12 @@ const FormContent = ({ btn, editRow, slug }) => {
       } else {
         btnSubmit.classList.remove("desabledBtn");
       }
+    } else if (slug == "profile") {
+      if (errors.name) {
+        btnSubmit.classList.add("desabledBtn");
+      } else {
+        btnSubmit.classList.remove("desabledBtn");
+      }
     } else if (slug == "commercial" && !editRow) {
       if (
         errors.name ||
@@ -181,6 +187,11 @@ const FormAdd = (props) => {
           pub: null,
           gallery: null,
         };
+      } else if (props.slug == "profile") {
+        initial = {
+          name: value.name,
+          avatar: null,
+        };
       }
     } else {
       if (props.slug == "user") {
@@ -200,15 +211,39 @@ const FormAdd = (props) => {
 
   const onSubmit = async (values) => {
     try {
+      if (props.slug == "profile") {
+        const formData = new FormData();
+        console.log(values);
+        formData.append("id", props.editRow.id);
+        formData.append("name", values.name);
+        if (values.avatar) {
+          formData.append("avatar", values.avatar);
+        }
+
+        const res = await privateAxios.put(`${props.url}/pro`, formData);
+          console.log(res.data);
+          const result = await defaultAxios.put(
+            `${props.url}/upload`,
+            formData
+          );
+
+          console.log(result);
+          if (res.data == "Utilisateur modifié") {
+            props.setOpen(false);
+            props.setEditRow(null);
+          }
+      }
+
       if (props.editRow) {
         if (props.slug == "user" || props.slug == "commercial") {
           const formData = new FormData();
+          console.log(values);
           formData.append("id", props.editRow.id);
           formData.append("name", values.name);
           if (props.slug == "commercial") {
             formData.append("role", prime[1]);
             // formData.append("type", undefined);
-          } else {
+          } else if (props.slug == "user") {
             // formData.append("role", undefined);
             formData.append("type", values.type);
           }

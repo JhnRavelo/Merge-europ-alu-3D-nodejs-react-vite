@@ -183,6 +183,8 @@ const userRead = async (req, res) => {
   if (!cookie?.jwt) return res.sendStatus(401);
   const refreshToken = cookie.jwt;
 
+  console.log(req.user);
+
   const user = await users.findOne({
     where: {
       refreshToken: refreshToken,
@@ -192,6 +194,7 @@ const userRead = async (req, res) => {
   if (!user) return res.sendStatus(401);
 
   res.json({
+    id: user.ID_user,
     name: user.name,
     email: user.email,
     phone: user.phone,
@@ -330,39 +333,43 @@ const updateUser = async (req, res) => {
   const { name, updateEmail, phone, updatePassword, type, id, role } =
     await req.body;
 
-  if (id) {
-    const user = await users.findOne({ where: { ID_user: id } });
 
-    if (user) {
-      user.set({ name, email: updateEmail, phone });
+    console.log(req.body);
+  if (!id) return res.json("Sans id");
 
-      if (type) {
-        user.type = type;
-      }
+  const user = await users.findOne({ where: { ID_user: id } });
 
-      if (role) {
-        user.role = role;
-      }
-
-      // if (req?.files?.avatar) {
-      //   user.avatar = `${process.env.SERVER_PATH}/img/avatar/${req.files.avatar[0].filename}`;
-      // }
-
-      if (updatePassword) {
-        console.log(updatePassword);
-        user.password = await bcrypt.hash(updatePassword, 10);
-      }
-      const result = await user.save();
-      if (result) {
-        res.json("Utilisateur modifié");
-      } else {
-        res.json("Utilisateur non modifié");
-      }
-    } else {
-      res.json("Utilisateur introuvable");
-    }
+  if (!user) return res.json("Sans user");
+  console.log("edit");
+  if (name) user.name = name;
+  if (updateEmail) user.email = updateEmail;
+  if (phone) user.phone = phone;
+  if (type) {
+    user.type = type;
   }
+
+  if (role) {
+    user.role = role;
+  }
+
+  if (updatePassword) {
+    console.log(updatePassword);
+    user.password = await bcrypt.hash(updatePassword, 10);
+  }
+  const result = await user.save();
+
+  if(result) return res.json("Utilisateur modifié");
 };
+
+const updateProfile = async(req, res)=>{
+  const {name, id}= await req.body
+  const user = await users.findOne({ where: { ID_user: id } });
+  if (name) user.name = name;
+
+  const result = await user.save();
+
+  if(result) return res.json("Utilisateur modifié");
+}
 
 const deleteUser = async (req, res) => {
   if (req?.params?.id) {
@@ -391,7 +398,6 @@ const avatarUpdateUser = async (req, res) => {
   const { avatar, id } = req.body;
 
   console.log(req.user);
-  console.log(avatar);
 
   const user = await users.findOne({
     where: {
@@ -420,4 +426,5 @@ module.exports = {
   validationRegister,
   uploadUserImage,
   avatarUpdateUser,
+  updateProfile
 };
