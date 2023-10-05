@@ -84,15 +84,15 @@ const validationRegister = async (req, res) => {
 const validationLogin = async (req, res) => {
   const { loginMail, loginPassword } = await req.body;
 
-  if(!loginMail || !loginPassword){
-    return res.jon("Connexion invalide")
+  if (!loginMail || !loginPassword) {
+    return res.jon("Connexion invalide");
   }
 
-    const userName = await users.findOne({
-      where: {
-        email: loginMail,
-      },
-    });
+  const userName = await users.findOne({
+    where: {
+      email: loginMail,
+    },
+  });
 
   if (!userName) {
     return res.json(`Connexion invalide`);
@@ -295,9 +295,8 @@ const uploadUserImage = async (req, res) => {
         email: email,
       },
     });
-  }
-  else {
-    return res.json("Aucun")
+  } else {
+    return res.json("Aucun");
   }
 
   if (!userUpload) return res.json("Non trouvé");
@@ -312,8 +311,8 @@ const uploadUserImage = async (req, res) => {
 
   const result = await userUpload.save();
 
-  if(result){
-    res.json("Upload product")
+  if (result) {
+    res.json("Upload product");
   }
 };
 
@@ -388,13 +387,24 @@ const getCommercials = async (req, res) => {
   res.json(result);
 };
 
-const avatarUpdateUser = (req, res)=>{
-  const {avatar, id}= req.body
+const avatarUpdateUser = async (req, res) => {
+  const { avatar, id } = req.body;
 
   console.log(req.user);
   console.log(avatar);
-  console.log(id);
-}
+
+  const user = await users.findOne({
+    where: {
+      ID_user: id,
+    },
+  });
+  user.avatar = avatar;
+  const result = await user.save();
+
+  if (result) {
+    return res.json("Avatar");
+  } else return res.json("Non");
+};
 
 module.exports = {
   userRegistration,
@@ -409,5 +419,5 @@ module.exports = {
   validationLogin,
   validationRegister,
   uploadUserImage,
-  avatarUpdateUser
+  avatarUpdateUser,
 };

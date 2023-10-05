@@ -3,8 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Fragment, useEffect, useRef, useState } from "react";
 import avatars from "../../../assets/json/avatar.json";
-import defaultAxios from "../../../api/axios";
 import propTypes from "prop-types";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
 const UserProfileCard = ({ data }) => {
   const showChangeAvatarRef = useRef();
@@ -13,6 +13,7 @@ const UserProfileCard = ({ data }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const privateAxios = useAxiosPrivate()
 
   const showChangeAvatar = () => {
     listeAvatarRef.current.classList.toggle("showed");
@@ -30,17 +31,26 @@ const UserProfileCard = ({ data }) => {
   const handleClick = (e) => {
     if (e.target.src.includes("Avatar-Profile")) {
       setImgProfile(avatars[1]);
+      handleFetch(1)
     } else if (e.target.src.includes("user-profile")) {
       setImgProfile(avatars[2]);
+      handleFetch(2)
     } else if (e.target.src.includes("woman-business")) {
       setImgProfile(avatars[3]);
+      handleFetch(3)
     } else if (e.target.src.includes("woman-users")) {
       setImgProfile(avatars[4]);
+      handleFetch(4)
     }
 
+   
+  };
+
+  const handleFetch = (index)=>{
     try {
-      const res = defaultAxios.put("/auth/avatar", {
-        avatar: imgProfile,
+      console.log(imgProfile);
+      const res = privateAxios.put("/auth/avatar", {
+        avatar: avatars[index],
         id: data[0].ID_user,
       });
 
@@ -48,7 +58,7 @@ const UserProfileCard = ({ data }) => {
     } catch (error) {
       console.log(error);
     }
-  };
+  }
 
   return (
     <>
@@ -82,7 +92,6 @@ const UserProfileCard = ({ data }) => {
               })}
             </div>
             <div className="name">{name}</div>
-            {/* <div className="firstname">Sylvestre Hardy</div> */}
             <div className="email">{email}</div>
             <div className="number">{phone}</div>
           </div>

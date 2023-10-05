@@ -65,7 +65,7 @@ router
 
 // router.use(verifyJWT);
 
-router.put("/avatar", verifyJWT, avatarUpdateUser)
+router.put("/avatar",verifyJWT, avatarUpdateUser)
 
 router.get("/", verifyJWT, userRead);
 
