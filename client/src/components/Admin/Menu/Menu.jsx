@@ -46,7 +46,7 @@ const Menu =  () => {
                 <span className="listItemTitle">Commandes</span>
             </Link>
             <span className="title">Evènements</span>
-            <Link to="/profile" className="listItem">
+            <Link to="/admin/log" className="listItem">
                 <img src={log} alt="product" />
                 <span className="listItemTitle">Journals</span>
             </Link>
