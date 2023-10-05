@@ -7,6 +7,7 @@ import Orders from "../pages/Admin/Orders/Orders";
 import Commercials from "../pages/Admin/Commercials/Commercials";
 import Profile from "../pages/Admin/Profile/Profile";
 import PrivateRoutes from "../components/Private/PrivateRoutes";
+import Log from "../pages/Admin/Log/Log";
 
 const prime = import.meta.env.VITE_PRIME.split(" ");
 
@@ -22,6 +23,7 @@ const AdminRouter = () => {
           <Route path="/order" element={<Orders />} />
           <Route path="/commercial" element={<Commercials />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/log" element={<Log />} />
         {/* </Route> */}
       </Routes>
     </>
