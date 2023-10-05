@@ -17,7 +17,7 @@ const Header = () => {
   const axiosPrivate = useAxiosPrivate();
   const userRef = useRef();
   const [data, setData] = useState([]);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   function menuIsClosed(e) {
     const profile = showProfileRef.current;
@@ -85,19 +85,21 @@ const Header = () => {
   useEffect(() => {
     const controller = new AbortController();
     const connected = async () => {
-      try {
-        const res = await axiosPrivate.get("/auth", {
-          signal: controller.signal,
-        });
+      if (!userRef.current.className.includes("connected")) {
+        try {
+          const res = await axiosPrivate.get("/auth", {
+            signal: controller.signal,
+          });
 
-        if (res.data.name) {
-          userRef.current.classList.add("connected");
-        } else {
+          if (res.data.name) {
+            userRef.current.classList.add("connected");
+          } else {
+            userRef.current.classList.remove("connected");
+          }
+        } catch (error) {
           userRef.current.classList.remove("connected");
+          console.log(error);
         }
-      } catch (error) {
-        userRef.current.classList.remove("connected");
-        console.log(error);
       }
     };
 
@@ -109,10 +111,10 @@ const Header = () => {
   const handleLogOut = async () => {
     try {
       const res = await axiosPrivate.get("/auth/logout");
+      
       userRef.current.classList.remove("connected");
-
-      if(res.data == "SUCCESS"){
-        navigate("/")
+      if (res.data == "SUCCESS") {
+        navigate("/");
       }
     } catch (error) {
       console.log(error);

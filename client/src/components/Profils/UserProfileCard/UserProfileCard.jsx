@@ -1,44 +1,54 @@
 import "./UserProfileCard.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faPlus} from "@fortawesome/free-solid-svg-icons"
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Fragment, useEffect, useRef, useState } from "react";
-import avatars from "../../../assets/json/avatar.json"
+import avatars from "../../../assets/json/avatar.json";
+import defaultAxios from "../../../api/axios";
+import propTypes from "prop-types";
 
-const UserProfileCard = () => {
+const UserProfileCard = ({ data }) => {
   const showChangeAvatarRef = useRef();
   const listeAvatarRef = useRef();
-  // const profilRef = useRef([])
   const [imgProfile, setImgProfile] = useState(avatars[0]);
-// useEffect(()=>{
-  
-// })
-
-// const addToRefProfil= (el)=>{
-//   if(el && !profilRef.current.includes(el)){
-//     profilRef.current.push(el)
-//   }
-  
-// }
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
 
   const showChangeAvatar = () => {
-    listeAvatarRef.current.classList.toggle('showed')
-  }
+    listeAvatarRef.current.classList.toggle("showed");
+  };
+
+  useEffect(() => {
+    if (data) {
+      setEmail(data[0].email);
+      setPhone(data[0].phone);
+      setName(data[0].name);
+      setImgProfile(data[0].avatar);
+    }
+  }, [data]);
 
   const handleClick = (e) => {
-    if(e.target.src.includes('Avatar-Profile')){
-      setImgProfile(avatars[1])
+    if (e.target.src.includes("Avatar-Profile")) {
+      setImgProfile(avatars[1]);
+    } else if (e.target.src.includes("user-profile")) {
+      setImgProfile(avatars[2]);
+    } else if (e.target.src.includes("woman-business")) {
+      setImgProfile(avatars[3]);
+    } else if (e.target.src.includes("woman-users")) {
+      setImgProfile(avatars[4]);
     }
-    else if(e.target.src.includes('user-profile')){
-      setImgProfile(avatars[2])
+
+    try {
+      const res = defaultAxios.put("/auth/avatar", {
+        avatar: imgProfile,
+        id: data[0].ID_user,
+      });
+
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
     }
-    else if(e.target.src.includes('woman-business')){
-      setImgProfile(avatars[3])
-    }
-    else if(e.target.src.includes('woman-users')){
-      setImgProfile(avatars[4])
-    }
-    
-  }
+  };
 
   return (
     <>
@@ -47,36 +57,34 @@ const UserProfileCard = () => {
           <div className="gauche">
             <div className="img-area">
               <div className="inner-area">
-                <img
-                  src={imgProfile}
-                  alt="avatar"
-                />
+                <img src={imgProfile} alt="avatar" />
               </div>
-              <div className="changeImg" ref={showChangeAvatarRef} onClick={showChangeAvatar}>
-                <FontAwesomeIcon className="plusIcon" icon={faPlus}/>
+              <div
+                className="changeImg"
+                ref={showChangeAvatarRef}
+                onClick={showChangeAvatar}
+              >
+                <FontAwesomeIcon className="plusIcon" icon={faPlus} />
               </div>
             </div>
 
             <div ref={listeAvatarRef} className="social-icons">
-              {
-                avatars.map((avatar, index)=>{
-                  
-                  if(index!==0){
-                    return(
-                      <Fragment key={index}>
-                        <a>
-                          <img  onClick={handleClick} src={avatar} alt="avatar" />
-                        </a>
-                      </Fragment>
-                    )
-                  }
-                })
-              }
+              {avatars.map((avatar, index) => {
+                if (index !== 0) {
+                  return (
+                    <Fragment key={index}>
+                      <a>
+                        <img onClick={handleClick} src={avatar} alt="avatar" />
+                      </a>
+                    </Fragment>
+                  );
+                }
+              })}
             </div>
-            <div className="name">HERINAVALONA</div>
-            <div className="firstname">Sylvestre Hardy</div>
-            <div className="email">sylvestrehardy@gmail.com</div>
-            <div className="number">034 66 454 54</div>
+            <div className="name">{name}</div>
+            {/* <div className="firstname">Sylvestre Hardy</div> */}
+            <div className="email">{email}</div>
+            <div className="number">{phone}</div>
           </div>
 
           <div className="buttons">
@@ -87,6 +95,10 @@ const UserProfileCard = () => {
       </div>
     </>
   );
+};
+
+UserProfileCard.propTypes = {
+  data: propTypes.any,
 };
 
 export default UserProfileCard;

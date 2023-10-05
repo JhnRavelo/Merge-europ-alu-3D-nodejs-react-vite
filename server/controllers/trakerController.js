@@ -63,10 +63,16 @@ const getTraker = async (req, res) => {
     return res.sendStatus(401);
   }
 
-  const traker = await trakers.findAll({
+  const traker = await users.findAll({
     where: {
-      userId: user.ID_user,
+      ID_user: user.ID_user,
     },
+    include: [
+      {
+        model: products,
+        attributes: ["title", "png"]
+      },
+    ]
   });
 
   if (!traker) {

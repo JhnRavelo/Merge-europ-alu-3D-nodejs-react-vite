@@ -8,8 +8,8 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
-users.belongsToMany(products, { through: trakers, onDelete: 'CASCADE', foreignKey:"userId" });
-products.belongsToMany(users, { through: trakers, onDelete: 'CASCADE', foreignKey:"productId" });
+
+
 pages.hasMany(products, {onDelete: 'CASCADE', foreignKey:"pageId"})
 products.belongsTo(pages, {onDelete: 'CASCADE', foreignKey:"pageId"})
 users.hasOne(sessions, {foreignKey:"userId"})

@@ -75,7 +75,7 @@ const SignupStepFinal = () => {
     try {
       console.log("click");
       const res = await defaultAxios.post("/auth", formContext[1]);
-      // console.log(res.data);
+
       var track;
       if (res.data !== `L'utilisateur existe déjà`) {
         const role = res.data.role,
@@ -85,10 +85,8 @@ const SignupStepFinal = () => {
 
       if (!checked[0] == "") {
         track = await addTraker(formContext[1]);
-        console.log(track);
       }
       if (res.data || track) {
-        console.log(res.data);
         showForm();
       }
     } catch (error) {

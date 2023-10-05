@@ -1,3 +1,6 @@
+const users = require("./users");
+const trakers = require("./trakers");
+
 module.exports = (sequelize, DataTypes) => {
   const products = sequelize.define("products", {
     ID_product: {
@@ -18,15 +21,23 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    pub:{
+    pub: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    gallery:{
+    gallery: {
       type: DataTypes.TEXT,
       allowNull: true,
     },
   });
+
+  products.associate = (models) => {
+    products.belongsToMany(models.users, {
+      through: models.trakers,
+      onDelete: "CASCADE",
+      foreignKey: "productId",
+    });
+  };
 
   return products;
 };

@@ -14,6 +14,7 @@ const {
   validationLogin,
   validationRegister,
   uploadUserImage,
+  avatarUpdateUser,
 } = require("../controllers/userController");
 const verifyJWT = require("../middlewares/verifyJWT");
 const verifyRole = require("../middlewares/verifyRole");
@@ -63,6 +64,8 @@ router
   .put(multipleField, uploadUserImage);
 
 // router.use(verifyJWT);
+
+router.put("/avatar", verifyJWT, avatarUpdateUser)
 
 router.get("/", verifyJWT, userRead);
 

@@ -5,8 +5,6 @@ import fenetre2 from "../../../../public/images/FENÊTRES/PNG/FENÊTRE OSCILLO-B
 
 const Cart = () => {
 
-
-
   return (
     <>
         <div className="pannier">

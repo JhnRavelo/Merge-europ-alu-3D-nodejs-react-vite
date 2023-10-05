@@ -388,6 +388,14 @@ const getCommercials = async (req, res) => {
   res.json(result);
 };
 
+const avatarUpdateUser = (req, res)=>{
+  const {avatar, id}= req.body
+
+  console.log(req.user);
+  console.log(avatar);
+  console.log(id);
+}
+
 module.exports = {
   userRegistration,
   userLogin,
@@ -401,4 +409,5 @@ module.exports = {
   validationLogin,
   validationRegister,
   uploadUserImage,
+  avatarUpdateUser
 };
