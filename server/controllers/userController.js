@@ -42,7 +42,7 @@ const userRegistration = async (req, res) => {
 
     if (userRegister.role == process.env.PRIME3) {
       const sess = await sessions.create({
-        userId: userAdd.ID_user,
+        userId: userRegister.ID_user,
         day,
         month,
         year,

@@ -1,9 +1,7 @@
 import propTypes from "prop-types";
-import pages from "../../../assets/json/pages.json";
 import "./Home.css";
-import { useContext, useEffect, useState } from "react";
-import ProductContext from "../Products/ProductContext";
-import { useLocation, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import defaultAxios from "../../../api/axios";
 
 const Home = () => {
@@ -17,16 +15,12 @@ const Home = () => {
   const fetchData = async () => {
     try {
       const res = await defaultAxios.get(`/page/getPage/${id}`);
-      console.log(res.data);
       setData(res.data);
     } catch (error) {
       console.log(error);
     }
   };
 
-  // console.log(id);
-  // const homeFilter = home.dataPage.filter((page) => page.ID_page == id);
-  // console.log(homeFilter);
   return (
     <>
       <section id="home" style={{ backgroundImage: `url(${data.home})` }}>

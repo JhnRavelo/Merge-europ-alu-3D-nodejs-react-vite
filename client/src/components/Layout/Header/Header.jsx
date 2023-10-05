@@ -1,7 +1,7 @@
 import "./Header.css";
 import Logo from "../../../assets/Logo_aluhd.png";
 import { useEffect, useRef, useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
@@ -17,6 +17,7 @@ const Header = () => {
   const axiosPrivate = useAxiosPrivate();
   const userRef = useRef();
   const [data, setData] = useState([]);
+  const navigate = useNavigate()
 
   function menuIsClosed(e) {
     const profile = showProfileRef.current;
@@ -48,7 +49,6 @@ const Header = () => {
     try {
       const res = await defaultAxios.get("/page");
       setData(res.data);
-      console.log(data);
     } catch (error) {
       console.log(error);
     }
@@ -110,7 +110,10 @@ const Header = () => {
     try {
       const res = await axiosPrivate.get("/auth/logout");
       userRef.current.classList.remove("connected");
-      console.log(res);
+
+      if(res.data == "SUCCESS"){
+        navigate("/")
+      }
     } catch (error) {
       console.log(error);
     }
