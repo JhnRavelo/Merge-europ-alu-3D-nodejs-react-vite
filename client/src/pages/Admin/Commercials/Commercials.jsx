@@ -96,7 +96,6 @@ const Commercials = () => {
       setRows(newTable);
     }
 
-    // getAllUsers();
   }, [open, deleteOpen, commercial]);
 
   return (

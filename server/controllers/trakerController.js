@@ -179,10 +179,20 @@ const nbrProdByTrack = async (req, res) => {
     order: ["pageId"],
   });
 
+  const getYear = await trakers.findAll({
+    attributes: [
+      "year"
+    ],
+    group: ['year'],
+    order: ['year'],
+    limit: 5,
+  })
+
   res.json({
     countProdInterested,
     countByMonthByYear,
     countProductByPageByMonth,
+    getYear
   });
 };
 

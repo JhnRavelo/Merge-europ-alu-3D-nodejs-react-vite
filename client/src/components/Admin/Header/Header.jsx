@@ -3,16 +3,16 @@ import logoEuro from "../../../assets/Logo_Euro.png";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
 import "./Header.scss";
 import useAdminContext from "../../../hooks/useAdminContext";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { Link, useLocation } from "react-router-dom";
+import { Field, Form, Formik } from "formik";
 
 const Header = () => {
-  const [selectedYear, setSelectedYear] = useState(2023);
 
   const location = useLocation();
   const { pathname } = location;
-
+  const { years, setYear, data, year } = useAdminContext();
   const selectDate = useRef();
   const chevron = useRef();
   const notication = useRef();
@@ -25,12 +25,13 @@ const Header = () => {
   const handleShowNotication = () => {
     notication.current.classList.toggle("showed");
   };
-
-  const handleYearChange = (event) => {
-    setSelectedYear(event.target.value);
+  
+  const handleClickYear = (value) => {
+    setYear(value.year);
+    selectDate.current.classList.toggle("visible");
+    chevron.current.classList.toggle("up");
   };
 
-  const { data } = useAdminContext();
   return (
     <div className="navbar">
       <div className="logo">
@@ -40,7 +41,7 @@ const Header = () => {
       {pathname === "/admin/" && (
         <div className="date">
           <div className="selected__date">
-            <h2 onClick={handleVisibleSelecteYear}>Année {selectedYear}</h2>
+            <h2 onClick={handleVisibleSelecteYear}>Année {year}</h2>
 
             <FontAwesomeIcon
               ref={chevron}
@@ -50,33 +51,22 @@ const Header = () => {
             />
           </div>
           <div ref={selectDate} className="setect__date">
-            <label>
-              <input
-                type="radio"
-                value={2023}
-                checked={selectedYear === "2023"}
-                onChange={handleYearChange}
-              />
-              année 2023
-            </label>
-            <label>
-              <input
-                type="radio"
-                value={2024}
-                checked={selectedYear === "2024"}
-                onChange={handleYearChange}
-              />
-              année 2024
-            </label>
-            <label>
-              <input
-                type="radio"
-                value={2025}
-                checked={selectedYear === "2025"}
-                onChange={handleYearChange}
-              />
-              année 2025
-            </label>
+            <Formik initialValues={{ year: year }}>
+              {({ values }) => (
+                <Form>
+                  {years.lenght != 0 &&
+                    years.map((item, index) => (
+                      <label
+                        key={index}
+                        onClick={() => handleClickYear(values)}
+                      >
+                        <Field name="year" type="radio" value={item.year} />
+                        année {item.year}
+                      </label>
+                    ))}
+                </Form>
+              )}
+            </Formik>
           </div>
         </div>
       )}

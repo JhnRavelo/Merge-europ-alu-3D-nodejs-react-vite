@@ -9,11 +9,11 @@ import useAdminContext from "../../hooks/useAdminContext";
 
 const Admin = () => {
   const privateAxios = useAxiosPrivate();
-  const { setData, open, setTop, SetNbUser, SetNbProd, setOrder, setUser, deleteOpen, setCommercial } = useAdminContext();
+  const { setData, open, setTop, SetNbUser, SetNbProd, setOrder, setUser, deleteOpen, setCommercial, year, setYears } = useAdminContext();
 
   useEffect(() => {
     fetchData();
-  }, [open, deleteOpen]);
+  }, [open, deleteOpen, year]);
 
   const fetchData = async () => {
     try {
@@ -25,12 +25,14 @@ const Admin = () => {
       setUser(user.data)
       const commercial = await privateAxios.get("/auth/getCommercials");
       setCommercial(commercial.data)
-      const resTop = await privateAxios.post("/traker/top", { year: 2023 });
+      const resTop = await privateAxios.post("/traker/top", { year: year });
       setTop(resTop.data);
-      const nbrUser = await privateAxios.post("/auth/nbr", { year: 2023 })
+      const nbrUser = await privateAxios.post("/auth/nbr", { year: year })
       SetNbUser(nbrUser.data)
-      const nbrProd = await privateAxios.post("/traker/nbrProd", { year: 2023 })
+      const nbrProd = await privateAxios.post("/traker/nbrProd", { year: year })
       SetNbProd(nbrProd.data)
+      console.log(nbrProd.data.getYear);
+      setYears(nbrProd.data.getYear)
       
     } catch (error) {
       console.log(error);

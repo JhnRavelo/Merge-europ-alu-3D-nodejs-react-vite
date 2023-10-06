@@ -23,7 +23,6 @@ const DataTable = (props) => {
   const handleDelete = (id) => {
     props.setDeleteOpen(true);
     props.setDeleteRow(id);
-    console.log(id);
   };
 
   const colums = [...props.columns];
@@ -36,7 +35,6 @@ if(props.slug == "products"){
   setPagination(7)
   setHeight(50)
 }
-console.log(pagination);
 
 },[props.slug])
   const actionColumn = {

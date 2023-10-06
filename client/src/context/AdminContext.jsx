@@ -13,6 +13,12 @@ const AdminProviser = ({ children }) => {
   const [user, setUser] = useState([]);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [commercial, setCommercial] = useState([]);
+  const [year, setYear] = useState(() => {
+    const date = new Date();
+    const year = date.getFullYear();
+    return year;
+  });
+  const [years, setYears] = useState([]);
 
   return (
     <AdminContext.Provider
@@ -35,6 +41,10 @@ const AdminProviser = ({ children }) => {
         setUser,
         deleteOpen,
         setDeleteOpen,
+        year,
+        setYear,
+        years,
+        setYears,
       }}
     >
       {children}
