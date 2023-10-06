@@ -5,7 +5,7 @@ import "./Header.scss";
 import useAdminContext from "../../../hooks/useAdminContext";
 import { useRef, useState } from "react";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Header = () => {
   const [selectedYear, setSelectedYear] = useState(2023);
@@ -15,10 +15,15 @@ const Header = () => {
 
   const selectDate = useRef();
   const chevron = useRef();
+  const notication = useRef();
 
   const handleVisibleSelecteYear = () => {
     selectDate.current.classList.toggle("visible");
     chevron.current.classList.toggle("up");
+  };
+
+  const handleShowNotication = () => {
+    notication.current.classList.toggle("showed");
   };
 
   const handleYearChange = (event) => {
@@ -44,7 +49,6 @@ const Header = () => {
               onClick={handleVisibleSelecteYear}
             />
           </div>
-          {/* {selectYearVisible && ( */}
           <div ref={selectDate} className="setect__date">
             <label>
               <input
@@ -73,51 +77,36 @@ const Header = () => {
               />
               année 2025
             </label>
-            {/* 
-            <span>2024</span>
-            <span>2025</span>
-            <span>2026</span> */}
           </div>
-          {/* )} */}
-
-          {/* <TextField
-            select
-            label="Année"
-            value={selectedYear}
-            onChange={handleYearChange}
-            variant="outlined"
-            className="year-picker"
-          >
-            {years.map((year) => (
-              <MenuItem key={year} value={year}>
-                {year}
-              </MenuItem>
-            ))}
-          </TextField> */}
         </div>
       )}
       <div className="icons">
-        <div className="log">
-          <div className="journal">
-            <h2>{"L'utilisateur zao a zao de nanao an zao de nanao an zao"}</h2>
-            <h2 className="date">23/34/3553</h2>
-          </div>
-          <div className="journal">
-            <h2>{"L'utilisateur zao a zao de nanao an zao de nanao an zao"}</h2>
-            <h2 className="date">23/34/3553</h2>
-          </div>
-          <div className="journal">
-            <h2>{"L'utilisateur zao a zao de nanao an zao de nanao an zao"}</h2>
-            <h2 className="date">23/34/3553</h2>
-          </div>
+        <div ref={notication} className="log">
+          <Link to="/admin/log">
+            <div className="journal" onClick={handleShowNotication}>
+              <div>
+                <h2>{"Nouveaux comptes crées"}</h2>
+                <span>10</span>
+              </div>
+              <h2 className="date">23/34/3553</h2>
+            </div>
+          </Link>
+          <Link to="/admin/log">
+            <div className="journal" onClick={handleShowNotication}>
+              <div>
+                <h2>{"Derniers produits intéressés"}</h2>
+                <span>300</span>
+              </div>
+              <h2 className="date">23/34/3553</h2>
+            </div>
+          </Link>
         </div>
-        <div className="notification">
+        <div className="notification" onClick={handleShowNotication}>
           <FontAwesomeIcon icon={faBell} className="bellIcon" />
           <span>1</span>
         </div>
         <div className="user">
           <img src={data.avatar} alt="" className="userIcon" />
-          {/* <FontAwesomeIcon icon={faUser} className="userIcon" /> */}
           <span>{data.name}</span>
         </div>
       </div>
