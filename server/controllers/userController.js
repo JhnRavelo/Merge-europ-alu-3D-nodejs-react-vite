@@ -85,7 +85,7 @@ const validationLogin = async (req, res) => {
   const { loginMail, loginPassword } = await req.body;
 
   if (!loginMail || !loginPassword) {
-    return res.jon("Connexion invalide");
+    return res.json("Connexion invalide");
   }
 
   const userName = await users.findOne({
@@ -333,8 +333,7 @@ const updateUser = async (req, res) => {
   const { name, updateEmail, phone, updatePassword, type, id, role } =
     await req.body;
 
-
-    console.log(req.body);
+  console.log(req.body);
   if (!id) return res.json("Sans id");
 
   const user = await users.findOne({ where: { ID_user: id } });
@@ -358,18 +357,18 @@ const updateUser = async (req, res) => {
   }
   const result = await user.save();
 
-  if(result) return res.json("Utilisateur modifié");
+  if (result) return res.json("Utilisateur modifié");
 };
 
-const updateProfile = async(req, res)=>{
-  const {name, id}= await req.body
+const updateProfile = async (req, res) => {
+  const { name, id } = await req.body;
   const user = await users.findOne({ where: { ID_user: id } });
   if (name) user.name = name;
 
   const result = await user.save();
 
-  if(result) return res.json("Utilisateur modifié");
-}
+  if (result) return res.json("Utilisateur modifié");
+};
 
 const deleteUser = async (req, res) => {
   if (req?.params?.id) {
@@ -426,5 +425,5 @@ module.exports = {
   validationRegister,
   uploadUserImage,
   avatarUpdateUser,
-  updateProfile
+  updateProfile,
 };

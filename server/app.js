@@ -7,8 +7,8 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 
 const app = express();
-
-  
+ 
+   
 
 pages.hasMany(products, {onDelete: 'CASCADE', foreignKey:"pageId"})
 products.belongsTo(pages, {onDelete: 'CASCADE', foreignKey:"pageId"})
