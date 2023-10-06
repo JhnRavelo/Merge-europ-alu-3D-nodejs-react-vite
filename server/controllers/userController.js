@@ -103,7 +103,6 @@ const validationLogin = async (req, res) => {
   if (!match) {
     return res.json("Connexion invalide");
   }
-  console.log("res");
   res.json("Login");
 };
 

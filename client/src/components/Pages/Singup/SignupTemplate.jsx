@@ -5,19 +5,16 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import FormContext from "../Form/FormContext";
 import errorShake from "../../../lib/utils/errorShake";
 import useButtonContext from "../../../hooks/useButtonContext";
-// import propTypes from 'prop-types';
-// import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
 const SignupTemplate = () => {
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(5);
   const prevBtnRef = useRef();
   const nextBtnRef = useRef();
   const btnStepRef = useRef();
   const formContext = useContext(FormContext);
   const {body, showForm } = useButtonContext()
-  // const buttonContext = useContext(ButtonContext);
-  // const axiosPrivate = useAxiosPrivate()
   const [title, setTitle] = useState(`S'enregistrer`);
+
   const errors = [
     formContext[0].name,
     formContext[0].email,
@@ -120,7 +117,7 @@ const SignupTemplate = () => {
       corps.classList.remove("none");
     }
     showForm()
-    // buttonContext[1]();
+    
   };
 
   useEffect(() => {
@@ -128,7 +125,7 @@ const SignupTemplate = () => {
       setIndex(4);
       btnStepRef.current.style.display = "none";
     } else {
-      setIndex(0);
+      setIndex(5);
       btnStepRef.current.style.display = "flex";
     }
   }, [body]);

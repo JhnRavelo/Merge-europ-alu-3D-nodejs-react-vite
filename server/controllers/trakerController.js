@@ -1,5 +1,5 @@
 const { trakers, users, products, pages } = require("../database/models");
-const { use } = require("../routes/Trakers");
+const sequelize = require("sequelize");
 
 const addTraker = async (req, res) => {
   const { name, email, checked, phone } = await req.body;
@@ -108,15 +108,30 @@ const getTrakers = async (req, res) => {
 const getTopProduct = async (req, res) => {
   const { year } = req.body;
 
-  const topProduct = await products.findAll({
+  const topProduct = await trakers.findAll({
+    where: {
+      year: year,
+    },
     include: [
       {
-        model: users,
+        model: products,
+        attributes: ["title","png"],
+        include:{
+          model: pages,
+          attributes: ["page"],
+        }
       },
     ],
+    attributes: [
+      "productId",
+      [sequelize.fn("COUNT", sequelize.col("productId")), "count"], 
+    ],
+    group: ["productId", "year"],
+    order: [[sequelize.fn("COUNT", sequelize.col("productId")), "DESC"]],
+    limit: 5,
   });
 
-  // res.json(topProduct);
+  res.json(topProduct);
 };
 
 module.exports = { addTraker, getTraker, getTrakers, getTopProduct };

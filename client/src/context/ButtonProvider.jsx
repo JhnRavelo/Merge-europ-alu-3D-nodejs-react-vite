@@ -46,7 +46,7 @@ const ButtonProvider = ({ children }) => {
         setBody,
         showForm,
         show,
-        open
+        open,
       }}
     >
       {children}

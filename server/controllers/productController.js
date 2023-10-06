@@ -129,7 +129,7 @@ const getProducts = async (req, res) => {
       {
         model: pages,
         required: true,
-        attributes: ["page", "home", "url"],
+        attributes: ["page", "home"],
       },
     ],
   });

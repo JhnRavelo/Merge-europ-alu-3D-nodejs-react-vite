@@ -6,8 +6,14 @@ import useButtonContext from "../../../hooks/useButtonContext";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import { useEffect } from "react";
 
+const body = {
+  name: "",
+  phone: "",
+  email: "",
+};
+
 const Home = () => {
-  const { show, showForm } = useButtonContext();
+  const { show, showForm, setBody } = useButtonContext();
   const privateAxios = useAxiosPrivate();
 
   useEffect(() => {
@@ -50,6 +56,7 @@ const Home = () => {
             <div
               className="start connect"
               onClick={() => {
+                setBody(body);
                 showForm();
               }}
             >
