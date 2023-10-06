@@ -11,18 +11,6 @@ const addPage = async (req, res) => {
       },
     });
     if (addPage) return res.json("Page existe déjà");
-    // console.log("addPage");
-
-  // let icon, home;
-  // if (req?.files?.icon) {
-  //   icon = `${process.env.SERVER_PATH}/img/icon/${req.files.icon[0].filename}`;
-  // } else icon = null;
-  // if (req?.files?.home) {
-  //   home = `${process.env.SERVER_PATH}/img/home/${req.files.home[0].filename}`;
-  // } else home = null;
-
-  // console.log(icon);
-  // console.log(home);
 
   if (
     !page ||
@@ -30,8 +18,7 @@ const addPage = async (req, res) => {
     !minXAngle ||
     !minYAngle ||
     !maxXAngle ||
-    !maxYAngle ||
-    !url
+    !maxYAngle 
   ) {
     return res.json("Aucun ne doit être vide");
   }
@@ -43,7 +30,6 @@ const addPage = async (req, res) => {
     maxYAngle,
     minXAngle,
     maxXAngle,
-    url,
   });
 
   if (result) {
@@ -105,15 +91,6 @@ const updatePage = async (req, res) => {
     maxXAngle,
     url,
   } = await req.body;
-  // let icon, home;
-  // if (req?.files?.icon) {
-  //   icon = `${process.env.SERVER_PATH}/img/icon/${req.files.icon[0].filename}`;
-  // } else icon = null;
-  // if (req?.files?.home) {
-  //   home = `${process.env.SERVER_PATH}/img/home/${req.files.home[0].filename}`;
-  // } else home = null;
-  // console.log(home);
-  // console.log(icon);
   if (id) {
     const updatePage = await pages.findOne({
       where: {
@@ -130,8 +107,7 @@ const updatePage = async (req, res) => {
         minXAngle &&
         maxXAngle &&
         minYAngle &&
-        maxYAngle &&
-        url
+        maxYAngle 
       ) {
         updatePage.set({
           page,
@@ -140,11 +116,8 @@ const updatePage = async (req, res) => {
           minYAngle,
           maxXAngle,
           maxYAngle,
-          url,
         });
       }
-      // if (icon) updatePage.icon = icon;
-      // if (home) updatePage.home = home;
 
       const result = await updatePage.save();
       if (result) {

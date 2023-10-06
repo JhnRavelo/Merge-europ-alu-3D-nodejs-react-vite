@@ -33,7 +33,7 @@
     flex-direction: column;
     text-align: end;
     justify-content: center;
-    align-items: end;
+    align-items: flex-end;
 }
 
 .button_intrested_start {

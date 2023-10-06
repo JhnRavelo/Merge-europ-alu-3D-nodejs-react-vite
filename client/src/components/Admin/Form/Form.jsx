@@ -230,7 +230,6 @@ const FormAdd = (props) => {
           console.log(result);
           if (res.data == "Utilisateur modifié") {
             props.setOpen(false);
-            props.setEditRow(null);
           }
       }
 

@@ -38,10 +38,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    url: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
   });
   return pages;
 };

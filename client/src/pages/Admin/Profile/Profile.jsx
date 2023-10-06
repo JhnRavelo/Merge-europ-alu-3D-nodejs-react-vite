@@ -4,7 +4,6 @@ import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import useAdminContext from "../../../hooks/useAdminContext";
 import FormAdd from "../../../components/Admin/Form/Form";
-import { useState } from "react";
 
 const columns = [
   {
@@ -23,7 +22,6 @@ const columns = [
 
 const Profile = () => {
 const {data, setOpen, open} = useAdminContext()
-const [editRow, setEditRow]=useState(null)
 
 const handleClick = ()=> {
   setOpen(true)
@@ -61,7 +59,6 @@ const handleClick = ()=> {
             columns={columns}
             setOpen={setOpen}
             editRow={data}
-            setEditRow={(value) => setEditRow(value)}
             url="/auth/User"
           />
         )}
