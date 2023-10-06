@@ -1,7 +1,5 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-const products = require("./products");
-const trakers = require("./trakers");
 
 module.exports = (sequelize, DataTypes) => {
   const users = sequelize.define("users", {
@@ -43,7 +41,6 @@ module.exports = (sequelize, DataTypes) => {
     type: {
       type: DataTypes.STRING,
       allowNull: true,
-      // defaultValue: "Particulier"
     },
   });
 
@@ -78,11 +75,10 @@ module.exports = (sequelize, DataTypes) => {
   };
 
   users.associate = (models) => {
-    users.belongsToMany(models.products, {
-      through: models.trakers,
+    users.hasMany(models.trakers, {
       onDelete: "CASCADE",
       foreignKey: "userId",
-    });
+    })
   };
 
   return users;

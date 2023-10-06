@@ -1,6 +1,5 @@
 const charDataValue = (prevState, nbUser, count) => {
   const newState = prevState.map((prev) => {
-    console.log(nbUser[count]);
     const matchingNb = nbUser[count].find(
       (nb) => nb.month == prev.number
     );

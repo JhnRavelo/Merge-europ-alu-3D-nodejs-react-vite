@@ -1,9 +1,8 @@
 import "../Users/User.scss";
 import { useEffect, useState } from "react";
 import DataTable from "../../../components/Admin/DataTable/DataTable";
-// import defaultAxios from "../../../api/axios";
 import useButtonContext from "../../../hooks/useButtonContext";
-import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import useAdminContext from "../../../hooks/useAdminContext";
 
 const columns = [
   {
@@ -49,7 +48,7 @@ const columns = [
     inputMode: "number",
     headerName: "Nom du Produit",
     placeholder: "Votre Numéro",
-    width: 120,
+    width: 200,
   },
   {
     field: "page",
@@ -71,39 +70,31 @@ const columns = [
 const Orders = () => {
   const [rows, setRows] = useState([]);
   const {show} = useButtonContext()
-  const privateAxios = useAxiosPrivate()
+  const {order} = useAdminContext()
 
   useEffect(() => {
-    getAllTrakers();
-  }, [show]);
 
-  const getAllTrakers = async () => {
-    try {
-      let res;
-      res = await privateAxios.get("/trakers/all");
-      console.log(res.data);
-      const newTable = res.data.map((tarker) => {
+    if(order.lenght!=0){
+      console.log(order);
+      const newTable = order.map((tarker) => {
         var createdAt;
-        
         createdAt = tarker.createdAt.slice(0, 10);
         return {
-          id: tarker.ID_traker,
-          name: tarker.name,
-          email: tarker.email,
-          phone: tarker.phone,
-          product: tarker.product,
-          page: tarker.page,
+          id: tarker.id,
+          name: tarker.user.name,
+          email: tarker.user.email,
+          phone: tarker.user.phone,
+          product: tarker.product.title,
+          page: tarker.product.page.page,
           createdAt,
 
         };
       });
 
       setRows(newTable);
-      return res.data;
-    } catch (error) {
-      console.log(error);
     }
-  };
+
+  }, [order, show]);
 
   return (
     <>

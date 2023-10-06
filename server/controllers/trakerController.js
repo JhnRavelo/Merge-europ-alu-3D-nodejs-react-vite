@@ -84,8 +84,7 @@ const getTraker = async (req, res) => {
 };
 
 const getTrakers = async (req, res) => {
-  const allTrakers = await users.findAll({
-    attributes: ["name", "email", "phone"],
+  const allTrakers = await trakers.findAll({
     include: [
       {
         model: products,
@@ -97,10 +96,12 @@ const getTrakers = async (req, res) => {
           },
         ],
       },
+      {
+        model: users,
+        attributes: ["name", "email", "phone"],
+      },
     ],
   });
-
-  console.log(allTrakers);
 
   res.json(allTrakers);
 };
@@ -158,7 +159,31 @@ const nbrProdByTrack = async (req, res) => {
     order: ["month"],
   });
 
-  res.json({ countProdInterested, countByMonthByYear });
+  const countProductByPageByMonth = await products.findAll({
+    include: [
+      {
+        model: trakers,
+        where: {
+          year: year,
+        },
+        attributes: [
+          [sequelize.fn("COUNT", sequelize.col("ProductId")), "Cacount"],
+        ],
+      },
+      {
+        model: pages,
+        attributes: ["page"],
+      },
+    ],
+    group: ["pageId"],
+    order: ["pageId"],
+  });
+
+  res.json({
+    countProdInterested,
+    countByMonthByYear,
+    countProductByPageByMonth,
+  });
 };
 
 module.exports = {

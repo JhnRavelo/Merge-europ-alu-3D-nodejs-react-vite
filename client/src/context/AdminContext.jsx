@@ -9,6 +9,9 @@ const AdminProviser = ({ children }) => {
   const [top, setTop] = useState([]);
   const [nbUser, SetNbUser] = useState(0);
   const [nbProd, SetNbProd] = useState(0);
+  const [order, setOrder] = useState([]);
+  const [user, setUser] = useState([]);
+  const [deleteOpen, setDeleteOpen] = useState(false);
 
   return (
     <AdminContext.Provider
@@ -23,6 +26,12 @@ const AdminProviser = ({ children }) => {
         SetNbUser,
         nbProd,
         SetNbProd,
+        order,
+        setOrder,
+        user,
+        setUser,
+        deleteOpen,
+        setDeleteOpen,
       }}
     >
       {children}

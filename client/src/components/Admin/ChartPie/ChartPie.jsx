@@ -1,5 +1,8 @@
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 import "./ChartPie.scss";
+import useAdminContext from "../../../hooks/useAdminContext";
+import { useEffect, useState } from "react";
+import generateColor from "../../../lib/utils/generateColor";
 
 const data = [
   { name: "Fenêtre", value: 400, color: "#0088FE" },
@@ -9,6 +12,29 @@ const data = [
 ];
 
 const PieChartBox = () => {
+  const { nbProd } = useAdminContext();
+  const [chartData, setChartData] = useState(data);
+
+  useEffect(() => {
+    if (nbProd != 0) {
+      console.log(nbProd);
+      if (nbProd?.countProductByPageByMonth) {
+        setChartData(() => {
+          const chart = nbProd.countProductByPageByMonth.map((prod) => {
+            const color = generateColor();
+            return {
+              name: prod.page.page,
+              value: prod.trakers[0].Cacount,
+              color: color,
+            };
+          });
+          console.log(chart);
+          return chart
+        });
+      }
+    }
+  }, [nbProd]);
+
   return (
     <div className="pieChartBox">
       <h1>Par Catégorie</h1>
@@ -19,13 +45,13 @@ const PieChartBox = () => {
               contentStyle={{ background: "white", borderRadius: "5px" }}
             />
             <Pie
-              data={data}
+              data={chartData}
               innerRadius={"70%"}
               outerRadius={"90%"}
               paddingAngle={5}
               dataKey="value"
             >
-              {data.map((item) => (
+              {chartData.map((item) => (
                 <Cell key={item.name} fill={item.color} />
               ))}
             </Pie>
@@ -33,7 +59,7 @@ const PieChartBox = () => {
         </ResponsiveContainer>
       </div>
       <div className="options">
-        {data.map((item) => (
+        {chartData.map((item) => (
           <div className="option" key={item.name}>
             <div className="title">
               <div className="dot" style={{ backgroundColor: item.color }} />

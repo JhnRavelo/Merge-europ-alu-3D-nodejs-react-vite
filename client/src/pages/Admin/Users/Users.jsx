@@ -5,6 +5,7 @@ import DataTable from "../../../components/Admin/DataTable/DataTable";
 import ModalDelete from "../../../components/Admin/ModalDelete/ModalDelete";
 import useButtonContext from "../../../hooks/useButtonContext";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import useAdminContext from "../../../hooks/useAdminContext";
 
 const columns = [
   {
@@ -75,23 +76,18 @@ const columns = [
 ];
 
 const Users = () => {
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
   const [rows, setRows] = useState([]);
   const [editRow, setEditRow] = useState(null);
-  const [deleteOpen, setDeleteOpen] = useState(false);
+  // const [deleteOpen, setDeleteOpen] = useState(false);
   const [deleteRow, setDeleteRow] = useState(null);
   const {show} = useButtonContext()
-  const privateAxios = useAxiosPrivate()
+  // const privateAxios = useAxiosPrivate()
+  const {open, setOpen, user, deleteOpen, setDeleteOpen} = useAdminContext() 
 
   useEffect(() => {
-    getAllUsers();
-  }, [open, deleteOpen, show]);
-
-  const getAllUsers = async () => {
-    try {
-      let res;
-      res = await privateAxios.get("/auth/getUsers");
-      const newTable = res.data.map((user) => {
+    if(user.lenght != 0){
+      const newTable = user.map((user) => {
         var connected, createdAt;
         if (!user.refreshToken) {
           connected = false;
@@ -112,11 +108,41 @@ const Users = () => {
       });
 
       setRows(newTable);
-      return res.data;
-    } catch (error) {
-      console.log(error);
     }
-  };
+
+    // getAllUsers();
+  }, [open, deleteOpen, show, user]);
+
+  // const getAllUsers = async () => {
+  //   try {
+  //     let res;
+  //     res = await privateAxios.get("/auth/getUsers");
+  //     const newTable = res.data.map((user) => {
+  //       var connected, createdAt;
+  //       if (!user.refreshToken) {
+  //         connected = false;
+  //       } else {
+  //         connected = true;
+  //       }
+  //       createdAt = user.createdAt.slice(0, 10);
+  //       return {
+  //         id: user.ID_user,
+  //         img: user.avatar,
+  //         name: user.name,
+  //         type: user.type,
+  //         email: user.email,
+  //         phone: user.phone,
+  //         createdAt,
+  //         connected,
+  //       };
+  //     });
+
+  //     setRows(newTable);
+  //     return res.data;
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   return (
     <>

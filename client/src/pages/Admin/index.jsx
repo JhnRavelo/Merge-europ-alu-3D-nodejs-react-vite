@@ -9,23 +9,27 @@ import useAdminContext from "../../hooks/useAdminContext";
 
 const Admin = () => {
   const privateAxios = useAxiosPrivate();
-  const { setData, open, setTop, SetNbUser, SetNbProd } = useAdminContext();
+  const { setData, open, setTop, SetNbUser, SetNbProd, setOrder, setUser, deleteOpen } = useAdminContext();
 
   useEffect(() => {
     fetchData();
-  }, [open]);
+  }, [open, deleteOpen]);
 
   const fetchData = async () => {
     try {
       const res = await privateAxios.get("/auth");
       setData(res.data);
+      const order = await privateAxios.get("/traker/all");
+      setOrder(order.data)
+      const user = await privateAxios.get("/auth/getUsers");
+      setUser(user.data)
       const resTop = await privateAxios.post("/traker/top", { year: 2023 });
       setTop(resTop.data);
       const nbrUser = await privateAxios.post("/auth/nbr", { year: 2023 })
       SetNbUser(nbrUser.data)
       const nbrProd = await privateAxios.post("/traker/nbrProd", { year: 2023 })
       SetNbProd(nbrProd.data)
-      console.log(nbrUser.data);
+      console.log(nbrProd.data);
       
     } catch (error) {
       console.log(error);
