@@ -1,23 +1,26 @@
 import { faEnvelope, faKey } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ErrorMessage, Field } from "formik";
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import FormContext from "../Form/FormContext";
 import defaultAxios from "../../../api/axios";
 import useAuth from "../../../hooks/useAuth";
 import useButtonContext from "../../../hooks/useButtonContext";
 import { useNavigate } from "react-router-dom";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 const prime = import.meta.env.VITE_PRIME.split(" ");
 
 const Login = () => {
+  const [visible, setVisible] = useState(false);
+
   const { setAuth } = useAuth();
   const formContext = useContext(FormContext);
-  const {showForm} = useButtonContext()
+  const { showForm } = useButtonContext();
   const btnLoginRef = useRef();
   const { loginMail, loginPassword } = formContext[1];
   const errors = formContext[0];
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   useEffect(() => {
     const btnLogin = btnLoginRef.current;
     if (
@@ -39,13 +42,13 @@ const Login = () => {
         role = res.data.role,
         accessToken = res.data.accessToken;
       console.log(res.data);
-      
+
       if (role) {
-        setAuth({role, accessToken});
-        if(role == prime[0]){
-          navigate("/admin")
+        setAuth({ role, accessToken });
+        if (role == prime[0]) {
+          navigate("/admin");
         }
-        showForm()
+        showForm();
       }
     } catch (error) {
       if (error) {
@@ -76,20 +79,32 @@ const Login = () => {
         <div className="username" style={{ marginTop: "15px" }}>
           <FontAwesomeIcon icon={faKey} className="fa" />
           <Field
-            type="password"
+            type={visible ? "text" : "password"}
             name="loginPassword"
             inputMode="password"
             className="user-input"
             placeholder="Mot de passe"
             autoComplete="off"
           />
+          {visible ? (
+            <AiOutlineEye
+              className="absolute right-6 top-10 cursor-pointer"
+              size={25}
+              onClick={() => setVisible(false)}
+            />
+          ) : (
+            <AiOutlineEyeInvisible
+              className="absolute right-6 top-10 cursor-pointer"
+              size={25}
+              onClick={() => setVisible(true)}
+            />
+          )}
         </div>
         <ErrorMessage
           name="loginPassword"
           component={"p"}
           className="error login-loginMail-error"
         />
-       
       </div>
       <div className="buttons">
         <button
