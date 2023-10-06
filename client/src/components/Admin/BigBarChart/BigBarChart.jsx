@@ -8,6 +8,22 @@ import {
   } from "recharts";
   import propTypes from 'prop-types'
   
+  const CustomTooltip = ({ active, payload}) => {
+    if (active && payload && payload.length) {
+      
+      return (
+        <div className="custom-tooltip">
+          {payload.map((item, index) => {
+            return (
+              <p key={index} className={`data ${item.dataKey}`} style={{color:"limegreen"}} >
+                {`${item.payload.name}: ${item.value} Visites`}
+              </p>
+            );
+          })}
+        </div>
+      );
+    }
+  };
   
   const BigChartBox = (props) => {
     return (
@@ -20,6 +36,7 @@ import {
               contentStyle={{ background: "#2a3447", borderRadius: "5px" }}
               labelStyle={{ display: "none" }}
               cursor={{fill:"none"}}
+              content={<CustomTooltip/>}
             />
             <XAxis dataKey="name" />
             <Bar dataKey={props.dataKey} fill={props.color} />
@@ -34,6 +51,11 @@ BigChartBox.propTypes = {
     chartData: propTypes.any,
     dataKey: propTypes.string,
     color: propTypes.string
+}
+
+CustomTooltip.propTypes = {
+  active: propTypes.any,
+  payload: propTypes.array
 }
   
   export default BigChartBox;

@@ -33,6 +33,7 @@ const Home = () => {
   const [totalProd, setTotalProd] = useState(0);
   const [chartDataUser, setChartDataUser] = useState(data);
   const [chartDataProd, setChartDataProd] = useState(data);
+  const [chartDataVisit, setChartDataVisit] = useState(data);
   const [percUser, setPercUser] = useState(0);
   const [percProd, setPercProd] = useState(0);
   const { nbUser, nbProd } = useAdminContext();
@@ -41,18 +42,22 @@ const Home = () => {
     if (nbUser != 0) {
       setTotalUser(nbUser.countUserByYear[0].userCount);
       setChartDataUser((prevState) => {
-        return charDataValue(prevState, nbUser);
+        return charDataValue(prevState, nbUser, "countByMonthByYear");
       });
 
       setPercUser(() => {
         return differencePercentage(nbUser);
+      });
+
+      setChartDataVisit((prevState) => {
+        return charDataValue(prevState, nbUser, "userVisitByMonth");
       });
     }
 
     if (nbProd != 0) {
       setTotalProd(nbProd.countProdInterested[0].prodCount);
       setChartDataProd((prevState) => {
-        return charDataValue(prevState, nbProd);
+        return charDataValue(prevState, nbProd, "countByMonthByYear");
       });
 
       setPercProd(() => {
@@ -89,7 +94,7 @@ const Home = () => {
         <PieChartBox />
       </div>
       <div className="box box7">
-        <BigChartBox {...barChartBoxVisit} />
+        <BigChartBox {...barChartBoxVisit} chartData={chartDataVisit} />
       </div>
     </div>
   );
