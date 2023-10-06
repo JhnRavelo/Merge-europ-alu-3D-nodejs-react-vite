@@ -6,9 +6,7 @@ const {users, products, trakers, pages, sessions} = require("./database/models")
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
-const app = express();
- 
-   
+const app = express();  
 
 pages.hasMany(products, {onDelete: 'CASCADE', foreignKey:"pageId"})
 products.belongsTo(pages, {onDelete: 'CASCADE', foreignKey:"pageId"})

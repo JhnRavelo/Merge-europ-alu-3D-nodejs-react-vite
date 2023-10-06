@@ -9,18 +9,7 @@ export const chartBoxUser = {
     color: "skyblue",
     icon: "/src/assets/png/analysis.png",
     title: "Total Produits Intéréssés",
-    // number: "238",
     dataKey: "users",
-    // percentage: 21,
-    // chartData: [
-    //   { name: "Sun", users: 400 },
-    //   { name: "Mon", users: 600 },
-    //   { name: "Tue", users: 500 },
-    //   { name: "Wed", users: 700 },
-    //   { name: "Thu", users: 400 },
-    //   { name: "Fri", users: 500 },
-    //   { name: "Sat", users: 450 },
-    // ],
   };
 
   export const barChartBoxVisit = {

@@ -9,7 +9,6 @@ const charDataValue = (prevState, nbUser) => {
       return prev;
     }
   });
-  console.log(newState);
   return newState;
 };
 

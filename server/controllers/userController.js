@@ -444,8 +444,24 @@ const nbrUser = async (req, res) => {
   const countByMonthByYear = countUserByMonth.filter((result) => {
     return result.dataValues.year == year;
   });
-  res.json({ countUserByYear, countByMonthByYear });
+
+const userVisitByMonth = await sessions.findAll({
+  where:{
+    year:year,
+  },
+  attributes: [
+    "month",
+    [sequelize.fn("COUNT", sequelize.col("userId")), "count"]
+  ],
+  group: ["month"],
+  order: ["month"],
+
+})
+
+  res.json({ countUserByYear, countByMonthByYear, userVisitByMonth });
 };
+
+
 
 module.exports = {
   userRegistration,

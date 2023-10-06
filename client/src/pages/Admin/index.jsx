@@ -25,7 +25,8 @@ const Admin = () => {
       SetNbUser(nbrUser.data)
       const nbrProd = await privateAxios.post("/traker/nbrProd", { year: 2023 })
       SetNbProd(nbrProd.data)
-
+      console.log(nbrUser.data);
+      
     } catch (error) {
       console.log(error);
     }
