@@ -1,6 +1,7 @@
 const { users, sessions } = require("../database/models");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
+const sequelize = require("sequelize");
 
 var date = new Date();
 var day = date.getDate();
@@ -410,6 +411,39 @@ const avatarUpdateUser = async (req, res) => {
   } else return res.json("Non");
 };
 
+const nbrUser = async (req, res) => {
+  const { year } = req.body;
+
+  const countUser = await users.findAll({
+    where: {
+      role: process.env.PRIME3,
+    },
+    attributes: [
+      [sequelize.fn("COUNT", sequelize.col("ID_user")), "userCount"],
+    ],
+  });
+
+  const countUserByMonth = await users.findAll({
+    where: {
+      role: process.env.PRIME3,
+    },
+    attributes: [
+      [sequelize.literal("MONTH(createdAt)"), "month"],
+      [sequelize.literal("YEAR(createdAt)"), "year"],
+      [sequelize.fn("COUNT", sequelize.col("ID_user")), "count"],
+    ],
+    group: ["month"],
+    order: sequelize.literal("month"),
+  });
+
+  const countUserByMonthByYear = countUserByMonth.filter(
+    (result) => {
+      return result.dataValues.year == year
+    }
+  );
+  res.json({ countUser, countUserByMonthByYear });
+};
+
 module.exports = {
   userRegistration,
   userLogin,
@@ -425,4 +459,5 @@ module.exports = {
   uploadUserImage,
   avatarUpdateUser,
   updateProfile,
+  nbrUser,
 };

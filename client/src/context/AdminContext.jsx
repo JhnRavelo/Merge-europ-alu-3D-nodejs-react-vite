@@ -6,10 +6,25 @@ const AdminContext = createContext();
 const AdminProviser = ({ children }) => {
   const [data, setData] = useState({});
   const [open, setOpen] = useState(false);
-  const [top, setTop] = useState([])
+  const [top, setTop] = useState([]);
+  const [nbUser, SetNbUser] = useState({});
+  const [nbProd, SetNbProd] = useState({});
 
   return (
-    <AdminContext.Provider value={{ data, setData, open, setOpen, top, setTop }}>
+    <AdminContext.Provider
+      value={{
+        data,
+        setData,
+        open,
+        setOpen,
+        top,
+        setTop,
+        nbUser,
+        SetNbUser,
+        nbProd,
+        SetNbProd,
+      }}
+    >
       {children}
     </AdminContext.Provider>
   );

@@ -16,11 +16,13 @@ const {
   uploadUserImage,
   avatarUpdateUser,
   updateProfile,
+  nbrUser,
 } = require("../controllers/userController");
 const verifyJWT = require("../middlewares/verifyJWT");
 const verifyRole = require("../middlewares/verifyRole");
 const multer = require("multer");
 const path = require("path");
+const { route } = require("./Trakers");
 
 const imgPath = path.join(__dirname, "..", "public", "img");
 
@@ -90,6 +92,8 @@ router.put(
   verifyRole(process.env.PRIME1),
   updateProfile
 );
+
+router.post("/nbr", verifyJWT, verifyRole(process.env.PRIME1), nbrUser)
 
 router.get(
   "/getCommercials",

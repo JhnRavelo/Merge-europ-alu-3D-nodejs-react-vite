@@ -9,7 +9,7 @@ import useAdminContext from "../../hooks/useAdminContext";
 
 const Admin = () => {
   const privateAxios = useAxiosPrivate();
-  const { setData, open, setTop } = useAdminContext();
+  const { setData, open, setTop, SetNbUser } = useAdminContext();
 
   useEffect(() => {
     fetchData();
@@ -22,7 +22,10 @@ const Admin = () => {
 
       const resTop = await privateAxios.post("/traker/top", { year: 2023 });
       setTop(resTop.data);
-      console.log(resTop.data);
+
+      const nbrUser = await privateAxios.post("/auth/nbr", { year: 2023 })
+      SetNbUser(nbrUser.data)
+      console.log(nbrUser.data);
     } catch (error) {
       console.log(error);
     }

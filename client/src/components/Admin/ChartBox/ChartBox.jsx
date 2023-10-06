@@ -28,7 +28,7 @@ const ChartBox = (props) => {
           <span>{props.title}</span>
         </div>
         <h1>{props.number}</h1>
-        <Link to="/" style={{ color: props.color }}>
+        <Link to={props.url} style={{ color: props.color }}>
           Visionner
         </Link>
       </div>
@@ -74,6 +74,7 @@ ChartBox.propTypes = {
   number: propTypes.any,
   percentage: propTypes.number,
   chartData: propTypes.any,
+  url: propTypes.string,
 };
 
 CustomTooltip.propTypes = {

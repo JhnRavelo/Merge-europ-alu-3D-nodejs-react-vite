@@ -3,8 +3,6 @@ import useAdminContext from "../../../hooks/useAdminContext";
 
 const TopProduct = () => {
   const {top} = useAdminContext()
-
-  console.log(top);
   
   return (
     <div className="topBox">
