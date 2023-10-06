@@ -14,7 +14,8 @@
     .selected__date {
       
       h2 {
-        color: #000;
+        // color: #000;
+        color: #fff;
         font-size: 18px;
         width: 100%;
       }
@@ -22,8 +23,8 @@
       width: 200px;
       height: 50px;
       box-shadow: rgba(0, 0, 0, .5) 0px 3px 8px;
-      // border: 2px solid #384256;
-      background: #fff;
+      border: 2px solid #384256;
+      // background: #fff;
       border-radius: 10px;
       display: flex;
       align-items: center;
@@ -33,8 +34,8 @@
         background: transparent;
         border: none;
         outline: none;
-        color: #2d2d2d;
-        // color: #fff;
+        // color: #2d2d2d;
+        color: #fff;
         width: 150px;
         font-size: 18px;
         cursor: pointer;
@@ -131,7 +132,7 @@
   .icons {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 30px;
 
     .icon{
       @include sm{
@@ -141,25 +142,33 @@
 
     .notification {
       position: relative;
+      transition: .2s;
+      &:hover {
+        cursor: pointer;
+      }
+      &:active {
+        transform: scale(.9);
+      }
 
       .bellIcon {
-        width: 17px;
-        height: 17px;
+        width: 25px;
+        height: 25px;
       }
 
       span {
         background-color: red;
+        padding: 8px;
         color: white;
         width: 12px;
         height: 12px;
         border-radius: 50%;
         position: absolute;
         top: -8px;
-        right: -7px;
+        right: -10px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 9px;
+        font-size: 10px;
       }
     }
 
@@ -169,10 +178,18 @@
       gap: 10px;
 
       .userIcon {
-        width: 17px;
-        height: 17px;
+        padding: 3px;
+        border: 2px solid green;
+        width: 50px;
+        height: 50px;
         border-radius: 50%;
         object-fit: cover;
+
+      }
+      span {
+        font-size: 20px;
+        font-weight: 500;
+        text-transform: capitalize;
       }
     }
   }
