@@ -10,63 +10,58 @@ import BigChartBox from "../../../components/Admin/BigBarChart/BigBarChart";
 import PieChartBox from "../../../components/Admin/ChartPie/ChartPie";
 import useAdminContext from "../../../hooks/useAdminContext";
 import { useEffect, useState } from "react";
+import charDataValue from "../../../lib/utils/charDataValue";
+import differencePercentage from "../../../lib/utils/differencePercentage";
+
+const data = [
+  { name: "Jan", users: 0, number: 1 },
+  { name: "Feb", users: 0, number: 2 },
+  { name: "Mar", users: 0, number: 3 },
+  { name: "Apr", users: 0, number: 4 },
+  { name: "May", users: 0, number: 5 },
+  { name: "Jun", users: 0, number: 6 },
+  { name: "Jul", users: 0, number: 7 },
+  { name: "Aug", users: 0, number: 8 },
+  { name: "Sep", users: 0, number: 9 },
+  { name: "Oct", users: 0, number: 10 },
+  { name: "Nov", users: 0, number: 11 },
+  { name: "Dec", users: 0, number: 12 },
+];
 
 const Home = () => {
   const [totalUser, setTotalUser] = useState(0);
-  const [chartDataUser, setChartDataUser] = useState([
-    { name: "Jan", users: 0, number: 1 },
-    { name: "Feb", users: 0, number: 2 },
-    { name: "Mar", users: 0, number: 3 },
-    { name: "Apr", users: 0, number: 4 },
-    { name: "May", users: 0, number: 5 },
-    { name: "Jun", users: 0, number: 6 },
-    { name: "Jul", users: 0, number: 7 },
-    { name: "Aug", users: 0, number: 8 },
-    { name: "Sep", users: 0, number: 9 },
-    { name: "Oct", users: 0, number: 10 },
-    { name: "Nov", users: 0, number: 11 },
-    { name: "Dec", users: 0, number: 12 },
-  ]);
+  const [totalProd, setTotalProd] = useState(0);
+  const [chartDataUser, setChartDataUser] = useState(data);
+  const [chartDataProd, setChartDataProd] = useState(data);
   const [percUser, setPercUser] = useState(0);
-  const { nbUser } = useAdminContext();
+  const [percProd, setPercProd] = useState(0);
+  const { nbUser, nbProd } = useAdminContext();
 
   useEffect(() => {
-    if (nbUser) {
-      setTotalUser(nbUser.countUser[0].userCount);
-      console.log(nbUser.countUserByMonthByYear[0]);
+    if (nbUser!=0) {
+      setTotalUser(nbUser.countUserByYear[0].userCount);
       setChartDataUser((prevState) => {
-        const newState = prevState.map((prev) => {
-          const matchingNb = nbUser.countUserByMonthByYear.find(
-            (nb) => nb.month === prev.number
-          );
-          if (matchingNb) {
-            return { ...prev, users: matchingNb.count };
-          } else {
-            return prev;
-          }
-        });
-
-        return newState;
+        return charDataValue(prevState, nbUser);
       });
 
       setPercUser(() => {
-        const date = new Date();
-        const Lastmonth = date.getMonth();
-        const Thismonth = Lastmonth + 1;
-        const findThisMonth = nbUser.countUserByMonthByYear.find(
-          (nb) => nb.month === Thismonth
-        );
-        const findLastMonth = nbUser.countUserByMonthByYear.find(
-          (nb) => nb.month === Lastmonth
-        );
-        const percentageUser = Math.floor(
-          ((findThisMonth.count - findLastMonth.count) / findLastMonth.count) *
-            100
-        );
-        return percentageUser;
+        return differencePercentage(nbUser);
       });
     }
-  }, [nbUser]);
+
+    if (nbProd!=0) {
+      setTotalProd(nbProd.countProdInterested[0].prodCount);
+      setChartDataProd((prevState) => {
+        return charDataValue(prevState, nbProd);
+      });
+
+      setPercProd(() => {
+        return differencePercentage(nbProd);
+      });
+    }
+
+    console.log(chartDataProd);
+  }, [nbUser, nbProd]);
 
   return (
     <div className="home">
@@ -83,8 +78,19 @@ const Home = () => {
         />
       </div>
       <div className="box box3">
+<<<<<<< HEAD
         <ChartBox {...chartBoxProduct} url={"/admin/product"} />
         <ChartBox {...chartBoxUser} />
+=======
+        <ChartBox
+          {...chartBoxProduct}
+          url={"/admin/product"}
+          number={totalProd}
+          chartData={chartDataProd}
+          percentage={percProd}
+          // dataKey="users"
+        />
+>>>>>>> 31cfea6 (Chartbox produit)
       </div>
       <div className="box box4">
         <PieChartBox />

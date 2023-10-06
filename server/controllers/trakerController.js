@@ -115,16 +115,16 @@ const getTopProduct = async (req, res) => {
     include: [
       {
         model: products,
-        attributes: ["title","png"],
-        include:{
+        attributes: ["title", "png"],
+        include: {
           model: pages,
           attributes: ["page"],
-        }
+        },
       },
     ],
     attributes: [
       "productId",
-      [sequelize.fn("COUNT", sequelize.col("productId")), "count"], 
+      [sequelize.fn("COUNT", sequelize.col("productId")), "count"],
     ],
     group: ["productId", "year"],
     order: [[sequelize.fn("COUNT", sequelize.col("productId")), "DESC"]],
@@ -134,4 +134,37 @@ const getTopProduct = async (req, res) => {
   res.json(topProduct);
 };
 
-module.exports = { addTraker, getTraker, getTrakers, getTopProduct };
+const nbrProdByTrack = async (req, res) => {
+  const { year } = req.body;
+
+  const countProdInterested = await trakers.findAll({
+    where: {
+      year: year,
+    },
+    attributes: [
+      [sequelize.fn("COUNT", sequelize.col("productId")), "prodCount"],
+    ],
+  });
+
+  const countByMonthByYear = await trakers.findAll({
+    where: {
+      year: year,
+    },
+    attributes: [
+      "month",
+      [sequelize.fn("COUNT", sequelize.col("ProductId")), "count"],
+    ],
+    group: ["month"],
+    order: ["month"],
+  });
+
+  res.json({ countProdInterested, countByMonthByYear });
+};
+
+module.exports = {
+  addTraker,
+  getTraker,
+  getTrakers,
+  getTopProduct,
+  nbrProdByTrack,
+};

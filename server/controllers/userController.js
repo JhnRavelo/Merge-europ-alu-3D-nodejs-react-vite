@@ -419,8 +419,13 @@ const nbrUser = async (req, res) => {
       role: process.env.PRIME3,
     },
     attributes: [
+      [sequelize.literal("YEAR(createdAt)"), "year"],
       [sequelize.fn("COUNT", sequelize.col("ID_user")), "userCount"],
     ],
+  });
+
+  const countUserByYear = countUser.filter((result) => {
+    return result.dataValues.year == year;
   });
 
   const countUserByMonth = await users.findAll({
@@ -436,12 +441,10 @@ const nbrUser = async (req, res) => {
     order: sequelize.literal("month"),
   });
 
-  const countUserByMonthByYear = countUserByMonth.filter(
-    (result) => {
-      return result.dataValues.year == year
-    }
-  );
-  res.json({ countUser, countUserByMonthByYear });
+  const countByMonthByYear = countUserByMonth.filter((result) => {
+    return result.dataValues.year == year;
+  });
+  res.json({ countUserByYear, countByMonthByYear });
 };
 
 module.exports = {
