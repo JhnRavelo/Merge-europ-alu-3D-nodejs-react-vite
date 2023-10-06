@@ -112,14 +112,11 @@ const getTopProduct = async (req, res) => {
     include: [
       {
         model: users,
-        where: {
-          
-        },
       },
     ],
   });
 
-  res.json(topProduct);
+  // res.json(topProduct);
 };
 
 module.exports = { addTraker, getTraker, getTrakers, getTopProduct };
