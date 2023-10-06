@@ -6,13 +6,19 @@ import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./context/AuthProvider";
 import { ButtonProvider } from "./context/ButtonProvider";
+import { ProductProvider } from "./context/ProductProvider";
+import { AdminProviser } from "./context/AdminContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <AuthProvider>
     <ButtonProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <ProductProvider>
+        <AdminProviser>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </AdminProviser>
+      </ProductProvider>
     </ButtonProvider>
   </AuthProvider>
 );

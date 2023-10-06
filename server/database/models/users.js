@@ -1,8 +1,10 @@
-const jwt = require('jsonwebtoken')
-require('dotenv').config()
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
+const products = require("./products");
+const trakers = require("./trakers");
 
 module.exports = (sequelize, DataTypes) => {
-  const users = sequelize.define('users', {
+  const users = sequelize.define("users", {
     ID_user: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -36,49 +38,52 @@ module.exports = (sequelize, DataTypes) => {
     },
     role: {
       type: DataTypes.INTEGER,
-      defaultValue: process.env.PRIME3
+      defaultValue: process.env.PRIME3,
     },
     type: {
       type: DataTypes.STRING,
       allowNull: true,
       // defaultValue: "Particulier"
-    }
+    },
   });
 
   users.prototype.generateToken = function (id, role) {
     const accessToken = jwt.sign(
-      {"userInfo":{
-        "id": id,
-        "role":role,
-      }
-        
+      {
+        userInfo: {
+          id: id,
+          role: role,
+        },
       },
       process.env.ACCESS_TOKEN_SECRET,
       {
-        expiresIn: '60s',
+        expiresIn: "60s",
       }
     );
-    return accessToken
+    return accessToken;
   };
 
   users.prototype.generateRefreshToken = function (id) {
     const refreshToken = jwt.sign(
       {
-        "id":id
+        id: id,
       },
       process.env.REFRESH_TOKEN_SECRET,
       {
-        expiresIn: '1d',
+        expiresIn: "1d",
       }
     );
-    
-    return refreshToken
-  }
 
-  // users.associate = (models) => {
-  // users.belongsToMany(models.product, { through: models.commande, onDelete: 'CASCADE' });
-// Produit.belongsToMany(Client, { through: Commande, onDelete: 'CASCADE' });
-  // }
+    return refreshToken;
+  };
+
+  users.associate = (models) => {
+    users.belongsToMany(models.products, {
+      through: models.trakers,
+      onDelete: "CASCADE",
+      foreignKey: "userId",
+    });
+  };
 
   return users;
 };

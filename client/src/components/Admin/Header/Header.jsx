@@ -1,9 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import logoEuro from "../../../assets/Logo_Euro.png";
-import { faBell, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faBell } from "@fortawesome/free-solid-svg-icons";
 import "./Header.scss";
+import useAdminContext from "../../../hooks/useAdminContext";
 
 const Header = () => {
+  const {data} = useAdminContext()
   return (
     <div className="navbar">
       <div className="logo">
@@ -16,8 +18,9 @@ const Header = () => {
           <span>1</span>
         </div>
         <div className="user">
-          <FontAwesomeIcon icon={faUser} className="userIcon" />
-          <span>Cedy</span>
+          <img src={data.avatar} alt="" className="userIcon"/>
+          {/* <FontAwesomeIcon icon={faUser} className="userIcon" /> */}
+          <span>{data.name}</span>
         </div>
       </div>
     </div>

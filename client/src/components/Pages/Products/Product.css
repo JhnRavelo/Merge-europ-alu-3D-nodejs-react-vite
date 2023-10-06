@@ -64,6 +64,21 @@
     flex-direction: row-reverse;
 }
 
+
+.presentation.pres2 .button_intrested_start {
+    display: flex;
+    align-items: flex-end !important;
+}
+
+
+
+.button_intrested_start {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
 /* ======================= RESPA ====================== */
 
 @media screen and (max-width: 750px) {

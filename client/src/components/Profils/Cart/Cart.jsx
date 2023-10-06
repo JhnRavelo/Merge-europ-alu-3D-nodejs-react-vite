@@ -1,49 +1,39 @@
-import './Cart.css'
-import fenetre from "../../../../public/images/FENÊTRES/PNG/FENÊTRE COULISSANTE.png"
-import fenetre1 from "../../../../public/images/FENÊTRES/PNG/FENÊTRE BATTANTE.png"
-import fenetre2 from "../../../../public/images/FENÊTRES/PNG/FENÊTRE OSCILLO-BATTANTE.png"
+import "./Cart.css";
+import propTypes from "prop-types";
+import { useEffect, useState } from "react";
 
-const Cart = () => {
+const Cart = ({ data }) => {
+  const [product, setProduct] = useState([]);
 
-
+  useEffect(() => {
+    if (data) {
+      setProduct(data[0].products);
+    }
+  }, [data]);
 
   return (
     <>
-        <div className="pannier">
-          <div className="titre__pannier">
-            <h1>les produits qui vous ont intéressé:</h1>
-          </div>
-  
-            <div className="cart-item">
-              <div className="title__cart__item">
-                <h1>Fenêtres Coulissante</h1>
-              </div>
-              <div className="img__cart__item">
-                <img src={fenetre} alt="image du produit" />
-              </div>
-            </div>
-
-            <div className="cart-item">
-              <div className="title__cart__item">
-                <h1>Fenêtres Battante</h1>
-              </div>
-              <div className="img__cart__item">
-                <img src={fenetre1} alt="image du produit" />
-              </div>
-            </div>
-
-            <div className="cart-item">
-              <div className="title__cart__item">
-                <h1>Fenêtres Oscillo-Battente</h1>
-              </div>
-              <div className="img__cart__item">
-                <img src={fenetre2} alt="image du produit" />
-              </div>
-            </div>
-
+      <div className="pannier">
+        <div className="titre__pannier">
+          <h1>les produits qui vous ont intéressé:</h1>
         </div>
+        {product.map((prod, index) => (
+          <div className="cart-item" key={index}>
+            <div className="title__cart__item">
+              <h1>{prod.title}</h1>
+            </div>
+            <div className="img__cart__item">
+              <img src={prod.png} alt="image du produit" />
+            </div>
+          </div>
+        ))}
+      </div>
     </>
-  )
-}
+  );
+};
 
-export default Cart
+Cart.propTypes = {
+  data: propTypes.any,
+};
+
+export default Cart;

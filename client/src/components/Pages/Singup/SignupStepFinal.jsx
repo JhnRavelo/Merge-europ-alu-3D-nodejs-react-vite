@@ -6,40 +6,28 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Fragment, useContext, useEffect, useRef, useState } from "react";
-import productContext from "../Products/ProductContext";
-import page from "../../../assets/json/pages.json";
 import FormContext from "../Form/FormContext";
 import { ErrorMessage, Field } from "formik";
-import { addUser } from "../../../lib/service/User";
 import { addTraker } from "../../../lib/service/Trakers";
 import useAuth from "../../../hooks/useAuth";
 import useButtonContext from "../../../hooks/useButtonContext";
+import defaultAxios from "../../../api/axios";
+import useProductContext from "../../../hooks/useProductContext";
+import { useLocation } from "react-router-dom";
 
 const SignupStepFinal = () => {
-  const productCategoryIndex = useContext(productContext);
-  const {selectedProduct, showForm} = useButtonContext()
+  const { selectedProduct, showForm } = useButtonContext();
   const formContext = useContext(FormContext);
   const btnListRef = useRef();
   const btnSubmitRef = useRef();
   const checkboxRef = useRef([]);
-  const [productSelected, setproductSelected] = useState(selectedProduct)
+  const [productSelected, setproductSelected] = useState(selectedProduct);
   const { setAuth } = useAuth();
-  const productTypeRef = useRef()
+  const { dataFetch } = useProductContext();
   const errors = formContext[0];
+  const location = useLocation();
+
   checkboxRef.current = [];
-  const handleProductType = () => {
-    var initial
-    console.log(productCategoryIndex)
-    if(productCategoryIndex!==undefined){
-      initial = [...page[productCategoryIndex].products];
-    }
-    return initial
-  }
-  productTypeRef.current = handleProductType()
-  console.log(productTypeRef.current)
-  // const [productTypes, setProductTypes] = useState(()=>{
-  //   return handleProductType()
-  // })
   const { name, email, phone, checked } = formContext[1];
 
   useEffect(() => {
@@ -52,7 +40,6 @@ const SignupStepFinal = () => {
   }, [errors]);
 
   const handleListClick = () => {
-    console.log(checked);
     const btnList = btnListRef.current;
     btnList.classList.toggle("open");
   };
@@ -82,33 +69,31 @@ const SignupStepFinal = () => {
     } else if (count > 1) {
       setproductSelected(`${count} produits selectionnés`);
     }
-    console.log(arrayChecked);
   };
 
   const onSubmit = async () => {
-    console.log("click");
     try {
-      const res = await addUser(formContext[1]);
-      let track
-      const role = res.role,
-        accessToken = res.accessToken;
-      if (res != `L'utilisateur existe déjà`) {
+      console.log("click");
+      const res = await defaultAxios.post("/auth", formContext[1]);
+
+      var track;
+      if (res.data !== `L'utilisateur existe déjà`) {
+        const role = res.data.role,
+          accessToken = res.data.accessToken;
         setAuth({ role, accessToken });
       }
-      // console.log(res);
-      // console.log(!checked[0]=="");
-      if(!checked[0] == ""){
+
+      if (!checked[0] == "") {
         track = await addTraker(formContext[1]);
-        console.log(formContext[1].checked)
       }
-      if (role || track) {
-        showForm()
-        // buttonContext[1]();
+      if (res.data || track) {
+        showForm();
       }
     } catch (error) {
-      if (!error?.response) {
-        console.log(error);
+      if (!error) {
+        showForm();
       }
+      console.log(error);
     }
   };
 
@@ -128,44 +113,46 @@ const SignupStepFinal = () => {
           <p id="phone">{phone}</p>
         </div>
       </div>
-      {productTypeRef.current && <div className="menu-deroulant">
-        <label>Produits qui vous Intérèssent :</label>
+      {dataFetch && location.pathname.includes("page") && (
+        <div className="menu-deroulant">
+          <label>Produits qui vous Intérèssent :</label>
 
-        <div className="container">
-          <div
-            className="select-btn"
-            ref={btnListRef}
-            onClick={handleListClick}
-          >
-            <span className="btn-text">{productSelected}</span>
-            <span className="arrow-dwn">
-              <FontAwesomeIcon
-                icon={faChevronDown}
-                className="fa-solid fa-chevron-down"
-              />
-            </span>
+          <div className="container">
+            <div
+              className="select-btn"
+              ref={btnListRef}
+              onClick={handleListClick}
+            >
+              <span className="btn-text">{productSelected}</span>
+              <span className="arrow-dwn">
+                <FontAwesomeIcon
+                  icon={faChevronDown}
+                  className="fa-solid fa-chevron-down"
+                />
+              </span>
+            </div>
+
+            <ul className="list-items">
+              {dataFetch.map((product, index) => {
+                return (
+                  <Fragment key={index}>
+                    <label className="item" ref={addtoRefsCheck}>
+                      <Field
+                        className="checkbox"
+                        type="checkbox"
+                        name="checked"
+                        value={product.title}
+                        onClick={handleClickList}
+                      />
+                      <span className="item-text">{product.title}</span>
+                    </label>
+                  </Fragment>
+                );
+              })}
+            </ul>
           </div>
-
-          <ul className="list-items">
-            {productTypeRef.current.map((product, index) => {
-              return (
-                <Fragment key={index}>
-                  <label className="item" ref={addtoRefsCheck}>
-                    <Field
-                      className="checkbox"
-                      type="checkbox"
-                      name="checked"
-                      value={product.title}
-                      onClick={handleClickList}
-                    />
-                    <span className="item-text">{product.title}</span>
-                  </label>
-                </Fragment>
-              );
-            })}
-          </ul>
         </div>
-      </div>}
+      )}
 
       <ErrorMessage
         name="checked"

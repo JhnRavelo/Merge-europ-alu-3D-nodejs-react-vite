@@ -14,6 +14,8 @@ const {
   validationLogin,
   validationRegister,
   uploadUserImage,
+  avatarUpdateUser,
+  updateProfile,
 } = require("../controllers/userController");
 const verifyJWT = require("../middlewares/verifyJWT");
 const verifyRole = require("../middlewares/verifyRole");
@@ -62,13 +64,11 @@ router
   .post(multipleField, uploadUserImage)
   .put(multipleField, uploadUserImage);
 
-// router.use(verifyJWT);
+router.put("/avatar", verifyJWT, avatarUpdateUser);
 
 router.get("/", verifyJWT, userRead);
 
 router.get("/logout", verifyJWT, userLogout);
-
-// router.use(verifyRole(process.env.PRIME1));
 
 router
   .route("/User")
@@ -83,6 +83,13 @@ router.delete(
 );
 
 router.get("/getUsers", verifyJWT, verifyRole(process.env.PRIME1), getUsers);
+
+router.put(
+  "/User/pro",
+  verifyJWT,
+  verifyRole(process.env.PRIME1),
+  updateProfile
+);
 
 router.get(
   "/getCommercials",

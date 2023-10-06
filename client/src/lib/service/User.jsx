@@ -1,6 +1,7 @@
 import defaultAxios from "../../api/axios";
 
 export const addUser = async (body) => {
+  console.log("add");
   return new Promise((onSucces, onFail) => {
     defaultAxios
       .post('/auth', body)

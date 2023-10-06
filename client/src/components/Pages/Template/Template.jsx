@@ -23,7 +23,7 @@ const Template = ({ products, productsLenght, title }) => {
             if (el && !presRefs.current.includes(el)) {
               presRefs.current.push(el);
             }
-            // console.log(presRefs.current[index]);
+            
             if (index % 2 == !0 && presRefs.current[index]) {
               presRefs.current[index].classList.add('pres2');
             }
@@ -40,7 +40,7 @@ const Template = ({ products, productsLenght, title }) => {
               imgRefs.current[index].className !==
                 'float_right simple-parallax-initialized'
             ) {
-              // console.log(imgRefs.current[index].className);
+              
               new SimpleParallax(imgRefs.current[index], {
                 overflow: true,
                 orientation: 'up',
@@ -68,9 +68,7 @@ const Template = ({ products, productsLenght, title }) => {
                     <div className='button_intrested_start'>
                       <h1 className='title'>{product.title}</h1>
                       <p className='short__desc'>
-                        Lorem, ipsum. Quam, sit obcaecati corrupti accusamusui
-                        suscipit morum quis. Incidunt aliquid maiores soluta
-                        mollitia eveniet?
+                        {product.description}
                       </p>
 
                       <Button />

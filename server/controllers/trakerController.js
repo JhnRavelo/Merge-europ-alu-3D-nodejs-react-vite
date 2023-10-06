@@ -2,8 +2,8 @@ const { trakers, users, products, pages } = require("../database/models");
 
 const addTraker = async (req, res) => {
   const { name, email, checked, phone } = await req.body;
-  const {ID_user} = req.user
-
+  const { ID_user } = req.user;
+  let response, isTraker;
 
   if (checked && name && email && checked[0] !== "") {
     checked.map(async (track) => {
@@ -12,21 +12,21 @@ const addTraker = async (req, res) => {
       var month = date.getMonth() + 1;
       var year = date.getFullYear();
 
-      const product = await products.findOne({where: {
-        title: track
-      }})
-
-      if(!product) return res.json("produit non trouvé")
-
-      const isTraker = await trakers.findOne({
+      const product = await products.findOne({
         where: {
-          email: email,
-          product: track,
+          title: track,
+        },
+      });
+
+      isTraker = await trakers.findOne({
+        where: {
+          userId: ID_user,
+          productId: product.ID_product,
         },
       });
 
       if (!isTraker) {
-        const response = await trakers.create({
+        response = await trakers.create({
           date,
           day,
           month,
@@ -34,12 +34,15 @@ const addTraker = async (req, res) => {
           userId: ID_user,
           productId: product.ID_product,
         });
-        if (response) {
-          res.json("Produit ajouté");
-        }
-      }else res.json("Produits déjà ajouté")
+      }
     });
-  }else res.json("Produits non ajouté")
+  }
+
+  if (response) {
+    return res.json("Produit ajouté");
+  } else {
+    return res.json("Produit déjà ajouté");
+  }
 };
 
 const getTraker = async (req, res) => {
@@ -60,10 +63,16 @@ const getTraker = async (req, res) => {
     return res.sendStatus(401);
   }
 
-  const traker = await trakers.findAll({
+  const traker = await users.findAll({
     where: {
-      email: user.email,
+      ID_user: user.ID_user,
     },
+    include: [
+      {
+        model: products,
+        attributes: ["title", "png"]
+      },
+    ]
   });
 
   if (!traker) {
@@ -73,9 +82,9 @@ const getTraker = async (req, res) => {
   res.json(traker);
 };
 
-const getTrakers = async(req, res)=>{
+const getTrakers = async (req, res) => {
   const allTrakers = await trakers.findAll({
-    include:[
+    include: [
       {
         model: users,
         attributes: ["name", "email", "type"],
@@ -86,16 +95,16 @@ const getTrakers = async(req, res)=>{
         include: [
           {
             model: pages,
-            attributes: ["page"]
-          }
-        ]
-      }
-    ]
-  })
+            attributes: ["page"],
+          },
+        ],
+      },
+    ],
+  });
 
-   console.log(allTrakers);
+  console.log(allTrakers);
 
-  res.json(allTrakers)
-}
+  res.json(allTrakers);
+};
 
 module.exports = { addTraker, getTraker, getTrakers };

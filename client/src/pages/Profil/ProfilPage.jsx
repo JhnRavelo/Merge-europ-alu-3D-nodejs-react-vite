@@ -1,11 +1,12 @@
 import "./ProfilPage.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import UserProfileCard from "../../components/Profils/UserProfileCard/UserProfileCard";
 import Cart from "../../components/Profils/Cart/Cart";
 
 const ProfilPage = () => {
   const privateAxios = useAxiosPrivate();
+  const [data, setData] = useState()
 
   useEffect(() => {
     getTraker();
@@ -14,8 +15,8 @@ const ProfilPage = () => {
   const getTraker = async () => {
     try {
       const res = await privateAxios.get("/traker");
-
-      console.log(res.data[0].page);
+      setData(res.data)
+      console.log(res.data);
     } catch (error) {
       console.log(error);
     }
@@ -25,10 +26,10 @@ const ProfilPage = () => {
     <>
       <div className="profile__page">
         <div className="profile__box">
-          <UserProfileCard />
+          <UserProfileCard data={data}/>
         </div>
         <div className="card__box">
-          <Cart />
+          <Cart data={data}/>
         </div>
       </div>
     </>

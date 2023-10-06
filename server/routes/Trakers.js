@@ -14,7 +14,7 @@ router.post("/", verifyUserExist, addTraker);
 
 // router.use(verifyJWT);
 
-router.get("/", getTraker);
+router.get("/", verifyJWT, getTraker);
 
 router.get("/all", verifyRole(process.env.PRIME1), getTrakers);
 
