@@ -46,7 +46,7 @@ const Login = () => {
       if (role) {
         setAuth({ role, accessToken });
         if (role == prime[0]) {
-          navigate("/admin");
+          navigate("/admin/");
         }
         showForm();
       }

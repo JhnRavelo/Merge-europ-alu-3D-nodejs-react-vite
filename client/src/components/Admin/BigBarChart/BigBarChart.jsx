@@ -12,10 +12,10 @@ import {
     if (active && payload && payload.length) {
       
       return (
-        <div className="custom-tooltip">
+        <div className="custom-tooltipBig">
           {payload.map((item, index) => {
             return (
-              <p key={index} className={`data ${item.dataKey}`} style={{color:"limegreen"}} >
+              <p key={index} className={`data ${item.dataKey}`} >
                 {`${item.payload.name}: ${item.value} Visites`}
               </p>
             );
