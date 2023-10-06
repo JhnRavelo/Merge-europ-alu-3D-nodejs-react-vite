@@ -81,14 +81,6 @@ const columns = [
     width: 80,
   },
   {
-    field: "url",
-    type: "string",
-    inputMode: "text",
-    headerName: "URL",
-    placeholder: "url de la page",
-    width: 120,
-  },
-  {
     field: "createdAt",
     headerName: "Created At",
     width: 100,

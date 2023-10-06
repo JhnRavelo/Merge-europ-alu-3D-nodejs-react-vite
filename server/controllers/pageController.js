@@ -2,7 +2,7 @@ const { pages } = require("../database/models");
 require("dotenv").config();
 
 const addPage = async (req, res) => {
-  const { page, position, minYAngle, maxYAngle, minXAngle, maxXAngle, url } =
+  const { page, position, minYAngle, maxYAngle, minXAngle, maxXAngle } =
     await req.body;
     
     const addPage = await pages.findOne({
@@ -89,7 +89,6 @@ const updatePage = async (req, res) => {
     maxYAngle,
     minXAngle,
     maxXAngle,
-    url,
   } = await req.body;
   if (id) {
     const updatePage = await pages.findOne({

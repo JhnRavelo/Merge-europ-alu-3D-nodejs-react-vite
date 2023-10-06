@@ -5,6 +5,7 @@ const {
   addTraker,
   getTraker,
   getTrakers,
+  getTopProduct,
 } = require("../controllers/trakerController");
 const verifyJWT = require("../middlewares/verifyJWT");
 const verifyUserExist = require("../middlewares/verifyUserExist");
@@ -12,10 +13,10 @@ const verifyRole = require("../middlewares/verifyRole");
 
 router.post("/", verifyUserExist, addTraker);
 
-// router.use(verifyJWT);
-
 router.get("/", verifyJWT, getTraker);
 
-router.get("/all", verifyRole(process.env.PRIME1), getTrakers);
+router.post("/top", verifyJWT, verifyRole(process.env.PRIME1), getTopProduct)
+
+router.get("/all", verifyJWT, verifyRole(process.env.PRIME1), getTrakers);
 
 module.exports = router;

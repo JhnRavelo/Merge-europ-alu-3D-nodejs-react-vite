@@ -39,8 +39,6 @@ const pageInitialValue = {
   maxYAngle: "",
   maxXAngle: "",
   minXAngle: "",
-  url: "",
-  // createdAt: "",
 };
 
 const productInitialValue = {
@@ -112,8 +110,7 @@ const FormContent = ({ btn, editRow, slug }) => {
         errors.minXAngle ||
         errors.maxXAngle ||
         errors.minYAngle ||
-        errors.maxYAngle ||
-        errors.url
+        errors.maxYAngle
       ) {
         btnSubmit.classList.add("desabledBtn");
       } else {
@@ -176,7 +173,6 @@ const FormAdd = (props) => {
           maxYAngle: value.maxYAngle,
           maxXAngle: value.maxXAngle,
           minXAngle: value.minXAngle,
-          url: value.url,
         };
       } else if (props.slug == "product") {
         initial = {
@@ -278,7 +274,6 @@ const FormAdd = (props) => {
           formData.append("maxYAngle", values.maxYAngle);
           formData.append("maxXAngle", values.maxXAngle);
           formData.append("minXAngle", values.minXAngle);
-          formData.append("url", values.url);
 
           const res = await privateAxios.put(`${props.url}`, formData);
 
@@ -353,7 +348,6 @@ const FormAdd = (props) => {
           formData.append("maxYAngle", values.maxYAngle);
           formData.append("maxXAngle", values.maxXAngle);
           formData.append("minXAngle", values.minXAngle);
-          formData.append("url", values.url);
 
           const res = await privateAxios.post(`${props.url}`, formData);
 

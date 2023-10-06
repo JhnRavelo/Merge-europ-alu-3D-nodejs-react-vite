@@ -1,10 +1,36 @@
+import { useState } from "react";
 import pages from "../../../assets/json/pages.json";
 import "./TopProduct.scss";
+import { useEffect } from "react";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import useAdminContext from "../../../hooks/useAdminContext";
 
 const TopProduct = () => {
   const product = pages[0].products;
   const title = pages[0].title;
-  console.log(product);
+  const {top} = useAdminContext()
+
+  console.log(top);
+  
+  // const [data, setData] = useState([])
+  // const privateAxios = useAxiosPrivate()
+
+//   useEffect(()=>{
+//     fetchData()
+//   },[])
+
+// const fetchData = async() => {
+  
+//   try {
+//     const res = await privateAxios.post("/traker/top",{year:2023})
+
+//     console.log(res.data);
+//     setData(res.data)
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
+  
   return (
     <div className="topBox">
       <h1>Top Produits</h1>

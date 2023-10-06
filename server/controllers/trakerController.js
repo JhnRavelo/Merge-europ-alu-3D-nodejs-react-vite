@@ -1,4 +1,5 @@
 const { trakers, users, products, pages } = require("../database/models");
+const { use } = require("../routes/Trakers");
 
 const addTraker = async (req, res) => {
   const { name, email, checked, phone } = await req.body;
@@ -70,9 +71,9 @@ const getTraker = async (req, res) => {
     include: [
       {
         model: products,
-        attributes: ["title", "png"]
+        attributes: ["title", "png"],
       },
-    ]
+    ],
   });
 
   if (!traker) {
@@ -83,12 +84,9 @@ const getTraker = async (req, res) => {
 };
 
 const getTrakers = async (req, res) => {
-  const allTrakers = await trakers.findAll({
+  const allTrakers = await users.findAll({
+    attributes: ["name", "email", "phone"],
     include: [
-      {
-        model: users,
-        attributes: ["name", "email", "type"],
-      },
       {
         model: products,
         attributes: ["title"],
@@ -107,4 +105,21 @@ const getTrakers = async (req, res) => {
   res.json(allTrakers);
 };
 
-module.exports = { addTraker, getTraker, getTrakers };
+const getTopProduct = async (req, res) => {
+  const { year } = req.body;
+
+  const topProduct = await products.findAll({
+    include: [
+      {
+        model: users,
+        where: {
+          
+        },
+      },
+    ],
+  });
+
+  res.json(topProduct);
+};
+
+module.exports = { addTraker, getTraker, getTrakers, getTopProduct };

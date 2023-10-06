@@ -107,9 +107,6 @@ const validationPage = Yup.object({
   minXAngle: Yup.string()
     .required("Requis")
     .matches(/^-?\d+(\.\d+)?$/, "Doit être un nombre, peut être décimal"),
-  url: Yup.string()
-    .required("Requis")
-    .matches(/^\/[^\s/$.?#].[^\s]*$/, "Format url"),
 });
 
 const validationProduct = Yup.object({

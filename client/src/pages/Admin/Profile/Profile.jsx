@@ -4,6 +4,8 @@ import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import useAdminContext from "../../../hooks/useAdminContext";
 import FormAdd from "../../../components/Admin/Form/Form";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import { useNavigate } from "react-router-dom";
 
 const columns = [
   {
@@ -22,10 +24,24 @@ const columns = [
 
 const Profile = () => {
 const {data, setOpen, open} = useAdminContext()
+const axiosPrivate = useAxiosPrivate()
+const navigate = useNavigate()
 
 const handleClick = ()=> {
   setOpen(true)
 }
+
+const handleLogOut = async () => {
+  try {
+    const res = await axiosPrivate.get("/auth/logout");
+    
+    if (res.data == "SUCCESS") {
+      navigate("/");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
 
   return (
     <>
@@ -48,7 +64,7 @@ const handleClick = ()=> {
           <h1 className="user__admin">- Administrateur</h1>
         </div>
       </div>
-      <button className="logout__button">
+      <button className="logout__button" onClick={handleLogOut}>
         <FontAwesomeIcon icon={faSignOutAlt} flip />
         Se déconnecter
       </button>
