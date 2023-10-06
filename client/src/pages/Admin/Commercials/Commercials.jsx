@@ -2,9 +2,8 @@ import "../Users/User.scss";
 import { useEffect, useState } from "react";
 import Form from "../../../components/Admin/Form/Form";
 import DataTable from "../../../components/Admin/DataTable/DataTable";
-// import defaultAxios from "../../../api/axios";
 import ModalDelete from "../../../components/Admin/ModalDelete/ModalDelete";
-import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import useAdminContext from "../../../hooks/useAdminContext";
 
 const columns = [
   {
@@ -68,22 +67,14 @@ const columns = [
 ];
 
 const Commercials = () => {
-  const [open, setOpen] = useState(false);
   const [rows, setRows] = useState([]);
   const [editRow, setEditRow] = useState(null);
-  const [deleteOpen, setDeleteOpen] = useState(false);
   const [deleteRow, setDeleteRow] = useState(null);
-  const privateAxios = useAxiosPrivate()
+  const {open, setOpen, commercial, deleteOpen, setDeleteOpen} = useAdminContext()
 
   useEffect(() => {
-    getAllUsers();
-  }, [open, deleteOpen]);
-
-  const getAllUsers = async () => {
-    try {
-      let res;
-      res = await privateAxios.get("/auth/getCommercials");
-      const newTable = res.data.map((user) => {
+    if(commercial.lenght != 0){
+      const newTable = commercial.map((user) => {
         var connected, createdAt;
         if (!user.refreshToken) {
           connected = false;
@@ -103,11 +94,10 @@ const Commercials = () => {
       });
 
       setRows(newTable);
-      return res.data;
-    } catch (error) {
-      console.log(error);
     }
-  };
+
+    // getAllUsers();
+  }, [open, deleteOpen, commercial]);
 
   return (
     <>

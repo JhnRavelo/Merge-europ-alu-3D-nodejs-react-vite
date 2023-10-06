@@ -12,11 +12,14 @@ const AdminProviser = ({ children }) => {
   const [order, setOrder] = useState([]);
   const [user, setUser] = useState([]);
   const [deleteOpen, setDeleteOpen] = useState(false);
+  const [commercial, setCommercial] = useState([]);
 
   return (
     <AdminContext.Provider
       value={{
         data,
+        commercial,
+        setCommercial,
         setData,
         open,
         setOpen,

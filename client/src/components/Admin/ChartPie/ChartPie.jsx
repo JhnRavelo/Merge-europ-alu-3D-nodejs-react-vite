@@ -17,7 +17,6 @@ const PieChartBox = () => {
 
   useEffect(() => {
     if (nbProd != 0) {
-      console.log(nbProd);
       if (nbProd?.countProductByPageByMonth) {
         setChartData(() => {
           const chart = nbProd.countProductByPageByMonth.map((prod) => {
@@ -28,7 +27,6 @@ const PieChartBox = () => {
               color: color,
             };
           });
-          console.log(chart);
           return chart
         });
       }
