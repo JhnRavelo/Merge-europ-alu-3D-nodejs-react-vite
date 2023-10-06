@@ -466,6 +466,9 @@
 .username {
   /* margin-bottom: 30px; */
   border-radius: 15px;
+  display: flex;
+  align-items: center;
+  padding-right: 10px;
   box-shadow: inset 4px 4px 4px #cbced1, inset -4px -4px 4px #fff;
   /* box-shadow: 4px 4px 8px #ff1e1e, -4px -4px 8px #ff0000; */
 }
