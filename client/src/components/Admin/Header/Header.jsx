@@ -32,8 +32,7 @@ const Header = () => {
         <img src={logoEuro} alt="logo" />
         <span>{"Europ'Alu"}</span>
       </div>
-      {
-        pathname === '/admin/' && (
+      {pathname === "/admin/" && (
         <div className="date">
           <div className="selected__date">
             <h2 onClick={handleVisibleSelecteYear}>Année {selectedYear}</h2>
@@ -96,9 +95,22 @@ const Header = () => {
             ))}
           </TextField> */}
         </div>
-        )
-      }
+      )}
       <div className="icons">
+        <div className="log">
+          <div className="journal">
+            <h2>{"L'utilisateur zao a zao de nanao an zao de nanao an zao"}</h2>
+            <h2 className="date">23/34/3553</h2>
+          </div>
+          <div className="journal">
+            <h2>{"L'utilisateur zao a zao de nanao an zao de nanao an zao"}</h2>
+            <h2 className="date">23/34/3553</h2>
+          </div>
+          <div className="journal">
+            <h2>{"L'utilisateur zao a zao de nanao an zao de nanao an zao"}</h2>
+            <h2 className="date">23/34/3553</h2>
+          </div>
+        </div>
         <div className="notification">
           <FontAwesomeIcon icon={faBell} className="bellIcon" />
           <span>1</span>

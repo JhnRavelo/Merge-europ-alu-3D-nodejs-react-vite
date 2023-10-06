@@ -8,11 +8,7 @@ const AdminProviser = ({ children }) => {
   const [open, setOpen] = useState(false);
   const [top, setTop] = useState([]);
   const [nbUser, SetNbUser] = useState(0);
-<<<<<<< HEAD
-  const [nbProd, SetNbProd] = useState({});
-=======
   const [nbProd, SetNbProd] = useState(0);
->>>>>>> 31cfea6 (Chartbox produit)
 
   return (
     <AdminContext.Provider

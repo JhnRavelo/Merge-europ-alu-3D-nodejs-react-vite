@@ -78,19 +78,15 @@ const Home = () => {
         />
       </div>
       <div className="box box3">
-<<<<<<< HEAD
         <ChartBox {...chartBoxProduct} url={"/admin/product"} />
         <ChartBox {...chartBoxUser} />
-=======
         <ChartBox
           {...chartBoxProduct}
           url={"/admin/product"}
           number={totalProd}
           chartData={chartDataProd}
           percentage={percProd}
-          // dataKey="users"
         />
->>>>>>> 31cfea6 (Chartbox produit)
       </div>
       <div className="box box4">
         <PieChartBox />
