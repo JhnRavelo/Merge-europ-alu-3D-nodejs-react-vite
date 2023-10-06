@@ -3,7 +3,7 @@ import "./Log.scss";
 const Log = () => {
   return (
     <>
-      <h1>Journals</h1>
+      <h1 className="h1__journal">Journals</h1>
       <div className="log">
         <div className="journal">
           <h2>{"L'utilisateur zao a zao de nanao an zao de nanao an zao"}</h2>

@@ -170,7 +170,7 @@ const Header = () => {
           <div className="header-nav__content">
             <ul className="header-nav__list">
               <li>
-                <NavLink to="acceuil">
+                <NavLink to="/">
                   <h1>Acceuil</h1>
                 </NavLink>
               </li>

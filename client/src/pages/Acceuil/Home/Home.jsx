@@ -44,7 +44,7 @@ const Home = () => {
             aux normes européennes.
           </h1>
           <div className="button button__intro">
-            <Link to="/page/fenetre">
+            <Link to="/page/5">
               <div className="start">Commencer</div>
             </Link>
             <div
