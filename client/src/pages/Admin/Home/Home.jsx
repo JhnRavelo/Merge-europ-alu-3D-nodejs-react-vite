@@ -84,6 +84,7 @@ const Home = () => {
       </div>
       <div className="box box3">
         <ChartBox {...chartBoxProduct} url={"/admin/product"} />
+        <ChartBox {...chartBoxUser} />
       </div>
       <div className="box box4">
         <PieChartBox />
