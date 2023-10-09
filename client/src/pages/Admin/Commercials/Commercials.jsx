@@ -73,7 +73,7 @@ const Commercials = () => {
   const {open, setOpen, commercial, deleteOpen, setDeleteOpen} = useAdminContext()
 
   useEffect(() => {
-    if(commercial.lenght != 0){
+    if(commercial.lenght !== 0){
       const newTable = commercial.map((user) => {
         var connected, createdAt;
         if (!user.refreshToken) {

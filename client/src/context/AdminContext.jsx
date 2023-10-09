@@ -12,6 +12,7 @@ const AdminProviser = ({ children }) => {
   const [order, setOrder] = useState([]);
   const [user, setUser] = useState([]);
   const [deleteOpen, setDeleteOpen] = useState(false);
+  const [notifOpen, setNotifOpen] = useState(false);
   const [commercial, setCommercial] = useState([]);
   const [year, setYear] = useState(() => {
     const date = new Date();
@@ -19,6 +20,13 @@ const AdminProviser = ({ children }) => {
     return year;
   });
   const [years, setYears] = useState([]);
+  const [log, setLog] = useState({
+    unReadLogNb: [],
+    userCreatedByYear: [],
+    productInterestedByYear: [],
+    listProductInterestedByYear: [],
+    listByYear: [],
+  });
 
   return (
     <AdminContext.Provider
@@ -45,6 +53,10 @@ const AdminProviser = ({ children }) => {
         setYear,
         years,
         setYears,
+        log,
+        setLog,
+        notifOpen,
+        setNotifOpen,
       }}
     >
       {children}

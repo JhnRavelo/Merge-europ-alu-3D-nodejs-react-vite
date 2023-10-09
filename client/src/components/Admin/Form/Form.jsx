@@ -217,16 +217,13 @@ const FormAdd = (props) => {
         }
 
         const res = await privateAxios.put(`${props.url}/pro`, formData);
-          console.log(res.data);
-          const result = await defaultAxios.put(
-            `${props.url}/upload`,
-            formData
-          );
+        console.log(res.data);
+        const result = await defaultAxios.put(`${props.url}/upload`, formData);
 
-          console.log(result);
-          if (res.data == "Utilisateur modifié") {
-            props.setOpen(false);
-          }
+        console.log(result);
+        if (res.data == "Utilisateur modifié") {
+          props.setOpen(false);
+        }
       }
 
       if (props.editRow) {
@@ -459,8 +456,12 @@ const FormAdd = (props) => {
         <span
           className="close"
           onClick={() => {
-            props.setEditRow(null);
-            props.setOpen(false);
+            if (props.slug == "profile") {
+              props.setOpen(false);
+            } else {
+              props.setOpen(false);
+              props.setEditRow(null);
+            }
           }}
         >
           X

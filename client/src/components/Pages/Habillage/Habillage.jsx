@@ -7,7 +7,7 @@ import Separation from '../Separation/Separation';
 import { useEffect, useRef } from 'react';
 import SimpleParallax from 'simple-parallax-js';
 
-const Habillage = ({ products, productsLenght, title }) => {
+const Habillage = ({ products, productslenght, title }) => {
   const presRefs = useRef([]);
   const imgRefs = useRef([]);
   useEffect(() => {
@@ -24,7 +24,7 @@ const Habillage = ({ products, productsLenght, title }) => {
               presRefs.current.push(el);
             }
             // console.log(presRefs.current[index]);
-            if (index % 2 == !0 && presRefs.current[index]) {
+            if (index % 2 !0 && presRefs.current[index]) {
               presRefs.current[index].classList.add('pres2');
             }
           };
@@ -33,7 +33,7 @@ const Habillage = ({ products, productsLenght, title }) => {
               imgRefs.current.push(el);
             }
             
-            if (title != 7 && imgRefs.current[index]) {
+            if (title !== 7 && imgRefs.current[index]) {
               console.log(imgRefs.current[index].className)
               new SimpleParallax(imgRefs.current[index], {
                 overflow: true,
@@ -82,7 +82,7 @@ const Habillage = ({ products, productsLenght, title }) => {
                 </div>
               </div>
               <Gallery gallery={product.gallery.split(",")} indexCategory={index} />
-              {productsLenght > index + 1 && <Separation />}
+              {productslenght > index + 1 && <Separation />}
             </Fragment>
           );
         })}
@@ -94,7 +94,7 @@ const Habillage = ({ products, productsLenght, title }) => {
 Habillage.propTypes = {
   products: propTypes.array,
   title: propTypes.string,
-  productsLenght: propTypes.number,
+  productslenght: propTypes.number,
 };
 
 export default Habillage;

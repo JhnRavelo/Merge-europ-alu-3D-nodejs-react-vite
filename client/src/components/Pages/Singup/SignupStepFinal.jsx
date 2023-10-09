@@ -16,7 +16,7 @@ import useProductContext from "../../../hooks/useProductContext";
 import { useLocation } from "react-router-dom";
 
 const SignupStepFinal = () => {
-  const { selectedProduct, showForm } = useButtonContext();
+  const { selectedProduct, showForm, body } = useButtonContext();
   const formContext = useContext(FormContext);
   const btnListRef = useRef();
   const btnSubmitRef = useRef();
@@ -161,10 +161,10 @@ const SignupStepFinal = () => {
       />
 
       <div className="check">
-        <label>
+        {body.name == "" && <label>
           <Field id="acceptCheckbox" type="checkbox" name="checkbox" />
           {"Cette action va vous créer un compte chez Europ'Alu"}
-        </label>
+        </label>}
       </div>
       <div className="buttons">
         <button

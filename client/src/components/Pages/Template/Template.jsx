@@ -6,7 +6,7 @@ import propTypes from 'prop-types';
 import { useEffect, useRef } from 'react';
 import SimpleParallax from 'simple-parallax-js';
 
-const Template = ({ products, productsLenght, title }) => {
+const Template = ({ products, productslenght, title }) => {
   const presRefs = useRef([]);
   const imgRefs = useRef([]);
 
@@ -24,7 +24,7 @@ const Template = ({ products, productsLenght, title }) => {
               presRefs.current.push(el);
             }
             
-            if (index % 2 == !0 && presRefs.current[index]) {
+            if (index % 2 !==0 && presRefs.current[index]) {
               presRefs.current[index].classList.add('pres2');
             }
           };
@@ -35,7 +35,7 @@ const Template = ({ products, productsLenght, title }) => {
             }
 
             if (
-              title != 7 &&
+              title !== 7 &&
               imgRefs.current[index] &&
               imgRefs.current[index].className !==
                 'float_right simple-parallax-initialized'
@@ -77,7 +77,7 @@ const Template = ({ products, productsLenght, title }) => {
                 </div>
                 <Gallery gallery={product.gallery.split(",")} indexCategory={index} />
               </div>
-              {productsLenght > index + 1 && <Separation />}
+              {productslenght > index + 1 && <Separation />}
             </Fragment>
           );
         })}
@@ -88,7 +88,7 @@ const Template = ({ products, productsLenght, title }) => {
 
 Template.propTypes = {
   products: propTypes.array,
-  productsLenght: propTypes.number,
+  productslenght: propTypes.number,
   title: propTypes.string,
 };
 

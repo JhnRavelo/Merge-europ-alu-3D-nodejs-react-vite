@@ -26,7 +26,7 @@ const Layout = () => {
           phone: res.data.phone,
         });
         const page = await axiosPrivate.get("/traker");
-        if (page.data != "No Page") {
+        if (page.data !== "No Page") {
           setDataPage(page.data);
         }
       } else {
