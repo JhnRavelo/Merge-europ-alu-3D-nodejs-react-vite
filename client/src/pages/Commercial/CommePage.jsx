@@ -1,10 +1,10 @@
 import "./CommePage.scss";
-// import Home from "../../components/Messanger/Home";
+import "../../components/Messanger/style.scss"
+import Home from "../../components/Messanger/pages/Home";
 
 const CommePage = () => {
   return (
-    // <Home/>
-    <h1>rien</h1>
+    <Home/>
   );
 };
 

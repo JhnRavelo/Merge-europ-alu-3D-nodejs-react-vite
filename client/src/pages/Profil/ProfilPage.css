@@ -1,3 +1,5 @@
+
+
 .profile__page {
     width: 100%;
     min-height: 100vh;
@@ -7,6 +9,12 @@
     display: flex;
     justify-content: space-around;
 }
+
+.card__box {
+    width: 70%;
+    /* height: 80vh; */
+}
+ 
 
 /* ================== RESPA ================== */
 @media (max-width: 1024px) {

@@ -1,3 +1,6 @@
+*::-webkit-scrollbar {
+    display: none;
+}
 @keyframes shake {
     0% {
       margin-left: 0rem;
@@ -144,7 +147,7 @@ $darkColor: #2f2d52;
 
 // --------------- HOME PAGE -------------
 
-.home {
+.homeChat {
     // background-color: #a7bcff;
     // background-color: azure;
     background-color: #F3F6FF;
@@ -173,6 +176,7 @@ $darkColor: #2f2d52;
             &.visible {
                 @include resp870 {
                     // display: block !important;
+                    min-height: 500px;
                     height: auto;
                     transform: scale(1);
                     pointer-events: all;
@@ -264,7 +268,8 @@ $darkColor: #2f2d52;
             
         }
         button {
-            background-color: orangered;
+            // background-color: orangered;
+            background-color: rgb(238, 8, 8);
             color: #fff;
             font-size: 10px;
             border: none;
@@ -483,7 +488,7 @@ $darkColor: #2f2d52;
                             box-shadow:  10px 10px 30px #cfd1d9,
                             -10px -10px 30px #ffffff;
                             border-radius: 20px 20px 20px 0px;
-                            max-width: max-content;
+                            max-width: max-content !important;
                             font-weight: 500;
                             font-size: 18px;
                             @include resp610 {
@@ -492,12 +497,18 @@ $darkColor: #2f2d52;
                             }
                             @include resp520 {
                                 max-width: 300px !important;
-
                             }
+
                         }
 
                         img {
                             width: 50%;
+                            @include tablet {
+                                width: 70%;
+                            }
+                            @include resp610{
+                                width: 100%;
+                            }
                         }
                     }
 

@@ -6,7 +6,7 @@ import avatars from "../../../assets/json/avatar.json";
 import propTypes from "prop-types";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
-const UserProfileCard = ({ data }) => {
+const UserProfileCard = ({ data, handleSetCart, handleSetChat }) => {
   const showChangeAvatarRef = useRef();
   const listeAvatarRef = useRef();
   const [imgProfile, setImgProfile] = useState(avatars[0]);
@@ -92,8 +92,8 @@ const UserProfileCard = ({ data }) => {
           </div>
 
           <div className="buttons">
-            <button>Message</button>
-            <button>Pannier</button>
+            <button onClick={handleSetChat}>Message</button>
+            <button onClick={handleSetCart}>Pannier</button>
           </div>
         </div>
       </div>
