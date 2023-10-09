@@ -13,52 +13,47 @@ const UserProfileCard = ({ data }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const privateAxios = useAxiosPrivate()
+  const privateAxios = useAxiosPrivate();
 
   const showChangeAvatar = () => {
     listeAvatarRef.current.classList.toggle("showed");
   };
 
   useEffect(() => {
-    if (data) {
-      setEmail(data[0].email);
-      setPhone(data[0].phone);
-      setName(data[0].name);
-      setImgProfile(data[0].avatar);
+    if (data.lenght != 0 && data[0]?.user?.email) {
+      setEmail(data[0].user.email);
+      setPhone(data[0].user.phone);
+      setName(data[0].user.name);
+      setImgProfile(data[0].user.avatar);
     }
   }, [data]);
 
   const handleClick = (e) => {
     if (e.target.src.includes("Avatar-Profile")) {
       setImgProfile(avatars[1]);
-      handleFetch(1)
+      handleFetch(1);
     } else if (e.target.src.includes("user-profile")) {
       setImgProfile(avatars[2]);
-      handleFetch(2)
+      handleFetch(2);
     } else if (e.target.src.includes("woman-business")) {
       setImgProfile(avatars[3]);
-      handleFetch(3)
+      handleFetch(3);
     } else if (e.target.src.includes("woman-users")) {
       setImgProfile(avatars[4]);
-      handleFetch(4)
+      handleFetch(4);
     }
-
-   
   };
 
-  const handleFetch = (index)=>{
+  const handleFetch = async (index) => {
     try {
-      console.log(imgProfile);
-      const res = privateAxios.put("/auth/avatar", {
+      await privateAxios.put("/auth/avatar", {
         avatar: avatars[index],
-        id: data[0].ID_user,
       });
 
-      console.log(res.data);
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   return (
     <>

@@ -9,23 +9,26 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useEffect } from "react";
 
 const Layout = () => {
-  const { show, setBody } = useButtonContext();
-  const axiosPrivate = useAxiosPrivate()
+  const { show, setBody, setDataPage } = useButtonContext();
+  const axiosPrivate = useAxiosPrivate();
 
-useEffect(()=>{
-  fetchData()
-},[show])
+  useEffect(() => {
+    fetchData();
+  }, [show]);
 
-  const fetchData = async()=>{
+  const fetchData = async () => {
     try {
       const res = await axiosPrivate.get("/auth");
-      console.log(res.data);
       if (res.data) {
         setBody({
           name: res.data.name,
           email: res.data.email,
           phone: res.data.phone,
         });
+        const page = await axiosPrivate.get("/traker");
+        if (page.data != "No Page") {
+          setDataPage(page.data);
+        }
       } else {
         setBody({
           name: "",
@@ -43,18 +46,18 @@ useEffect(()=>{
         console.log(error);
       }
     }
-  }
+  };
 
   return (
     <>
       <ScrollToTop />
-        <div className="corps">
-          <Header />
-          <Grids />
-          <Chemins />
-          <Footer />
-        </div>
-        {show && <FormField />}
+      <div className="corps">
+        <Header />
+        <Grids />
+        <Chemins />
+        <Footer />
+      </div>
+      {show && <FormField />}
     </>
   );
 };

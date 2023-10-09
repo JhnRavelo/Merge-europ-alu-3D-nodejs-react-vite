@@ -1,26 +1,19 @@
 import "./ProfilPage.css";
 import { useEffect, useState } from "react";
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import UserProfileCard from "../../components/Profils/UserProfileCard/UserProfileCard";
 import Cart from "../../components/Profils/Cart/Cart";
+import useButtonContext from "../../hooks/useButtonContext";
 
 const ProfilPage = () => {
-  const privateAxios = useAxiosPrivate();
-  const [data, setData] = useState()
+  const [data, setData] = useState([])
+  const {dataPage} = useButtonContext()
 
   useEffect(() => {
-    getTraker();
-  }, []);
-
-  const getTraker = async () => {
-    try {
-      const res = await privateAxios.get("/traker");
-      setData(res.data)
-      console.log(res.data);
-    } catch (error) {
-      console.log(error);
+    if(dataPage.lenght != 0){
+      setData(dataPage)
     }
-  };
+    
+  }, [dataPage]);
 
   return (
     <>

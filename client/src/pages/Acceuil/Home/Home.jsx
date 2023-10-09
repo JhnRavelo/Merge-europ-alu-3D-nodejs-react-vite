@@ -22,9 +22,8 @@ const Home = () => {
 
   const handleLogout = async () => {
     try {
-      const res = await privateAxios.get("/auth/logout");
-
-      console.log(res.data);
+      await privateAxios.get("/auth/logout");
+      setBody(body)
     } catch (error) {
       console.log(error);
     }
@@ -56,7 +55,6 @@ const Home = () => {
             <div
               className="start connect"
               onClick={() => {
-                setBody(body);
                 showForm();
               }}
             >

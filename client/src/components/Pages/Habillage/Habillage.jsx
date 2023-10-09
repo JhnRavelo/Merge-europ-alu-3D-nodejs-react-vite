@@ -14,7 +14,6 @@ const Habillage = ({ products, productsLenght, title }) => {
     imgRefs.current = [];
     presRefs.current = [];
   }, []);
-  console.log(title);
 
   return (
     <>

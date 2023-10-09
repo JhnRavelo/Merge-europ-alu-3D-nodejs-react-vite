@@ -2,12 +2,12 @@ import "./Cart.css";
 import propTypes from "prop-types";
 import { useEffect, useState } from "react";
 
-const Cart = ({ data }) => {
+const Cart = ({data}) => {
   const [product, setProduct] = useState([]);
 
   useEffect(() => {
-    if (data) {
-      setProduct(data[0].products);
+    if (data.lenght != 0 ) {
+      setProduct(data);
     }
   }, [data]);
 
@@ -20,10 +20,10 @@ const Cart = ({ data }) => {
         {product.map((prod, index) => (
           <div className="cart-item" key={index}>
             <div className="title__cart__item">
-              <h1>{prod.title}</h1>
+              <h1>{prod.product.title}</h1>
             </div>
             <div className="img__cart__item">
-              <img src={prod.png} alt="image du produit" />
+              <img src={prod.product.png} alt="image du produit" />
             </div>
           </div>
         ))}

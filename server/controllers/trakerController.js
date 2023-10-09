@@ -77,6 +77,10 @@ const getTraker = async (req, res) => {
         model: products,
         attributes: ["title", "png"],
       },
+      {
+        model: users,
+        attributes: ["name", "email", "phone", "avatar"]
+      }
     ],
   });
 

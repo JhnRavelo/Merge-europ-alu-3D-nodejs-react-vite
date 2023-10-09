@@ -268,9 +268,6 @@ const addUser = async (req, res) => {
     if (role) {
       userAdd.role = role;
     }
-    // if (req?.files?.avatar) {
-    //   userAdd.avatar = `${process.env.SERVER_PATH}/img/avatar/${req.files.avatar[0].filename}`;
-    // }
 
     const result = await userAdd.save();
 
@@ -287,7 +284,7 @@ const addUser = async (req, res) => {
 
 const uploadUserImage = async (req, res) => {
   let avatar, userUpload;
-  const { id, email, updateEmail } = req.body;
+  const { id, email } = req.body;
 
   if (id) {
     userUpload = await users.findOne({
@@ -397,13 +394,11 @@ const getCommercials = async (req, res) => {
 };
 
 const avatarUpdateUser = async (req, res) => {
-  const { avatar, id } = req.body;
-
-  console.log(req.user);
+  const { avatar } = req.body;
 
   const user = await users.findOne({
     where: {
-      ID_user: id,
+      ID_user: req.user,
     },
   });
   user.avatar = avatar;

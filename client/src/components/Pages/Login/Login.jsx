@@ -6,14 +6,14 @@ import FormContext from "../Form/FormContext";
 import defaultAxios from "../../../api/axios";
 import useAuth from "../../../hooks/useAuth";
 import useButtonContext from "../../../hooks/useButtonContext";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 const prime = import.meta.env.VITE_PRIME.split(" ");
 
 const Login = () => {
   const [visible, setVisible] = useState(false);
-
+  const location = useLocation();
   const { setAuth } = useAuth();
   const formContext = useContext(FormContext);
   const { showForm } = useButtonContext();
@@ -47,6 +47,8 @@ const Login = () => {
         setAuth({ role, accessToken });
         if (role == prime[0]) {
           navigate("/admin/");
+        } else if (role == prime[2] && location.pathname == "/") {
+          navigate("/page/5");
         }
         showForm();
       }

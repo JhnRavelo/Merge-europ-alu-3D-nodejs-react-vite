@@ -12,7 +12,7 @@ const SignupTemplate = () => {
   const nextBtnRef = useRef();
   const btnStepRef = useRef();
   const formContext = useContext(FormContext);
-  const {body, showForm } = useButtonContext()
+  const {body, showForm, show } = useButtonContext()
   const [title, setTitle] = useState(`S'enregistrer`);
 
   const errors = [
@@ -128,7 +128,7 @@ const SignupTemplate = () => {
       setIndex(5);
       btnStepRef.current.style.display = "flex";
     }
-  }, [body]);
+  }, [body, show]);
   return (
     <div className="card" data-step>
       <div className="modal-box register-form">

@@ -82,8 +82,7 @@ const Header = () => {
   };
 
   useEffect(() => {
-      
-          if (body.name ==! "") {
+          if (!body.name == "") {
             userRef.current.classList.add("connected");
           } else {
             userRef.current.classList.remove("connected");
