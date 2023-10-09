@@ -1,4 +1,4 @@
-const { users, sessions } = require("../database/models");
+const { users, sessions, logs } = require("../database/models");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
 const sequelize = require("sequelize");
@@ -42,13 +42,16 @@ const userRegistration = async (req, res) => {
     if (!result) return res.json("Utilisateur non enregistré");
 
     if (userRegister.role == process.env.PRIME3) {
-      const sess = await sessions.create({
+      await sessions.create({
         userId: userRegister.ID_user,
         day,
         month,
         year,
       });
-      console.log(sess);
+
+      await logs.create({
+        userId: userRegister.ID_user,
+      });
     }
 
     res.cookie("jwt", refreshToken, {
@@ -445,23 +448,20 @@ const nbrUser = async (req, res) => {
     return result.dataValues.year == year;
   });
 
-const userVisitByMonth = await sessions.findAll({
-  where:{
-    year:year,
-  },
-  attributes: [
-    "month",
-    [sequelize.fn("COUNT", sequelize.col("userId")), "count"]
-  ],
-  group: ["month"],
-  order: ["month"],
-
-})
+  const userVisitByMonth = await sessions.findAll({
+    where: {
+      year: year,
+    },
+    attributes: [
+      "month",
+      [sequelize.fn("COUNT", sequelize.col("userId")), "count"],
+    ],
+    group: ["month"],
+    order: ["month"],
+  });
 
   res.json({ countUserByYear, countByMonthByYear, userVisitByMonth });
 };
-
-
 
 module.exports = {
   userRegistration,

@@ -78,7 +78,12 @@ module.exports = (sequelize, DataTypes) => {
     users.hasMany(models.trakers, {
       onDelete: "CASCADE",
       foreignKey: "userId",
-    })
+    });
+
+    users.hasMany(models.logs, {
+      onDelete: "CASCADE",
+      foreignKey: "userId",
+    });
   };
 
   return users;

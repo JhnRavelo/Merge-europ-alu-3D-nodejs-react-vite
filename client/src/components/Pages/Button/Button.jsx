@@ -11,7 +11,6 @@ const Button = () => {
   const handleClick = async () => {
     try {
       const res = await axiosPrivate.get("/auth");
-      console.log(res.data);
       if (res.data) {
         setBody({
           name: res.data.name,
