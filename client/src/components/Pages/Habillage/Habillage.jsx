@@ -24,7 +24,7 @@ const Habillage = ({ products, productslenght, title }) => {
               presRefs.current.push(el);
             }
             // console.log(presRefs.current[index]);
-            if (index % 2 !0 && presRefs.current[index]) {
+            if (index % 2 !== 0 && presRefs.current[index]) {
               presRefs.current[index].classList.add('pres2');
             }
           };
