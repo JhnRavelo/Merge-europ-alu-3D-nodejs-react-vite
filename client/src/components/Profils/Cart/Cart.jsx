@@ -6,7 +6,7 @@ const Cart = ({data}) => {
   const [product, setProduct] = useState([]);
 
   useEffect(() => {
-    if (data.lenght != 0 ) {
+    if (data.lenght !== 0 ) {
       setProduct(data);
     }
   }, [data]);

@@ -64,17 +64,15 @@ const columns = [
     width: 100,
     type: "string",
   },
-  
 ];
 
 const Orders = () => {
   const [rows, setRows] = useState([]);
-  const {show} = useButtonContext()
-  const {order} = useAdminContext()
+  const { show } = useButtonContext();
+  const { order } = useAdminContext();
 
   useEffect(() => {
-
-    if(order.lenght!=0){
+    if (order.lenght !== 0) {
       console.log(order);
       const newTable = order.map((tarker) => {
         var createdAt;
@@ -87,13 +85,11 @@ const Orders = () => {
           product: tarker.product.title,
           page: tarker.product.page.page,
           createdAt,
-
         };
       });
 
       setRows(newTable);
     }
-
   }, [order, show]);
 
   return (
@@ -102,11 +98,7 @@ const Orders = () => {
         <div className="info">
           <h1>Commandes</h1>
         </div>
-        <DataTable
-          slug="orders"
-          columns={columns}
-          rows={rows}
-        />
+        <DataTable slug="orders" columns={columns} rows={rows} />
       </div>
     </>
   );

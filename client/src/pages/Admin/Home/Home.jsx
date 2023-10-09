@@ -39,7 +39,7 @@ const Home = () => {
   const { nbUser, nbProd } = useAdminContext();
 
   useEffect(() => {
-    if (nbUser != 0) {
+    if (nbUser !== 0) {
       setTotalUser(nbUser.countUserByYear[0].userCount);
       setChartDataUser((prevState) => {
         return charDataValue(prevState, nbUser, "countByMonthByYear");
@@ -54,7 +54,7 @@ const Home = () => {
       });
     }
 
-    if (nbProd != 0) {
+    if (nbProd !== 0) {
       setTotalProd(nbProd.countProdInterested[0].prodCount);
       setChartDataProd((prevState) => {
         return charDataValue(prevState, nbProd, "countByMonthByYear");

@@ -16,7 +16,7 @@ const PieChartBox = () => {
   const [chartData, setChartData] = useState(data);
 
   useEffect(() => {
-    if (nbProd != 0) {
+    if (nbProd !== 0) {
       if (nbProd?.countProductByPageByMonth) {
         setChartData(() => {
           const chart = nbProd.countProductByPageByMonth.map((prod) => {

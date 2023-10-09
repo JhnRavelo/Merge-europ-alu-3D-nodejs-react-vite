@@ -78,11 +78,11 @@ const Users = () => {
   const [rows, setRows] = useState([]);
   const [editRow, setEditRow] = useState(null);
   const [deleteRow, setDeleteRow] = useState(null);
-  const {show} = useButtonContext()
-  const {open, setOpen, user, deleteOpen, setDeleteOpen} = useAdminContext() 
+  const { show } = useButtonContext();
+  const { open, setOpen, user, deleteOpen, setDeleteOpen } = useAdminContext();
 
   useEffect(() => {
-    if(user.lenght != 0){
+    if (user.lenght !==0) {
       const newTable = user.map((user) => {
         var connected, createdAt;
         if (!user.refreshToken) {
@@ -105,7 +105,6 @@ const Users = () => {
 
       setRows(newTable);
     }
-
   }, [open, deleteOpen, show, user]);
 
   return (

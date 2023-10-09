@@ -9,7 +9,7 @@ const ProfilPage = () => {
   const {dataPage} = useButtonContext()
 
   useEffect(() => {
-    if(dataPage.lenght != 0){
+    if(dataPage.lenght !== 0){
       setData(dataPage)
     }
     

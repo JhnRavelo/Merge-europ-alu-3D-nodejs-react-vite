@@ -28,16 +28,16 @@ const Products = () => {
   return (
     <>
       <section id="produit">
-        {id != 7 ? (
+        {id !== 7 ? (
           <Template
             products={dataFetch}
-            productsLenght={Object.keys(dataFetch).length}
+            productslenght={Object.keys(dataFetch).length}
             title={id}
           />
         ) : (
           <Habillage
             products={dataFetch}
-            productsLenght={Object.keys(dataFetch).length}
+            productslenght={Object.keys(dataFetch).length}
             title={id}
           />
         )}

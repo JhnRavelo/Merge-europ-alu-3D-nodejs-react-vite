@@ -121,7 +121,7 @@ const SignupTemplate = () => {
   };
 
   useEffect(() => {
-    if (body.name != "") {
+    if (body.name !== "") {
       setIndex(4);
       btnStepRef.current.style.display = "none";
     } else {

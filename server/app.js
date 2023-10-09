@@ -40,5 +40,8 @@ app.use('/page', pageRoutes);
 const productRoutes = require('./routes/Products.js')
 app.use('/product', productRoutes)
 
+const logRoutes = require('./routes/Logs.js')
+app.use('/log', logRoutes)
+
 
 

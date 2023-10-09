@@ -20,7 +20,7 @@ const UserProfileCard = ({ data }) => {
   };
 
   useEffect(() => {
-    if (data.lenght != 0 && data[0]?.user?.email) {
+    if (data.lenght !== 0 && data[0]?.user?.email) {
       setEmail(data[0].user.email);
       setPhone(data[0].user.phone);
       setName(data[0].user.name);
