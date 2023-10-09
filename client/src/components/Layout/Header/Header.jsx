@@ -7,6 +7,7 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import useAuth from "../../../hooks/useAuth";
 import defaultAxios from "../../../api/axios";
+import useButtonContext from "../../../hooks/useButtonContext";
 
 const Header = () => {
   const { auth } = useAuth();
@@ -18,6 +19,7 @@ const Header = () => {
   const userRef = useRef();
   const [data, setData] = useState([]);
   const navigate = useNavigate();
+  const {body, setBody, show} = useButtonContext()
 
   function menuIsClosed(e) {
     const profile = showProfileRef.current;
@@ -55,10 +57,7 @@ const Header = () => {
   };
 
   useEffect(() => {
-    fetchData();
-  }, []);
-
-  useEffect(() => {
+    fetchData()
     document.body.addEventListener("click", menuIsClosed);
     return () => document.body.removeEventListener("click", menuIsClosed);
   }, []);
@@ -83,30 +82,14 @@ const Header = () => {
   };
 
   useEffect(() => {
-    const controller = new AbortController();
-    const connected = async () => {
-      if (!userRef.current.className.includes("connected")) {
-        try {
-          const res = await axiosPrivate.get("/auth", {
-            signal: controller.signal,
-          });
-
-          if (res.data.name) {
+      
+          if (body.name ==! "") {
             userRef.current.classList.add("connected");
           } else {
             userRef.current.classList.remove("connected");
           }
-        } catch (error) {
-          userRef.current.classList.remove("connected");
-          console.log(error);
-        }
-      }
-    };
 
-    connected();
-
-    return () => controller?.abort;
-  }, [auth, axiosPrivate]);
+  }, [auth, body, show]);
 
   const handleLogOut = async () => {
     try {
@@ -114,6 +97,11 @@ const Header = () => {
       
       userRef.current.classList.remove("connected");
       if (res.data == "SUCCESS") {
+        setBody({
+          name:"",
+          email:"",
+          pgone:"",
+        })
         navigate("/");
       }
     } catch (error) {

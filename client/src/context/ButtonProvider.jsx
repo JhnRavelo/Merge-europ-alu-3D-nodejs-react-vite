@@ -7,12 +7,13 @@ const ButtonProvider = ({ children }) => {
   const [show, setShow] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState("");
   const [body, setBody] = useState({ name: "", email: "", phone: "" });
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
+  const [dataPage, setDataPage] = useState([]);
 
   const showForm = () => {
     if (show === false) {
       setShow(true);
-      setOpen(true)
+      setOpen(true);
       const corps = document.querySelector(".corps");
       const userIcon = document.querySelector(".login__logout");
       if (corps) {
@@ -22,7 +23,7 @@ const ButtonProvider = ({ children }) => {
         userIcon.style.pointerEvents = "none";
       }
     } else {
-      setOpen(false)
+      setOpen(false);
       setTimeout(() => {
         setShow(false);
       }, 200);
@@ -47,6 +48,8 @@ const ButtonProvider = ({ children }) => {
         showForm,
         show,
         open,
+        dataPage,
+        setDataPage,
       }}
     >
       {children}

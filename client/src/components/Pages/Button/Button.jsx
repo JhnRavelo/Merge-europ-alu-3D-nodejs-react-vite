@@ -1,41 +1,12 @@
 import { useRef } from "react";
 import "./Button.css";
-import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import useButtonContext from "../../../hooks/useButtonContext";
 
 const Button = () => {
   const btnRef = useRef();
-  const { setSelectedProduct, showForm, setBody, body } = useButtonContext();
-  const axiosPrivate = useAxiosPrivate();
+  const { setSelectedProduct, showForm } = useButtonContext();
 
-  const handleClick = async () => {
-    try {
-      const res = await axiosPrivate.get("/auth");
-      if (res.data) {
-        setBody({
-          name: res.data.name,
-          email: res.data.email,
-          phone: res.data.phone,
-        });
-      } else {
-        setBody({
-          name: "",
-          email: "",
-          phone: "",
-        });
-      }
-      console.log(body);
-    } catch (error) {
-      if (error) {
-        setBody({
-          name: "",
-          email: "",
-          phone: "",
-        });
-        console.log(error);
-      }
-    }
-    
+  const handleClick = async () => {  
     showForm();
     setSelectedProduct(btnRef.current.parentElement.querySelector("h1").textContent);
   };
