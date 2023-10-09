@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useRef } from "react";
-// import photos from "../img/avatar/femme.png";
 import { AuthContext } from "../context/AuthContext";
 import { ChatContext } from "../context/ChatContext";
 
@@ -13,7 +12,6 @@ const Message = ({ message }) => {
     ref.current?.scrollIntoView({ behavior: "smooth" });
   }, [message]);
 
-  // console.log(message);
   return (
     <div
     ref={ref}
@@ -22,13 +20,13 @@ const Message = ({ message }) => {
       <div className="messageInfo">
         <img
           src={
-            message.sendeId === currentUser.uid
+            message.senderId === currentUser.uid
               ? currentUser.photoURL
               : data.user.photoURL
           }
           alt="sary"
         />
-        <span>vo zao</span>
+        {/* <span>vo zao</span> */}
       </div>
       <div className="messageContent">
         <p>{message.text}</p>
