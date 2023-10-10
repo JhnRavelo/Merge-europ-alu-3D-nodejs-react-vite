@@ -4,6 +4,8 @@ import Form from "../../../components/Admin/Form/Form";
 import DataTable from "../../../components/Admin/DataTable/DataTable";
 import defaultAxios from "../../../api/axios";
 import ModalDelete from "../../../components/Admin/ModalDelete/ModalDelete";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFileCirclePlus } from '@fortawesome/free-solid-svg-icons';
 
 const columns = [
   {
@@ -136,7 +138,10 @@ const Pages = () => {
     <div className="users">
       <div className="info">
         <h1>Pages</h1>
-        <button onClick={() => setOpen(true)}>Add New Page</button>
+        <button onClick={() => setOpen(true)}>
+          <FontAwesomeIcon icon={faFileCirclePlus} beat/>
+          Add New Page
+        </button>
       </div>
       <DataTable slug="pages" columns={columns} rows={rows} setOpen={setOpen} setEditRow={(value)=> setEditRow(value)} setDeleteOpen={setDeleteOpen} setDeleteRow={setDeleteRow}/>
 
