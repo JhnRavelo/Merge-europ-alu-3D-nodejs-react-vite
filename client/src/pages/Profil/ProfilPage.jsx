@@ -6,10 +6,8 @@ import Cart from "../../components/Profils/Cart/Cart";
 import useButtonContext from "../../hooks/useButtonContext";
 import Chat from "../../components/Messanger/components/Chat";
 import ChevronDroite from "../../components/Messanger/img/chevron-droit.png";
+import Pub from "../../components/Profils/Pub/Pub";
 
-const Vide = () => {
-  return <></>;
-};
 
 const ProfilPage = () => {
   const [chatOrCart, setChatOrCart] = useState("vide");
@@ -74,7 +72,7 @@ const ProfilPage = () => {
               </div>
             </div>
           ) : (
-            <Vide />
+            <Pub />
           )}
         </div>
       </div>

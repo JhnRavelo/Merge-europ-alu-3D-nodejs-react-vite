@@ -8,7 +8,9 @@ function App() {
   return (
     <>
       <AppRouter/>
-      <ToastContainer/>
+      <ToastContainer
+        theme="dark"
+      />
     </>
   );
 }
