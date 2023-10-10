@@ -23,7 +23,7 @@ const Footer = () => {
             <div className="row contact-main" data-aos="fade-up">
                 <div className="col-full">
                     <div className="logo__foot">
-                      <img className="float_right m-auto mb-5" src={LogoEuro} alt="Logo" />
+                      <img className="m-auto mb-5" src={LogoEuro} alt="Logo" />
                     </div>
                 <div className="d__flex">
             

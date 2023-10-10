@@ -49,11 +49,12 @@ const Admin = () => {
       });
       SetNbProd(nbrProd.data);
       setYears(nbrProd.data.getYear);
-      const log = await privateAxios.post("/log", { year: year });
-      setLog(log.data);
+      if (notifOpen == false) {
+        const log = await privateAxios.post("/log", { year: year });
+        setLog(log.data);
+      }
       if (notifOpen == true) {
         await privateAxios.get("/log");
-          setNotifOpen(false);
       }
     } catch (error) {
       console.log(error);

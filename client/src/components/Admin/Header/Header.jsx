@@ -11,7 +11,8 @@ import { Field, Form, Formik } from "formik";
 const Header = () => {
   const location = useLocation();
   const { pathname } = location;
-  const { years, setYear, data, year, log, setNotifOpen } = useAdminContext();
+  const { years, setYear, data, year, log, setNotifOpen, notifOpen } =
+    useAdminContext();
   const selectDate = useRef();
   const chevron = useRef();
   const notication = useRef();
@@ -28,7 +29,12 @@ const Header = () => {
 
   const handleShowNotication = () => {
     notication.current.classList.toggle("showed");
-    setNotifOpen(true);
+    setNotif(0);
+    if (notifOpen == true) {
+      setNotifOpen(false);
+    } else {
+      setNotifOpen(true);
+    }
   };
 
   const handleClickYear = (value) => {
@@ -88,7 +94,7 @@ const Header = () => {
             <Formik initialValues={{ year: year }}>
               {({ values }) => (
                 <Form>
-                  {years.length !==0 &&
+                  {years.length !== 0 &&
                     years.map((item, index) => (
                       <label
                         key={index}
@@ -127,7 +133,7 @@ const Header = () => {
         </div>
         <div className="notification" onClick={handleShowNotication}>
           <FontAwesomeIcon icon={faBell} className="bellIcon" />
-          {notif !==0 && <span> {notif} </span>}
+          {notif !== 0 && <span> {notif} </span>}
         </div>
         <div className="user">
           <img src={data.avatar} alt="" className="userIcon" />

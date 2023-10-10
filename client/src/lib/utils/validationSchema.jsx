@@ -7,7 +7,7 @@ const phoneRegEx =
 const validate = Yup.object({
   name: Yup.string()
     .required("Vous devez mettre votre nom")
-    .matches(/^[A-Za-z]+$/, "Votre doit seulement contenir des lettres"),
+    .matches(/^[A-Za-z]+$/, "Votre nom doit seulement contenir des lettres"),
   email: Yup.string()
     .required("Vous devez mettre votre adresse email")
     .email(`l'adresse email est invalide`)

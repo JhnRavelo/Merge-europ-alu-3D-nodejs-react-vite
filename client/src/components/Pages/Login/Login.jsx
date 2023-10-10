@@ -41,10 +41,9 @@ const Login = () => {
       const res = await defaultAxios.post("/auth/login", body),
         role = res.data.role,
         accessToken = res.data.accessToken;
-      console.log(res.data);
 
       if (role) {
-        setAuth({ role, accessToken });
+       await setAuth({ role, accessToken });
         if (role == prime[0]) {
           navigate("/admin/");
         } else if (role == prime[2] && location.pathname == "/") {

@@ -51,23 +51,6 @@ const addTraker = async (req, res) => {
 };
 
 const getTraker = async (req, res) => {
-  const cookie = await req.cookies;
-  console.log(req.user);
-
-  // if (!cookie?.jwt) {
-  //   return res.sendStatus(401);
-  // }
-  // const refreshToken = cookie.jwt;
-
-  // const user = await users.findOne({
-  //   where: {
-  //     refreshToken: refreshToken,
-  //   },
-  // });
-
-  // if (!user) {
-  //   return res.sendStatus(401);
-  // }
 
   const userRead = await users.findAll({
     where: {
@@ -87,10 +70,6 @@ const getTraker = async (req, res) => {
       },
     ],
   });
-
-  // if (!traker) {
-  //   return res.json("No Page");
-  // }
 
   res.json({traker, userRead});
 };

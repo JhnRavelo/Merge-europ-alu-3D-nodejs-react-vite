@@ -13,7 +13,7 @@ const AppRouter = () => {
       <Route path="/commercial/*" element={<CommePage />} />
       <Route path="/" element={<Acceuil />} />
       <Route path="/page/*" element={<Layout />} />
-      <Route element={<PrivateRoutes prime={prime[2]} />}>
+      <Route element={<PrivateRoutes prime={prime[0]} />}>
         <Route path="/admin/*" element={<Admin />} />
       </Route>
       <Route path="*" element={<Navigate to={"/"} />} />
