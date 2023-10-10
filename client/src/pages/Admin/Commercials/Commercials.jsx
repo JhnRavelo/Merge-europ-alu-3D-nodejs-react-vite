@@ -4,6 +4,8 @@ import Form from "../../../components/Admin/Form/Form";
 import DataTable from "../../../components/Admin/DataTable/DataTable";
 import ModalDelete from "../../../components/Admin/ModalDelete/ModalDelete";
 import useAdminContext from "../../../hooks/useAdminContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 
 const columns = [
   {
@@ -103,7 +105,10 @@ const Commercials = () => {
       <div className="users">
         <div className="info">
           <h1>Users</h1>
-          <button onClick={() => setOpen(true)}>Add New Commercial</button>
+          <button onClick={() => setOpen(true)}>
+            <FontAwesomeIcon icon={faUserPlus} beat />
+            Add New Commercial
+          </button>
         </div>
         <DataTable
           slug="commercials"
