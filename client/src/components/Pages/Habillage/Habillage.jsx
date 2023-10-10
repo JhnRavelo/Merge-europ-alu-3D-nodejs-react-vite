@@ -24,7 +24,7 @@ const Habillage = ({ products, productslenght, title }) => {
               presRefs.current.push(el);
             }
             // console.log(presRefs.current[index]);
-            if (index % 2 !== 0 && presRefs.current[index]) {
+            if (index % 2 != 0 && presRefs.current[index]) {
               presRefs.current[index].classList.add('pres2');
             }
           };
@@ -33,7 +33,7 @@ const Habillage = ({ products, productslenght, title }) => {
               imgRefs.current.push(el);
             }
             
-            if (title !== 7 && imgRefs.current[index]) {
+            if (title != 7 && imgRefs.current[index]) {
               console.log(imgRefs.current[index].className)
               new SimpleParallax(imgRefs.current[index], {
                 overflow: true,

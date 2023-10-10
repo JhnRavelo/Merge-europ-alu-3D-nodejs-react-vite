@@ -8,7 +8,10 @@ const ButtonProvider = ({ children }) => {
   const [selectedProduct, setSelectedProduct] = useState("");
   const [body, setBody] = useState({ name: "", email: "", phone: "" });
   const [open, setOpen] = useState(false);
-  const [dataPage, setDataPage] = useState([]);
+  const [dataPage, setDataPage] = useState({
+    traker: [],
+    userRead: [],
+  });
 
   const showForm = () => {
     if (show === false) {

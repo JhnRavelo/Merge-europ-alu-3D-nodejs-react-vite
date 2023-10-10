@@ -1,6 +1,6 @@
 import "./ProfilPage.css";
 import "./ProfilPage.scss";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import UserProfileCard from "../../components/Profils/UserProfileCard/UserProfileCard";
 import Cart from "../../components/Profils/Cart/Cart";
 import useButtonContext from "../../hooks/useButtonContext";
@@ -13,7 +13,6 @@ const Vide = () => {
 };
 
 const ProfilPage = () => {
-  const [data, setData] = useState([]);
   const [chatOrCart, setChatOrCart] = useState("vide");
   const { dataPage } = useButtonContext();
 
@@ -23,11 +22,6 @@ const ProfilPage = () => {
   const handleSetChat = () => {
     setChatOrCart("chat");
   };
-  useEffect(() => {
-    if (dataPage.lenght != 0) {
-      setData(dataPage);
-    }
-  }, [dataPage]);
 
   const handleOpenMenu = () => {
     const sidebar = document.querySelector(".sidebar");
@@ -39,14 +33,14 @@ const ProfilPage = () => {
       <div className="profile__page">
         <div className="profile__box">
           <UserProfileCard
-            data={data}
+            data={dataPage}
             handleSetCart={handleSetCart}
             handleSetChat={handleSetChat}
           />
         </div>
         <div className="card__box">
           {chatOrCart === "cart" ? (
-            <Cart data={data} />
+            <Cart data={dataPage} />
           ) : chatOrCart === "chat" ? (
             <div className="chatUser">
               <Chat />

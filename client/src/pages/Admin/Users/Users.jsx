@@ -82,7 +82,7 @@ const Users = () => {
   const { open, setOpen, user, deleteOpen, setDeleteOpen } = useAdminContext();
 
   useEffect(() => {
-    if (user.lenght !==0) {
+    if (user.length != 0) {
       const newTable = user.map((user) => {
         var connected, createdAt;
         if (!user.refreshToken) {

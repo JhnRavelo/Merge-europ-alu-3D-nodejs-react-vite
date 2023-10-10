@@ -20,11 +20,11 @@ const UserProfileCard = ({ data, handleSetCart, handleSetChat }) => {
   };
 
   useEffect(() => {
-    if (data.lenght !== 0 && data[0]?.user?.email) {
-      setEmail(data[0].user.email);
-      setPhone(data[0].user.phone);
-      setName(data[0].user.name);
-      setImgProfile(data[0].user.avatar);
+    if (data?.userRead?.length != 0) {
+      setEmail(data.userRead[0].email);
+      setPhone(data.userRead[0].phone);
+      setName(data.userRead[0].name);
+      setImgProfile(data.userRead[0].avatar);
     }
   }, [data]);
 

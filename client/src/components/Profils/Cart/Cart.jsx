@@ -6,8 +6,8 @@ const Cart = ({data}) => {
   const [product, setProduct] = useState([]);
 
   useEffect(() => {
-    if (data.lenght !== 0 ) {
-      setProduct(data);
+    if (data?.traker.length != 0 ) {
+      setProduct(data.traker);
     }
   }, [data]);
 

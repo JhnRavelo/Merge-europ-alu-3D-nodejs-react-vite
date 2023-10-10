@@ -15,7 +15,7 @@ const AdminRouter = () => {
   return (
     <>
       <Routes>
-        {/* <Route element={<PrivateRoutes prime={prime[0]} />}> */}
+        <Route element={<PrivateRoutes prime={prime[0]} />}>
           <Route path="/" element={<Home />} />
           <Route path="/user" element={<Users />} />
           <Route path="/product" element={<Product />} />
@@ -24,7 +24,7 @@ const AdminRouter = () => {
           <Route path="/commercial" element={<Commercials />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/log" element={<Log />} />
-        {/* </Route> */}
+        </Route>
       </Routes>
     </>
   );

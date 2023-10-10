@@ -28,7 +28,7 @@ const Products = () => {
   return (
     <>
       <section id="produit">
-        {id !== 7 ? (
+        {id != 7 ? (
           <Template
             products={dataFetch}
             productslenght={Object.keys(dataFetch).length}

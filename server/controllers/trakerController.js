@@ -52,43 +52,47 @@ const addTraker = async (req, res) => {
 
 const getTraker = async (req, res) => {
   const cookie = await req.cookies;
+  console.log(req.user);
 
-  if (!cookie?.jwt) {
-    return res.sendStatus(401);
-  }
-  const refreshToken = cookie.jwt;
+  // if (!cookie?.jwt) {
+  //   return res.sendStatus(401);
+  // }
+  // const refreshToken = cookie.jwt;
 
-  const user = await users.findOne({
+  // const user = await users.findOne({
+  //   where: {
+  //     refreshToken: refreshToken,
+  //   },
+  // });
+
+  // if (!user) {
+  //   return res.sendStatus(401);
+  // }
+
+  const userRead = await users.findAll({
     where: {
-      refreshToken: refreshToken,
+      ID_user: req.user,
     },
-  });
-
-  if (!user) {
-    return res.sendStatus(401);
-  }
+    attributes: ["name", "email", "phone", "avatar"]
+  })
 
   const traker = await trakers.findAll({
     where: {
-      userId: user.ID_user,
+      userId: req.user,
     },
     include: [
       {
         model: products,
         attributes: ["title", "png"],
       },
-      {
-        model: users,
-        attributes: ["name", "email", "phone", "avatar"]
-      }
     ],
   });
 
-  if (!traker) {
-    return res.json("No Page");
-  }
+  // if (!traker) {
+  //   return res.json("No Page");
+  // }
 
-  res.json(traker);
+  res.json({traker, userRead});
 };
 
 const getTrakers = async (req, res) => {

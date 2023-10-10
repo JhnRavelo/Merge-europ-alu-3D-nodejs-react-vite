@@ -72,7 +72,7 @@ const Orders = () => {
   const { order } = useAdminContext();
 
   useEffect(() => {
-    if (order.lenght !== 0) {
+    if (order.length !== 0) {
       console.log(order);
       const newTable = order.map((tarker) => {
         var createdAt;
