@@ -7,6 +7,7 @@
     // background-color: #fff;
     border-radius: 20px;
     position: relative;
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 3px 8px;
 
     h1 {
         font-size: 50px;
@@ -14,6 +15,7 @@
     } 
     
     .edit__admin {
+        box-shadow: rgba(0, 0, 0, 0.5) 0px 3px 8px;
         display: flex;
         justify-content: space-between;
         height: 10%;
@@ -44,7 +46,7 @@
             border-radius: 5px;
             letter-spacing: 1px;
             background-color: green;
-            box-shadow: 2px 2px 4px #252c39, -2px -2px 4px #45516a;
+            box-shadow: rgba(0, 0, 0, 0.5) 0px 3px 8px;
             transition: all .3s ease;
             cursor: pointer;
             &:hover {
@@ -57,6 +59,7 @@
     }
 
     .admin__card {
+        box-shadow: rgba(0, 0, 0, 0.5) 0px 3px 8px;
         display: flex;
         height: 50%;
         margin-top: 20px;
@@ -71,6 +74,7 @@
         .admin__img {
             width: 30%;
             img {
+                box-shadow: rgba(0, 0, 0, 0.5) 0px 3px 8px;
                 width: 200px;
                 height: 200px;
                 border-radius: 50%;
