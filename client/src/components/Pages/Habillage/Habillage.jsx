@@ -10,23 +10,32 @@ import SimpleParallax from "simple-parallax-js";
 const Habillage = ({ products, productslenght, title }) => {
   const presRefs = useRef([]);
   const imgRefs = useRef([]);
+
   useEffect(() => {
     imgRefs.current = [];
     presRefs.current = [];
   }, []);
 
-  // useEffect(() => {
-  //   const img = document.querySelectorAll(".image_parallaxe");
-  //   console.log(img.length > 0);
-  //   if (img.length > 0) {
-  //     for (let i = 0; i < img.length; i++) {
-  //       console.log(i);
-  //       new simpleParallax(img, {
-  //         scale: 1.5,
-  //       });
-  //     }
-  //   }
-  // }, [products]);
+  const addtoRefsImg = (el) => {
+    if (el && !imgRefs.current.includes(el)) {
+      imgRefs.current.push(el);
+    }
+  };
+
+  useEffect(() => {
+    
+    if (
+      imgRefs.current.length == products.length &&
+      title == 7 &&
+      imgRefs.current
+    ) {
+      for (let i = 0; i < imgRefs.current.length; i++) {
+        new SimpleParallax(imgRefs.current[i], {
+          scale: 1.5,
+        });
+      }
+    }
+  }, [imgRefs, title, products]);
 
   return (
     <>
@@ -36,29 +45,12 @@ const Habillage = ({ products, productslenght, title }) => {
             if (el && !presRefs.current.includes(el)) {
               presRefs.current.push(el);
             }
-            // console.log(presRefs.current[index]);
+        
             if (index % 2 != 0 && presRefs.current[index]) {
               presRefs.current[index].classList.add("pres2");
             }
           };
-          const addtoRefsImg = (el) => {
-            if (el && !imgRefs.current.includes(el)) {
-              imgRefs.current.push(el);
-            }
 
-            if (
-              title == 7 &&
-              imgRefs.current[index] &&
-              !imgRefs.current[index].className.includes(
-                "simple-parallax-initialized"
-              )
-            ) {
-              console.log("habillage");
-              new SimpleParallax(imgRefs.current[index], {
-                scale: 1.5,
-              });
-            }
-          };
           return (
             <Fragment key={index}>
               <div ref={addtoRefsPres} className="Habillage_presenatation">
