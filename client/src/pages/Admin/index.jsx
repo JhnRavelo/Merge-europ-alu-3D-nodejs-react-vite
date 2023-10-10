@@ -23,7 +23,6 @@ const Admin = () => {
     year,
     setYears,
     setLog,
-    setNotifOpen,
   } = useAdminContext();
 
   useEffect(() => {

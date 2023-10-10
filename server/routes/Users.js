@@ -93,13 +93,8 @@ router.put(
   updateProfile
 );
 
-router.post("/nbr", verifyJWT, verifyRole(process.env.PRIME1), nbrUser)
+router.post("/nbr", verifyJWT, verifyRole(process.env.PRIME1), nbrUser);
 
-router.get(
-  "/getCommercials",
-  verifyJWT,
-  verifyRole(process.env.PRIME1),
-  getCommercials
-);
+router.get("/getCommercials", verifyJWT, getCommercials);
 
 module.exports = router;

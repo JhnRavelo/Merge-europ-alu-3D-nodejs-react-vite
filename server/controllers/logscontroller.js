@@ -49,7 +49,7 @@ const getLogs = async (req, res) => {
         ],
       },
     ],
-    order: [[Sequelize.col("logs.createdAt"), "ASC"]],
+    order: [[Sequelize.col("logs.createdAt"), "DESC"]],
   });
 
   const listProductInterested = await logs.findAll({

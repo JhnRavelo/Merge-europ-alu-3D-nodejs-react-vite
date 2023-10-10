@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import Button from "../Button/Button";
 import Gallery from "../Gallery/Gallery";
 import Separation from "../Separation/Separation";

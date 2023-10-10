@@ -390,7 +390,7 @@ const getCommercials = async (req, res) => {
     },
   });
 
-  res.json(result);
+  return res.json(result);
 };
 
 const avatarUpdateUser = async (req, res) => {

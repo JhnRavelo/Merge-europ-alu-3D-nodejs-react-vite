@@ -5,12 +5,12 @@ import userPhoto from "../img/avatar/homme.png"
 import "../style.scss"
 import { useLocation } from "react-router-dom";
 import ChevronGauche from "../img/chevron-gauche.png"
+import { useState } from "react";
 
 
 const Chat = () => {
-  
+  const [commercialChat, setCommercialChat] = useState("")
   const location = useLocation();
-
 
   const handleOpenMenu = () => {
     const sidebar = document.querySelector(".sidebar")

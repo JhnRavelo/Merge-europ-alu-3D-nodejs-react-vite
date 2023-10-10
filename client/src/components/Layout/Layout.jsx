@@ -9,7 +9,7 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useEffect } from "react";
 
 const Layout = () => {
-  const { show, setBody, setDataPage } = useButtonContext();
+  const { show, setBody, setDataPage, setCommercials } = useButtonContext();
   const axiosPrivate = useAxiosPrivate();
 
   useEffect(() => {
@@ -26,7 +26,9 @@ const Layout = () => {
           phone: res.data.phone,
         });
         const page = await axiosPrivate.get("/traker");
-          setDataPage(page.data);
+        setDataPage(page.data);
+        const commercial = await axiosPrivate.get("/auth/getCommercials");
+        setCommercials(commercial.data);
       } else {
         setBody({
           name: "",
