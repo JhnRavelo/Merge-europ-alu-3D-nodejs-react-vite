@@ -1,5 +1,16 @@
 @import "../../../pages/Admin/variables.scss";
 
+@keyframes modal {
+  0% {
+    opacity: 0;
+    transform: scale(1.2);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 .add {
   width: 100vw;
   height: 100vh;
@@ -10,12 +21,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  
 
   .modal {
+    box-shadow: rgba(0, 0, 0, 1) 0px 3px 8px;
     padding: 50px;
     border-radius: 10px;
     background-color: $main-bg;
     position: relative;
+    animation: modal .3s ease;
 
     .desabledBtn {
       background-color: red !important;
@@ -36,7 +50,8 @@
     label {
         font-size: 14px;
         color: white;
-        font-weight: 100;
+        font-weight: 400;
+        letter-spacing: .5px;
     }
 
     h1 {
@@ -47,9 +62,15 @@
 
     .close {
       position: absolute;
-      top: 10px;
-      right: 10px;
+      top: 0px;
+      border-radius: 0px 10px;
+      right: 0px;
+      font-size: 20px;
       cursor: pointer;
+      font-weight: 900;
+      background-color: rgb(212, 14, 14);
+      padding: 10px;
+      box-shadow: rgba(0, 0, 0, .5) 0px 3px 8px;
     }
 
     form {
@@ -176,16 +197,19 @@
           background-color: transparent;
           color: white;
           outline: none;
-          border: 1px solid $soft-color;
           border-radius: 3px;
+          box-shadow: rgba(0, 0, 0, .5) 0px 3px 8px;
+          border: 1px solid $soft-color;
+          
         }
-
+        
         .labelInput {
+          box-shadow: rgba(0, 0, 0, .5) 0px 3px 8px;
+          border: 1px solid $soft-color;
           padding: 10px;
           background-color: transparent;
           color: #717273;
           outline: none;
-          border: 1px solid $soft-color;
           border-radius: 3px;
           display: flex;
           flex-direction: row;
@@ -209,6 +233,22 @@
         width: 100%;
         padding: 10px;
         cursor: pointer;
+        border-radius: 5px;
+        border: none;
+        font-size: 20px;
+        font-weight: 700;
+        letter-spacing: .5px;
+        background-color: var(--orange);
+        color: #fff;
+        box-shadow: rgba(0, 0, 0, .5) 0px 3px 8px;
+        transition: .3s ease;
+        &:hover {
+          transform: scale(1.02);
+        }
+        &:active {
+          transform: scale(1);
+        }
+
       }
     }
   }
