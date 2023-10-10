@@ -1,9 +1,11 @@
 
 
 .dataTable{
-    padding-bottom: 10px;
+    // padding-bottom: 10px;
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 3px 8px;
+
     .dataGrid{
-      background: white;
+      background: #f3f3f3;
       padding: 20px;
   
       .MuiDataGrid-toolbarContainer{
