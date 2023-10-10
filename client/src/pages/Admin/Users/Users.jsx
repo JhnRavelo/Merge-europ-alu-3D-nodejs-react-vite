@@ -5,6 +5,8 @@ import DataTable from "../../../components/Admin/DataTable/DataTable";
 import ModalDelete from "../../../components/Admin/ModalDelete/ModalDelete";
 import useButtonContext from "../../../hooks/useButtonContext";
 import useAdminContext from "../../../hooks/useAdminContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 
 const columns = [
   {
@@ -112,7 +114,10 @@ const Users = () => {
       <div className="users">
         <div className="info">
           <h1>Users</h1>
-          <button onClick={() => setOpen(true)}>Add New User</button>
+          <button onClick={() => setOpen(true)}>
+            <FontAwesomeIcon icon={faUserPlus} beat />
+            Add New User
+          </button>
         </div>
         <DataTable
           slug="users"
