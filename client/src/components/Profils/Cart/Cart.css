@@ -7,6 +7,7 @@
     padding: 40px;
     overflow-y: scroll;
     position: relative;
+    animation: tonga .6s ease;
 }
 
 .pannier .titre__pannier h1 {
