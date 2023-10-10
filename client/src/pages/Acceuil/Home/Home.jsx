@@ -5,6 +5,7 @@ import Form from "../../../components/Pages/Form/Form";
 import useButtonContext from "../../../hooks/useButtonContext";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 const body = {
   name: "",
@@ -24,8 +25,11 @@ const Home = () => {
     try {
       await privateAxios.get("/auth/logout");
       setBody(body)
+      toast.info("Deconnexion")
     } catch (error) {
       console.log(error);
+      toast.error("Deconnexion impossible !")
+
     }
   };
 

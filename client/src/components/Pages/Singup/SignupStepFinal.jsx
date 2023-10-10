@@ -13,7 +13,8 @@ import useAuth from "../../../hooks/useAuth";
 import useButtonContext from "../../../hooks/useButtonContext";
 import defaultAxios from "../../../api/axios";
 import useProductContext from "../../../hooks/useProductContext";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const SignupStepFinal = () => {
   const { selectedProduct, showForm, body } = useButtonContext();
@@ -26,6 +27,7 @@ const SignupStepFinal = () => {
   const { dataFetch } = useProductContext();
   const errors = formContext[0];
   const location = useLocation();
+  const navigate=  useNavigate();
 
   checkboxRef.current = [];
   const { name, email, phone, checked } = formContext[1];
@@ -73,11 +75,13 @@ const SignupStepFinal = () => {
 
   const onSubmit = async () => {
     try {
-      console.log("click");
-      const res = await defaultAxios.post("/auth", formContext[1]);
+      let res;
+      if (body.name == "") {
+        res = await defaultAxios.post("/auth", formContext[1]);
+      }
 
       var track;
-      if (res.data !== `L'utilisateur existe déjà`) {
+      if (res?.data !== `L'utilisateur existe déjà` && res?.data?.role) {
         const role = res.data.role,
           accessToken = res.data.accessToken;
         setAuth({ role, accessToken });
@@ -86,12 +90,26 @@ const SignupStepFinal = () => {
       if (!checked[0] == "") {
         track = await addTraker(formContext[1]);
       }
-      if (res.data || track) {
+
+      if (res?.data == "L'utilisateur existe déjà") {
+        toast.error("L'utilisateur existe déjà");
+      }
+
+      console.log(res?.data);
+
+      if (res?.data?.role) {
         showForm();
+        toast.success("Votre compte a bien été créé.");
+        navigate("/page/5")
+      }
+
+      if (track && location.pathname != "/") {
+        showForm();
+        toast.success("Votre produit a bien été ajouté");
       }
     } catch (error) {
       if (!error) {
-        showForm();
+        toast.error("Erreur du server");
       }
       console.log(error);
     }
@@ -161,10 +179,12 @@ const SignupStepFinal = () => {
       />
 
       <div className="check">
-        {body.name == "" && <label>
-          <Field id="acceptCheckbox" type="checkbox" name="checkbox" />
-          {"Cette action va vous créer un compte chez Europ'Alu"}
-        </label>}
+        {body.name == "" && (
+          <label>
+            <Field id="acceptCheckbox" type="checkbox" name="checkbox" />
+            {"Cette action va vous créer un compte chez Europ'Alu"}
+          </label>
+        )}
       </div>
       <div className="buttons">
         <button

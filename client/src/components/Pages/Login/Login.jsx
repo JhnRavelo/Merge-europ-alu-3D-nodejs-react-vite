@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import { faEnvelope, faKey } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ErrorMessage, Field } from "formik";
@@ -8,6 +9,8 @@ import useAuth from "../../../hooks/useAuth";
 import useButtonContext from "../../../hooks/useButtonContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+
+
 
 const prime = import.meta.env.VITE_PRIME.split(" ");
 
@@ -50,10 +53,13 @@ const Login = () => {
           navigate("/page/5");
         }
         showForm();
+        
+        toast.success("Vous êtes connecté.")
       }
     } catch (error) {
       if (error) {
         console.log(error);
+        toast.error("Connexion impossible")
       }
     }
   };

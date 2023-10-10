@@ -6,6 +6,7 @@ const Log = () => {
   const { log } = useAdminContext();
   const [list, setList] = useState([]);
   const logRef = useRef();
+
   useEffect(() => {
     if (log.listByYear.length !== 0) {
       console.log(log.listByYear);
@@ -13,6 +14,7 @@ const Log = () => {
     }
     logRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [log]);
+  
   return (
     <>
       <h1 className="h1__journal">Journals</h1>
