@@ -4,14 +4,15 @@ import Form from "../../../components/Admin/Form/Form";
 import DataTable from "../../../components/Admin/DataTable/DataTable";
 import defaultAxios from "../../../api/axios";
 import ModalDelete from "../../../components/Admin/ModalDelete/ModalDelete";
-import "./Product.scss"
+import "./Product.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const columns = [
   {
     field: "id",
     headerName: "ID",
     width: 40,
-    
   },
   {
     field: "png",
@@ -19,9 +20,8 @@ const columns = [
     type: "file",
     width: 80,
     renderCell: (params) => {
-      return <img src={params.row.png} alt="" className="imgprod"/>;
+      return <img src={params.row.png} alt="" className="imgprod" />;
     },
-    
   },
   {
     field: "page",
@@ -30,7 +30,6 @@ const columns = [
     placeholder: "Votre produit",
     type: "string",
     width: 90,
-    
   },
   {
     field: "title",
@@ -39,7 +38,6 @@ const columns = [
     placeholder: "Votre produit",
     type: "string",
     width: 120,
-    
   },
   {
     field: "description",
@@ -48,7 +46,6 @@ const columns = [
     headerName: "Description",
     placeholder: "Description du produit",
     width: 250,
-    
   },
   {
     field: "pub",
@@ -56,9 +53,8 @@ const columns = [
     type: "file",
     width: 80,
     renderCell: (params) => {
-      return <img src={params.row.pub} alt="" className="imgprod"/>;
+      return <img src={params.row.pub} alt="" className="imgprod" />;
     },
-    
   },
   {
     field: "gallery",
@@ -66,23 +62,21 @@ const columns = [
     headerName: "Gallery",
     width: 200,
     renderCell: (params) => {
-      const galleries = params.row.gallery.split(",")
-      return(
+      const galleries = params.row.gallery.split(",");
+      return (
         <div className="galleryContainer">
-          {galleries.map((gallery, index)=>(
-            <img src={gallery} alt="" key={index} className="imgprod"/>
+          {galleries.map((gallery, index) => (
+            <img src={gallery} alt="" key={index} className="imgprod" />
           ))}
         </div>
-      )
+      );
     },
-    
   },
   {
     field: "createdAt",
     headerName: "Created At",
     width: 100,
     type: "string",
-    
   },
 ];
 
@@ -127,7 +121,10 @@ const Products = () => {
     <div className="users">
       <div className="info">
         <h1>Produits</h1>
-        <button onClick={() => setOpen(true)}>Add New Produit</button>
+        <button onClick={() => setOpen(true)}>
+          <FontAwesomeIcon icon={faPlus} beat />
+          Add New Produit
+        </button>
       </div>
       <DataTable
         slug="products"
