@@ -22,7 +22,6 @@ const verifyJWT = require("../middlewares/verifyJWT");
 const verifyRole = require("../middlewares/verifyRole");
 const multer = require("multer");
 const path = require("path");
-const { route } = require("./Trakers");
 
 const imgPath = path.join(__dirname, "..", "public", "img");
 
@@ -41,14 +40,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({
   storage: storage,
-  fileFilter: (req, file, cb) => {
-    if (file.mimetype.startsWith("image/")) {
-      cb(null, true);
-    } else {
-      cb(new Error("Seules les images sont autorisées."));
-    }
-  },
-  encoding: "utf-8",
 });
 
 const multipleField = upload.fields([{ name: "avatar" }]);

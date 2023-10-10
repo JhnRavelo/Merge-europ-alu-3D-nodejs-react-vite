@@ -6,8 +6,6 @@ import Cart from "../../components/Profils/Cart/Cart";
 import useButtonContext from "../../hooks/useButtonContext";
 import Chat from "../../components/Messanger/components/Chat";
 import ChevronDroite from "../../components/Messanger/img/chevron-droit.png";
-import userPhoto from "../../components/Messanger/img/avatar/homme.png";
-import useAdminContext from "../../hooks/useAdminContext";
 
 const Vide = () => {
   return <></>;

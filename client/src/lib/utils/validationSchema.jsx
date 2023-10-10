@@ -123,7 +123,6 @@ const validationProduct = Yup.object({
 
 const validationMessage = Yup.object({
   message: Yup.string().required("Requis"),
-  file: Yup.mixed().required("Requis")
 })
 
 export { validate, validationPage, validationProduct, validationMessage };

@@ -7,12 +7,17 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       text: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.TEXT,
         allowNull: true,
       },
       img: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.TEXT,
         allowNull: true,
+      },
+      unRead: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true,
+        defaultValue: true,
       },
     });
   

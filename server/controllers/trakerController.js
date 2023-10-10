@@ -56,7 +56,7 @@ const getTraker = async (req, res) => {
     where: {
       ID_user: req.user,
     },
-    attributes: ["name", "email", "phone", "avatar"]
+    attributes: ["name", "email", "phone", "avatar", "ID_user"]
   })
 
   const traker = await trakers.findAll({

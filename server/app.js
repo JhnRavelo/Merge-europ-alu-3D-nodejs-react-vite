@@ -43,5 +43,8 @@ app.use('/product', productRoutes)
 const logRoutes = require('./routes/Logs.js')
 app.use('/log', logRoutes)
 
+const messageRoutes = require('./routes/Messages.js')
+app.use('/message', messageRoutes)
+
 
 

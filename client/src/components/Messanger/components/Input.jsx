@@ -2,19 +2,39 @@ import Img from "../img/img.png";
 import Send from "../img/envoyer-le-message.png";
 import { Field, Form, Formik } from "formik";
 import { validationMessage } from "../../../lib/utils/validationSchema";
+import { useLocation } from "react-router-dom";
+import useButtonContext from "../../../hooks/useButtonContext";
+import propTypes from "prop-types";
+import defaultAxios from "../../../api/axios";
 
 const initialValues = {
-  message: null,
+  message: "",
   file: null,
 };
 
-const handleSendMessage = (values, errors) => {
-  if (!errors.message) {
-    console.log(values);
-  }
-};
-
 const Input = () => {
+  const location = useLocation();
+  const { commercialChat, dataPage } = useButtonContext();
+
+  const handleSendMessage = async(values, errors) => {
+    if (!errors.message && commercialChat?.ID_user) {
+      try {
+        const formData = new FormData();
+        formData.append("text", values.message);
+        if (values?.file) {
+          formData.append("file", values.file);
+        }
+        formData.append("sender", dataPage.userRead[0].ID_user);
+        if (location.pathname.includes("page")) {
+          formData.append("receiver", commercialChat.ID_user);
+        }
+        const res = await defaultAxios.post("/message", formData);
+        console.log(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
   return (
     <Formik initialValues={initialValues} validationSchema={validationMessage}>
       {({ values, setFieldValue, errors }) => (
@@ -30,6 +50,7 @@ const Input = () => {
                 type="file"
                 style={{ display: "none" }}
                 id="file"
+                accept="image/png, .svg, .jpeg, .jpg, .webp"
                 onChange={(e) => {
                   if (e.target.files) {
                     setFieldValue("file", e.target.files[0]);
@@ -40,7 +61,7 @@ const Input = () => {
                 <img src={Img} alt="" />
               </label>
               <button
-              type="button"
+                type="button"
                 onClick={() => {
                   handleSendMessage(values, errors);
                 }}
@@ -53,6 +74,10 @@ const Input = () => {
       )}
     </Formik>
   );
+};
+
+Input.propTypes = {
+  sender: propTypes.array,
 };
 
 export default Input;

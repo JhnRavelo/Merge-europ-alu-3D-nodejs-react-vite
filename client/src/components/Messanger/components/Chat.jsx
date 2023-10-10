@@ -11,7 +11,7 @@ import useButtonContext from "../../../hooks/useButtonContext";
 
 const Chat = () => {
   const location = useLocation();
-  const {commercialChat} = useButtonContext()
+  const {commercialChat, dataPage} = useButtonContext()
 
   const handleOpenMenu = () => {
     const sidebar = document.querySelector(".sidebar")
