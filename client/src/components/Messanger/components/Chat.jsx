@@ -6,11 +6,12 @@ import "../style.scss"
 import { useLocation } from "react-router-dom";
 import ChevronGauche from "../img/chevron-gauche.png"
 import { useState } from "react";
+import useButtonContext from "../../../hooks/useButtonContext";
 
 
 const Chat = () => {
-  const [commercialChat, setCommercialChat] = useState("")
   const location = useLocation();
+  const {commercialChat} = useButtonContext()
 
   const handleOpenMenu = () => {
     const sidebar = document.querySelector(".sidebar")
@@ -20,8 +21,8 @@ const Chat = () => {
   return (
     <div className="chat">
       <div className="chatInfo">
-        <img src={userPhoto} alt="" />
-        <span>{'Hardy'}</span>
+        <img src={commercialChat?.avatar} alt="" />
+        <span>{commercialChat?.name}</span>
 
         <button className="menuIcon" onClick={handleOpenMenu}>
           <img src={ location.pathname.includes("commercial") ? menuIcon : ChevronGauche} alt="" />

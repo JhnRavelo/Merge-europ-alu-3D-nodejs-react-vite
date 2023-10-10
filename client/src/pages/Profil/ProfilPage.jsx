@@ -15,16 +15,13 @@ const Vide = () => {
 
 const ProfilPage = () => {
   const [chatOrCart, setChatOrCart] = useState("vide");
-  const { dataPage, commercials } = useButtonContext();
+  const { dataPage, commercials, setCommercialChat } = useButtonContext();
   const handleSetCart = () => {
     setChatOrCart("cart");
   };
   const handleSetChat = () => {
     setChatOrCart("chat");
   };
-  useEffect(()=>{
-    console.log(commercials);
-  })
 
   const handleOpenMenu = () => {
     const sidebar = document.querySelector(".sidebar");
@@ -56,11 +53,16 @@ const ProfilPage = () => {
                     <img src={ChevronDroite} alt="" />
                   </button>
                 </div>
-                
+
                 <div className="listeComm">
                   {commercials.length > 0 && commercials.map((item, index)=>(
-                  <div className="chats" key={index}>
-                    <div className="userChat">
+                  <div className="chats" key={index} onClick={
+                    ()=>{
+                      setCommercialChat(item)
+                      handleOpenMenu()
+                    }
+                  }>
+                    <div className="userChat" >
                       <img src={item?.avatar} alt="" />
                       <div className="userChatInfo">
                         <span>{item?.name}</span>

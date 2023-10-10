@@ -1,33 +1,61 @@
 import Img from "../img/img.png";
 import Send from "../img/envoyer-le-message.png";
+import { Field, Form, Formik } from "formik";
+import { validationMessage } from "../../../lib/utils/validationSchema";
+
+const initialValues = {
+  message: null,
+  file: null,
+};
+
+const handleSendMessage = (values, errors) => {
+  if (!errors.message) {
+    console.log(values);
+  }
+};
 
 const Input = () => {
-
   return (
-    <div className="input">
-      <input
-        type="text"
-        placeholder="Envoyer un message ..."
-      />
-      <div className="send">
-        <input
-          type="file"
-          style={{ display: "none" }}
-          id="file"
-        />
-        <label htmlFor="file">
-          <img src={Img} alt="" />
-        </label>
-        <button>
-          <img src={Send} alt="" />
-        </button>
-      </div>
-    </div>
+    <Formik initialValues={initialValues} validationSchema={validationMessage}>
+      {({ values, setFieldValue, errors }) => (
+        <Form>
+          <div className="input">
+            <Field
+              name="message"
+              type="text"
+              placeholder="Envoyer un message ..."
+            />
+            <div className="send">
+              <input
+                type="file"
+                style={{ display: "none" }}
+                id="file"
+                onChange={(e) => {
+                  if (e.target.files) {
+                    setFieldValue("file", e.target.files[0]);
+                  }
+                }}
+              />
+              <label htmlFor="file">
+                <img src={Img} alt="" />
+              </label>
+              <button
+              type="button"
+                onClick={() => {
+                  handleSendMessage(values, errors);
+                }}
+              >
+                <img src={Send} alt="" />
+              </button>
+            </div>
+          </div>
+        </Form>
+      )}
+    </Formik>
   );
 };
 
 export default Input;
-
 
 // import { useContext, useState } from "react";
 // import Img from "../img/img.png";
@@ -51,8 +79,6 @@ export default Input;
 
 //   const { currentUser } = useContext(AuthContext);
 //   const { data } = useContext(ChatContext);
-
-
 
 //   const handleSend = async () => {
 //     if (img) {
