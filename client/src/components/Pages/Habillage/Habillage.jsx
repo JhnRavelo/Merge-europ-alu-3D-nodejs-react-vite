@@ -66,11 +66,7 @@ const Habillage = ({ products, productslenght, title }) => {
                   <div className="desc_box">
                     <div className="button_intrested_start">
                       <h1 className="title">{product.title}</h1>
-                      <p className="short__desc">
-                        Lorem, ipsum. Quam, sit obcaecati corrupti accusamusui
-                        suscipit morum quis. Incidunt aliquid maiores soluta
-                        mollitia eveniet?
-                      </p>
+                      <p className="short__desc">{product.description}</p>
                       <Button />
                     </div>
                   </div>

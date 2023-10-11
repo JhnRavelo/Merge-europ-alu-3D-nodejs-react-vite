@@ -20,7 +20,7 @@ const Navbar = () => {
         <img src={Xmark} alt="" />
       </button>
       <div className="notication">
-        <FontAwesomeIcon className="bell" icon={faBell} />
+        <FontAwesomeIcon className="bell" icon={faBell} shake />
         <span>1</span>
       </div>
       <button className="deconnexion">

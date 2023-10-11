@@ -276,11 +276,13 @@ $darkColor: #2f2d52;
             }
 
             .bell {
-                color: #000;
+                color: #060720;
                 font-size: 25px;
+                
             }
-
+            
             span {
+                box-shadow: rgba(0, 0, 0, .5) 0px 0px 5px;
                 width: 17px;
                 height: 17px;
                 border-radius: 50%;
