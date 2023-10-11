@@ -17,7 +17,7 @@ const Layout = () => {
     setMessages,
     sender,
     receiver,
-    sendMessage,
+    sendMessage,setLastMessage
   } = useButtonContext();
   const axiosPrivate = useAxiosPrivate();
 
@@ -38,6 +38,9 @@ const Layout = () => {
         setDataPage(page.data);
         const commercial = await axiosPrivate.get("/auth/getCommercials");
         setCommercials(commercial.data);
+        const lastmessage = await axiosPrivate.get("/message/getlast")
+        setLastMessage(lastmessage.data)
+        console.log(lastmessage.data);
         if (receiver) {
           const message = await axiosPrivate.post("/message/get", { receiver });
           setMessages(message.data);

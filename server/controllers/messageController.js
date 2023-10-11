@@ -69,4 +69,31 @@ const getMessage = async (req, res) => {
   res.json(getMessages);
 };
 
-module.exports = { addMessage, getMessage };
+const getLastMessage = async(req, res)=>{
+  const lastMessage = await messages.findAll({
+    where:{
+      [Op.or]: [
+        {sender: req.user},
+        {receiver: req.user}
+      ]
+    },
+    include: [
+      {
+        model: users,
+        as: "send",
+        attributes: ["name", "avatar", "ID_user"],
+      },
+      {
+        model: users,
+        as: "receive",
+        attributes: ["name", "avatar", "ID_user"],
+      },
+    ],
+    order: [[Sequelize.col("messages.createdAt"), "DESC"]],
+
+  })
+
+  res.json(lastMessage)
+}
+
+module.exports = { addMessage, getMessage, getLastMessage };

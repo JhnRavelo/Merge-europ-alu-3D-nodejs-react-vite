@@ -8,10 +8,11 @@ import Chat from "../../components/Messanger/components/Chat";
 import ChevronDroite from "../../components/Messanger/img/chevron-droit.png";
 import Pub from "../../components/Profils/Pub/Pub";
 
-
 const ProfilPage = () => {
   const [chatOrCart, setChatOrCart] = useState("vide");
-  const { dataPage, commercials, setCommercialChat } = useButtonContext();
+  const { dataPage, commercials, setCommercialChat, lastMessage } =
+    useButtonContext();
+
   const handleSetCart = () => {
     setChatOrCart("cart");
   };
@@ -24,9 +25,19 @@ const ProfilPage = () => {
     sidebar.classList.toggle("visible");
   };
 
+  const handleLastMessage = (item) => {
+    const userLastMessage = lastMessage.find(
+      (m) => item.ID_user == m.receiver || item.ID_user == m.sender
+    );
+    console.log(userLastMessage);
+    if (userLastMessage?.text) {
+      return userLastMessage?.text;
+    }
+  };
+
   return (
     <>
-      <div className="profile__page" style={{animation: 'tonga .6s ease'}}>
+      <div className="profile__page" style={{ animation: "tonga .6s ease" }}>
         <div className="profile__box">
           <UserProfileCard
             data={dataPage}
@@ -51,23 +62,25 @@ const ProfilPage = () => {
                 </div>
 
                 <div className="listeComm">
-                  {commercials.length > 0 && commercials.map((item, index)=>(
-                  <div className="chats" key={index} onClick={
-                    ()=>{
-                      setCommercialChat(item)
-                      handleOpenMenu()
-                    }
-                  }>
-                    <div className="userChat" >
-                      <img src={item?.avatar} alt="" />
-                      <div className="userChatInfo">
-                        <span>{item?.name}</span>
-                        <p>{"Holla senorita"}</p>
+                  {commercials.length > 0 &&
+                    commercials.map((item, index) => (
+                      <div
+                        className="chats"
+                        key={index}
+                        onClick={() => {
+                          setCommercialChat(item);
+                          handleOpenMenu();
+                        }}
+                      >
+                        <div className="userChat">
+                          <img src={item?.avatar} alt="" />
+                          <div className="userChatInfo">
+                            <span>{item?.name}</span>
+                            <p>{handleLastMessage(item)}</p>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                  ))}
-
+                    ))}
                 </div>
               </div>
             </div>
