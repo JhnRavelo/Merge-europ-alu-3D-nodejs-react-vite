@@ -13,12 +13,6 @@ const Search = () => {
         </div>
         <span className="errorMessage">Client introuvable !!</span>
       </div>
-      <div className="userChat">
-        <img src={homme} alt="" />
-        <div className="userChatInfo">
-          <span>{"Cedi"}</span>
-        </div>
-      </div>
     </div>
   );
 };

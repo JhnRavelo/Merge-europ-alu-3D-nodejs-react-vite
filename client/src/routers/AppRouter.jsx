@@ -10,9 +10,9 @@ const prime = import.meta.env.VITE_PRIME.split(" ");
 const AppRouter = () => {
   return (
     <Routes>
-      <Route element={<PrivateRoutes prime={prime[1]} />}>
-        <Route path="/commercial/*" element={<CommePage />} />
-      </Route>
+      {/* <Route element={<PrivateRoutes prime={prime[1]} />}> */}
+        <Route path="/commercial/" element={<CommePage />} />
+      {/* </Route> */}
       <Route path="/" element={<Acceuil />} />
       <Route path="/page/*" element={<Layout />} />
       <Route element={<PrivateRoutes prime={prime[0]} />}>

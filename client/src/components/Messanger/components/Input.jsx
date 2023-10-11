@@ -2,7 +2,6 @@ import Img from "../img/img.png";
 import Send from "../img/envoyer-le-message.png";
 import { Field, Form, Formik } from "formik";
 import { validationMessage } from "../../../lib/utils/validationSchema";
-import { useLocation } from "react-router-dom";
 import useButtonContext from "../../../hooks/useButtonContext";
 import propTypes from "prop-types";
 import defaultAxios from "../../../api/axios";
@@ -13,10 +12,16 @@ const initialValues = {
 };
 
 const Input = () => {
-  const location = useLocation();
-  const { commercialChat, dataPage, setSender, setReceiver, setsendMessage, sendMessage } = useButtonContext();
+  const {
+    commercialChat,
+    dataPage,
+    setSender,
+    setReceiver,
+    setsendMessage,
+    sendMessage,
+  } = useButtonContext();
 
-  const handleSendMessage = async(values, errors, setField) => {
+  const handleSendMessage = async (values, errors, setField) => {
     if (!errors.message && commercialChat?.ID_user && values.message != "") {
       try {
         const formData = new FormData();
@@ -25,20 +30,17 @@ const Input = () => {
           formData.append("file", values.file);
         }
         formData.append("sender", dataPage.userRead[0].ID_user);
-        setSender(dataPage.userRead[0].ID_user)
-        if (location.pathname.includes("page")) {
-          formData.append("receiver", commercialChat.ID_user);
-          setReceiver(commercialChat.ID_user)
-        }
+        setSender(dataPage.userRead[0].ID_user);
+        formData.append("receiver", commercialChat.ID_user);
+        setReceiver(commercialChat.ID_user);
         await defaultAxios.post("/message", formData);
-        setField("file", null)
-        setField("message", "")
-        if(sendMessage == false){
-          setsendMessage(true)
-        }else {
-          setsendMessage(false)
+        setField("file", null);
+        setField("message", "");
+        if (sendMessage == false) {
+          setsendMessage(true);
+        } else {
+          setsendMessage(false);
         }
-
       } catch (error) {
         console.log(error);
       }
@@ -55,7 +57,8 @@ const Input = () => {
               type="text"
               placeholder="Envoyer un message ..."
               onKeyDown={(e) => {
-                e.code === "Enter" && handleSendMessage(values, errors, setFieldValue);
+                e.code === "Enter" &&
+                  handleSendMessage(values, errors, setFieldValue);
               }}
             />
             <div className="send">

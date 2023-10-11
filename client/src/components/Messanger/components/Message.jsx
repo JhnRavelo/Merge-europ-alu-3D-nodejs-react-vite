@@ -81,14 +81,7 @@ const Message = ({ message }) => {
         } `}
       >
         <div className="messageInfo">
-          <img
-            src={
-              message?.send?.ID_user === dataPage?.userRead[0]?.ID_user
-                ? message?.send?.avatar
-                : message?.receive?.avatar
-            }
-            alt="sary"
-          />
+          <img src={message?.send?.avatar} alt="sary" />
           <span>{dispalyDate}</span>
         </div>
         <div className="messageContent">

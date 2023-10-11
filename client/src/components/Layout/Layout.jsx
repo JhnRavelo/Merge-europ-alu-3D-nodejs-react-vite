@@ -40,11 +40,11 @@ const Layout = () => {
         setCommercials(commercial.data);
         const lastmessage = await axiosPrivate.get("/message/getlast")
         setLastMessage(lastmessage.data)
-        console.log(lastmessage.data);
         if (receiver) {
           const message = await axiosPrivate.post("/message/get", { receiver });
           setMessages(message.data);
           console.log(message.data);
+          
         }
       } else {
         setBody({

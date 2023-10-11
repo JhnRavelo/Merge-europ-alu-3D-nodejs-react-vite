@@ -1,17 +1,38 @@
-import userPhoto from "../img/avatar/homme.png"
+import useButtonContext from "../../../hooks/useButtonContext";
+// import userPhoto from "../img/avatar/homme.png";
 
 const Chats = () => {
+  const { commercials, lastMessage, setCommercialChat } = useButtonContext();
 
+  const handleLastMessage = (item) => {
+    const userLastMessage = lastMessage.find(
+      (m) => item.ID_user == m.receiver || item.ID_user == m.sender
+    );
+    if (userLastMessage?.text) {
+      return userLastMessage?.text;
+    }
+  };
   return (
-    <div className="chats">
-      <div className="userChat">
-        <img src={userPhoto} alt="" />
-        <div className="userChatInfo">
-          <span>{'Hardy'}</span>
-          <p>{'Holla senorita'}</p>
-        </div>
-      </div>
-    </div>
+    <>
+      {commercials.length > 0 &&
+        commercials.map((item, index) => (
+          <div
+            className="chats"
+            key={index}
+            onClick={() => {
+              setCommercialChat(item);
+            }}
+          >
+            <div className="userChat">
+              <img src={item?.avatar} alt="" />
+              <div className="userChatInfo">
+                <span>{item?.name}</span>
+                <p>{handleLastMessage(item)}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+    </>
   );
 };
 
@@ -41,7 +62,7 @@ export default Chats;
 //     };
 
 //     currentUser.uid && getChats();
-    
+
 //   }, [currentUser.uid]);
 
 //   // console.log(Object.entries(chats));

@@ -9,6 +9,7 @@ const {
   addMessage,
   getMessage,
   getLastMessage,
+  getUsers,
 } = require("../controllers/messageController");
 
 const imgPath = path.join(__dirname, "..", "public", "img");
@@ -37,5 +38,7 @@ router.post("/", multipleField, addMessage);
 router.post("/get", verifyJWT, getMessage);
 
 router.get("/getlast", verifyJWT, getLastMessage);
+
+router.get("/getUsers", verifyJWT, getUsers)
 
 module.exports = router;

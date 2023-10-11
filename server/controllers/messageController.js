@@ -1,5 +1,6 @@
 const { messages, users } = require("../database/models");
 const { Op, Sequelize } = require("sequelize");
+require("dotenv").config();
 
 const addMessage = async (req, res) => {
   const { sender, receiver, text } = await req.body;
@@ -31,7 +32,7 @@ const addMessage = async (req, res) => {
 const getMessage = async (req, res) => {
   const { receiver } = await req.body;
 
-  if (!receiver) return res.json("No sender");
+  if (!receiver || receiver == null || receiver == undefined) return res.json("No sender");
 
   const getMessages = await messages.findAll({
     where: {
@@ -61,21 +62,19 @@ const getMessage = async (req, res) => {
     attributes: [
       [Sequelize.literal("DATE(messages.createdAt)"), "date"],
       [Sequelize.literal("TIME(messages.createdAt)"), "time"],
-      "text", "img"
+      "text",
+      "img",
     ],
-    order: [[Sequelize.col("messages.createdAt"), "ASC"]]
+    order: [[Sequelize.col("messages.createdAt"), "ASC"]],
   });
 
   res.json(getMessages);
 };
 
-const getLastMessage = async(req, res)=>{
+const getLastMessage = async (req, res) => {
   const lastMessage = await messages.findAll({
-    where:{
-      [Op.or]: [
-        {sender: req.user},
-        {receiver: req.user}
-      ]
+    where: {
+      [Op.or]: [{ sender: req.user }, { receiver: req.user }],
     },
     include: [
       {
@@ -90,10 +89,74 @@ const getLastMessage = async(req, res)=>{
       },
     ],
     order: [[Sequelize.col("messages.createdAt"), "DESC"]],
+  });
 
-  })
+  res.json(lastMessage);
+};
 
-  res.json(lastMessage)
-}
+const getUsers = async (req, res) => {
+  const user = await messages.findAll({
+    where: {
+      [Op.or]: [{ sender: req.user }, { receiver: req.user }],
+    },
+    include: [
+      {
+        model: users,
+        as: "send",
+        attributes: ["name", "avatar", "ID_user"],
+      },
+      {
+        model: users,
+        as: "receive",
+        attributes: ["name", "avatar", "ID_user"],
+      },
+    ],
+    order: ["sender"],
+  });
 
-module.exports = { addMessage, getMessage, getLastMessage };
+  const allUserAvecDoublons = user.map((item) => {
+    if (item.send.ID_user == req.user) {
+      return {
+        ID_user: item.receive.ID_user,
+        avatar: item.receive.avatar,
+        name: item.receive.name,
+      };
+    } else {
+      return {
+        ID_user: item.send.ID_user,
+        avatar: item.send.avatar,
+        name: item.send.name,
+      };
+    }
+  });
+
+  const allUser = [];
+
+  const objetsUniques = new Set();
+
+  allUserAvecDoublons.forEach((objet) => {
+    const cleObjet = `${objet.ID_user}`;
+    if (!objetsUniques.has(cleObjet)) {
+      objetsUniques.add(cleObjet);
+      allUser.push(objet);
+    }
+  });
+
+  // const allUserSansDoublons = new Set(allUserAvecDoublons)
+  // const allUser = [...allUserSansDoublons]
+
+  const use = await users.findAll({
+    include: [
+      {
+        model: messages,
+      },
+    ],
+    where: {
+      role: process.env.PRIME3,
+    },
+  });
+
+  res.json(allUser);
+};
+
+module.exports = { addMessage, getMessage, getLastMessage, getUsers };

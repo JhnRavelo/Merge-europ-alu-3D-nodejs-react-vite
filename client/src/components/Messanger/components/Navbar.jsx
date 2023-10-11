@@ -1,20 +1,42 @@
 import Xmark from "../img/x.png";
-import userPhoto from "../img/avatar/homme.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
+import useButtonContext from "../../../hooks/useButtonContext";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import { useNavigate } from "react-router-dom";
+
 
 const Navbar = () => {
+  const {dataPage, setBody} = useButtonContext()
+  const axiosPrivate = useAxiosPrivate()
+  const navigate = useNavigate()
   const handleOpenMenu = () => {
     const sidebar = document.querySelector(".sidebar");
     sidebar.classList.toggle("visible");
   };
 
+  const handleLogOut = async () => {
+    try {
+      const res = await axiosPrivate.get("/auth/logout");
+      if (res.data == "SUCCESS") {
+        setBody({
+          name:"",
+          email:"",
+          pgone:"",
+        })
+        navigate("/");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="navbar">
       <div className="user">
-        <img src={userPhoto} alt="photos" />
-        <span>{"Hardy"}</span>
+        <img src={dataPage?.userRead[0]?.avatar} alt="photos" />
+        <span>{dataPage?.userRead[0]?.name}</span>
       </div>
       <button className="x" onClick={handleOpenMenu}>
         <img src={Xmark} alt="" />
@@ -23,12 +45,8 @@ const Navbar = () => {
         <FontAwesomeIcon className="bell" icon={faBell} shake />
         <span>1</span>
       </div>
-      <button className="deconnexion">
-        <FontAwesomeIcon
-          icon={faSignOutAlt}
-          flip
-          style={{ marginRight: "5px" }}
-        />
+      <button className="deconnexion" onClick={handleLogOut}>
+        <FontAwesomeIcon icon={faSignOutAlt} flip style={{marginRight: '5px'}}/>
         Déconnexion
       </button>
     </div>
