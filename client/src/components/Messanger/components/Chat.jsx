@@ -20,7 +20,7 @@ const Chat = () => {
   useEffect(() => {
     if (commercialChat?.name && location.pathname.includes("page")) {
       setReceiver(commercialChat.ID_user);
-      setSender(dataPage.userRead[0].ID_user);
+      setSender(dataPage?.userRead[0]?.ID_user);
     }
   }, [commercialChat, location, dataPage]);
 

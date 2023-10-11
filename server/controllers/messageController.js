@@ -49,11 +49,13 @@ const getMessage = async (req, res) => {
     include: [
       {
         model: users,
-        attributes: ["name", "avatar"],
+        as: "send",
+        attributes: ["name", "avatar", "ID_user"],
       },
       {
         model: users,
-        attributes: ["name", "avatar"],
+        as: "receive",
+        attributes: ["name", "avatar", "ID_user"],
       },
     ],
     attributes: [

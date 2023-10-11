@@ -1,9 +1,16 @@
+import useButtonContext from "../../../hooks/useButtonContext";
 import Message from "./Message";
 
 const Messages = () => {
+  const {messages} = useButtonContext()
+
   return (
     <div className="messages">
-      <Message />
+
+      {messages.map((item, index)=>(
+        <Message message={item} key={index}/>
+        )) }
+
     </div>
   );
 };

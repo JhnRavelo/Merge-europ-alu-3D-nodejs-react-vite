@@ -25,10 +25,12 @@ module.exports = (sequelize, DataTypes) => {
       messages.belongsTo(models.users, {
         onDelete: "CASCADE",
         foreignKey: "sender",
+        as:"send",
       });
       messages.belongsTo(models.users, {
         onDelete: "CASCADE",
         foreignKey: "receiver",
+        as: "receive",
       });
     };
   
