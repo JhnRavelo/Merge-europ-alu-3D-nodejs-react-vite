@@ -146,14 +146,14 @@ html[data-useragent*='MSIE 10.0'] .scrolldown,
 .scroll-icon {
     display: inline-block;
     font-family: 'montserrat-bold', sans-serif;
-    font-size: .7rem;
+    font-size: 1rem;
     text-transform: uppercase;
     text-decoration: none;
     letter-spacing: 0.3rem;
     color: rgb(232, 98, 34) !important;
     background: transparent;
     position: relative;
-    top: 10px;
+    top: 36px;
     right: 42px;
     -webkit-animation: animate-it 3s ease infinite;
     animation: animate-it 3s ease infinite;
