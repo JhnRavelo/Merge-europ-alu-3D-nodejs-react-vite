@@ -14,6 +14,11 @@ const ButtonProvider = ({ children }) => {
   });
   const [commercials, setCommercials] = useState([]);
   const [commercialChat, setCommercialChat] = useState({});
+  const [messages, setMessages] = useState([]);
+  const [sender, setSender] = useState(null);
+  const [receiver, setReceiver] = useState(null);
+  const [sendMessage, setsendMessage] = useState(false);
+
   const showForm = () => {
     if (show === false) {
       setShow(true);
@@ -58,6 +63,14 @@ const ButtonProvider = ({ children }) => {
         setCommercials,
         commercialChat,
         setCommercialChat,
+        messages,
+        setMessages,
+        sender,
+        setSender,
+        receiver,
+        setReceiver,
+        sendMessage,
+        setsendMessage,
       }}
     >
       {children}

@@ -1,22 +1,28 @@
 import Messages from "./Messages";
 import Input from "./Input";
 import menuIcon from "../img/bar.png";
-import userPhoto from "../img/avatar/homme.png"
-import "../style.scss"
+import "../style.scss";
 import { useLocation } from "react-router-dom";
-import ChevronGauche from "../img/chevron-gauche.png"
-import { useState } from "react";
+import ChevronGauche from "../img/chevron-gauche.png";
 import useButtonContext from "../../../hooks/useButtonContext";
-
+import { useEffect } from "react";
 
 const Chat = () => {
   const location = useLocation();
-  const {commercialChat, dataPage} = useButtonContext()
+  const { commercialChat, setSender, setReceiver, dataPage } =
+    useButtonContext();
 
   const handleOpenMenu = () => {
-    const sidebar = document.querySelector(".sidebar")
-    sidebar.classList.toggle("visible")
+    const sidebar = document.querySelector(".sidebar");
+    sidebar.classList.toggle("visible");
   };
+
+  useEffect(() => {
+    if (commercialChat?.name && location.pathname.includes("page")) {
+      setReceiver(commercialChat.ID_user);
+      setSender(dataPage.userRead[0].ID_user);
+    }
+  }, [commercialChat, location, dataPage]);
 
   return (
     <div className="chat">
@@ -25,7 +31,14 @@ const Chat = () => {
         <span>{commercialChat?.name}</span>
 
         <button className="menuIcon" onClick={handleOpenMenu}>
-          <img src={ location.pathname.includes("commercial") ? menuIcon : ChevronGauche} alt="" />
+          <img
+            src={
+              location.pathname.includes("commercial")
+                ? menuIcon
+                : ChevronGauche
+            }
+            alt=""
+          />
         </button>
       </div>
       <Messages />
@@ -36,8 +49,6 @@ const Chat = () => {
 
 export default Chat;
 
-
-
 // export default Chat;
 // import { useContext } from "react";
 // import Messages from "./Messages";
@@ -47,8 +58,7 @@ export default Chat;
 
 // const Chat = () => {
 //   const { data } = useContext(ChatContext);
-  
-  
+
 //   const handleOpenMenu = () => {
 //     const sidebar = document.querySelector(".sidebar")
 //     sidebar.classList.toggle("visible")

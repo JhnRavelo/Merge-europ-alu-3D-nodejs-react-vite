@@ -9,12 +9,21 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useEffect } from "react";
 
 const Layout = () => {
-  const { show, setBody, setDataPage, setCommercials } = useButtonContext();
+  const {
+    show,
+    setBody,
+    setDataPage,
+    setCommercials,
+    setMessages,
+    sender,
+    receiver,
+    sendMessage,
+  } = useButtonContext();
   const axiosPrivate = useAxiosPrivate();
 
   useEffect(() => {
     fetchData();
-  }, [show]);
+  }, [show, sender, receiver, sendMessage]);
 
   const fetchData = async () => {
     try {
@@ -29,6 +38,11 @@ const Layout = () => {
         setDataPage(page.data);
         const commercial = await axiosPrivate.get("/auth/getCommercials");
         setCommercials(commercial.data);
+        if (receiver) {
+          const message = await axiosPrivate.post("/message/get", { receiver });
+          setMessages(message.data);
+          console.log(message.data);
+        }
       } else {
         setBody({
           name: "",

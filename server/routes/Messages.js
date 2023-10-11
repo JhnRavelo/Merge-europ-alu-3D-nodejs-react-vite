@@ -5,7 +5,7 @@ require("dotenv").config();
 const verifyJWT = require("../middlewares/verifyJWT");
 const multer = require("multer")
 const path = require("path");
-const { addMessage } = require("../controllers/messageController");
+const { addMessage, getMessage } = require("../controllers/messageController");
 
 const imgPath = path.join(__dirname, "..", "public", "img");
 
@@ -29,5 +29,7 @@ const storage = multer.diskStorage({
   const multipleField = upload.fields([{ name: "file" }]);
 
 router.post("/", multipleField, addMessage)
+
+router.post("/get",verifyJWT, getMessage)
 
 module.exports = router;

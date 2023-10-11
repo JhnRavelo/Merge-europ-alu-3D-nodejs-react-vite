@@ -28,7 +28,6 @@ const Home = () => {
       toast.info("Deconnexion")
     } catch (error) {
       console.log(error);
-      toast.error("Deconnexion impossible !")
 
     }
   };

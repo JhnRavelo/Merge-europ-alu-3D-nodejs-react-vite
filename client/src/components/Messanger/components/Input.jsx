@@ -14,7 +14,7 @@ const initialValues = {
 
 const Input = () => {
   const location = useLocation();
-  const { commercialChat, dataPage } = useButtonContext();
+  const { commercialChat, dataPage, setSender, setReceiver, setsendMessage, sendMessage } = useButtonContext();
 
   const handleSendMessage = async(values, errors) => {
     if (!errors.message && commercialChat?.ID_user) {
@@ -25,11 +25,19 @@ const Input = () => {
           formData.append("file", values.file);
         }
         formData.append("sender", dataPage.userRead[0].ID_user);
+        setSender(dataPage.userRead[0].ID_user)
         if (location.pathname.includes("page")) {
           formData.append("receiver", commercialChat.ID_user);
+          setReceiver(commercialChat.ID_user)
         }
-        const res = await defaultAxios.post("/message", formData);
-        console.log(res.data);
+        await defaultAxios.post("/message", formData);
+
+        if(sendMessage == false){
+          setsendMessage(true)
+        }else {
+          setsendMessage(false)
+        }
+        
       } catch (error) {
         console.log(error);
       }
