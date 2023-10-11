@@ -17,7 +17,7 @@ const Input = () => {
   const { commercialChat, dataPage, setSender, setReceiver, setsendMessage, sendMessage } = useButtonContext();
 
   const handleSendMessage = async(values, errors, setField) => {
-    if (!errors.message && commercialChat?.ID_user) {
+    if (!errors.message && commercialChat?.ID_user && values.message != "") {
       try {
         const formData = new FormData();
         formData.append("text", values.message);
@@ -32,6 +32,7 @@ const Input = () => {
         }
         await defaultAxios.post("/message", formData);
         setField("file", null)
+        setField("message", "")
         if(sendMessage == false){
           setsendMessage(true)
         }else {

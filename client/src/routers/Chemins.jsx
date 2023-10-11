@@ -6,15 +6,12 @@ import PrivateRoutes from "../components/Private/PrivateRoutes";
 const prime = import.meta.env.VITE_PRIME.split(" ");
 
 const Chemins = () => {
-  // const path = useContext(ProductContext);
-
   return (
     <Routes>
-
       <Route path="/:id" element={<Page />} />
-      {/* <Route element={<PrivateRoutes prime={prime[2]} />}> */}
-      <Route path="/profile" element={<ProfilPage />} />
-      {/* </Route> */}
+      <Route element={<PrivateRoutes prime={prime[2]} />}>
+        <Route path="/profile" element={<ProfilPage />} />
+      </Route>
     </Routes>
   );
 };

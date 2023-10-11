@@ -52,6 +52,8 @@ const Login = () => {
           navigate("/admin/");
         } else if (role == prime[2] && location.pathname == "/") {
           navigate("/page/5");
+        } else if(role == prime[1]) {
+          navigate("/commercial/")
         }
         showForm();
         
