@@ -310,9 +310,14 @@ footer .contact ul li {
     .contact-social {
         font-size: 4rem;
     }
+
+    * {
+        list-style: none;
+    }
 }
 
 @media only screen and (max-width: 800px) {
+
     .contact-main {
         font-size: 2.6rem;
     }

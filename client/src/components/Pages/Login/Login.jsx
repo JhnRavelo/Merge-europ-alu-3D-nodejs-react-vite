@@ -15,6 +15,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 const prime = import.meta.env.VITE_PRIME.split(" ");
 
 const Login = () => {
+
   const [visible, setVisible] = useState(false);
   const location = useLocation();
   const { setAuth } = useAuth();
@@ -63,6 +64,24 @@ const Login = () => {
       }
     }
   };
+  
+  const handleEnterPressed = (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+
+      const allInputs = document.querySelectorAll('.user-input');
+      const currentInput = event.target;
+
+      const currentIndex = Array.from(allInputs).indexOf(currentInput);
+
+      if (currentIndex < allInputs.length - 1) {
+        allInputs[currentIndex + 1].focus();
+      } else {
+        handleLogin()
+      }
+    }
+  };
+
   return (
     <>
       <div className="fields">
@@ -71,10 +90,11 @@ const Login = () => {
           <Field
             type="loginMail"
             name="loginMail"
-            className="user-input"
+            className="user-input loginMail-input"
             placeholder="Adresse email"
             inputMode="loginMail"
             autoComplete="off"
+            onKeyPress={handleEnterPressed}
           />
         </div>
         <ErrorMessage
@@ -89,7 +109,7 @@ const Login = () => {
             type={visible ? "text" : "password"}
             name="loginPassword"
             inputMode="password"
-            className="user-input"
+            className="user-input loginPassword-input"
             placeholder="Mot de passe"
             autoComplete="off"
           />
