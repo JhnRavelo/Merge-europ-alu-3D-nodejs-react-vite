@@ -15,10 +15,11 @@
         position: relative;
         width: 100%;
         height: 100%;
-        transition: .3s ease-in-out;
+        transition: .3s ease-in;
         img {
             max-width:100% !important;
             height: auto;
+            flex-shrink: 0;
         }
     }
 
@@ -37,11 +38,12 @@
             height: 60px;
             margin: 10px;
             border-radius: 50%;
-            background-color: #fff;
+            background-color: transparent;
+            backdrop-filter: blur(10px);
             box-shadow: rgba(0, 0, 0, 1) 0px 3px 8px;
             cursor: pointer;
             .chevron {
-                color: #000;
+                color: #fff;
                 font-size: 40px;
                 @include resp1024 {
                     width: 20px;
@@ -74,6 +76,7 @@
                 height: 15px;
                 opacity: .7;
                 transition: all .3s ease;
+                cursor: pointer;
                 &.opacity {
                     width: 20px;
                     height: 20px;
