@@ -16,7 +16,7 @@ const Input = () => {
   const location = useLocation();
   const { commercialChat, dataPage, setSender, setReceiver, setsendMessage, sendMessage } = useButtonContext();
 
-  const handleSendMessage = async(values, errors) => {
+  const handleSendMessage = async(values, errors, setField) => {
     if (!errors.message && commercialChat?.ID_user) {
       try {
         const formData = new FormData();
@@ -31,18 +31,19 @@ const Input = () => {
           setReceiver(commercialChat.ID_user)
         }
         await defaultAxios.post("/message", formData);
-
+        setField("file", null)
         if(sendMessage == false){
           setsendMessage(true)
         }else {
           setsendMessage(false)
         }
-        
+
       } catch (error) {
         console.log(error);
       }
     }
   };
+
   return (
     <Formik initialValues={initialValues} validationSchema={validationMessage}>
       {({ values, setFieldValue, errors }) => (
@@ -52,6 +53,9 @@ const Input = () => {
               name="message"
               type="text"
               placeholder="Envoyer un message ..."
+              onKeyDown={(e) => {
+                e.code === "Enter" && handleSendMessage(values, errors, setFieldValue);
+              }}
             />
             <div className="send">
               <input
@@ -71,7 +75,7 @@ const Input = () => {
               <button
                 type="button"
                 onClick={() => {
-                  handleSendMessage(values, errors);
+                  handleSendMessage(values, errors, setFieldValue);
                 }}
               >
                 <img src={Send} alt="" />
