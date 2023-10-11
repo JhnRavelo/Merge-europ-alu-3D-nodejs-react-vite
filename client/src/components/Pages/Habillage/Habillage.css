@@ -114,7 +114,7 @@
     .Habillage_presenatation {
         display: flex;
         background-color: rgb(239, 238, 238);
-        flex-direction: column;
+        flex-direction: column !important;
     }
 
     .Habillage_presenatation .description {
