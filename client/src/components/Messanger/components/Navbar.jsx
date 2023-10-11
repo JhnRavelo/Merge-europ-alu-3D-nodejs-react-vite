@@ -2,6 +2,7 @@ import Xmark from "../img/x.png";
 import userPhoto from "../img/avatar/homme.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import { faBell } from "@fortawesome/free-solid-svg-icons";
 
 const Navbar = () => {
   const handleOpenMenu = () => {
@@ -18,8 +19,16 @@ const Navbar = () => {
       <button className="x" onClick={handleOpenMenu}>
         <img src={Xmark} alt="" />
       </button>
+      <div className="notication">
+        <FontAwesomeIcon className="bell" icon={faBell} />
+        <span>1</span>
+      </div>
       <button className="deconnexion">
-        <FontAwesomeIcon icon={faSignOutAlt} flip style={{marginRight: '5px'}}/>
+        <FontAwesomeIcon
+          icon={faSignOutAlt}
+          flip
+          style={{ marginRight: "5px" }}
+        />
         Déconnexion
       </button>
     </div>

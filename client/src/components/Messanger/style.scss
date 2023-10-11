@@ -22,6 +22,11 @@
     }
 }
 
+@mixin resp1024{
+    @media screen and (max-width: 1024px) {
+        @content;
+    }
+}
 @mixin resp870{
     @media screen and (max-width: 870px) {
         @content;
@@ -258,9 +263,43 @@ $darkColor: #2f2d52;
             }
         }
 
-        button.deconnexion {
-            
+        .notication {
+            position: relative;
+            // right: -40px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             @include resp870 {
+                right: 75px;      
+            }
+
+            .bell {
+                color: #000;
+                font-size: 25px;
+            }
+
+            span {
+                width: 17px;
+                height: 17px;
+                border-radius: 50%;
+                color: #fff;
+                background-color: red;
+                position: absolute;
+                font-weight: 700;
+                font-size: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                top: 0;
+                right: 0;
+            }
+        }
+
+        button.deconnexion {
+
+            @include resp1024 {
                 position: absolute;
                 bottom: 20px;
                 left: 20px;
