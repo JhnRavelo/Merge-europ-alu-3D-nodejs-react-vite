@@ -6,7 +6,7 @@ import propTypes from "prop-types";
 import { useEffect, useRef } from "react";
 import SimpleParallax from "simple-parallax-js";
 
-const Template = ({ products, productslenght, title }) => {
+const Template = ({ products, productslenght, title, id }) => {
   const fentetreRef = useRef();
   const presRefs = useRef([]);
   const imgRefs = useRef([]);
@@ -14,9 +14,10 @@ const Template = ({ products, productslenght, title }) => {
   useEffect(() => {
     imgRefs.current = [];
     presRefs.current = [];
-  }, []);
+  }, [id]);
 
   const addtoRefsImg = (el) => {
+
     if (el && !imgRefs.current.includes(el)) {
       imgRefs.current.push(el);
     }
@@ -29,12 +30,15 @@ const Template = ({ products, productslenght, title }) => {
       title != 7 &&
       imgRefs.current
     ) {
+
       for (let i = 0; i < imgRefs.current.length; i++) {
-        new SimpleParallax(imgRefs.current[i], {
-          overflow: true,
-          orientation: "up",
-          scale: 1.8,
-        });
+        if(!imgRefs.current[i].className.includes("simple-parallax-initialized")) {
+          new SimpleParallax(imgRefs.current[i], {
+            overflow: true,
+            orientation: "up",
+            scale: 1.8,
+          });
+        }
       }
     }
   }, [imgRefs, title, products]);

@@ -7,14 +7,14 @@ import Separation from "../Separation/Separation";
 import { useEffect, useRef } from "react";
 import SimpleParallax from "simple-parallax-js";
 
-const Habillage = ({ products, productslenght, title }) => {
+const Habillage = ({ products, productslenght, title, id }) => {
   const presRefs = useRef([]);
   const imgRefs = useRef([]);
 
   useEffect(() => {
     imgRefs.current = [];
     presRefs.current = [];
-  }, []);
+  }, [id]);
 
   const addtoRefsImg = (el) => {
     if (el && !imgRefs.current.includes(el)) {
@@ -29,10 +29,13 @@ const Habillage = ({ products, productslenght, title }) => {
       title == 7 &&
       imgRefs.current
     ) {
+
       for (let i = 0; i < imgRefs.current.length; i++) {
-        new SimpleParallax(imgRefs.current[i], {
-          scale: 1.5,
-        });
+        if(!imgRefs.current[i].className.includes("simple-parallax-initialized")) {
+          new SimpleParallax(imgRefs.current[i], {
+            scale: 1.5,
+          });
+        }
       }
     }
   }, [imgRefs, title, products]);

@@ -30,12 +30,14 @@ const Products = () => {
       <section id="produit">
         {id != 7 ? (
           <Template
+            id={id}
             products={dataFetch}
             productslenght={Object.keys(dataFetch).length}
             title={id}
           />
         ) : (
           <Habillage
+            id={id}
             products={dataFetch}
             productslenght={Object.keys(dataFetch).length}
             title={id}
