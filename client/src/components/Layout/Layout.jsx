@@ -7,7 +7,6 @@ import FormField from "../Pages/Form/Form";
 import useButtonContext from "../../hooks/useButtonContext";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useEffect } from "react";
-import { io } from "socket.io-client";
 
 const Layout = () => {
   const {
@@ -23,7 +22,9 @@ const Layout = () => {
     commercialChat,
     socket,
     onMessage,
-    setOnMessage
+    setOnMessage,
+    onAvatar,
+    setOnAvatar,
   } = useButtonContext();
   const axiosPrivate = useAxiosPrivate();
 
@@ -33,6 +34,9 @@ const Layout = () => {
         console.log(data);
         setOnMessage(data);
       });
+      socket.on("receiveAvatar", (data)=>{
+        setOnAvatar(data)
+      })
     }
   }, [socket]);
 
@@ -44,7 +48,7 @@ const Layout = () => {
 
   useEffect(() => {
     fetchData();
-  }, [show, sender, receiver, sendMessage, onMessage]);
+  }, [show, sender, receiver, sendMessage, onMessage, onAvatar]);
 
   const fetchData = async () => {
     try {

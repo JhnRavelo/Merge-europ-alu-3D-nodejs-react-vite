@@ -4,7 +4,6 @@ import Home from "../../components/Messanger/pages/Home";
 import useButtonContext from "../../hooks/useButtonContext";
 import { useEffect } from "react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import { io } from "socket.io-client";
 
 const CommePage = () => {
   const {
@@ -20,6 +19,8 @@ const CommePage = () => {
     socket,
     onMessage,
     setOnMessage,
+    onAvatar,
+    setOnAvatar,
   } = useButtonContext();
   const axiosPrivate = useAxiosPrivate();
 
@@ -32,16 +33,18 @@ const CommePage = () => {
   useEffect(() => {
     if (socket) {
       socket.on("receiveMessage", (data) => {
-        console.log(data);
         setOnMessage(data);
       });
+      socket.on("receiveAvatar", (data)=>{
+        setOnAvatar(data)
+      })
     }
   }, [socket]);
 
   useEffect(() => {
     fetchData();
     console.log("connexion");
-  }, [show, sender, receiver, sendMessage, onMessage]);
+  }, [show, sender, receiver, sendMessage, onMessage, onAvatar]);
 
   const fetchData = async () => {
     try {
@@ -54,7 +57,6 @@ const CommePage = () => {
       if (receiver) {
         const message = await axiosPrivate.post("/message/get", { receiver });
         setMessages(message.data);
-        console.log(message.data);
       }
     } catch (error) {
       console.log(error);

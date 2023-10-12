@@ -21,6 +21,7 @@ const ButtonProvider = ({ children }) => {
   const [lastMessage, setLastMessage] = useState([]);
   const [socket, setSocket] = useState(null);
   const [onMessage, setOnMessage] = useState(null);
+  const [onAvatar, setOnAvatar] = useState(null);
 
   const showForm = () => {
     if (show === false) {
@@ -78,7 +79,10 @@ const ButtonProvider = ({ children }) => {
         setLastMessage,
         socket,
         setSocket,
-        onMessage, setOnMessage
+        onMessage,
+        setOnMessage,
+        onAvatar,
+        setOnAvatar,
       }}
     >
       {children}

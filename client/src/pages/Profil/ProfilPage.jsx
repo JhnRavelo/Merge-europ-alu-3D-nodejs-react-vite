@@ -1,6 +1,6 @@
 import "./ProfilPage.css";
 import "./ProfilPage.scss";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import UserProfileCard from "../../components/Profils/UserProfileCard/UserProfileCard";
 import Cart from "../../components/Profils/Cart/Cart";
 import useButtonContext from "../../hooks/useButtonContext";

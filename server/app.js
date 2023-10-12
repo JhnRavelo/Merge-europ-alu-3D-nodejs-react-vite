@@ -13,21 +13,24 @@ const app = express();
 const server = http.createServer(app);
 
 const io = new Server(server, {
-    cors: {
-      origin: "http://localhost:5173",
-      methods: ["GET", "POST", "OPTIONS", "PUT", "DELETE"]
-    }
+  cors: {
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST", "OPTIONS", "PUT", "DELETE"],
+  },
 });
 
 io.on("connection", (socket) => {
-
   socket.on("joinRoom", (data) => {
     socket.join(data);
   });
 
   socket.on("sendMessage", (data) => {
-    console.log(data.text);
-    socket.broadcast.emit("receiveMessage", data);
+    console.log(data);
+    socket.to(data.sender).to(data.receiver).emit("receiveMessage", data);
+  });
+
+  socket.on("sendAvatar", (data) => {
+    socket.broadcast.emit("receiveAvatar", data);
   });
 });
 

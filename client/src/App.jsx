@@ -12,9 +12,6 @@ function App() {
   useEffect(() => {
     const socket = io("http://localhost:5000");
     setSocket(socket);
-    // return () => {
-    //   socket.disconnect();
-    // };
   }, []);
   return (
     <>

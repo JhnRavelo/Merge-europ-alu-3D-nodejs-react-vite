@@ -35,7 +35,7 @@ const Input = () => {
         formData.append("receiver", commercialChat.ID_user);
         setReceiver(commercialChat.ID_user);
         await defaultAxios.post("/message", formData);
-        socket.emit("sendMessage", {text:values.message, room:commercialChat.ID_user })
+        socket.emit("sendMessage", {text:values.message, receiver:commercialChat.ID_user, sender:dataPage.userRead[0].ID_user })
         setField("file", null);
         setField("message", "");
         if (sendMessage == false) {
