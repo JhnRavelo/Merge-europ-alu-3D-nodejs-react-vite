@@ -29,9 +29,12 @@ const Chats = () => {
                   {lastMessageDisplay?.length > 0 && lastMessageDisplay[index]}
                 </p>
               </div>
+              <span className="notif newMessage">1</span>
             </div>
           </div>
         ))}
+
+        
     </>
   );
 };

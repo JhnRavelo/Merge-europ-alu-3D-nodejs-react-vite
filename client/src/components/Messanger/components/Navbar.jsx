@@ -5,9 +5,11 @@ import { faBell } from "@fortawesome/free-solid-svg-icons";
 import useButtonContext from "../../../hooks/useButtonContext";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import { useNavigate } from "react-router-dom";
+import { useRef } from "react";
 
 
 const Navbar = () => {
+  const notifRef = useRef();
   const {dataPage, setBody} = useButtonContext()
   const axiosPrivate = useAxiosPrivate()
   const navigate = useNavigate()
@@ -32,6 +34,10 @@ const Navbar = () => {
     }
   };
 
+  const handleShowNotif = () => {
+    notifRef.current.classList.toggle("visible")
+  }
+
   return (
     <div className="navbar">
       <div className="user">
@@ -41,9 +47,20 @@ const Navbar = () => {
       <button className="x" onClick={handleOpenMenu}>
         <img src={Xmark} alt="" />
       </button>
-      <div className="notication">
+      <div onClick={handleShowNotif} className="notication">
         <FontAwesomeIcon className="bell" icon={faBell} shake />
         <span>1</span>
+      </div>
+      <div ref={notifRef} className="cardNotif">
+        <img onClick={handleShowNotif} className="xNotif" src={Xmark} alt="" />
+        <div className="messNotif">
+          <span>Nouveau message de Hardy</span>
+          <span>Nouveau message de Hardy</span>
+          <span>Nouveau message de Hardy</span>
+          <span>Nouveau message de Hardy</span>
+          <span>Nouveau message de Hardy</span>
+          <span>Nouveau message de Hardy</span>
+        </div>
       </div>
       <button className="deconnexion" onClick={handleLogOut}>
         <FontAwesomeIcon icon={faSignOutAlt} flip style={{marginRight: '5px'}}/>

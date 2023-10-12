@@ -86,6 +86,7 @@
         border-radius: 0 30px 30px 0px;
         width: 30%;
         position: absolute;
+        z-index: 2;
         right: 0;
         top: 0;
         height: 80vh;
@@ -104,11 +105,18 @@
         @include resp1024 {
             width: 50%;
         }
+        // overflow: hidden;
 
-        .listeComm { 
+        .listeComm {
+            height: 65vh;
+            overflow-y: scroll;
+            
             .chats {
-    
+
+                
                 .userChat {
+
+                    position: relative;
                     padding: 10px;
                     display: flex;
                     align-items: center;
@@ -143,6 +151,32 @@
                             color: rgb(177, 177, 177);
                             display: flex;
                             white-space: nowrap;
+                            &.newMessage {
+                                color: rgb(0, 164, 0);
+                                font-weight: 700;
+                            }
+                        }
+                    }
+
+                    span.notif {
+                        color: #fff;
+                        position: absolute;
+                        font-weight: 900;
+                        top: 10px;
+                        left: 50px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 5px;
+                        background: green;
+                        font-size: 10px;
+                        width: 17px;
+                        height: 17px;
+                        border-radius: 50%;
+                        text-align: center;
+                        opacity: 0;
+                        &.newMessage {
+                            opacity: 1;
                         }
                     }
                 }
@@ -222,7 +256,7 @@
             background: #f8f8f978;
             // background: transparent;
             backdrop-filter: blur(20px);
-            display: flex;
+            display: flex; 
             gap: 10px;
             align-items: center;
             // justify-content: space-between;
@@ -291,6 +325,13 @@
             background: #f8f8f9;
             height: calc(100% - 150px);
             overflow-y: scroll;
+            @include tablet {
+                padding: 20px 10px;
+            }
+            @include resp440 {
+                padding: 20px 5px;
+            }
+
             &:-webkit-scrollbar-thumb {
                 background-color: transparent; /* Couleur de la poignée de défilement */
             }
@@ -302,19 +343,61 @@
             .message {
                 display: flex;
                 gap: 20px;
-                margin-bottom: 20px;
+                margin-bottom: 30px;
+                position: relative;
+                @include tablet {
+                    gap: 10px;
+                }
+                @include resp440 {
+                    gap: 5px;
+                }
     
                 .messageInfo {
                     display: flex;
                     flex-direction: column;
                     color: gray;
                     font-weight: 300;
+                    width: 70px;
+                    align-items: center;
+                    justify-content: end;
+                    text-align: center;
+                    @include tablet {
+                        width: 60px;
+                    }
+                    @include resp440 {
+                        width: 30px;
+                    }
+                    
     
                     img {
                         width: 50px;
                         height: 50px;
                         border-radius: 50px;
                         object-fit: cover;
+                        @include tablet {
+                            width: 30px;
+                            height: 30px;
+                            
+                        }
+                        @include resp440 {
+                            width: 25px;
+                            height: 25px;
+
+                        }
+                        
+                    }
+                    span {
+                        font-size: 12px;
+                        position: absolute;
+                        bottom: -20px;
+                        z-index: 1;
+                        left: 50%;
+                        font-weight: 700;
+                        transform: translate(-50%);
+
+                        @include resp440 {
+                            font-size: 7px;
+                        }
                     }
                 }
     
@@ -366,6 +449,9 @@
                         background-color: #fff;
                         color: #000;
                         border-radius: 20px 20px 0px 20px;
+                        @include resp610 {
+                            font-size: 16px;
+                        }
                     }
                 }
             }

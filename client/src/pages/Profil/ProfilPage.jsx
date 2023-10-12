@@ -75,6 +75,7 @@ const ProfilPage = () => {
                             <span>{item?.name}</span>
                             <p>{lastMessageDisplay}</p>
                           </div>
+                          <span className="notif newMessage">1</span>
                         </div>
                       </div>
                     ))}
