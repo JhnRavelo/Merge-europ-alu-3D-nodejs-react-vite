@@ -4,6 +4,7 @@ import Home from "../../components/Messanger/pages/Home";
 import useButtonContext from "../../hooks/useButtonContext";
 import { useEffect } from "react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import { io } from "socket.io-client";
 
 const CommePage = () => {
   const {
@@ -15,12 +16,32 @@ const CommePage = () => {
     receiver,
     sendMessage,
     setLastMessage,
+    commercialChat,
+    socket,
+    onMessage,
+    setOnMessage,
   } = useButtonContext();
   const axiosPrivate = useAxiosPrivate();
 
   useEffect(() => {
+    if (commercialChat?.ID_user && socket) {
+      socket.emit("joinRoom", { room: commercialChat.ID_user });
+    }
+  }, [commercialChat, socket]);
+
+  useEffect(() => {
+    if (socket) {
+      socket.on("receiveMessage", (data) => {
+        console.log(data);
+        setOnMessage(data);
+      });
+    }
+  }, [socket]);
+
+  useEffect(() => {
     fetchData();
-  }, [show, sender, receiver, sendMessage]);
+    console.log("connexion");
+  }, [show, sender, receiver, sendMessage, onMessage]);
 
   const fetchData = async () => {
     try {
@@ -28,12 +49,12 @@ const CommePage = () => {
       setDataPage(page.data);
       const lastmessage = await axiosPrivate.get("/message/getlast");
       setLastMessage(lastmessage.data);
-      const user = await axiosPrivate.get("/message/getUsers")
-      console.log(page.data);
-      setCommercials(user.data)
+      const user = await axiosPrivate.get("/message/getUsers");
+      setCommercials(user.data);
       if (receiver) {
         const message = await axiosPrivate.post("/message/get", { receiver });
         setMessages(message.data);
+        console.log(message.data);
       }
     } catch (error) {
       console.log(error);

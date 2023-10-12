@@ -9,9 +9,9 @@ const Chemins = () => {
   return (
     <Routes>
       <Route path="/:id" element={<Page />} />
-      <Route element={<PrivateRoutes prime={prime[2]} />}>
+      {/* <Route element={<PrivateRoutes prime={prime[2]} />}> */}
         <Route path="/profile" element={<ProfilPage />} />
-      </Route>
+      {/* </Route> */}
     </Routes>
   );
 };

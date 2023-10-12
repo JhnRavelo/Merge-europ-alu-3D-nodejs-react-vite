@@ -1,5 +1,4 @@
 import SearchIcon from "../img/loupe-arrondie.png";
-import homme from "../img/avatar/homme.png";
 
 const Search = () => {
   return (

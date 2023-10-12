@@ -29,7 +29,6 @@ const ProfilPage = () => {
     const userLastMessage = lastMessage.find(
       (m) => item.ID_user == m.receiver || item.ID_user == m.sender
     );
-    console.log(userLastMessage);
     if (userLastMessage?.text) {
       return userLastMessage?.text;
     }

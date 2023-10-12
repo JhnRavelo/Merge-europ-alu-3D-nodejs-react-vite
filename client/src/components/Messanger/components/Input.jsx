@@ -19,6 +19,7 @@ const Input = () => {
     setReceiver,
     setsendMessage,
     sendMessage,
+    socket,
   } = useButtonContext();
 
   const handleSendMessage = async (values, errors, setField) => {
@@ -34,6 +35,7 @@ const Input = () => {
         formData.append("receiver", commercialChat.ID_user);
         setReceiver(commercialChat.ID_user);
         await defaultAxios.post("/message", formData);
+        socket.emit("sendMessage", {text:values.message, room:commercialChat.ID_user })
         setField("file", null);
         setField("message", "");
         if (sendMessage == false) {

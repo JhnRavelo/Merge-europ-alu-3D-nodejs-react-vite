@@ -1,16 +1,23 @@
+import { useEffect } from "react";
 import useButtonContext from "../../../hooks/useButtonContext";
 import Message from "./Message";
+import { useState } from "react";
 
 const Messages = () => {
-  const {messages} = useButtonContext()
+  const { messages, onMessage } = useButtonContext();
+  const [m, setM] = useState([]);
+
+  useEffect(() => {
+    if (messages) {
+      console.log(messages);
+      setM(messages);
+    }
+  }, [messages, onMessage]);
 
   return (
     <div className="messages">
-
-      {messages.map((item, index)=>(
-        <Message message={item} key={index}/>
-        )) }
-
+      {m.length > 0 &&
+        m.map((item, index) => <Message message={item} key={index} />)}
     </div>
   );
 };

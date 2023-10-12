@@ -7,6 +7,7 @@ import FormField from "../Pages/Form/Form";
 import useButtonContext from "../../hooks/useButtonContext";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useEffect } from "react";
+import { io } from "socket.io-client";
 
 const Layout = () => {
   const {
@@ -17,13 +18,33 @@ const Layout = () => {
     setMessages,
     sender,
     receiver,
-    sendMessage,setLastMessage
+    sendMessage,
+    setLastMessage,
+    commercialChat,
+    socket,
+    onMessage,
+    setOnMessage
   } = useButtonContext();
   const axiosPrivate = useAxiosPrivate();
 
   useEffect(() => {
+    if (socket) {
+      socket.on("receiveMessage", (data) => {
+        console.log(data);
+        setOnMessage(data);
+      });
+    }
+  }, [socket]);
+
+  useEffect(() => {
+    if (commercialChat?.ID_user && socket) {
+      socket.emit("joinRoom", { room: commercialChat.ID_user });
+    }
+  }, [commercialChat, socket]);
+
+  useEffect(() => {
     fetchData();
-  }, [show, sender, receiver, sendMessage]);
+  }, [show, sender, receiver, sendMessage, onMessage]);
 
   const fetchData = async () => {
     try {
@@ -38,13 +59,11 @@ const Layout = () => {
         setDataPage(page.data);
         const commercial = await axiosPrivate.get("/auth/getCommercials");
         setCommercials(commercial.data);
-        const lastmessage = await axiosPrivate.get("/message/getlast")
-        setLastMessage(lastmessage.data)
+        const lastmessage = await axiosPrivate.get("/message/getlast");
+        setLastMessage(lastmessage.data);
         if (receiver) {
           const message = await axiosPrivate.post("/message/get", { receiver });
-          setMessages(message.data);
-          console.log(message.data);
-          
+          setMessages(message.data)
         }
       } else {
         setBody({
