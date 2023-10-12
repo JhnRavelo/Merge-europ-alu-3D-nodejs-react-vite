@@ -21,7 +21,8 @@ const io = new Server(server, {
 
 io.on("connection", (socket) => {
   socket.on("joinRoom", (data) => {
-    socket.join(data);
+    console.log(data.room);
+    socket.join(data.room);
   });
 
   socket.on("sendMessage", (data) => {
@@ -31,6 +32,15 @@ io.on("connection", (socket) => {
   socket.on("sendAvatar", (data) => {
     socket.broadcast.emit("receiveAvatar", data);
   });
+
+  socket.on("connectUser", (data)=> {
+    console.log(data.room);
+    socket.to(data.room).emit("receiveConnectUser", data)
+  })
+
+  socket.on("logoutUser", (data)=>{
+    socket.to(data.room).emit("receiveLogoutUser", data)
+  })
 });
 
 pages.hasMany(products, { onDelete: "CASCADE", foreignKey: "pageId" });

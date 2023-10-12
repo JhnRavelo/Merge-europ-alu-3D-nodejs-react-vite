@@ -9,6 +9,8 @@ import useAuth from "../../../hooks/useAuth";
 import defaultAxios from "../../../api/axios";
 import useButtonContext from "../../../hooks/useButtonContext";
 
+const prime = import.meta.env.VITE_PRIME.split(" ");
+
 const Header = () => {
   const { auth } = useAuth();
   const headerRef = useRef();
@@ -19,7 +21,7 @@ const Header = () => {
   const userRef = useRef();
   const [data, setData] = useState([]);
   const navigate = useNavigate();
-  const {body, setBody, show} = useButtonContext()
+  const {body, setBody, show, socket} = useButtonContext()
 
   function menuIsClosed(e) {
     const profile = showProfileRef.current;
@@ -96,6 +98,8 @@ const Header = () => {
       
       userRef.current.classList.remove("connected");
       if (res.data == "SUCCESS") {
+        socket.emit("logoutUser", {email: body.email, room: prime[0]})
+
         setBody({
           name:"",
           email:"",

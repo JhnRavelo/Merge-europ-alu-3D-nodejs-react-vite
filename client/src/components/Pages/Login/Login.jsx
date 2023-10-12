@@ -10,8 +10,6 @@ import useButtonContext from "../../../hooks/useButtonContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
-
-
 const prime = import.meta.env.VITE_PRIME.split(" ");
 
 const Login = () => {
@@ -20,7 +18,7 @@ const Login = () => {
   const location = useLocation();
   const { setAuth } = useAuth();
   const formContext = useContext(FormContext);
-  const { showForm } = useButtonContext();
+  const { showForm, socket } = useButtonContext();
   const btnLoginRef = useRef();
   const { loginMail, loginPassword } = formContext[1];
   const errors = formContext[0];
@@ -56,6 +54,14 @@ const Login = () => {
           navigate("/commercial/")
         }
         showForm();
+
+        socket.emit("joinRoom", {
+          room: prime[0]
+        })
+
+        socket.emit("connectUser", {
+          loginMail: loginMail, room: prime[0]
+        })
         
         toast.success("Vous êtes connecté.")
       }

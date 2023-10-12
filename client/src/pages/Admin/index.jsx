@@ -6,6 +6,7 @@ import "./index.scss";
 import { useEffect } from "react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import useAdminContext from "../../hooks/useAdminContext";
+import useButtonContext from "../../hooks/useButtonContext";
 
 const Admin = () => {
   const privateAxios = useAxiosPrivate();
@@ -23,11 +24,28 @@ const Admin = () => {
     year,
     setYears,
     setLog,
+    connect,
+    setConnect,
+    logout,
+    setLogout,
   } = useAdminContext();
+  const { socket } = useButtonContext();
 
   useEffect(() => {
     fetchData();
-  }, [open, deleteOpen, year, notifOpen]);
+  }, [open, deleteOpen, year, notifOpen, connect, logout]);
+
+  useEffect(() => {
+    if (socket) {
+      socket.on("receiveConnectUser", (data) => {
+        console.log(data);
+        setConnect(data);
+      });
+      socket.on("receiveLogoutUser", (data) => {
+        setLogout(data);
+      });
+    }
+  }, [socket]);
 
   const fetchData = async () => {
     try {

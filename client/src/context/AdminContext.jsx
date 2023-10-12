@@ -27,6 +27,8 @@ const AdminProviser = ({ children }) => {
     listProductInterestedByYear: [],
     listByYear: [],
   });
+  const [connect, setConnect] = useState(null);
+  const [logout, setLogout] = useState(null);
 
   return (
     <AdminContext.Provider
@@ -57,6 +59,10 @@ const AdminProviser = ({ children }) => {
         setLog,
         notifOpen,
         setNotifOpen,
+        connect,
+        setConnect,
+        logout,
+        setLogout,
       }}
     >
       {children}
