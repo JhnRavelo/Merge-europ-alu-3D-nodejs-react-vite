@@ -1,16 +1,57 @@
+import { useState } from "react";
 import SearchIcon from "../img/loupe-arrondie.png";
+import useButtonContext from "../../../hooks/useButtonContext";
 
 const Search = () => {
+  const [username, setUsername] = useState();
+  const { commercials, setCommercials, search, setSearch } = useButtonContext();
+
+  // const handleKey = (e) => {
+  //   e.code === "Enter" && handleSearch();
+  // };
+
+  // const handleSearch = () => {
+  //   console.log("Search");
+  //   const filteredItems = commercials.filter((item) => {
+  //     console.log(item);
+  //     return item.name.toLowerCase().includes(username.toLowerCase());
+  //   });
+  //   setCommercials(filteredItems);
+  // };
+
   return (
     <div className="search">
       <div className="searchForm">
         <div className="input">
-          <input type="text" placeholder="Rechercher client" />
+          <input
+            type="text"
+            placeholder="Rechercher client"
+            // onKeyDown={handleKey}
+            onChange={(e) => {
+              setUsername(e.target.value);
+              const filteredItems = commercials.filter((item) =>
+                item.name.toLowerCase().includes(e.target.value.toLowerCase())
+              );
+              setCommercials(filteredItems);
+              console.log(commercials);
+              if (e.target.value == "") {
+                console.log("search");
+                if (search) {
+                  setSearch(false);
+                } else {
+                  setSearch(true);
+                }
+              }
+            }}
+            value={username}
+          />
           <div className="iconRecherche">
             <img src={SearchIcon} alt="" />
           </div>
         </div>
-        <span className="errorMessage">Client introuvable !!</span>
+        {commercials.length == 0 && (
+          <span className="errorMessage">Client introuvable !!</span>
+        )}
       </div>
     </div>
   );

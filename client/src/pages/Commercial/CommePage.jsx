@@ -21,6 +21,7 @@ const CommePage = () => {
     setOnMessage,
     onAvatar,
     setOnAvatar,
+    search,
   } = useButtonContext();
   const axiosPrivate = useAxiosPrivate();
 
@@ -43,7 +44,7 @@ const CommePage = () => {
 
   useEffect(() => {
     fetchData();
-  }, [show, sender, receiver, sendMessage, onMessage, onAvatar]);
+  }, [show, sender, receiver, sendMessage, onMessage, onAvatar, search]);
 
   const fetchData = async () => {
     try {

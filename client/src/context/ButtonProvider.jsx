@@ -22,6 +22,7 @@ const ButtonProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
   const [onMessage, setOnMessage] = useState(null);
   const [onAvatar, setOnAvatar] = useState(null);
+  const [search, setSearch] = useState(false);
 
   const showForm = () => {
     if (show === false) {
@@ -83,6 +84,8 @@ const ButtonProvider = ({ children }) => {
         setOnMessage,
         onAvatar,
         setOnAvatar,
+        search,
+        setSearch,
       }}
     >
       {children}
