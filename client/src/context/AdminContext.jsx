@@ -29,6 +29,7 @@ const AdminProviser = ({ children }) => {
   });
   const [connect, setConnect] = useState(null);
   const [logout, setLogout] = useState(null);
+  const [onInterested, setOnInterested] = useState(null);
 
   return (
     <AdminContext.Provider
@@ -63,6 +64,8 @@ const AdminProviser = ({ children }) => {
         setConnect,
         logout,
         setLogout,
+        onInterested,
+        setOnInterested,
       }}
     >
       {children}

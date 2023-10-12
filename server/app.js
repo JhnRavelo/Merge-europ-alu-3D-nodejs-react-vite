@@ -41,6 +41,10 @@ io.on("connection", (socket) => {
   socket.on("logoutUser", (data)=>{
     socket.to(data.room).emit("receiveLogoutUser", data)
   })
+
+  socket.on("UserInterested", (data)=>{
+    socket.to(data.room).emit("receiveInterested", data)
+  })
 });
 
 pages.hasMany(products, { onDelete: "CASCADE", foreignKey: "pageId" });

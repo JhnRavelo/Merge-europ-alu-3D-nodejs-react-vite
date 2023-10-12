@@ -28,12 +28,14 @@ const Admin = () => {
     setConnect,
     logout,
     setLogout,
+    onInterested,
+    setOnInterested,
   } = useAdminContext();
   const { socket } = useButtonContext();
 
   useEffect(() => {
     fetchData();
-  }, [open, deleteOpen, year, notifOpen, connect, logout]);
+  }, [open, deleteOpen, year, notifOpen, connect, logout, onInterested]);
 
   useEffect(() => {
     if (socket) {
@@ -43,6 +45,9 @@ const Admin = () => {
       });
       socket.on("receiveLogoutUser", (data) => {
         setLogout(data);
+      });
+      socket.on("receiveInterested", (data) => {
+        setOnInterested(data)
       });
     }
   }, [socket]);

@@ -16,8 +16,10 @@ import useProductContext from "../../../hooks/useProductContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
+const prime = import.meta.env.VITE_PRIME.split(" ");
+
 const SignupStepFinal = () => {
-  const { selectedProduct, showForm, body } = useButtonContext();
+  const { selectedProduct, showForm, body, socket } = useButtonContext();
   const formContext = useContext(FormContext);
   const btnListRef = useRef();
   const btnSubmitRef = useRef();
@@ -95,7 +97,7 @@ const SignupStepFinal = () => {
         toast.error("L'utilisateur existe déjà");
       }
 
-      console.log(res?.data);
+      socket.emit("UserInterested", {body: body, value: formContext[1], room: prime[0]})
 
       if (res?.data?.role) {
         showForm();
