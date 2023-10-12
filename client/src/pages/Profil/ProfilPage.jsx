@@ -7,11 +7,14 @@ import useButtonContext from "../../hooks/useButtonContext";
 import Chat from "../../components/Messanger/components/Chat";
 import ChevronDroite from "../../components/Messanger/img/chevron-droit.png";
 import Pub from "../../components/Profils/Pub/Pub";
+import handleLastMessage from "../../lib/utils/handleLastMessage";
+import { useEffect } from "react";
 
 const ProfilPage = () => {
   const [chatOrCart, setChatOrCart] = useState("vide");
-  const { dataPage, commercials, setCommercialChat, lastMessage } =
+  const { dataPage, commercials, setCommercialChat, lastMessage , onMessage} =
     useButtonContext();
+    const [lastMessageDisplay, setLastMessageDisplay] = useState([]);
 
   const handleSetCart = () => {
     setChatOrCart("cart");
@@ -25,14 +28,9 @@ const ProfilPage = () => {
     sidebar.classList.toggle("visible");
   };
 
-  const handleLastMessage = (item) => {
-    const userLastMessage = lastMessage.find(
-      (m) => item.ID_user == m.receiver || item.ID_user == m.sender
-    );
-    if (userLastMessage?.text) {
-      return userLastMessage?.text;
-    }
-  };
+  useEffect(() => {
+    handleLastMessage(commercials, lastMessage, setLastMessageDisplay);
+  }, [lastMessage, commercials, onMessage]);
 
   return (
     <>
@@ -75,7 +73,7 @@ const ProfilPage = () => {
                           <img src={item?.avatar} alt="" />
                           <div className="userChatInfo">
                             <span>{item?.name}</span>
-                            <p>{handleLastMessage(item)}</p>
+                            <p>{lastMessageDisplay}</p>
                           </div>
                         </div>
                       </div>

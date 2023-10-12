@@ -31,12 +31,11 @@ const Layout = () => {
   useEffect(() => {
     if (socket) {
       socket.on("receiveMessage", (data) => {
-        console.log(data);
         setOnMessage(data);
       });
-      socket.on("receiveAvatar", (data)=>{
-        setOnAvatar(data)
-      })
+      socket.on("receiveAvatar", (data) => {
+        setOnAvatar(data);
+      });
     }
   }, [socket]);
 
@@ -67,7 +66,7 @@ const Layout = () => {
         setLastMessage(lastmessage.data);
         if (receiver) {
           const message = await axiosPrivate.post("/message/get", { receiver });
-          setMessages(message.data)
+          setMessages(message.data);
         }
       } else {
         setBody({

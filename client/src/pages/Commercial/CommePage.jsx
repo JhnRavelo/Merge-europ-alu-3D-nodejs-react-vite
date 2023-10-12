@@ -43,7 +43,6 @@ const CommePage = () => {
 
   useEffect(() => {
     fetchData();
-    console.log("connexion");
   }, [show, sender, receiver, sendMessage, onMessage, onAvatar]);
 
   const fetchData = async () => {

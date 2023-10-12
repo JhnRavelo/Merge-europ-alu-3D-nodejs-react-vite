@@ -25,8 +25,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("sendMessage", (data) => {
-    console.log(data);
-    socket.to(data.sender).to(data.receiver).emit("receiveMessage", data);
+    socket.broadcast.emit("receiveMessage", data);
   });
 
   socket.on("sendAvatar", (data) => {
