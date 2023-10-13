@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-import Xmark from "./img/x.png";
->>>>>>> 89d9579 (Reorganisation)
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignOutAlt, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faBell } from "@fortawesome/free-solid-svg-icons";

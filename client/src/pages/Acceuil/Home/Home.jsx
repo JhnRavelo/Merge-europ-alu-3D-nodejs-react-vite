@@ -52,7 +52,7 @@ const Home = () => {
             aux normes européennes.
           </h1>
           <div className="button button__intro">
-            <Link to="/page/5">
+            <Link to="/page">
               <div className="start">Commencer</div>
             </Link>
             <div
