@@ -1,7 +1,10 @@
-import { Canvas } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
-import { AroundLight, HemiLight, ToplLight } from '../Light';
-import { Europ } from '../Models/Europ';
+import { Canvas } from "@react-three/fiber";
+import { OrbitControls } from "@react-three/drei";
+import { AroundLight, HemiLight, ToplLight } from "../Light";
+import { Europ } from "../Models/Europ";
+import Camera from "../Camera/Camera";
+import { Tone } from "../Postprocessing";
+import Icon from "../Icon";
 
 function EuropExterior() {
   return (
@@ -12,15 +15,15 @@ function EuropExterior() {
           fov: 45,
           near: 0.1,
           far: 20,
-          position: [5, 3, 10],
+          position: [0.1207495869371528, 1.7967386171333914, 6.74719555004217],
         }}
       >
-        {/* <Tone /> */}
-        <axesHelper args={[20,20,20]}/>
+        <Tone />
+        <axesHelper args={[20, 20, 20]} />
         <OrbitControls
-          maxDistance={7}
-          minDistance={0.2}
-          // enablePan={false}
+          maxDistance={10}
+          minDistance={2}
+          enablePan={false}
           maxPolarAngle={Math.PI / 2}
           rotateSpeed={2}
         />
@@ -28,6 +31,8 @@ function EuropExterior() {
         <AroundLight />
         <ToplLight />
         <HemiLight />
+        <Icon/>
+        <Camera />
       </Canvas>
     </>
   );

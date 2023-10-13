@@ -8,7 +8,7 @@ export function Europ(props) {
   const { nodes, materials } = useGLTF('./gltf/ModelEuropProduit/europ.gltf')
   return (
     <group {...props} dispose={null}>
-      <group position={[-18.395, 0.365, 5.527]} scale={0.0003}>
+      <group position={[-10.395, -0.6, 2.527]} scale={0.0003} >
         <mesh geometry={nodes.PRODUITEUROPALU_1.geometry} material={materials['METAL_-_ACIER_INOXYDABLE.001']} />
         <mesh geometry={nodes.PRODUITEUROPALU_2.geometry} material={materials['METAL_-_ACIER_INOXYDABLE.001']} />
         <mesh geometry={nodes.PRODUITEUROPALU_3.geometry} material={materials['METAL_-_ACIER_INOXYDABLE.001']} />

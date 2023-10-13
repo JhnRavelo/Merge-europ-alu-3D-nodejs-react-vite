@@ -2,101 +2,71 @@
   {
     "title": "Icon habillage",
     "img": "img_habillage",
-    "src": "./icon/iconizer-facade-de-maison-de-trois-etages.svg",
+    "src": "./src/assets/icon/iconizer-facade-de-maison-de-trois-etages.svg",
     "position": {
-      "x": 0.22,
-      "y": 0.4,
-      "z": 0.42
+      "x": 0.1,
+      "y": 1.55,
+      "z": 1.4
     }
   },
   {
     "title": "Icon baie",
     "img": "img_baie",
-    "src": "./icon/iconizer-porte-coulissante.svg",
+    "src": "./src/assets/icon/iconizer-porte-coulissante.svg",
     "position": {
-      "x": 0.685,
+      "x": 1.32,
       "y": -0.18,
-      "z": 0.26
+      "z": 0.22
     }
   },
   {
     "title": "Icon gardecorps",
     "img": "img_gardecorps",
-    "src": "./icon/iconizer-escaliers_1.svg",
+    "src": "./src/assets/icon/iconizer-escaliers_1.svg",
     "position": {
-      "x": -0.15,  
-      "y": -0.44,
-      "z": 0.58
-    }
-  },
-  {
-    "title": "Icon oeil",
-    "img": "img_oeil",
-    "src": "./icon/iconizer-oeil.svg",
-    "position": {
-      "x": 0,    
-      "y": 1.1,
-      "z": 0
-    }
-  },
-  {
-    "title": "Icon interieur",
-    "img": "img_interieur",
-    "src": "./icon/iconizer-plan-de-la-maison.svg",
-    "position": {
-      "x": 0.01,      
-      "y": -0.036,
-      "z": 0
-    }
-  },
-  {
-    "title": "Icon oeilbarre",
-    "img": "img_oeilbarre",
-    "src": "./icon/download.svg",
-    "position": {
-      "x": 0.3275,      
-      "y": -0.7,
-      "z": 0.25
+      "x": 0.03,  
+      "y": 0.65,
+      "z": 1.65
     }
   },
   {
     "title": "Icon exterieur",
     "img": "img_exterieur",
-    "src": "./icon/icon.png",
+    "src": "./src/assets/icon/icon.png",
     "position": {
-      "x": 0.015,      
-      "y": -0.019,
-      "z": 0.14
+      "x": 1.38,
+      "y": 0.26,
+      "z": 0.9
     }
   },
   {
     "title": "Icon porte",
     "img": "img_porte",
-    "src": "./icon/iconizer-ouverture-de-porte-ouverte.svg",
+    "src": "./src/assets/icon/iconizer-ouverture-de-porte-ouverte.svg",
     "position": {
       "x": 0,    
-      "y": 1.1,
-      "z": 0
+      "y": -0.2,
+      "z": 0.965
     }
   },
   {
     "title": "Icon fenetre",
     "img": "img_fenetre",
-    "src": "./icon/iconizer-la-fenetre.svg",
+    "src": "./src/assets/icon/iconizer-la-fenetre.svg",
     "position": {
-      "x": 0,    
-      "y": 1.1,
-      "z": 0
+      "x": 1.2,    
+      "y": 0.9,
+      "z": 0.2
     }
   },
   {
     "title": "Icon garage",
     "img": "img_garage",
-    "src": "./icon/iconizer-garage.svg",
+    "src": "./src/assets/icon/iconizer-garage.svg",
     "position": {
-      "x": 0,    
-      "y": 1.1,
-      "z": 0
+      "x": -1.3,    
+      "y": -0.01,
+      "z": 0.23
     }
   }
 ]
