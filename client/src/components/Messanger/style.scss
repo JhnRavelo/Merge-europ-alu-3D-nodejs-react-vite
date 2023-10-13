@@ -1,6 +1,28 @@
 *::-webkit-scrollbar {
     display: none;
 }
+
+$darkColor: #2f2d52;
+
+$gris: #202C33;
+
+$gris1: #111B21;
+
+$grisInput: #202C33;
+
+$vert: #00A884;
+
+$shadow1 : transparent;
+
+$sideshadow: rgba(0, 0, 0, 1) 0px 4px 10px;
+// $shadow1 :5px 5px 20px #000000,
+// -5px -5px 20px #4a4a4a;
+
+// $shadow1 :10px 10px 30px #252525,
+// -10px -10px 30px #a6a6a6;
+
+$shadow2 : rgba(14, 30, 37, 1) 0px 2px 4px 0px, rgba(14, 30, 37, 1) 0px 2px 16px 0px;
+
 @keyframes shake {
     0% {
       margin-left: 0rem;
@@ -66,7 +88,6 @@
 }
 
 
-$darkColor: #2f2d52;
 
 * {
     margin: 0;
@@ -75,105 +96,33 @@ $darkColor: #2f2d52;
     font-family: "Lato", sans-serif;
 }
 
-.formContainer {
-    background-color: #a7bcff;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    .formWrapper {
-        background-color: #fff;
-        padding: 20px 60px;
-        border-radius: 15px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        align-items: center;
-
-        .logo {
-            color: #5d5b8d;
-            font-weight: bold;
-            font-size: 24px;
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-
-            input {
-                padding: 15px;
-                border: none;
-                border-bottom: 1px solid #92acff;
-                outline: none;
-                width: 250px;
-                &::placeholder {
-                    color: rgb(137, 137, 137);
-                }
-            }
-
-            button {
-                background-color: #6f90fd;
-                color: #fff;
-                padding: 10px;
-                font-weight: bold;
-                border: none;
-                border-radius: 5px;
-                transition: all .3s ease;
-                cursor: pointer;
-                &:hover {
-                    transform: scale(1.02);
-                }
-                &:active {
-                    transform: scale(.98);
-                }
-
-            }
-            label {
-                display: flex;
-                align-items: center;
-                gap: 10px;
-                color: #82acff;
-                font-size: 12px;
-                
-                img {
-                    width: 32px;
-                }
-            }
-
-        }
-        p {
-            color: #5d5b8d;
-            font-size: 12px;
-            margin-top: 10px;
-            &:hover {
-
-                cursor: pointer;
-            }
-        }
-
-    }
-}
 
 // --------------- HOME PAGE -------------
+.chatOverlay {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    background-color: #0b141ae0;
+}
 
 .homeChat {
-    // background-image: url(../../components/Messanger/img/fond-1.png);
+    background-image: url(../../components/Messanger/img/backxhat.png);
     background-position: top;
-    background-size: cover;
-    backdrop-filter: blur(20px);
+    // background-size: cover;
+    background-repeat: repeat-x;
+    // backdrop-filter: blur(1px);
     // background-color: #a7bcff;
     // background-color: azure;
     // background-color: #F3F6FF;
-    padding: 20px;
+    padding:10px;
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 10px;
     @include resp440 {
-        padding: 20px 0px 5px 5px;
+        // padding: 20px 0px 5px 5px;
     }
+
 
     .container {
         width: 100%;
@@ -189,9 +138,10 @@ $darkColor: #2f2d52;
             margin-right: 20px;
             border-radius: 30px;
             // background-color: #3e3c61;
-            background: #ffffff;
-            box-shadow:  10px 10px 30px #cfd1d9,
-             -10px -10px 30px #ffffff;
+            background: $gris1;
+            box-shadow: $sideshadow;
+            // box-shadow:  10px 10px 30px #cfd1d9,
+            //  -10px -10px 30px #ffffff;
             position: relative;
             &.visible {
 
@@ -200,6 +150,7 @@ $darkColor: #2f2d52;
                     height: 93vh;
                     transform: scale(1);
                     pointer-events: all;
+                    box-shadow: $sideshadow;
                 }
             }
              @include resp870 {
@@ -218,7 +169,7 @@ $darkColor: #2f2d52;
 
             .navbar {
                 border-radius: 30px;
-                background: #ffffff;
+                background: $gris;
                 // box-shadow:  10px 10px 30px #cfd1d9,
                 //  -10px -10px 30px #ffffff;
                 display: flex;
@@ -235,14 +186,15 @@ $darkColor: #2f2d52;
                 justify-content: center;
                 align-items: center;
                 font-size: 18px;
-                color: #000;
+                font-weight: 300 !important;
+                color: #fff;
             }
             // .logo {
             //     font-weight: bold;
             // }
             .x {
                 // background-color: #ddddf7;
-                background: #fff;
+                background: $gris;
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -255,6 +207,10 @@ $darkColor: #2f2d52;
                 position: absolute;
                 @include resp870 {
                     display: block;
+                }
+
+                .xNotif {
+                    font-size: 20px;
                 }
 
                 img {
@@ -281,6 +237,7 @@ $darkColor: #2f2d52;
 
         .notication {
             position: relative;
+            z-index: 10000;
             // right: -40px;
             width: 40px;
             height: 40px;
@@ -297,7 +254,7 @@ $darkColor: #2f2d52;
             }
 
             .bell {
-                color: #060720;
+                color: #fff;
                 font-size: 25px;
                 &:active {
                     transform: scale(.9);
@@ -333,8 +290,8 @@ $darkColor: #2f2d52;
             transform: translateX(45%) scale(1.2);
             position: absolute;
             border-radius: 20px;
-            box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
-            background-color: #fff;
+            box-shadow: $sideshadow;
+            background: $gris1;
             opacity: 0;
             transition: .2s ease;
             pointer-events: none;            
@@ -345,13 +302,14 @@ $darkColor: #2f2d52;
             }
 
             .xNotif {
-                width: 25px;
-                height: 25px;
+                width: 20px;
+                height: 20px;
                 position: absolute;
                 left: 5px;
                 top: 5px;
-                background: #fff;
-                box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+                color: #fff;
+                background: $gris;
+                box-shadow: $shadow1;
                 border-radius: 50px;
                 padding: 5px;
                 cursor: pointer;
@@ -374,12 +332,12 @@ $darkColor: #2f2d52;
                     border-radius: 3px;
                     padding: 5px;
                     font-weight: 700;
-                    box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+                    box-shadow: $sideshadow;
                     margin-bottom: 5px;
                     cursor: pointer;
                     transition: .1s ease;
                     &:hover {
-                        background-color: #b4c5ff;
+                        background-color: $gris;
                         color: #fff;
                     }
                     &:active {
@@ -422,24 +380,25 @@ $darkColor: #2f2d52;
         .search {
             span.errorMessage {
                 margin-top: 10px;
+                font-weight: 500 !important;
                 color: red;
                 animation: shake 0.2s ease-in-out 0s 2;
             }
             
             .searchForm {
                 width: 100%;
-                border-bottom: 1px solid rgb(231, 231, 231);
+                border-bottom: 2px solid #202C33;
                 padding: 20px;
                 .input{
                     border-radius: 30px;
-                    background: #F3F6FF;
+                    background: #202C33;
                     width: 100%;
-                    color: #000;
                     padding: 10px;
                     border-radius: 20px;
                     display: flex;
                     input {
-                        background: #F3F6FF;
+                        background: #202C33;
+                        color: #fff;
                         border: none;
                         outline: none;
                         width: 90%;
@@ -449,10 +408,11 @@ $darkColor: #2f2d52;
                         margin-right: 10px;
                     }
                     .iconRecherche {
+                        color: #fff;
                         padding: 8px;
                         border-radius: 50%;
                         transition: .3s ease;
-                        background-color: #e5e8f2;
+                        background-color: $gris1;
                         cursor: pointer;
                         &:hover {
                             transform: scale(1.05);
@@ -476,7 +436,14 @@ $darkColor: #2f2d52;
 
         .chats {
             overflow-y: scroll;
-            height: 55%;
+            height: 65%;
+            @include resp1024 {
+                height: 55%;
+            }
+            @include resp870 {
+                height: 58%;
+
+            }
             
             .userChat {
                 position: relative;
@@ -485,11 +452,11 @@ $darkColor: #2f2d52;
                 align-items: center;
                 gap: 10px;
                 color: #fff;
-                border-bottom: 1px solid rgb(231, 231, 231);
+                border-bottom: 1px solid #202C33;
                 cursor: pointer;
                 transition: all .2s ease;
                 &:hover {
-                    background-color: #F3F3F3;
+                    background-color: #202C33;
                     color: #000;
                 }
                 img {
@@ -509,7 +476,8 @@ $darkColor: #2f2d52;
                         font-size: 18px;
                         font-weight: 500;
                         display: flex;
-                        justify-content: start;
+                        justify-content: flex-start;
+                        
                     }
                     
                     p {
@@ -519,8 +487,9 @@ $darkColor: #2f2d52;
                         white-space: nowrap;
                         justify-content: flex-start;
                         &.newMessage {
-                            color: rgb(0, 164, 0);
-                            font-weight: 700;
+                            color: #fff;
+                            font-weight: 900;
+                            letter-spacing: .5px;
                         }
                     }
                 }
@@ -528,11 +497,11 @@ $darkColor: #2f2d52;
                 span.notif {
                     color: #fff;
                     position: absolute;
-                    font-weight: 900;
+                    font-weight: 900 !important;
                     top: 10px;
                     left: 50px;
                     box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 5px;
-                    background: green;
+                    background: rgb(215, 11, 11);
                     font-size: 10px;
                     width: 17px;
                     height: 17px;
@@ -553,10 +522,11 @@ $darkColor: #2f2d52;
             .chatInfo {
                 position: inherit;
                 height: 75px;
+                padding: 10px;
                 margin-bottom: 2px;
                 box-shadow: rgba(0, 0, 0, 0.05) 0px 15px 10px -10px;
                 background-color: #ffffff16;
-                backdrop-filter: blur(50px);
+                backdrop-filter: blur(10px);
                 border-radius: 20px;
                 display: flex;
                 gap: 10px;
@@ -567,14 +537,24 @@ $darkColor: #2f2d52;
                 font-weight: 500;
                 font-size: 20px;
                 @include tablet {
-                    height: 50px;
+                    // height: 50px;
                     padding-bottom: 10px;
                 }
 
                 img {
-                    width: 50px;
-                    height: 50px;
+                    box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 5px;
+                    height: 53px;
+                    width: 53px;
                     border-radius: 50%;
+                    object-fit: cover;
+                    padding:2px;
+                    border: 1px solid green;
+                }
+
+                span {
+                    color: #fff;
+                    text-transform: capitalize;
+                    
                 }
 
                 .menuIcon {
@@ -597,11 +577,14 @@ $darkColor: #2f2d52;
                         top: 17px;
                     }
                     
-                    img {
+                    .burger {
                         border-radius: 0px !important;
-                        width: 40px;
-                        padding-top: 2px;
-                        height: 40px;
+                        width: 35px;
+                        height: 35px;
+                        font-size: 10px;
+                        padding: 5px;
+                        border: none;
+                        box-shadow: none;
                     }
 
                 }
@@ -655,7 +638,7 @@ $darkColor: #2f2d52;
                         font-weight: 300;
                         // width: 100px;
                         align-items: center;
-                        justify-content: end;
+                        justify-content: flex-end;
                         text-align: center;
                         @include tablet {
                             width: 60px;
@@ -666,6 +649,8 @@ $darkColor: #2f2d52;
                         
                         img {
                             width: 50px;
+                            box-shadow: rgba(0, 0, 0, 1) 0px 0px 5px;
+
                             height: 50px;
                             border-radius: 50px;
                             object-fit: cover;
@@ -684,11 +669,15 @@ $darkColor: #2f2d52;
 
                         span {
                             font-size: 12px;
+                            padding: 5px 10px 5px 10px;
+                            background: #182229;
+                            color: #869685;
+                            border-radius: 5px;
                             position: absolute;
-                            bottom: -20px;
+                            bottom: -26px;
                             z-index: 1;
                             left: 50%;
-                            font-weight: 700;
+                            font-weight: 500;
                             transform: translate(-50%);
     
                             @include resp440 {
@@ -705,15 +694,19 @@ $darkColor: #2f2d52;
                         p {
                             max-width: 500px !important;
                             overflow-wrap: break-word;
-                            background-color: #E86222;
+                            background-color: var(--orange);
                             padding: 15px 25px;
+                            margin-bottom: 5px;
                             color: #fff;
-                            box-shadow:  10px 10px 30px #cfd1d9,
-                            -10px -10px 30px #ffffff;
+                            box-shadow: $shadow2;
+
+                            // box-shadow:  10px 10px 30px #cfd1d9,
+                            // -10px -10px 30px #ffffff;
                             border-radius: 20px 20px 20px 0px;
                             max-width: max-content !important;
-                            font-weight: 500;
+                            font-weight: 300;
                             font-size: 18px;
+                            letter-spacing: .5px;
                             @include resp610 {
                                 max-width: 400px !important;
                                 
@@ -725,7 +718,7 @@ $darkColor: #2f2d52;
                         }
 
                         img {
-                            width: 50%;
+                            width: 50%;                            
                             @include tablet {
                                 width: 70%;
                             }
@@ -742,8 +735,8 @@ $darkColor: #2f2d52;
                             align-items: flex-end;
                         }
                         p {
-                            background-color: #fff;
-                            color: #000;
+                            background-color: $gris;
+                            color: #ffffff;
                             border-radius: 20px 20px 0px 20px;
                         }
                     }
@@ -754,9 +747,10 @@ $darkColor: #2f2d52;
                 border-radius: 30px;
                 position: relative;
                 // background-color: #3e3c61;
-                background: #ffffff;
-                box-shadow:  10px 10px 30px #cfd1d9,
-                 -10px -10px 30px #ffffff;
+                background: $gris1;
+                box-shadow: $sideshadow;
+                // box-shadow:  10px 10px 30px #cfd1d9,
+                //  -10px -10px 30px #ffffff;
                 height: 75px;
                 padding: 10px;
                 padding-left: 20px;
@@ -774,7 +768,8 @@ $darkColor: #2f2d52;
                     width: 80%;
                     border: none;
                     outline: none;
-                    color: #2f2d52;
+                    background: $gris1;
+                    color: #fff;
                     font-size: 18px;                 
                     @include resp520 {
                         width: 70%;

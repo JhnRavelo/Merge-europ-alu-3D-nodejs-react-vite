@@ -7,8 +7,12 @@ import FormField from "../Pages/Form/Form";
 import useButtonContext from "../../hooks/useButtonContext";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 const Layout = () => {
+
+  const location = useLocation();
+
   const {
     show,
     setBody,
@@ -94,7 +98,7 @@ const Layout = () => {
         <Header />
         <Grids />
         <Chemins />
-        <Footer />
+        {!location.pathname.includes("profile") && <Footer />}
       </div>
       {show && <FormField />}
     </>

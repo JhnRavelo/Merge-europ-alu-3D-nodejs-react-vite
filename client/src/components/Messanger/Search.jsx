@@ -1,6 +1,7 @@
 import { useState } from "react";
-import SearchIcon from "../img/loupe-arrondie.png";
-import useButtonContext from "../../../hooks/useButtonContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import useButtonContext from "../../hooks/useButtonContext";
 
 const Search = () => {
   const [username, setUsername] = useState();
@@ -32,7 +33,7 @@ const Search = () => {
             value={username}
           />
           <div className="iconRecherche">
-            <img src={SearchIcon} alt="" />
+            <FontAwesomeIcon icon={faSearch} />
           </div>
         </div>
         {commercials.length == 0 && (
@@ -44,4 +45,3 @@ const Search = () => {
 };
 
 export default Search;
-

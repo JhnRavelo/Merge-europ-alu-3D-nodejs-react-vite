@@ -1,10 +1,10 @@
 import Messages from "./Messages";
 import Input from "./Input";
-import menuIcon from "../img/bar.png";
-import "../style.scss";
+import "./style.scss";
 import { useLocation } from "react-router-dom";
-import ChevronGauche from "../img/chevron-gauche.png";
-import useButtonContext from "../../../hooks/useButtonContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronLeft, faBars } from "@fortawesome/free-solid-svg-icons";
+import useButtonContext from "../../hooks/useButtonContext";
 import { useEffect } from "react";
 
 const Chat = () => {
@@ -27,18 +27,16 @@ const Chat = () => {
   return (
     <div className="chat">
       <div className="chatInfo">
-        <img src={commercialChat?.avatar} alt="" />
+        {commercialChat?.avatar && <img src={commercialChat?.avatar} alt="" />}
         <span>{commercialChat?.name}</span>
 
         <button className="menuIcon" onClick={handleOpenMenu}>
-          <img
-            src={
-              location.pathname.includes("commercial")
-                ? menuIcon
-                : ChevronGauche
-            }
-            alt=""
-          />
+          {location.pathname.includes("commercial") && (
+            <FontAwesomeIcon className="burger" icon={faBars} />
+          )}
+          {location.pathname.includes("page/profile") && (
+            <FontAwesomeIcon className="chevronChat" icon={faChevronLeft} />
+          )}
         </button>
       </div>
       <Messages />

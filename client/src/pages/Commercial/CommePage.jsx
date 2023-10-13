@@ -1,6 +1,6 @@
 import "./CommePage.scss";
 import "../../components/Messanger/style.scss";
-import Home from "../../components/Messanger/pages/Home";
+import Home from "../../components/Messanger/Home";
 import useButtonContext from "../../hooks/useButtonContext";
 import { useEffect } from "react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";

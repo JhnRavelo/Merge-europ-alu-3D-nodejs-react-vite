@@ -4,11 +4,12 @@ import { useState } from "react";
 import UserProfileCard from "../../components/Profils/UserProfileCard/UserProfileCard";
 import Cart from "../../components/Profils/Cart/Cart";
 import useButtonContext from "../../hooks/useButtonContext";
-import Chat from "../../components/Messanger/components/Chat";
-import ChevronDroite from "../../components/Messanger/img/chevron-droit.png";
+import Chat from "../../components/Messanger/Chat";
 import Pub from "../../components/Profils/Pub/Pub";
 import handleLastMessage from "../../lib/utils/handleLastMessage";
 import { useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
 const ProfilPage = () => {
   const [chatOrCart, setChatOrCart] = useState("vide");
@@ -35,6 +36,7 @@ const ProfilPage = () => {
   return (
     <>
       <div className="profile__page" style={{ animation: "tonga .6s ease" }}>
+      {/* <div className="profilOverlay"></div> */}
         <div className="profile__box">
           <UserProfileCard
             data={dataPage}
@@ -47,6 +49,7 @@ const ProfilPage = () => {
             <Cart data={dataPage} />
           ) : chatOrCart === "chat" ? (
             <div className="chatUser">
+              <div className="chatOverlay"></div>
               <Chat />
               <div className="sidebar">
                 <div className="navbar">
@@ -54,7 +57,7 @@ const ProfilPage = () => {
                     <span>{"Commerciales"}</span>
                   </div>
                   <button className="x" onClick={handleOpenMenu}>
-                    <img src={ChevronDroite} alt="" />
+                    <FontAwesomeIcon className="chevronChat" icon={faChevronRight} />
                   </button>
                 </div>
 

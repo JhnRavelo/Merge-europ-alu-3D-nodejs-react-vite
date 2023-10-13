@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import useButtonContext from "../../../hooks/useButtonContext";
+import useButtonContext from "../../hooks/useButtonContext";
 import Message from "./Message";
 import { useState } from "react";
 

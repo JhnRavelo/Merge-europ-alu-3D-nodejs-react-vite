@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import propTypes from "prop-types";
-import useButtonContext from "../../../hooks/useButtonContext";
+import useButtonContext from "../../hooks/useButtonContext";
 
 const monthNames = [
   "Jan",
@@ -98,4 +98,3 @@ Message.propTypes = {
 };
 
 export default Message;
-

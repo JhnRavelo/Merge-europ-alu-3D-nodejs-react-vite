@@ -1,10 +1,10 @@
-import Img from "../img/img.png";
-import Send from "../img/envoyer-le-message.png";
+import Img from "./img/img.png";
+import Send from "./img/envoyer-le-message.png";
 import { Field, Form, Formik } from "formik";
-import { validationMessage } from "../../../lib/utils/validationSchema";
-import useButtonContext from "../../../hooks/useButtonContext";
+import { validationMessage } from "../../lib/utils/validationSchema";
+import useButtonContext from "../../hooks/useButtonContext";
 import propTypes from "prop-types";
-import defaultAxios from "../../../api/axios";
+import defaultAxios from "../../api/axios";
 
 const initialValues = {
   message: "",
@@ -35,7 +35,11 @@ const Input = () => {
         formData.append("receiver", commercialChat.ID_user);
         setReceiver(commercialChat.ID_user);
         await defaultAxios.post("/message", formData);
-        socket.emit("sendMessage", {text:values.message, receiver:commercialChat.ID_user, sender:dataPage.userRead[0].ID_user })
+        socket.emit("sendMessage", {
+          text: values.message,
+          receiver: commercialChat.ID_user,
+          sender: dataPage.userRead[0].ID_user,
+        });
         setField("file", null);
         setField("message", "");
         if (sendMessage == false) {
@@ -55,6 +59,7 @@ const Input = () => {
         <Form>
           <div className="input">
             <Field
+              autoComplete="off"
               name="message"
               type="text"
               placeholder="Envoyer un message ..."

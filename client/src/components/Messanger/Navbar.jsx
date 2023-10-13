@@ -1,18 +1,16 @@
-import Xmark from "../img/x.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import { faSignOutAlt, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
-import useButtonContext from "../../../hooks/useButtonContext";
-import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import useButtonContext from "../../hooks/useButtonContext";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useNavigate } from "react-router-dom";
 import { useRef } from "react";
 
-
 const Navbar = () => {
   const notifRef = useRef();
-  const {dataPage, setBody} = useButtonContext()
-  const axiosPrivate = useAxiosPrivate()
-  const navigate = useNavigate()
+  const { dataPage, setBody } = useButtonContext();
+  const axiosPrivate = useAxiosPrivate();
+  const navigate = useNavigate();
   const handleOpenMenu = () => {
     const sidebar = document.querySelector(".sidebar");
     sidebar.classList.toggle("visible");
@@ -23,10 +21,10 @@ const Navbar = () => {
       const res = await axiosPrivate.get("/auth/logout");
       if (res.data == "SUCCESS") {
         setBody({
-          name:"",
-          email:"",
-          pgone:"",
-        })
+          name: "",
+          email: "",
+          pgone: "",
+        });
         navigate("/");
       }
     } catch (error) {
@@ -35,8 +33,8 @@ const Navbar = () => {
   };
 
   const handleShowNotif = () => {
-    notifRef.current.classList.toggle("visible")
-  }
+    notifRef.current.classList.toggle("visible");
+  };
 
   return (
     <div className="navbar">
@@ -45,14 +43,22 @@ const Navbar = () => {
         <span>{dataPage?.userRead[0]?.name}</span>
       </div>
       <button className="x" onClick={handleOpenMenu}>
-        <img src={Xmark} alt="" />
+        <FontAwesomeIcon
+          className="xNotif"
+          onClick={handleShowNotif}
+          icon={faXmark}
+        />
       </button>
       <div onClick={handleShowNotif} className="notication">
         <FontAwesomeIcon className="bell" icon={faBell} shake />
         <span>1</span>
       </div>
       <div ref={notifRef} className="cardNotif">
-        <img onClick={handleShowNotif} className="xNotif" src={Xmark} alt="" />
+        <FontAwesomeIcon
+          className="xNotif"
+          onClick={handleShowNotif}
+          icon={faXmark}
+        />
         <div className="messNotif">
           <span>Nouveau message de Hardy</span>
           <span>Nouveau message de Hardy</span>
@@ -63,7 +69,11 @@ const Navbar = () => {
         </div>
       </div>
       <button className="deconnexion" onClick={handleLogOut}>
-        <FontAwesomeIcon icon={faSignOutAlt} flip style={{marginRight: '5px'}}/>
+        <FontAwesomeIcon
+          icon={faSignOutAlt}
+          flip
+          style={{ marginRight: "5px" }}
+        />
         Déconnexion
       </button>
     </div>

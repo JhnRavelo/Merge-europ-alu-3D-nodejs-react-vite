@@ -16,17 +16,17 @@
 
 .wrapper{
     background: #f8f8f9;
-    box-shadow: rgba(0,0,0,0.24) 0px 3px 8px;
+    /* box-shadow: rgba(0,0,0,0.24) 0px 3px 8px; */
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
     position: relative;
     width: 25vw;
-    padding: 30px;
+    padding: 20px;
     border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     height: 80vh;
-    margin-bottom: 2rem;
 } 
 
 .wrapper .img-area{                    
@@ -241,8 +241,11 @@
         margin-top: 20px;
     }
     .profile__page {
-        margin-top: 14vh;
+        top: 0rem;
     }
+    /* .profile__page {
+        padding-top: 15vh;
+    } */
 
     .wrapper{
         height: 300px;
