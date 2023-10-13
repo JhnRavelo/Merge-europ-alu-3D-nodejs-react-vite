@@ -94,7 +94,7 @@ const validationPage = Yup.object({
   icon: Yup.mixed().required("Icône est requis"),
   position: Yup.string()
     .required("Position requis")
-    .matches(/^(\d+(\.\d+)?,){2}\d+(\.\d+)?$/, "Doit être de forme x,y,z"),
+    .matches(/^(-?\d+(\.\d+)?,-?\d+(\.\d+)?,-?\d+(\.\d+)?)$/, "Doit être de forme x,y,z"),
   minYAngle: Yup.string()
     .required("Requis")
     .matches(/^-?\d+(\.\d+)?$/, "Doit être un nombre, peut être décimal"),

@@ -49,7 +49,7 @@ const Login = () => {
         if (role == prime[0]) {
           navigate("/admin/");
         } else if (role == prime[2] && location.pathname == "/") {
-          navigate("/page/5");
+          navigate("/page");
         } else if(role == prime[1]) {
           navigate("/commercial/")
         }

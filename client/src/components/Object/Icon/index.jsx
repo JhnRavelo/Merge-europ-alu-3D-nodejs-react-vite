@@ -1,22 +1,42 @@
-import { Html } from '@react-three/drei';
-import iconJSON from '../../../assets/json/icon.json';
+import { Html } from "@react-three/drei";
+import { useEffect } from "react";
+import useButtonContext from "../../../hooks/useButtonContext";
+import { useNavigate } from "react-router-dom";
 
 function Icon() {
+  const { data } = useButtonContext();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
+
+  const handleClick = (icon) => {
+    console.log(icon.ID_page);
+    navigate(`/page/${icon.ID_page}`);
+  };
 
   return (
     <>
-      {iconJSON.map((icon, index) => {
-        return (
-          <Html
-            key={index}
-            position={[icon.position.x, icon.position.y, icon.position.z]}
-          >
-            <div className='divi'>
-              <img src={icon.src} alt={icon.img} className='imgi'/>
-            </div>
-          </Html>
-        );
-      })}
+      {data?.length > 0 &&
+        data.map((icon, index) => {
+          const position = icon.position.split(",");
+          const x = parseFloat(position[0]),
+            y = parseFloat(position[1]),
+            z = parseFloat(position[2]);
+          return (
+            <Html key={index} position={[x, y, z]}>
+              <div
+                className="divi"
+                onClick={() => {
+                  handleClick(icon);
+                }}
+              >
+                <img src={icon.icon} alt={icon.page} className="imgi" />
+              </div>
+            </Html>
+          );
+        })}
     </>
   );
 }

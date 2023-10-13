@@ -1,12 +1,11 @@
 import "./Header.css";
 import Logo from "../../../assets/Logo_aluhd.png";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import useAuth from "../../../hooks/useAuth";
-import defaultAxios from "../../../api/axios";
 import useButtonContext from "../../../hooks/useButtonContext";
 
 const prime = import.meta.env.VITE_PRIME.split(" ");
@@ -19,9 +18,8 @@ const Header = () => {
   const location = useLocation();
   const axiosPrivate = useAxiosPrivate();
   const userRef = useRef();
-  const [data, setData] = useState([]);
   const navigate = useNavigate();
-  const {body, setBody, show, socket} = useButtonContext()
+  const { body, setBody, show, socket, data } = useButtonContext();
 
   function menuIsClosed(e) {
     const profile = showProfileRef.current;
@@ -49,17 +47,7 @@ const Header = () => {
     }
   }
 
-  const fetchData = async () => {
-    try {
-      const res = await defaultAxios.get("/page");
-      setData(res.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
-    fetchData()
     document.body.addEventListener("click", menuIsClosed);
     return () => document.body.removeEventListener("click", menuIsClosed);
   }, []);
@@ -84,27 +72,26 @@ const Header = () => {
   };
 
   useEffect(() => {
-          if (!body.name == "") {
-            userRef.current.classList.add("connected");
-          } else {
-            userRef.current.classList.remove("connected");
-          }
-
+    if (!body.name == "") {
+      userRef.current.classList.add("connected");
+    } else {
+      userRef.current.classList.remove("connected");
+    }
   }, [auth, body, show]);
 
   const handleLogOut = async () => {
     try {
       const res = await axiosPrivate.get("/auth/logout");
-      
+
       userRef.current.classList.remove("connected");
       if (res.data == "SUCCESS") {
-        socket.emit("logoutUser", {email: body.email, room: prime[0]})
+        socket.emit("logoutUser", { email: body.email, room: prime[0] });
 
         setBody({
-          name:"",
-          email:"",
-          pgone:"",
-        })
+          name: "",
+          email: "",
+          pgone: "",
+        });
         navigate("/");
       }
     } catch (error) {
@@ -165,15 +152,16 @@ const Header = () => {
                   <h1>Acceuil</h1>
                 </NavLink>
               </li>
-              {data.map((page, index) => {
-                return (
-                  <li key={index}>
-                    <NavLink to={`/page/${page.ID_page}`}>
-                      <h1>{page.page}</h1>
-                    </NavLink>
-                  </li>
-                );
-              })}
+              {data?.length > 0 &&
+                data.map((page, index) => {
+                  return (
+                    <li key={index}>
+                      <NavLink to={`/page/${page.ID_page}`}>
+                        <h1>{page.page}</h1>
+                      </NavLink>
+                    </li>
+                  );
+                })}
             </ul>
           </div>
         </nav>

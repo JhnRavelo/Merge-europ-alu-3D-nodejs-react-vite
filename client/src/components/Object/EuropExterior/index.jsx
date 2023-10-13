@@ -23,7 +23,7 @@ function EuropExterior() {
         }}
       >
         <Tone />
-        <axesHelper args={[20, 20, 20]} />
+        {/* <axesHelper args={[20, 20, 20]} /> */}
         <Europ />
         <AroundLight />
         <ToplLight />

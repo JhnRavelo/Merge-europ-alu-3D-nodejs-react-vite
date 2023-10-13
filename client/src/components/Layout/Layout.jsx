@@ -8,6 +8,7 @@ import useButtonContext from "../../hooks/useButtonContext";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import defaultAxios from "../../api/axios";
 
 const Layout = () => {
   const {
@@ -26,6 +27,7 @@ const Layout = () => {
     setOnMessage,
     onAvatar,
     setOnAvatar,
+    setData,
   } = useButtonContext();
   const axiosPrivate = useAxiosPrivate();
   const location = useLocation();
@@ -53,6 +55,8 @@ const Layout = () => {
 
   const fetchData = async () => {
     try {
+      const data = await defaultAxios.get("/page");
+      setData(data.data);
       const res = await axiosPrivate.get("/auth");
       if (res.data) {
         setBody({

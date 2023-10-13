@@ -12,6 +12,7 @@ const ButtonProvider = ({ children }) => {
     traker: [],
     userRead: [],
   });
+  const [data, setData] = useState([]);
   const [commercials, setCommercials] = useState([]);
   const [commercialChat, setCommercialChat] = useState({});
   const [messages, setMessages] = useState([]);
@@ -92,6 +93,8 @@ const ButtonProvider = ({ children }) => {
         setPolar,
         azimuth,
         setAzimuth,
+        data,
+        setData,
       }}
     >
       {children}

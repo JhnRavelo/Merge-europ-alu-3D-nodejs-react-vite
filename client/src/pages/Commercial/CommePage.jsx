@@ -27,10 +27,13 @@ const CommePage = () => {
   const axiosPrivate = useAxiosPrivate();
 
   useEffect(() => {
-    if ((commercialChat?.ID_user )&& socket) {
+    if (commercialChat?.ID_user && socket) {
       socket.emit("joinRoom", { room: commercialChat.ID_user });
     }
-  }, [commercialChat, socket]);
+    if(dataPage?.userRead[0].ID_user && socket){
+      socket.emit("joinRoom", { room: dataPage?.userRead[0].ID_user })
+    }
+  }, [commercialChat, socket, dataPage]);
 
   useEffect(() => {
     if (socket) {
