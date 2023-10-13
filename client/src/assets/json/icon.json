@@ -68,5 +68,15 @@
       "y": -0.01,
       "z": 0.23
     }
+  },
+  {
+    "title": "Icon interieur",
+    "img": "img_interieur",
+    "src": "./src/assets/icon/iconizer-plan-de-la-maison.svg",
+    "position": {
+      "x": 0,      
+      "y": -0.75,
+      "z": 2.6
+    }
   }
 ]
