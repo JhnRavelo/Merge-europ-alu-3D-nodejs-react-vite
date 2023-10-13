@@ -10,9 +10,6 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 const Layout = () => {
-
-  const location = useLocation();
-
   const {
     show,
     setBody,
@@ -31,6 +28,7 @@ const Layout = () => {
     setOnAvatar,
   } = useButtonContext();
   const axiosPrivate = useAxiosPrivate();
+  const location = useLocation();
 
   useEffect(() => {
     if (socket) {
@@ -96,9 +94,9 @@ const Layout = () => {
       <ScrollToTop />
       <div className="corps">
         <Header />
-        <Grids />
+        {location.pathname != "/page" && <Grids />}
         <Chemins />
-        {!location.pathname.includes("profile") && <Footer />}
+        {(!location.pathname.includes("profile") && location.pathname != "/page") && <Footer />}
       </div>
       {show && <FormField />}
     </>

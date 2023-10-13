@@ -16,6 +16,6 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
-    "react/no-unknown-property": ["error", { ignore: ["directory", "mozdirectory"] }],
+    "react/no-unknown-property": ["error", { ignore: ["args","directory", "mozdirectory", "position", "dispose", "geometry", "material"] }],
   },
 }
