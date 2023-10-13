@@ -26,6 +26,7 @@
     "dotenv": "^16.3.1",
     "font-awesome": "^4.7.0",
     "formik": "^2.4.4",
+    "gsap": "^3.12.2",
     "leva": "^0.9.35",
     "postprocessing": "^6.33.0",
     "prop-types": "^15.8.1",

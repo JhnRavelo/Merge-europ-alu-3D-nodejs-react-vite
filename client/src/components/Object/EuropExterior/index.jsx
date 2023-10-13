@@ -1,16 +1,20 @@
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
 import { AroundLight, HemiLight, ToplLight } from "../Light";
 import { Europ } from "../Models/Europ";
 import Camera from "../Camera/Camera";
 import { Tone } from "../Postprocessing";
 import Icon from "../Icon";
+import Controls from "../Controls/Controls";
+import { useRef } from "react";
 
 function EuropExterior() {
+  const controlsRef = useRef();
+
   return (
     <>
       <Canvas
         // dpr={window.devicePixelRatio}
+        ref={controlsRef}
         camera={{
           fov: 45,
           near: 0.1,
@@ -20,19 +24,13 @@ function EuropExterior() {
       >
         <Tone />
         <axesHelper args={[20, 20, 20]} />
-        <OrbitControls
-          maxDistance={10}
-          minDistance={2}
-          enablePan={false}
-          maxPolarAngle={Math.PI / 2}
-          rotateSpeed={2}
-        />
         <Europ />
         <AroundLight />
         <ToplLight />
         <HemiLight />
-        <Icon/>
+        <Icon />
         <Camera />
+        <Controls />
       </Canvas>
     </>
   );
