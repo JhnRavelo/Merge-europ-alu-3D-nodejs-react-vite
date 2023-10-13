@@ -4,6 +4,7 @@ import "./style.scss";
 import { useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faBars } from "@fortawesome/free-solid-svg-icons";
+import "./style.scss";
 import useButtonContext from "../../hooks/useButtonContext";
 import { useEffect } from "react";
 

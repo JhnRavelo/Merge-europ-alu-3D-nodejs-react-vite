@@ -22,11 +22,12 @@ const CommePage = () => {
     onAvatar,
     setOnAvatar,
     search,
+    dataPage,
   } = useButtonContext();
   const axiosPrivate = useAxiosPrivate();
 
   useEffect(() => {
-    if (commercialChat?.ID_user && socket) {
+    if ((commercialChat?.ID_user )&& socket) {
       socket.emit("joinRoom", { room: commercialChat.ID_user });
     }
   }, [commercialChat, socket]);

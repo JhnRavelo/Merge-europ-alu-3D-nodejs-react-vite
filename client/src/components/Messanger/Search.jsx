@@ -1,6 +1,10 @@
 import { useState } from "react";
+<<<<<<< HEAD
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+=======
+import SearchIcon from "./img/loupe-arrondie.png";
+>>>>>>> 89d9579 (Reorganisation)
 import useButtonContext from "../../hooks/useButtonContext";
 
 const Search = () => {
