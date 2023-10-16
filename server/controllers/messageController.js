@@ -32,7 +32,8 @@ const addMessage = async (req, res) => {
 const getMessage = async (req, res) => {
   const { receiver } = await req.body;
 
-  if (!receiver || receiver == null || receiver == undefined) return res.json("No sender");
+  if (!receiver || receiver == null || receiver == undefined)
+    return res.json("No sender");
 
   const getMessages = await messages.findAll({
     where: {
@@ -67,6 +68,16 @@ const getMessage = async (req, res) => {
     ],
     order: [[Sequelize.col("messages.createdAt"), "ASC"]],
   });
+
+  await messages.update(
+    { unRead: false },
+    {
+      where: {
+        unRead: true,
+        sender: receiver,
+      },
+    }
+  );
 
   res.json(getMessages);
 };
@@ -142,9 +153,6 @@ const getUsers = async (req, res) => {
     }
   });
 
-  // const allUserSansDoublons = new Set(allUserAvecDoublons)
-  // const allUser = [...allUserSansDoublons]
-
   const use = await users.findAll({
     include: [
       {
@@ -159,4 +167,35 @@ const getUsers = async (req, res) => {
   res.json(allUser);
 };
 
-module.exports = { addMessage, getMessage, getLastMessage, getUsers };
+const getMessageNotif = async (req, res) => {
+  const receiveMessage = await messages.findAll({
+    where: {
+      unRead: true,
+      receiver: req.user,
+    },
+    attributes: [
+      "sender",
+      "receiver",
+      [Sequelize.fn("COUNT", Sequelize.col("ID_message")), "count"],
+    ],
+    include:[
+      {
+        model: users,
+        as:"send",
+        attributes:["ID_user", "name", "email"]
+      }
+    ],
+    group: ["sender"],
+    order: ["sender"],
+  });
+
+  res.json(receiveMessage);
+};
+
+module.exports = {
+  addMessage,
+  getMessage,
+  getLastMessage,
+  getUsers,
+  getMessageNotif,
+};

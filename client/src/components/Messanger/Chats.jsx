@@ -1,15 +1,18 @@
 import { useEffect, useState } from "react";
 import useButtonContext from "../../hooks/useButtonContext";
 import handleLastMessage from "../../lib/utils/handleLastMessage";
+import handleClassNewMessage from "../../lib/utils/handleClassNewMessage";
 
 const Chats = () => {
-  const { commercials, lastMessage, setCommercialChat, onMessage } =
+  const { commercials, lastMessage, setCommercialChat, onMessage, notif } =
     useButtonContext();
   const [lastMessageDisplay, setLastMessageDisplay] = useState([]);
+  const [classNewMessage, setClassNewMessage] = useState([])
 
   useEffect(() => {
     handleLastMessage(commercials, lastMessage, setLastMessageDisplay);
-  }, [lastMessage, commercials, onMessage]);
+    handleClassNewMessage(setClassNewMessage, commercials, notif)
+  }, [lastMessage, commercials, onMessage, notif]);
 
   return (
     <>
@@ -26,7 +29,7 @@ const Chats = () => {
                 <img src={item?.avatar} alt="" />
                 <div className="userChatInfo">
                   <span>{item?.name}</span>
-                  <p>
+                  <p className={classNewMessage[index]}>
                     {lastMessageDisplay?.length > 0 &&
                       lastMessageDisplay[index]}
                   </p>

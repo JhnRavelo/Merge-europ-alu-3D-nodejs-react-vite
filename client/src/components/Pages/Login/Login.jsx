@@ -47,6 +47,7 @@ const Login = () => {
       if (role) {
         await setAuth({ role, accessToken });
         if (from) {
+          console.log(from);
           navigate(from, { replace: true });
         } else {
           if (role == prime[0]) {

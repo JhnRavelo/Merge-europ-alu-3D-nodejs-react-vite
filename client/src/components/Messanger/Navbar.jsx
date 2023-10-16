@@ -5,12 +5,15 @@ import useButtonContext from "../../hooks/useButtonContext";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useNavigate } from "react-router-dom";
 import { useRef } from "react";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const Navbar = () => {
   const notifRef = useRef();
-  const { dataPage, setBody } = useButtonContext();
+  const { dataPage, setBody, notif } = useButtonContext();
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
+  const [notifCount, setNotifCount] = useState(0);
   const handleOpenMenu = () => {
     const sidebar = document.querySelector(".sidebar");
     sidebar.classList.toggle("visible");
@@ -33,8 +36,15 @@ const Navbar = () => {
   };
 
   const handleShowNotif = () => {
+    setNotifCount(0)
     notifRef.current.classList.toggle("visible");
   };
+
+  useEffect(() => {
+    if (notif?.length > 0) {
+      setNotifCount(notif.length);
+    }
+  }, [notif]);
 
   return (
     <div className="navbar">
@@ -50,8 +60,12 @@ const Navbar = () => {
         />
       </button>
       <div onClick={handleShowNotif} className="notication">
-        <FontAwesomeIcon className="bell" icon={faBell} shake />
-        <span>1</span>
+        {notifCount > 0 ? (
+          <FontAwesomeIcon className="bell" icon={faBell} shake />
+        ) : (
+          <FontAwesomeIcon className="bell" icon={faBell} />
+        )}
+        {notifCount > 0 && <span>{notifCount}</span>}
       </div>
       <div ref={notifRef} className="cardNotif">
         <FontAwesomeIcon
@@ -60,12 +74,13 @@ const Navbar = () => {
           icon={faXmark}
         />
         <div className="messNotif">
-          <span>Nouveau message de Hardy</span>
-          <span>Nouveau message de Hardy</span>
-          <span>Nouveau message de Hardy</span>
-          <span>Nouveau message de Hardy</span>
-          <span>Nouveau message de Hardy</span>
-          <span>Nouveau message de Hardy</span>
+          {notif?.length > 0 &&
+            notif.map((item, index) => (
+              <span key={index}>
+                {item.send.name} a envoyé {item.count}{" "}
+                {item.count > 0 ? "messages" : "message"}
+              </span>
+            ))}
         </div>
       </div>
       <button className="deconnexion" onClick={handleLogOut}>
@@ -81,36 +96,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-// import React, { useContext } from 'react'
-// // import photos from "../img/add.png"
-// import { signOut } from 'firebase/auth'
-// import { auth } from '../firebase'
-// import { AuthContext } from '../context/AuthContext'
-// import Xmark from '../img/x.png'
-
-// const Navbar = () => {
-//   const {currentUser} = useContext(AuthContext)
-
-//   const handleOpenMenu = () => {
-//     const sidebar = document.querySelector(".sidebar")
-//     sidebar.classList.toggle("visible")
-//   };
-
-//   return (
-//     <div className='navbar'>
-//       {/* <span className="logo">Chat</span> */}
-//       <div className="user">
-//         <img src={currentUser.photoURL} alt="photos" />
-//         <span>{currentUser.displayName}</span>
-//       </div>
-//       <button className='x' onClick={handleOpenMenu}>
-//         <img src={Xmark} alt="" />
-//         {/* X */}
-//       </button>
-//       <button className='deconnexion' onClick={() => signOut(auth)}>Déconnexion</button>
-//     </div>
-//   )
-// }
-
-// export default Navbar

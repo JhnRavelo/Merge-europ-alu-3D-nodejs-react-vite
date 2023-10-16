@@ -26,6 +26,7 @@ const ButtonProvider = ({ children }) => {
   const [polar, setPolar] = useState(null);
   const [azimuth, setAzimuth] = useState(null);
   const [search, setSearch] = useState(false);
+  const [notif, setNotif] = useState([]);
 
   const showForm = () => {
     if (show === false) {
@@ -95,6 +96,8 @@ const ButtonProvider = ({ children }) => {
         setAzimuth,
         data,
         setData,
+        notif,
+        setNotif,
       }}
     >
       {children}

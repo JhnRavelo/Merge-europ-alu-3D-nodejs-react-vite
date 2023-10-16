@@ -19,7 +19,7 @@ const Header = () => {
   const axiosPrivate = useAxiosPrivate();
   const userRef = useRef();
   const navigate = useNavigate();
-  const { body, setBody, show, socket, data } = useButtonContext();
+  const { body, setBody, show, socket, data, setDataPage } = useButtonContext();
 
   function menuIsClosed(e) {
     const profile = showProfileRef.current;
@@ -86,17 +86,20 @@ const Header = () => {
       userRef.current.classList.remove("connected");
       if (res.data == "SUCCESS") {
         socket.emit("logoutUser", { email: body.email, room: prime[0] });
-
-        setBody({
-          name: "",
-          email: "",
-          pgone: "",
-        });
-        navigate("/");
       }
     } catch (error) {
       console.log(error);
     }
+    setBody({
+      name: "",
+      email: "",
+      pgone: "",
+    });
+    navigate("/");
+    setDataPage({
+      traker: [],
+      userRead: [],
+    });
   };
 
   return (

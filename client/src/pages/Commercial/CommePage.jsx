@@ -23,6 +23,7 @@ const CommePage = () => {
     setOnAvatar,
     search,
     dataPage,
+    setNotif,
   } = useButtonContext();
   const axiosPrivate = useAxiosPrivate();
 
@@ -30,7 +31,7 @@ const CommePage = () => {
     if (commercialChat?.ID_user && socket) {
       socket.emit("joinRoom", { room: commercialChat.ID_user });
     }
-    if(dataPage?.userRead[0].ID_user && socket){
+    if(dataPage?.userRead[0]?.ID_user && socket){
       socket.emit("joinRoom", { room: dataPage?.userRead[0].ID_user })
     }
   }, [commercialChat, socket, dataPage]);
@@ -62,6 +63,9 @@ const CommePage = () => {
         const message = await axiosPrivate.post("/message/get", { receiver });
         setMessages(message.data);
       }
+      const notif = await axiosPrivate.get("/message/getNotif")
+      setNotif(notif.data)
+      console.log(notif.data);
     } catch (error) {
       console.log(error);
     }

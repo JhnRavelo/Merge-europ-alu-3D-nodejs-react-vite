@@ -324,6 +324,7 @@ const getUsers = async (req, res) => {
     where: {
       role: process.env.PRIME3,
     },
+    
   });
 
   res.json(result);
