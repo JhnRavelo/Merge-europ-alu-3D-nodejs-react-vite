@@ -105,7 +105,6 @@ const Pages = () => {
   const getAllUsers = async () => {
     try {
       const res = await defaultAxios.get("/page");
-      console.log(res.data);
       const newTable = res.data.map((user) => {
         var 
         createdAt
@@ -125,7 +124,6 @@ const Pages = () => {
 
         };
       });
-      // console.log(newTable);
       
       setRows(newTable)
       return res.data;

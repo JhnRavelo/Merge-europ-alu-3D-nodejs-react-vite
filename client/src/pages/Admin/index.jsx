@@ -40,7 +40,6 @@ const Admin = () => {
   useEffect(() => {
     if (socket) {
       socket.on("receiveConnectUser", (data) => {
-        console.log(data);
         setConnect(data);
       });
       socket.on("receiveLogoutUser", (data) => {

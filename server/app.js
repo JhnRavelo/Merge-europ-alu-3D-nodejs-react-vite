@@ -14,14 +14,13 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173", "http://192.168.123.210:5173"],
     methods: ["GET", "POST", "OPTIONS", "PUT", "DELETE"],
   },
 });
 
 io.on("connection", (socket) => {
   socket.on("joinRoom", (data) => {
-    console.log(data.room);
     socket.join(data.room);
   });
 
@@ -30,7 +29,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("sendAvatar", (data) => {
-    socket.broadcast.emit("receiveAvatar", data);
+    socket.to(data.receiver).to(data.sender).emit("receiveAvatar", data);
   });
 
   socket.on("connectUser", (data)=> {
@@ -65,7 +64,7 @@ app.use(bodyParser.json());
 app.use(
   cors({
     credentials: true,
-    origin: `http://localhost:5173`,
+    origin: [`http://localhost:5173`, "http://192.168.123.210:5173"],
     methods: ["GET", "POST", "DELETE", "PUT"],
   })
 );

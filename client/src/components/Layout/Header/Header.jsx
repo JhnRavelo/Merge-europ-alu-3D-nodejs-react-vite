@@ -152,6 +152,11 @@ const Header = () => {
                   <h1>Acceuil</h1>
                 </NavLink>
               </li>
+              <li>
+                <NavLink to="/page">
+                  <h1>Modèle 3D</h1>
+                </NavLink>
+              </li>
               {data?.length > 0 &&
                 data.map((page, index) => {
                   return (

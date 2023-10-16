@@ -20,9 +20,9 @@ const Search = () => {
                 item.name.toLowerCase().includes(e.target.value.toLowerCase())
               );
               setCommercials(filteredItems);
-              console.log(commercials);
+             
               if (e.target.value == "") {
-                console.log("search");
+               
                 if (search) {
                   setSearch(false);
                 } else {

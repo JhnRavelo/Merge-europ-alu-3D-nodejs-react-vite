@@ -1,4 +1,4 @@
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 import { faEnvelope, faKey } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ErrorMessage, Field } from "formik";
@@ -13,7 +13,6 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 const prime = import.meta.env.VITE_PRIME.split(" ");
 
 const Login = () => {
-
   const [visible, setVisible] = useState(false);
   const location = useLocation();
   const { setAuth } = useAuth();
@@ -45,39 +44,40 @@ const Login = () => {
         accessToken = res.data.accessToken;
 
       if (role) {
-       await setAuth({ role, accessToken });
+        await setAuth({ role, accessToken });
         if (role == prime[0]) {
           navigate("/admin/");
         } else if (role == prime[2] && location.pathname == "/") {
           navigate("/page");
-        } else if(role == prime[1]) {
-          navigate("/commercial/")
+        } else if (role == prime[1]) {
+          navigate("/commercial/");
         }
         showForm();
 
         socket.emit("joinRoom", {
-          room: prime[0]
-        })
+          room: prime[0],
+        });
 
         socket.emit("connectUser", {
-          loginMail: loginMail, room: prime[0]
-        })
-        
-        toast.success("Vous êtes connecté.")
+          loginMail: loginMail,
+          room: prime[0],
+        });
+
+        toast.success("Vous êtes connecté.");
       }
     } catch (error) {
       if (error) {
         console.log(error);
-        toast.error("Connexion impossible")
+        toast.error("Connexion impossible");
       }
     }
   };
-  
+
   const handleEnterPressed = (event) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       event.preventDefault();
 
-      const allInputs = document.querySelectorAll('.user-input');
+      const allInputs = document.querySelectorAll(".user-input");
       const currentInput = event.target;
 
       const currentIndex = Array.from(allInputs).indexOf(currentInput);
@@ -85,7 +85,7 @@ const Login = () => {
       if (currentIndex < allInputs.length - 1) {
         allInputs[currentIndex + 1].focus();
       } else {
-        handleLogin()
+        handleLogin();
       }
     }
   };
@@ -141,6 +141,7 @@ const Login = () => {
           className="error login-loginMail-error"
         />
       </div>
+
       <div className="buttons">
         <button
           type="button"

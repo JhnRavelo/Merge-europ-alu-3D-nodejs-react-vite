@@ -67,7 +67,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       process.env.REFRESH_TOKEN_SECRET,
       {
-        expiresIn: "1d",
+        expiresIn: "5min",
       }
     );
 

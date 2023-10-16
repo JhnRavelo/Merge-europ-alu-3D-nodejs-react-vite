@@ -28,6 +28,7 @@ const Layout = () => {
     onAvatar,
     setOnAvatar,
     setData,
+    dataPage
   } = useButtonContext();
   const axiosPrivate = useAxiosPrivate();
   const location = useLocation();
@@ -47,7 +48,10 @@ const Layout = () => {
     if (commercialChat?.ID_user && socket) {
       socket.emit("joinRoom", { room: commercialChat.ID_user });
     }
-  }, [commercialChat, socket]);
+    if(dataPage?.userRead[0]?.ID_user && socket){
+      socket.emit("joinRoom", { room: dataPage?.userRead[0].ID_user })
+    }
+  }, [commercialChat, socket, dataPage]);
 
   useEffect(() => {
     fetchData();

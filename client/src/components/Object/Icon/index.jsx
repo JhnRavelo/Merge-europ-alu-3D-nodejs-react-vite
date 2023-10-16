@@ -1,5 +1,4 @@
 import { Html } from "@react-three/drei";
-import { useEffect } from "react";
 import useButtonContext from "../../../hooks/useButtonContext";
 import { useNavigate } from "react-router-dom";
 
@@ -7,12 +6,7 @@ function Icon() {
   const { data } = useButtonContext();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
-
   const handleClick = (icon) => {
-    console.log(icon.ID_page);
     navigate(`/page/${icon.ID_page}`);
   };
 

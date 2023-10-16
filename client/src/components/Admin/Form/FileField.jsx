@@ -38,7 +38,6 @@ const FileField = ({ name, accept, setFieldValue, folder, value }) => {
           accept={accept}
           onChange={(e) => {
             if (e.target.files) {
-              console.log(e.target.files);
               setFieldValue(name, e.target.files);
             }
           }}

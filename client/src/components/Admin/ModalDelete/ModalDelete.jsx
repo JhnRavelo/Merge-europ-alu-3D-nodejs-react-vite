@@ -13,10 +13,10 @@ const ModalDelete = ({
 }) => {
   const privateAxios = useAxiosPrivate();
   const handleDelete = async () => {
-    console.log(deleteRow);
+
     try {
       const res = await privateAxios.delete(`${url}/${deleteRow}`);
-      console.log(res.data);
+
       if (res.data == "supprimé") {
         setDeleteOpen(false);
         setDeleteRow(null);

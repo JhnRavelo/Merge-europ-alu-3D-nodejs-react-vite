@@ -108,7 +108,6 @@ const Products = () => {
           createdAt,
         };
       });
-      // console.log(newTable);
 
       setRows(newTable);
       return res.data;
