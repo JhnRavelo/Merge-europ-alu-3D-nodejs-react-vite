@@ -22,6 +22,7 @@ const Login = () => {
   const { loginMail, loginPassword } = formContext[1];
   const errors = formContext[0];
   const navigate = useNavigate();
+  const from = location?.state?.from?.pathname;
   useEffect(() => {
     const btnLogin = btnLoginRef.current;
     if (
@@ -45,12 +46,16 @@ const Login = () => {
 
       if (role) {
         await setAuth({ role, accessToken });
-        if (role == prime[0]) {
-          navigate("/admin/");
-        } else if (role == prime[2] && location.pathname == "/") {
-          navigate("/page");
-        } else if (role == prime[1]) {
-          navigate("/commercial/");
+        if (from) {
+          navigate(from, { replace: true });
+        } else {
+          if (role == prime[0]) {
+            navigate("/admin/");
+          } else if (role == prime[2] && location.pathname == "/") {
+            navigate("/page");
+          } else if (role == prime[1]) {
+            navigate("/commercial/");
+          }
         }
         showForm();
 
