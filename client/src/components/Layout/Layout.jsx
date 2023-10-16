@@ -28,7 +28,8 @@ const Layout = () => {
     onAvatar,
     setOnAvatar,
     setData,
-    dataPage
+    dataPage,
+    setNotif
   } = useButtonContext();
   const axiosPrivate = useAxiosPrivate();
   const location = useLocation();
@@ -78,6 +79,8 @@ const Layout = () => {
           const message = await axiosPrivate.post("/message/get", { receiver });
           setMessages(message.data);
         }
+        const notif = await axiosPrivate.get("/message/getNotif")
+        setNotif(notif.data)
       } else {
         setBody({
           name: "",

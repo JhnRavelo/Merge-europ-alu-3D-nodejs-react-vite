@@ -10,7 +10,7 @@ import { useEffect } from "react";
 
 const Navbar = () => {
   const notifRef = useRef();
-  const { dataPage, setBody, notif } = useButtonContext();
+  const { dataPage, setBody, notif, commercialChat} = useButtonContext();
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
   const [notifCount, setNotifCount] = useState(0);
@@ -43,8 +43,10 @@ const Navbar = () => {
   useEffect(() => {
     if (notif?.length > 0) {
       setNotifCount(notif.length);
+    }else{
+      setNotifCount(0)
     }
-  }, [notif]);
+  }, [notif, commercialChat]);
 
   return (
     <div className="navbar">

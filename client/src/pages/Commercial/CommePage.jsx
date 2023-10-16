@@ -65,7 +65,6 @@ const CommePage = () => {
       }
       const notif = await axiosPrivate.get("/message/getNotif")
       setNotif(notif.data)
-      console.log(notif.data);
     } catch (error) {
       console.log(error);
     }

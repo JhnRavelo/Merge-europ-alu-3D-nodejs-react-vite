@@ -10,12 +10,15 @@ import handleLastMessage from "../../lib/utils/handleLastMessage";
 import { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import handleClassNewMessage from "../../lib/utils/handleClassNewMessage";
 
 const ProfilPage = () => {
   const [chatOrCart, setChatOrCart] = useState("vide");
-  const { dataPage, commercials, setCommercialChat, lastMessage , onMessage} =
+  const { dataPage, commercials, setCommercialChat, lastMessage , onMessage, notif, commercialChat} =
     useButtonContext();
     const [lastMessageDisplay, setLastMessageDisplay] = useState([]);
+    const [classNewMessage, setClassNewMessage] = useState([])
+  const [countMessage, setCountMessage] = useState([])
 
   const handleSetCart = () => {
     setChatOrCart("cart");
@@ -31,7 +34,8 @@ const ProfilPage = () => {
 
   useEffect(() => {
     handleLastMessage(commercials, lastMessage, setLastMessageDisplay);
-  }, [lastMessage, commercials, onMessage]);
+    handleClassNewMessage(setClassNewMessage, commercials, notif, setCountMessage)
+  }, [lastMessage, commercials, onMessage, notif, commercialChat]);
 
   return (
     <>
@@ -76,9 +80,9 @@ const ProfilPage = () => {
                           <img src={item?.avatar} alt="" />
                           <div className="userChatInfo">
                             <span>{item?.name}</span>
-                            <p>{lastMessageDisplay}</p>
+                            <p className={classNewMessage[index]}>{lastMessageDisplay[index]}</p>
                           </div>
-                          <span className="notif newMessage">1</span>
+                          {countMessage[index]>0 && <span className="notif newMessage"> {countMessage[index]} </span>}
                         </div>
                       </div>
                     ))}
