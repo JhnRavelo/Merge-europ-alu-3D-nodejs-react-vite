@@ -4,15 +4,16 @@ import handleLastMessage from "../../lib/utils/handleLastMessage";
 import handleClassNewMessage from "../../lib/utils/handleClassNewMessage";
 
 const Chats = () => {
-  const { commercials, lastMessage, setCommercialChat, onMessage, notif } =
+  const { commercials, lastMessage, setCommercialChat, onMessage, notif, commercialChat } =
     useButtonContext();
   const [lastMessageDisplay, setLastMessageDisplay] = useState([]);
   const [classNewMessage, setClassNewMessage] = useState([])
+  const [countMessage, setCountMessage] = useState([])
 
   useEffect(() => {
     handleLastMessage(commercials, lastMessage, setLastMessageDisplay);
-    handleClassNewMessage(setClassNewMessage, commercials, notif)
-  }, [lastMessage, commercials, onMessage, notif]);
+    handleClassNewMessage(setClassNewMessage, commercials, notif, setCountMessage)
+  }, [lastMessage, commercials, onMessage, notif, commercialChat]);
 
   return (
     <>
@@ -34,7 +35,7 @@ const Chats = () => {
                       lastMessageDisplay[index]}
                   </p>
                 </div>
-                <span className="notif newMessage">1</span>
+                {countMessage[index] > 0 && <span className="notif newMessage"> {countMessage[index]} </span>}
               </div>
             </div>
           ))}

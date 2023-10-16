@@ -1,17 +1,19 @@
+const handleClassNewMessage = (setClassNewMessage, commercials, notif, setCountMessage) => {
+  const classNewMessages = new Array(), countMessages = new Array();
+  commercials.map((item) => {
+    const find = notif.find((n) => n.send.ID_user == item.ID_user);
+    console.log(find)
+    if (find) {
+      classNewMessages.push("newMessage");
+      countMessages.push(find?.count)
+    } else {
+      classNewMessages.push("");
+      countMessages.push(find?.count)
+    }
+    
+  });
+  setCountMessage(countMessages)
+  setClassNewMessage(classNewMessages);
+};
 
-
-const handleClassNewMessage = (setClassNewMessage, commercials, notif) => {
-    const classNewMessages = new Array()
-    if(notif?.length > 0){
-        commercials.map((item)=>{
-            const find = notif.find((n)=>n.send.ID_user == item.ID_user)
-            if(find){
-                classNewMessages.push("newMessage")
-            }else {
-                classNewMessages.push("")
-            }
-        })
-      }
-}
-
-export default handleClassNewMessage
+export default handleClassNewMessage;
