@@ -2,6 +2,7 @@ const { users, sessions, logs } = require("../database/models");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
 const sequelize = require("sequelize");
+const {Op} = require("sequelize")
 
 var date = new Date();
 var day = date.getDate();
@@ -73,7 +74,9 @@ const validationRegister = async (req, res) => {
   if (email) {
     userName = await users.findOne({
       where: {
-        email: email,
+        email: {
+          [Op.eq]: email,
+        },
       },
     });
   }
@@ -94,7 +97,9 @@ const validationLogin = async (req, res) => {
 
   const userName = await users.findOne({
     where: {
-      email: loginMail,
+      email: {
+        [Op.eq]: loginMail,
+      },
     },
   });
 
@@ -117,7 +122,9 @@ const userLogin = async (req, res) => {
 
   const userName = await users.findOne({
     where: {
-      email: loginMail,
+      email: {
+        [Op.eq]: loginMail,
+      },
     },
   });
 
@@ -324,7 +331,7 @@ const getUsers = async (req, res) => {
     where: {
       role: process.env.PRIME3,
     },
-    
+
   });
 
   res.json(result);

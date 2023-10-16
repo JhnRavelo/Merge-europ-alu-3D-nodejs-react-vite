@@ -23,8 +23,6 @@ const ButtonProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
   const [onMessage, setOnMessage] = useState(null);
   const [onAvatar, setOnAvatar] = useState(null);
-  const [polar, setPolar] = useState(null);
-  const [azimuth, setAzimuth] = useState(null);
   const [search, setSearch] = useState(false);
   const [notif, setNotif] = useState([]);
 
@@ -90,10 +88,6 @@ const ButtonProvider = ({ children }) => {
         setOnAvatar,
         search,
         setSearch,
-        polar,
-        setPolar,
-        azimuth,
-        setAzimuth,
         data,
         setData,
         notif,

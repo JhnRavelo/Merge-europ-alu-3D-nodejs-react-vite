@@ -122,7 +122,7 @@ const getUsers = async (req, res) => {
         attributes: ["name", "avatar", "ID_user"],
       },
     ],
-    order: ["sender"],
+    order: [[Sequelize.col("messages.createdAt"), "DESC"]],
   });
 
   const allUserAvecDoublons = user.map((item) => {
@@ -176,17 +176,18 @@ const getMessageNotif = async (req, res) => {
     attributes: [
       "sender",
       "receiver",
+      "createdAt",
       [Sequelize.fn("COUNT", Sequelize.col("ID_message")), "count"],
     ],
-    include:[
+    include: [
       {
         model: users,
-        as:"send",
-        attributes:["ID_user", "name", "email"]
-      }
+        as: "send",
+        attributes: ["ID_user", "name", "email"],
+      },
     ],
     group: ["sender"],
-    order: ["sender"],
+    order: [[Sequelize.col("messages.createdAt"), "DESC"]],
   });
 
   res.json(receiveMessage);

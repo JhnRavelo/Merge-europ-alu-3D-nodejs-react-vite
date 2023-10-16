@@ -3,33 +3,21 @@ import logo from "../../../assets/Logo_ea.png";
 import { Link } from "react-router-dom";
 import Form from "../../../components/Pages/Form/Form";
 import useButtonContext from "../../../hooks/useButtonContext";
-import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
-
-const body = {
-  name: "",
-  phone: "",
-  email: "",
-};
+import useLogout from "../../../hooks/useLogout";
 
 const Home = () => {
-  const { show, showForm, setBody } = useButtonContext();
-  const privateAxios = useAxiosPrivate();
+  const { show, showForm } = useButtonContext();
+  const logout = useLogout()
 
   useEffect(() => {
     handleLogout();
   }, []);
 
   const handleLogout = async () => {
-    try {
-      await privateAxios.get("/auth/logout");
-      setBody(body)
-      toast.info("Deconnexion")
-    } catch (error) {
-      console.log(error);
-
-    }
+    logout()
+    toast.info("Deconnexion")
   };
 
   return (

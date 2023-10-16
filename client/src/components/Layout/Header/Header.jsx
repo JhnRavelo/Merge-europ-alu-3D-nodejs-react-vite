@@ -1,14 +1,12 @@
 import "./Header.css";
 import Logo from "../../../assets/Logo_aluhd.png";
 import { useEffect, useRef } from "react";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import useAuth from "../../../hooks/useAuth";
 import useButtonContext from "../../../hooks/useButtonContext";
-
-const prime = import.meta.env.VITE_PRIME.split(" ");
+import useLogout from "../../../hooks/useLogout";
 
 const Header = () => {
   const { auth } = useAuth();
@@ -16,10 +14,9 @@ const Header = () => {
   const showLogoutRef = useRef();
   const showProfileRef = useRef();
   const location = useLocation();
-  const axiosPrivate = useAxiosPrivate();
   const userRef = useRef();
-  const navigate = useNavigate();
-  const { body, setBody, show, socket, data, setDataPage } = useButtonContext();
+  const { body, show, data } = useButtonContext();
+  const logout = useLogout();
 
   function menuIsClosed(e) {
     const profile = showProfileRef.current;
@@ -80,26 +77,8 @@ const Header = () => {
   }, [auth, body, show]);
 
   const handleLogOut = async () => {
-    try {
-      const res = await axiosPrivate.get("/auth/logout");
-
-      userRef.current.classList.remove("connected");
-      if (res.data == "SUCCESS") {
-        socket.emit("logoutUser", { email: body.email, room: prime[0] });
-      }
-    } catch (error) {
-      console.log(error);
-    }
-    setBody({
-      name: "",
-      email: "",
-      pgone: "",
-    });
-    navigate("/");
-    setDataPage({
-      traker: [],
-      userRead: [],
-    });
+    userRef.current.classList.remove("connected");
+    logout();
   };
 
   return (

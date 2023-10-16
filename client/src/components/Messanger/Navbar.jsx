@@ -2,41 +2,22 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignOutAlt, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
 import useButtonContext from "../../hooks/useButtonContext";
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import { useNavigate } from "react-router-dom";
 import { useRef } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
+import useLogout from "../../hooks/useLogout";
 
 const Navbar = () => {
   const notifRef = useRef();
-  const { dataPage, setBody, notif, commercialChat} = useButtonContext();
-  const axiosPrivate = useAxiosPrivate();
-  const navigate = useNavigate();
+  const { dataPage, notif, commercialChat} = useButtonContext();
   const [notifCount, setNotifCount] = useState(0);
+  const logout = useLogout()
   const handleOpenMenu = () => {
     const sidebar = document.querySelector(".sidebar");
     sidebar.classList.toggle("visible");
   };
 
-  const handleLogOut = async () => {
-    try {
-      const res = await axiosPrivate.get("/auth/logout");
-      if (res.data == "SUCCESS") {
-        setBody({
-          name: "",
-          email: "",
-          pgone: "",
-        });
-        navigate("/");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const handleShowNotif = () => {
-    setNotifCount(0)
     notifRef.current.classList.toggle("visible");
   };
 
@@ -85,7 +66,7 @@ const Navbar = () => {
             ))}
         </div>
       </div>
-      <button className="deconnexion" onClick={handleLogOut}>
+      <button className="deconnexion" onClick={()=>logout()}>
         <FontAwesomeIcon
           icon={faSignOutAlt}
           flip
