@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import Form from "../../../components/Pages/Form/Form";
 import useButtonContext from "../../../hooks/useButtonContext";
 import { useEffect } from "react";
-import { toast } from "react-toastify";
 import useLogout from "../../../hooks/useLogout";
 
 const Home = () => {
@@ -12,13 +11,11 @@ const Home = () => {
   const logout = useLogout()
 
   useEffect(() => {
-    handleLogout();
+      logout()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleLogout = async () => {
-    logout()
-    toast.info("Deconnexion")
-  };
+  
 
   return (
     <div id="home__page">

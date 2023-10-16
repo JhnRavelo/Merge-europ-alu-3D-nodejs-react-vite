@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import "./CommePage.scss";
 import "../../components/Messanger/style.scss";
 import Home from "../../components/Messanger/Home";

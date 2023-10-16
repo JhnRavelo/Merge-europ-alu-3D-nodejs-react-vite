@@ -16,6 +16,7 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
+    "react-hooks/exhaustive-deps": 'warn',
     "react/no-unknown-property": ["error", { ignore: ["args","directory", "mozdirectory", "position", "dispose", "geometry", "material"] }],
   },
 }

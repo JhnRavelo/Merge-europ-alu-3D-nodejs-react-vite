@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Header from "../../components/Admin/Header/Header";
 import Menu from "../../components/Admin/Menu/Menu";
 import Footer from "../../components/Admin/Footer/Footer";

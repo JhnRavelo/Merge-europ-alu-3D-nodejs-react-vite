@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Chemins from "../../routers/Chemins";
 import Grids from "./Grids/Grids";
 import Header from "./Header/Header";

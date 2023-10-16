@@ -2,13 +2,14 @@ import { useNavigate } from "react-router-dom";
 import useAxiosPrivate from "./useAxiosPrivate";
 import useButtonContext from "./useButtonContext";
 import useAuth from "./useAuth";
+import { toast } from "react-toastify";
+import useAdminContext from "./useAdminContext";
 
 const prime = import.meta.env.VITE_PRIME.split(" ");
 
 const useLogout = () => {
   const {
     setBody,
-    setData,
     setDataPage,
     setSelectedProduct,
     setCommercialChat,
@@ -16,16 +17,18 @@ const useLogout = () => {
     setMessages,
     setReceiver,
     setSender,
-    setShow
+    setShow,
   } = useButtonContext();
-  const navigate = useNavigate()
-  const {setAuth} = useAuth()
+  const { setData } = useAdminContext();
+  const navigate = useNavigate();
+  const { setAuth } = useAuth();
 
   const logout = async () => {
     try {
       const res = await useAxiosPrivate.get("/auth/logout");
 
       if (res.data == "SUCCESS") {
+        toast.info("Deconnexion");
         const randomId = Math.floor(Math.random() * 999999);
         socket.emit("logoutUser", { id: randomId, room: prime[0] });
       }
@@ -34,20 +37,20 @@ const useLogout = () => {
     }
 
     setBody({ name: "", email: "", phone: "" });
-    setData([]);
     setDataPage({
       traker: [],
       userRead: [],
     });
+    setData({});
     setSelectedProduct("");
     setCommercialChat({});
-    setAuth({})
-    setMessages([])
-    setReceiver(null)
-    setSender(null)
-    setShow(false)
-    navigate("/")
-    
+    setAuth({});
+    setMessages([]);
+    setReceiver(null);
+    setSender(null);
+    setShow(false);
+    setData();
+    navigate("/");
   };
   return logout;
 };
