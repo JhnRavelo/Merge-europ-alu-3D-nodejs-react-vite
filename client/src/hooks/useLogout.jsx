@@ -22,10 +22,11 @@ const useLogout = () => {
   const { setData } = useAdminContext();
   const navigate = useNavigate();
   const { setAuth } = useAuth();
+  const axiosPrivate = useAxiosPrivate()
 
   const logout = async () => {
     try {
-      const res = await useAxiosPrivate.get("/auth/logout");
+      const res = await axiosPrivate.get("/auth/logout");
 
       if (res.data == "SUCCESS") {
         toast.info("Deconnexion");
@@ -48,7 +49,7 @@ const useLogout = () => {
     setMessages([]);
     setReceiver(null);
     setSender(null);
-    setShow(false);
+    // setShow(false);
     setData();
     navigate("/");
   };

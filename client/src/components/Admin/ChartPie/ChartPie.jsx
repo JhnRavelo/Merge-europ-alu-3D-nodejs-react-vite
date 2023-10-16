@@ -61,7 +61,7 @@ const PieChartBox = () => {
           <div className="option" key={item.name}>
             <div className="title">
               <div className="dot" style={{ backgroundColor: item.color }} />
-              <span>{item.name}</span>
+              <span>{item.name.split(" ").length > 1 ? `${item.name.split(" ")[0][0]}. ${item.name.split(" ")[1]}` : `${item.name.split(" ")[0]}`}</span>
             </div>
             <span>{item.value}</span>
           </div>

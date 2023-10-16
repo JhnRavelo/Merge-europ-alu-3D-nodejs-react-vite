@@ -2,7 +2,7 @@ const { users, sessions, logs } = require("../database/models");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
 const sequelize = require("sequelize");
-const {Op} = require("sequelize")
+const { Op } = require("sequelize");
 
 var date = new Date();
 var day = date.getDate();
@@ -214,11 +214,11 @@ const userRead = async (req, res) => {
 
 const userLogout = async (req, res) => {
   const cookie = req.cookies;
-
+  console.log(cookie)
   if (!cookie?.jwt) return res.sendStatus(204);
 
   const refreshToken = cookie.jwt;
-  console.log("object");
+
   const user = await users.findOne({
     where: {
       refreshToken: refreshToken,
@@ -331,10 +331,35 @@ const getUsers = async (req, res) => {
     where: {
       role: process.env.PRIME3,
     },
-
   });
 
-  res.json(result);
+  const filterResult = result.map((item) => {
+    if (item.refreshToken) {
+      return {
+        id: item.ID_user,
+        name: item.name,
+        email: item.email,
+        phone: item.phone,
+        avatar: item.avatar,
+        createdAt: item.createdAt,
+        connected: true,
+        type: item.type,
+      };
+    } else {
+      return {
+        id: item.ID_user,
+        name: item.name,
+        email: item.email,
+        phone: item.phone,
+        avatar: item.avatar,
+        createdAt: item.createdAt,
+        connected: false,
+        type: item.type,
+      };
+    }
+  });
+
+  res.json(filterResult);
 };
 
 const updateUser = async (req, res) => {
@@ -398,7 +423,31 @@ const getCommercials = async (req, res) => {
     },
   });
 
-  return res.json(result);
+  const filterResult = result.map((item) => {
+    if (item.refreshToken) {
+      return {
+        id: item.ID_user,
+        name: item.name,
+        email: item.email,
+        phone: item.phone,
+        avatar: item.avatar,
+        createdAt: item.createdAt,
+        connected: true,
+      };
+    } else {
+      return {
+        id: item.ID_user,
+        name: item.name,
+        email: item.email,
+        phone: item.phone,
+        avatar: item.avatar,
+        createdAt: item.createdAt,
+        connected: false,
+      };
+    }
+  });
+
+  return res.json(filterResult);
 };
 
 const avatarUpdateUser = async (req, res) => {

@@ -77,21 +77,16 @@ const Commercials = () => {
   useEffect(() => {
     if(commercial.length != 0){
       const newTable = commercial.map((user) => {
-        var connected, createdAt;
-        if (!user.refreshToken) {
-          connected = false;
-        } else {
-          connected = true;
-        }
+        var createdAt;
         createdAt = user.createdAt.slice(0, 10);
         return {
-          id: user.ID_user,
+          id: user.id,
           avatar: user.avatar,
           name: user.name,
           email: user.email,
           phone: user.phone,
           createdAt,
-          connected,
+          connected: user.connected,
         };
       });
 
