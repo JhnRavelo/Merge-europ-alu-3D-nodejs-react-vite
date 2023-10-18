@@ -2,6 +2,7 @@
 
 .single {
   display: flex;
+max-height: 100vh;
 
   @include xl{
     flex-direction: column;
@@ -9,7 +10,8 @@
   }
 
   .view {
-    flex: 1;
+    // flex: 1;
+    width: 60%;
 
     .info {
       .topInfo {
@@ -20,8 +22,8 @@
         img {
           width: 100px;
           height: 100px;
-          border-radius: 20px;
-          object-fit: cover;
+        //   border-radius: 20px;
+          object-fit: fill;
         }
 
         h1 {
@@ -32,7 +34,22 @@
         font-size: 18px;
 
         .item {
-          margin: 30px 0px;
+          margin: 20px 0px;
+          
+          .gallery-single {
+            display: flex;
+            margin-top: 10px;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-direction: row;
+            img {
+                // margin-left: 20px;               
+                width: 50px;
+                height: 50px;
+                
+            }
+          }
 
           .itemTitle {
             font-weight: 600;
@@ -55,9 +72,9 @@
     }
 
     .chart {
-      margin-top: 50px;
+    //   margin-top: 50px;
       width: 80%;
-      height: 400px;
+      height: 350px;
 
       @include md{
         display: none;
@@ -72,6 +89,8 @@
     }
 
     ul {
+        overflow: scroll;
+        max-height: 500px;
       li {
         list-style-type: none;
         position: relative;
