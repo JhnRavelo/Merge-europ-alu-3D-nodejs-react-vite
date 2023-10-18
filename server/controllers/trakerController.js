@@ -1,5 +1,6 @@
 const { trakers, users, products, pages, logs } = require("../database/models");
 const sequelize = require("sequelize");
+const {Op} = require("sequelize")
 
 const addTraker = async (req, res) => {
   const { checked } = await req.body;
@@ -187,10 +188,52 @@ const nbrProdByTrack = async (req, res) => {
   });
 };
 
+const getProdByInterested = async(req, res)=>{
+  const {id, year} = req.body
+
+  const countByMonthByYear = await trakers.findAll({
+    where: {
+      year: year,
+      productId: id,
+    },
+    attributes: [
+      "month",
+      [sequelize.fn("COUNT", sequelize.col("ProductId")), "count"],
+    ],
+    group: ["month"],
+    order: ["month"],
+  });
+
+  const logSingleProductInterested = await trakers.findAll({
+    where:{
+      year: year,
+      productId: id,
+    },
+    attributes: [
+      [sequelize.literal("TIME(trakers.createdAt)"), "time"],
+    ],
+    include: [
+          {
+            model: products,
+            attributes: ["title"],
+          },
+          {
+            model: users,
+            attributes: ["name", "email"],
+          },
+    ],
+    order: [[sequelize.col("trakers.createdAt"), "DESC"]],
+    limit: 10
+  });
+
+  res.json({countByMonthByYear, logSingleProductInterested})
+}
+
 module.exports = {
   addTraker,
   getTraker,
   getTrakers,
   getTopProduct,
   nbrProdByTrack,
+  getProdByInterested
 };
