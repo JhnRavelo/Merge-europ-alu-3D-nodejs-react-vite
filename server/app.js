@@ -32,22 +32,25 @@ io.on("connection", (socket) => {
     socket.to(data.receiver).to(data.sender).emit("receiveAvatar", data);
   });
 
-  socket.on("connectUser", (data)=> {
-    console.log(data.room);
-    socket.to(data.room).emit("receiveConnectUser", data)
-  })
+  socket.on("connectUser", (data) => {
+    socket.to(data.room).emit("receiveConnectUser", data);
+  });
 
-  socket.on("logoutUser", (data)=>{
-    socket.to(data.room).emit("receiveLogoutUser", data)
-  })
+  socket.on("logoutUser", (data) => {
+    socket.to(data.room).emit("receiveLogoutUser", data);
+  });
 
-  socket.on("UserInterested", (data)=>{
-    socket.to(data.room).emit("receiveInterested", data)
-  })
+  socket.on("UserInterested", (data) => {
+    socket.to(data.room).emit("receiveInterested", data);
+  });
 
-  socket.on("formAdd", (data)=>{
-    socket.broadcast.emit("receiveForm", data)
-  })
+  socket.on("formAdd", (data) => {
+    socket.broadcast.emit("receiveForm", data);
+  });
+
+  socket.on("deleteForm", (data) => {
+    socket.broadcast.emit("receiveDelete", data);
+  });
 });
 
 pages.hasMany(products, { onDelete: "CASCADE", foreignKey: "pageId" });

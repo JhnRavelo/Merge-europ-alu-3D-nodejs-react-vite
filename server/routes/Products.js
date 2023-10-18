@@ -17,8 +17,6 @@ const imgPath = path.join(__dirname, "..", "public", "img");
 
 const storage = multer.diskStorage({
   destination: function (req, file, callback) {
-    // console.log(file);
-    // if(file.mimetype.split("/")[0] == "image"){
     if (file.fieldname == "png") {
       const homeImg = path.join(imgPath, "png");
       callback(null, homeImg);
@@ -29,13 +27,10 @@ const storage = multer.diskStorage({
       const Icon = path.join(imgPath, "pub");
       callback(null, Icon);
     }
-    // }
   },
 
   filename: function (req, file, callback) {
-    // if(file.mimetype.split("/")[0] == "image"){
     callback(null, Buffer.from(file.originalname, "latin1").toString("utf8"));
-    // }
   },
 });
 
@@ -56,12 +51,6 @@ router
   .route("/upload")
   .post(multipleField, uploadProductImage)
   .put(multipleField, uploadProductImage);
-
-
-
-// router.use(verifyJWT);
-
-// router.use(verifyRole(process.env.PRIME1));
 
 router
   .route("/")

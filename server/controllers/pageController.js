@@ -133,7 +133,6 @@ const getPages = async (req, res) => {
 
 const deletePage = async (req, res) => {
   const id = await req?.params?.id;
-  console.log(id);
   if (!id) return res.json("Pas d'identifiant");
 
   const page = await pages.findOne({

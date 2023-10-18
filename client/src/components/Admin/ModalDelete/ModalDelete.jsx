@@ -3,6 +3,7 @@ import Trash from "../../../assets/poubelle.png";
 import propTypes from "prop-types";
 // import defaultAxios from "../../../api/axios";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import useButtonContext from "../../../hooks/useButtonContext";
 
 const ModalDelete = ({
   setDeleteOpen,
@@ -11,9 +12,10 @@ const ModalDelete = ({
   setDeleteRow,
   title,
 }) => {
+  const {socket} = useButtonContext()
   const privateAxios = useAxiosPrivate();
   const handleDelete = async () => {
-
+    socket.emit("deleteForm", {deleteRow})
     try {
       const res = await privateAxios.delete(`${url}/${deleteRow}`);
 

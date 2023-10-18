@@ -5,6 +5,7 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import FormContext from "../Form/FormContext";
 import errorShake from "../../../lib/utils/errorShake";
 import useButtonContext from "../../../hooks/useButtonContext";
+import defaultAxios from "../../../api/axios";
 
 const SignupTemplate = () => {
   const [index, setIndex] = useState(5);
@@ -77,7 +78,27 @@ const SignupTemplate = () => {
       if (!password && !confirmPassword && champs[0].value && champs[1].value) {
         setIndex((prevIndex) => prevIndex + 1);
       }
-    } else {
+    } else if(index == 1){
+      var inputEmail = document.querySelector(".username");
+      var champEmail = document.querySelector(".user-input");
+      var errorEmail = errors[index];
+      try {
+        const res = await defaultAxios.post("/auth/mail", {email: formContext[1].email})
+        console.log(res.data)
+        if (errorEmail || !champEmail.value || res.data == "email non sent") {
+          errorShake(inputEmail);
+        } else {
+          setIndex((prevIndex) => prevIndex + 1);
+        }
+      } catch (error) {
+        if(error){
+          errorShake(inputEmail);
+        }
+        console.log(error)
+      }
+      
+    }
+    else {
       var input = document.querySelector(".username");
       var champ = document.querySelector(".user-input");
       var error = errors[index];

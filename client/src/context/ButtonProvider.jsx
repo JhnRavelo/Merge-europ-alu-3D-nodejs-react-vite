@@ -24,6 +24,7 @@ const ButtonProvider = ({ children }) => {
   const [onMessage, setOnMessage] = useState(null);
   const [onAvatar, setOnAvatar] = useState(null);
   const [onForm, setOnForm] = useState(null);
+  const [onDelete, setOnDelete] = useState(null);
   const [search, setSearch] = useState(false);
   const [notif, setNotif] = useState([]);
 
@@ -96,6 +97,8 @@ const ButtonProvider = ({ children }) => {
         setNotif,
         onForm,
         setOnForm,
+        onDelete,
+        setOnDelete,
       }}
     >
       {children}

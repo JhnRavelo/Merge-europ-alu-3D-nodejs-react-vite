@@ -3,6 +3,18 @@ const bcrypt = require("bcrypt");
 require("dotenv").config();
 const sequelize = require("sequelize");
 const { Op } = require("sequelize");
+const { google } = require("googleapis");
+const nodemailer = require("nodemailer");
+
+/*POPULATE BELOW FIELDS WITH YOUR CREDETIALS*/
+
+const CLIENT_ID =
+  "187306155890-bfhfeepg11p0mkr26g5tg7mjj0v28ujg.apps.googleusercontent.com";
+const CLIENT_SECRET = "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";
+const REFRESH_TOKEN =
+  "1//04qerzM0Bpi4gCgYIARAAGAQSNwF-L9Ir3i149RawIHrkx7bSpqZhbM9ymf3sIFNNHvKgceYtzB8FfVe-cAKiihCK22RaTTq1hZY";
+const REDIRECT_URI = "https://developers.google.com/oauthplayground"; //DONT EDIT THIS
+const MY_EMAIL = "timmyrocher8@gmail.com";
 
 var date = new Date();
 var day = date.getDate();
@@ -86,6 +98,59 @@ const validationRegister = async (req, res) => {
   }
 
   res.json("User");
+};
+
+const verificationEmail = async (req, res) => {
+  const oAuth2Client = new google.auth.OAuth2(
+    CLIENT_ID,
+    CLIENT_SECRET,
+    REDIRECT_URI
+  );
+
+  oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
+
+  const ACCESS_TOKEN = await oAuth2Client.getAccessToken();
+  console.log(ACCESS_TOKEN)
+
+  const { email } = req.body;
+  console.log(email);
+
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      type: "OAuth2",
+      user: MY_EMAIL,
+      clientId: CLIENT_ID,
+      clientSecret: CLIENT_SECRET,
+      refreshToken: REFRESH_TOKEN,
+      accessToken: ACCESS_TOKEN,
+    },
+    tls: {
+      rejectUnauthorized: true,
+    },
+  });
+  const random = Math.floor(Math.random() * 999999);
+
+  const mailOptions = {
+    from: MY_EMAIL,
+    to: "johnravelo135@gmail.com",
+    subject: "Votre mot de passe",
+    html: `
+    <h3>Bonjour ${email}</h3>
+    <p>Voici votre mot de passe pour accéder à votre compte</p>
+    <p>${random}</p>
+    `,
+  };
+
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+      res.json("email non sent");
+    } else {
+      console.log("Email sent: " + info.response);
+      res.json(random);
+    }
+  });
 };
 
 const validationLogin = async (req, res) => {
@@ -176,13 +241,12 @@ const userLogin = async (req, res) => {
   });
 
   if (userName.role == process.env.PRIME3) {
-    const sess = await sessions.create({
+    await sessions.create({
       userId: userName.ID_user,
       day,
       month,
       year,
     });
-    console.log(sess);
   }
 
   res.json({ role, accessToken });
@@ -192,8 +256,6 @@ const userRead = async (req, res) => {
   const cookie = await req.cookies;
   if (!cookie?.jwt) return res.sendStatus(401);
   const refreshToken = cookie.jwt;
-
-  console.log(req.user);
 
   const user = await users.findOne({
     where: {
@@ -250,7 +312,6 @@ const addUser = async (req, res) => {
   const { name, email, phone, password, type, role } = await req.body;
   var userName;
 
-  console.log(`${type}`);
   if (email) {
     userName = await users.findOne({
       where: {
@@ -366,13 +427,12 @@ const updateUser = async (req, res) => {
   const { name, updateEmail, phone, updatePassword, type, id, role } =
     await req.body;
 
-  console.log(req.body);
   if (!id) return res.json("Sans id");
 
   const user = await users.findOne({ where: { ID_user: id } });
 
   if (!user) return res.json("Sans user");
-  console.log("edit");
+
   if (name) user.name = name;
   if (updateEmail) user.email = updateEmail;
   if (phone) user.phone = phone;
@@ -385,7 +445,6 @@ const updateUser = async (req, res) => {
   }
 
   if (updatePassword) {
-    console.log(updatePassword);
     user.password = await bcrypt.hash(updatePassword, 10);
   }
   const result = await user.save();
@@ -531,4 +590,5 @@ module.exports = {
   avatarUpdateUser,
   updateProfile,
   nbrUser,
+  verificationEmail,
 };

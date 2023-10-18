@@ -33,6 +33,8 @@ const Layout = () => {
     setNotif,
     onForm,
     setOnForm,
+    onDelete,
+    setOnDelete,
   } = useButtonContext();
   const axiosPrivate = useAxiosPrivate();
   const location = useLocation();
@@ -46,7 +48,10 @@ const Layout = () => {
         setOnAvatar(data);
       });
       socket.on("receiveForm", (data) => {
-        setOnForm(data)
+        setOnForm(data);
+      });
+      socket.on("receiveDelete", (data) => {
+        setOnDelete(data);
       });
     }
   }, [socket]);
@@ -58,11 +63,20 @@ const Layout = () => {
     if (dataPage?.userRead[0]?.ID_user && socket) {
       socket.emit("joinRoom", { room: dataPage?.userRead[0].ID_user });
     }
-  }, [commercialChat, socket, dataPage, onForm]);
+  }, [commercialChat, socket, dataPage]);
 
   useEffect(() => {
     fetchData();
-  }, [show, sender, receiver, sendMessage, onMessage, onAvatar]);
+  }, [
+    show,
+    sender,
+    receiver,
+    sendMessage,
+    onMessage,
+    onAvatar,
+    onForm,
+    onDelete,
+  ]);
 
   const fetchData = async () => {
     try {

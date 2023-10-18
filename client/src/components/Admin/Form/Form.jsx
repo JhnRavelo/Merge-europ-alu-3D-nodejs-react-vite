@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { ErrorMessage, Field, Form, Formik, useFormikContext } from "formik";
 import "./Form.scss";
 import propTypes from "prop-types";
@@ -436,7 +437,6 @@ const FormAdd = (props) => {
   validateRef.current = handleValidate();
   emailRef.current = handleEmail();
   passwordRef.current = handlePassword();
-  // listPageRef.current = handleListPage()
 
   return (
     <div className="add">
