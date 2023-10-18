@@ -22,7 +22,7 @@ export const chartBoxUser = {
     chart: {
       dataKeys: [
         { name: "visits", color: "#82ca9d" },
-        { name: "orders", color: "#8884d8" },
+        { name: "interested", color: "#8884d8" },
       ],
       data: [
         {

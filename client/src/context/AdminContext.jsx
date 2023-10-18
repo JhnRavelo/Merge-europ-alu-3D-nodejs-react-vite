@@ -7,8 +7,8 @@ const AdminProviser = ({ children }) => {
   const [data, setData] = useState({});
   const [open, setOpen] = useState(false);
   const [top, setTop] = useState([]);
-  const [nbUser, SetNbUser] = useState(0);
-  const [nbProd, SetNbProd] = useState(0);
+  const [nbUser, SetNbUser] = useState(null);
+  const [nbProd, SetNbProd] = useState(null);
   const [order, setOrder] = useState([]);
   const [user, setUser] = useState([]);
   const [deleteOpen, setDeleteOpen] = useState(false);

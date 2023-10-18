@@ -69,8 +69,10 @@ const Admin = () => {
       const nbrProd = await privateAxios.post("/traker/nbrProd", {
         year: year,
       });
+
       SetNbProd(nbrProd.data);
       setYears(nbrProd.data.getYear);
+  
       if (notifOpen == false) {
         const log = await privateAxios.post("/log", { year: year });
         setLog(log.data);

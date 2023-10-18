@@ -210,6 +210,7 @@ const getProdByInterested = async(req, res)=>{
       productId: id,
     },
     attributes: [
+      "date",
       [sequelize.literal("TIME(trakers.createdAt)"), "time"],
     ],
     include: [

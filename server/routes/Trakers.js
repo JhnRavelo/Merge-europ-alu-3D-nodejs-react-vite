@@ -23,6 +23,6 @@ router.post("/nbrProd", verifyJWT, verifyRole(process.env.PRIME1), nbrProdByTrac
 
 router.get("/all", verifyJWT, verifyRole(process.env.PRIME1), getTrakers);
 
-router.get("/single", verifyJWT, verifyRole(process.env.PRIME1), getProdByInterested);
+router.post("/single", verifyJWT, verifyRole(process.env.PRIME1), getProdByInterested);
 
 module.exports = router;

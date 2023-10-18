@@ -44,7 +44,7 @@ const Single = (props) => {
               <LineChart
                 width={500}
                 height={300}
-                data={props.chart.data}
+                data={props.data}
                 margin={{
                   top: 5,
                   right: 30,
@@ -94,8 +94,9 @@ Single.propTypes = {
   img: propTypes.string,
   activities: propTypes.any,
   chart: propTypes.any,
-  id: propTypes.number,
-  description: propTypes.text
+  id: propTypes.string,
+  description: propTypes.string,
+  data: propTypes.array,
 };
 
 export default Single;
