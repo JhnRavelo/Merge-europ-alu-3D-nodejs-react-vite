@@ -28,7 +28,7 @@ const Menu =  () => {
                 <img src={page} alt="users" />
                 <span className="listItemTitle">Pages</span>
             </Link>
-            <Link to="/admin/product" className="listItem">
+            <Link to="/admin/products" className="listItem">
                 <img src={product} alt="product" />
                 <span className="listItemTitle">Produits</span>
             </Link>

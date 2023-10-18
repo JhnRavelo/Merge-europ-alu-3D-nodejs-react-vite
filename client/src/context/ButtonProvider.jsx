@@ -63,6 +63,7 @@ const ButtonProvider = ({ children }) => {
         setBody,
         showForm,
         show,
+        setShow,
         open,
         dataPage,
         setDataPage,

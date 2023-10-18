@@ -49,8 +49,8 @@ const useLogout = () => {
     setMessages([]);
     setReceiver(null);
     setSender(null);
-    // setShow(false);
-    setData();
+    setShow(false);
+    setData({});
     navigate("/");
   };
   return logout;

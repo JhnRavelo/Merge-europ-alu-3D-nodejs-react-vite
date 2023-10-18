@@ -214,7 +214,7 @@ const userRead = async (req, res) => {
 
 const userLogout = async (req, res) => {
   const cookie = req.cookies;
-  console.log(cookie)
+
   if (!cookie?.jwt) return res.sendStatus(204);
 
   const refreshToken = cookie.jwt;
