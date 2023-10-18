@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useParams } from "react-router-dom";
 import useAdminContext from "../../../hooks/useAdminContext";
 import { useEffect } from "react";
@@ -39,7 +40,7 @@ const Product = () => {
       }
     };
     fetchData();
-  }, [id]);
+  }, [id, year]);
 
   useEffect(() => {
     if (nbUser && dataProduct) {
@@ -51,7 +52,6 @@ const Product = () => {
           const matchProd = dataProduct?.countByMonthByYear.find(
             (nb) => nb.month == prev.number
           );
-          console.log(matchProd);
 
           if (matchVisit || matchProd) {
             return {
@@ -78,6 +78,7 @@ const Product = () => {
         description={singleProduct.description}
         gallery={singleProduct.gallery.split(",")}
         data={chartSingle}
+        activities={dataProduct?.logSingleProductInterested}
         {...singleProductData}
       />
     </div>

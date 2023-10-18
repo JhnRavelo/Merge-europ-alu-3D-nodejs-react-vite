@@ -30,7 +30,9 @@ const Layout = () => {
     setOnAvatar,
     setData,
     dataPage,
-    setNotif
+    setNotif,
+    onForm,
+    setOnForm,
   } = useButtonContext();
   const axiosPrivate = useAxiosPrivate();
   const location = useLocation();
@@ -43,6 +45,9 @@ const Layout = () => {
       socket.on("receiveAvatar", (data) => {
         setOnAvatar(data);
       });
+      socket.on("receiveForm", (data) => {
+        setOnForm(data)
+      });
     }
   }, [socket]);
 
@@ -50,10 +55,10 @@ const Layout = () => {
     if (commercialChat?.ID_user && socket) {
       socket.emit("joinRoom", { room: commercialChat.ID_user });
     }
-    if(dataPage?.userRead[0]?.ID_user && socket){
-      socket.emit("joinRoom", { room: dataPage?.userRead[0].ID_user })
+    if (dataPage?.userRead[0]?.ID_user && socket) {
+      socket.emit("joinRoom", { room: dataPage?.userRead[0].ID_user });
     }
-  }, [commercialChat, socket, dataPage]);
+  }, [commercialChat, socket, dataPage, onForm]);
 
   useEffect(() => {
     fetchData();
@@ -80,8 +85,8 @@ const Layout = () => {
           const message = await axiosPrivate.post("/message/get", { receiver });
           setMessages(message.data);
         }
-        const notif = await axiosPrivate.get("/message/getNotif")
-        setNotif(notif.data)
+        const notif = await axiosPrivate.get("/message/getNotif");
+        setNotif(notif.data);
       } else {
         setBody({
           name: "",
@@ -108,7 +113,8 @@ const Layout = () => {
         <Header />
         {location.pathname != "/page" && <Grids />}
         <Chemins />
-        {(!location.pathname.includes("profile") && location.pathname != "/page") && <Footer />}
+        {!location.pathname.includes("profile") &&
+          location.pathname != "/page" && <Footer />}
       </div>
       {show && <FormField />}
     </>

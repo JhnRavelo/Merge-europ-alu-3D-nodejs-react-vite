@@ -23,6 +23,7 @@ const ButtonProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
   const [onMessage, setOnMessage] = useState(null);
   const [onAvatar, setOnAvatar] = useState(null);
+  const [onForm, setOnForm] = useState(null);
   const [search, setSearch] = useState(false);
   const [notif, setNotif] = useState([]);
 
@@ -93,6 +94,8 @@ const ButtonProvider = ({ children }) => {
         setData,
         notif,
         setNotif,
+        onForm,
+        setOnForm,
       }}
     >
       {children}

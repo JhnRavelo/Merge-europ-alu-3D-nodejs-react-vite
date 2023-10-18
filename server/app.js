@@ -44,6 +44,10 @@ io.on("connection", (socket) => {
   socket.on("UserInterested", (data)=>{
     socket.to(data.room).emit("receiveInterested", data)
   })
+
+  socket.on("formAdd", (data)=>{
+    socket.broadcast.emit("receiveForm", data)
+  })
 });
 
 pages.hasMany(products, { onDelete: "CASCADE", foreignKey: "pageId" });

@@ -21,20 +21,21 @@ const Log = () => {
       <h1 className="h1__journal">Journals</h1>
       <div className="log" ref={logRef}>
         {list.map((item, index) => {
+          const time = item.time.split(":")
           return (
             <div className="journal" key={index}>
               {item.user ? (
                 <>
                   <h2>{`${item.user.name} a créer un compte avec adresse email ${item.user.email}`}</h2>
                   <h2 className="date">
-                    {item.date} à {item.time}
+                    {item.date} à {`${time[0]}:${time[1]}`}
                   </h2>
                 </>
               ) : (
                 <>
                   <h2>{`${item.traker.user.name} est intéresser par ${item.traker.product.title}`}</h2>
                   <h2 className="date">
-                    {item.date} à {item.time}
+                    {item.date} à {`${time[0]}:${time[1]}`}
                   </h2>
                 </>
               )}

@@ -73,14 +73,17 @@ const Single = (props) => {
         <h2>Dernier activités</h2>
         {props.activities && (
           <ul>
-            {props.activities.map((activity) => (
-              <li key={activity.text}>
-                <div>
-                  <p>{activity.text}</p>
-                  <time>{activity.time}</time>
-                </div>
-              </li>
-            ))}
+            {props.activities.map((activity, index) => {
+                const time = activity.time.split(":")
+              return (
+                <li key={index}>
+                  <div>
+                    <p>{`${activity.user.name} est intéressé par ce produit`}</p>
+                    <time>{`${activity.date} ${time[0]}:${time[1]}`}</time>
+                  </div>
+                </li>
+              );
+            })}
           </ul>
         )}
       </div>
