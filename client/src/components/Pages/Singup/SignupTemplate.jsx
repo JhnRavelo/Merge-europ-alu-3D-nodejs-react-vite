@@ -5,7 +5,6 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import FormContext from "../Form/FormContext";
 import errorShake from "../../../lib/utils/errorShake";
 import useButtonContext from "../../../hooks/useButtonContext";
-import defaultAxios from "../../../api/axios";
 
 const SignupTemplate = () => {
   const [index, setIndex] = useState(5);
@@ -83,8 +82,6 @@ const SignupTemplate = () => {
       var champEmail = document.querySelector(".user-input");
       var errorEmail = errors[index];
       try {
-        const res = await defaultAxios.post("/auth/mail", {email: formContext[1].email})
-        console.log(res.data)
         if (errorEmail || !champEmail.value) {
           errorShake(inputEmail);
         } else {

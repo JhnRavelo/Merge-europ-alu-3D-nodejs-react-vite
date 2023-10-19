@@ -3,7 +3,6 @@ const bcrypt = require("bcrypt");
 require("dotenv").config();
 const sequelize = require("sequelize");
 const { Op } = require("sequelize");
-const nodemailer = require("nodemailer");
 
 var date = new Date();
 var day = date.getDate();
@@ -87,62 +86,6 @@ const validationRegister = async (req, res) => {
   }
 
   res.json("User");
-};
-
-const verificationEmail = async (req, res) => {
-  const { email } = req.body;
-
-    let transporter = nodemailer.createTransport({
-      service:"gmail",
-      // host: "in-v3.mailjet.com",
-      // port: 587, // true for 465, false for other ports
-      auth: {
-        user: "timmyrocher8@gmail.com", // generated ethereal user
-        pass: "qxjkelgnxgodwiwz", // generated ethereal password
-      },
-    });
-  
-  // nodemailer.createTestAccount((err, account) => {
-
-  //   let transporter = nodemailer.createTransport({
-  //     host: "smtp.ethereal.email",
-  //     port: 587, // true for 465, false for other ports
-  //     auth: {
-  //       user: account.user, // generated ethereal user
-  //       pass: account.pass, // generated ethereal password
-  //     },
-  //   });
-
-    const random = Math.floor(Math.random() * 999999);
-
-    const mailOptions = {
-      from: "timmyrocher8@gmail.com",
-      to: "johnravelo135@gmail.com",
-      subject: "Votre mot de passe",
-      html: `<h3>Bonjour ${email}</h3>
-            <p>Voici votre mot de passe pour accéder à votre compte</p>
-            <p>${random}</p>`,
-    };
-
-    transporter.sendMail(mailOptions, function (error, info) {
-      if (error) {
-        console.log(error);
-        res.json(error);
-      } else {
-        console.log("Email sent: " + nodemailer.getTestMessageUrl(info));
-        res.json(random);
-      }
-    });
-
-  // const transporter = nodemailer.createTransport({
-  //   host: "mail.openjavascript.info",
-  //   port: 465,
-  //   secure: true,
-  //   auth: {
-  //     user: "test@openjavascript.info",
-  //     pass: "NodeMailer123!",
-  //   },
-  // });
 };
 
 const validationLogin = async (req, res) => {
