@@ -85,7 +85,7 @@ const SignupTemplate = () => {
       try {
         const res = await defaultAxios.post("/auth/mail", {email: formContext[1].email})
         console.log(res.data)
-        if (errorEmail || !champEmail.value || res.data == "email non sent") {
+        if (errorEmail || !champEmail.value) {
           errorShake(inputEmail);
         } else {
           setIndex((prevIndex) => prevIndex + 1);

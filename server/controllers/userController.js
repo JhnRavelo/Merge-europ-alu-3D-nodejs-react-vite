@@ -3,18 +3,7 @@ const bcrypt = require("bcrypt");
 require("dotenv").config();
 const sequelize = require("sequelize");
 const { Op } = require("sequelize");
-const { google } = require("googleapis");
 const nodemailer = require("nodemailer");
-
-/*POPULATE BELOW FIELDS WITH YOUR CREDETIALS*/
-
-const CLIENT_ID =
-  "187306155890-bfhfeepg11p0mkr26g5tg7mjj0v28ujg.apps.googleusercontent.com";
-const CLIENT_SECRET = "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";
-const REFRESH_TOKEN =
-  "1//04qerzM0Bpi4gCgYIARAAGAQSNwF-L9Ir3i149RawIHrkx7bSpqZhbM9ymf3sIFNNHvKgceYtzB8FfVe-cAKiihCK22RaTTq1hZY";
-const REDIRECT_URI = "https://developers.google.com/oauthplayground"; //DONT EDIT THIS
-const MY_EMAIL = "timmyrocher8@gmail.com";
 
 var date = new Date();
 var day = date.getDate();
@@ -101,56 +90,59 @@ const validationRegister = async (req, res) => {
 };
 
 const verificationEmail = async (req, res) => {
-  const oAuth2Client = new google.auth.OAuth2(
-    CLIENT_ID,
-    CLIENT_SECRET,
-    REDIRECT_URI
-  );
-
-  oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
-
-  const ACCESS_TOKEN = await oAuth2Client.getAccessToken();
-  console.log(ACCESS_TOKEN)
-
   const { email } = req.body;
-  console.log(email);
 
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      type: "OAuth2",
-      user: MY_EMAIL,
-      clientId: CLIENT_ID,
-      clientSecret: CLIENT_SECRET,
-      refreshToken: REFRESH_TOKEN,
-      accessToken: ACCESS_TOKEN,
-    },
-    tls: {
-      rejectUnauthorized: true,
-    },
-  });
-  const random = Math.floor(Math.random() * 999999);
+    let transporter = nodemailer.createTransport({
+      service:"gmail",
+      // host: "in-v3.mailjet.com",
+      // port: 587, // true for 465, false for other ports
+      auth: {
+        user: "timmyrocher8@gmail.com", // generated ethereal user
+        pass: "qxjkelgnxgodwiwz", // generated ethereal password
+      },
+    });
+  
+  // nodemailer.createTestAccount((err, account) => {
 
-  const mailOptions = {
-    from: MY_EMAIL,
-    to: "johnravelo135@gmail.com",
-    subject: "Votre mot de passe",
-    html: `
-    <h3>Bonjour ${email}</h3>
-    <p>Voici votre mot de passe pour accéder à votre compte</p>
-    <p>${random}</p>
-    `,
-  };
+  //   let transporter = nodemailer.createTransport({
+  //     host: "smtp.ethereal.email",
+  //     port: 587, // true for 465, false for other ports
+  //     auth: {
+  //       user: account.user, // generated ethereal user
+  //       pass: account.pass, // generated ethereal password
+  //     },
+  //   });
 
-  transporter.sendMail(mailOptions, function (error, info) {
-    if (error) {
-      console.log(error);
-      res.json("email non sent");
-    } else {
-      console.log("Email sent: " + info.response);
-      res.json(random);
-    }
-  });
+    const random = Math.floor(Math.random() * 999999);
+
+    const mailOptions = {
+      from: "timmyrocher8@gmail.com",
+      to: "johnravelo135@gmail.com",
+      subject: "Votre mot de passe",
+      html: `<h3>Bonjour ${email}</h3>
+            <p>Voici votre mot de passe pour accéder à votre compte</p>
+            <p>${random}</p>`,
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+        res.json(error);
+      } else {
+        console.log("Email sent: " + nodemailer.getTestMessageUrl(info));
+        res.json(random);
+      }
+    });
+
+  // const transporter = nodemailer.createTransport({
+  //   host: "mail.openjavascript.info",
+  //   port: 465,
+  //   secure: true,
+  //   auth: {
+  //     user: "test@openjavascript.info",
+  //     pass: "NodeMailer123!",
+  //   },
+  // });
 };
 
 const validationLogin = async (req, res) => {
