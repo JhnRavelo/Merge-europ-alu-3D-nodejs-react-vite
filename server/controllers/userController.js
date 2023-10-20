@@ -525,5 +525,4 @@ module.exports = {
   avatarUpdateUser,
   updateProfile,
   nbrUser,
-  verificationEmail,
 };

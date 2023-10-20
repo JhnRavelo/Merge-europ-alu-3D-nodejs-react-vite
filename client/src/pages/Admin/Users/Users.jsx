@@ -13,6 +13,7 @@ const columns = [
     field: "id",
     headerName: "ID",
     width: 40,
+    disableExport: true,
   },
   {
     field: "img",
@@ -21,6 +22,7 @@ const columns = [
     renderCell: (params) => {
       return <img src={params.row.img} alt="" />;
     },
+    disableExport: true,
   },
   {
     field: "name",
@@ -73,6 +75,7 @@ const columns = [
     headerName: "Connected",
     width: 90,
     type: "boolean",
+    disableExport: true,
   },
 ];
 

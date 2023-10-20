@@ -9,6 +9,7 @@ const columns = [
     field: "id",
     headerName: "ID",
     width: 40,
+    disableExport: true,
   },
   {
     field: "name",
@@ -57,12 +58,14 @@ const columns = [
     headerName: "Catégorie",
     placeholder: "Votre Numéro",
     width: 120,
+    disableExport: true,
   },
   {
     field: "createdAt",
     headerName: "Created At",
     width: 100,
     type: "string",
+    disableExport: true,
   },
 ];
 
@@ -73,7 +76,6 @@ const Orders = () => {
 
   useEffect(() => {
     if (order.length !== 0) {
-      console.log(order);
       const newTable = order.map((tarker) => {
         var createdAt;
         createdAt = tarker.createdAt.slice(0, 10);

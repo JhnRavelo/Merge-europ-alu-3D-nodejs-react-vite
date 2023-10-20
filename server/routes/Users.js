@@ -17,7 +17,6 @@ const {
   avatarUpdateUser,
   updateProfile,
   nbrUser,
-  verificationEmail,
 } = require("../controllers/userController");
 const verifyJWT = require("../middlewares/verifyJWT");
 const verifyRole = require("../middlewares/verifyRole");
@@ -52,8 +51,6 @@ router.post("/validationRegister", validationRegister);
 router.post("/login", userLogin);
 
 router.post("/", userRegistration);
-
-router.post("/mail", verificationEmail);
 
 router
   .route("/User/upload")

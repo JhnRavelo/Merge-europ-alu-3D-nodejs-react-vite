@@ -1,8 +1,8 @@
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import "./dataTable.scss";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import propTypes from "prop-types";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useAdminContext from "../../../hooks/useAdminContext";
 
 const DataTable = (props) => {
@@ -16,8 +16,9 @@ const DataTable = (props) => {
       return 70;
     } else return 50;
   });
-  const {setSingleProduct} = useAdminContext()
-  const navigate = useNavigate()
+  const { setSingleProduct } = useAdminContext();
+  const navigate = useNavigate();
+  const tableRef = useRef();
 
   const handleEdit = (id) => {
     props.setEditRow(id);
@@ -28,12 +29,25 @@ const DataTable = (props) => {
     props.setDeleteRow(id);
   };
   const handleSingle = (row) => {
-    setSingleProduct(row)
-    navigate(`/admin/product/${row.id}`)
-  }
+    setSingleProduct(row);
+    navigate(`/admin/product/${row.id}`);
+  };
 
   const colums = [...props.columns];
   const filterColums = colums.filter((item) => item.field !== "password");
+
+  useEffect(() => {
+    if (tableRef.current?.querySelector("button")) {
+      if (props.slug == "orders" || props.slug == "users") {
+        tableRef.current.querySelector("button").style.opacity = 1;
+        tableRef.current.querySelector("button").style.pointerEvent = "all";
+      } else {
+        tableRef.current.querySelector("button").style.opacity = 0;
+        tableRef.current.querySelector("button").style.pointerEvent = "none";
+      }
+    }
+  }, [tableRef.current]);
+
   useEffect(() => {
     if (props.slug == "products") {
       setPagination(5);
@@ -57,21 +71,21 @@ const DataTable = (props) => {
             <img src="/src/assets/svg/delete.svg" alt="" />
           </div>
           {props.slug == "products" && (
-            // <Link to={`/${props.slug}/${params.row.id}`}>
-              <div onClick={()=> handleSingle(params.row)}>
-                <img src="/src/assets/svg/barChart.svg" alt="" />
-              </div>
-            // </Link>
+            <div onClick={() => handleSingle(params.row)}>
+              <img src="/src/assets/svg/barChart.svg" alt="" />
+            </div>
           )}
         </div>
       );
     },
+    disableExport: true
   };
 
   return (
     <div className="dataTable">
       <DataGrid
         className="dataGrid"
+        ref={tableRef}
         rows={props.rows}
         columns={
           props.slug == "orders"
@@ -91,6 +105,12 @@ const DataTable = (props) => {
           toolbar: {
             showQuickFilter: true,
             quickFilterProps: { debounceMs: 500 },
+            csvOptions: { disableToolbarButton: true },
+            printOptions: {
+              hideFooter: true,
+              hideToolbar: true,
+              // pageStyle: ".MuiDataGrid-root .MuiDataGrid-main .MuiDataGrid-cell{white-space: wrap;overflow: auto;color: red;}"
+            },
           },
         }}
         pageSizeOptions={[pagination]}
