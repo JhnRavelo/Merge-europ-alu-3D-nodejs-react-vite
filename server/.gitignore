@@ -4,7 +4,3 @@ config.json
 images
 fonts
 fonts
-obj/
-public/*
-img
-video
