@@ -1,5 +1,5 @@
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import "./dataTable.scss";
+import "./DataTable.scss";
 import { useNavigate } from "react-router-dom";
 import propTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
