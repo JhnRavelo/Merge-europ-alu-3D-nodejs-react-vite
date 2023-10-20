@@ -76,6 +76,7 @@ const Layout = () => {
     onAvatar,
     onForm,
     onDelete,
+    commercialChat
   ]);
 
   const fetchData = async () => {
@@ -95,9 +96,11 @@ const Layout = () => {
         setCommercials(commercial.data);
         const lastmessage = await axiosPrivate.get("/message/getlast");
         setLastMessage(lastmessage.data);
+        console.log(commercialChat)
         if (receiver) {
           const message = await axiosPrivate.post("/message/get", { receiver });
           setMessages(message.data);
+          console.log(message.data)
         }
         const notif = await axiosPrivate.get("/message/getNotif");
         setNotif(notif.data);

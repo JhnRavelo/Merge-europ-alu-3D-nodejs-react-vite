@@ -92,7 +92,7 @@ const Users = () => {
         var createdAt;
         createdAt = user.createdAt.slice(0, 10);
         return {
-          id: user.id,
+          id: user.ID_user,
           img: user.avatar,
           name: user.name,
           type: user.type,

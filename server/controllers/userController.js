@@ -332,7 +332,7 @@ const getUsers = async (req, res) => {
   const filterResult = result.map((item) => {
     if (item.refreshToken) {
       return {
-        id: item.ID_user,
+        ID_user: item.ID_user,
         name: item.name,
         email: item.email,
         phone: item.phone,
@@ -343,7 +343,7 @@ const getUsers = async (req, res) => {
       };
     } else {
       return {
-        id: item.ID_user,
+        ID_user: item.ID_user,
         name: item.name,
         email: item.email,
         phone: item.phone,
@@ -420,7 +420,7 @@ const getCommercials = async (req, res) => {
   const filterResult = result.map((item) => {
     if (item.refreshToken) {
       return {
-        id: item.ID_user,
+        ID_user: item.ID_user,
         name: item.name,
         email: item.email,
         phone: item.phone,
@@ -430,7 +430,7 @@ const getCommercials = async (req, res) => {
       };
     } else {
       return {
-        id: item.ID_user,
+        ID_user: item.ID_user,
         name: item.name,
         email: item.email,
         phone: item.phone,

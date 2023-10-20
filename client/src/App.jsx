@@ -5,12 +5,13 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { io } from "socket.io-client";
 import useButtonContext from "./hooks/useButtonContext";
-
+const server = import.meta.env.VITE_SERVER_PATH
 function App() {
   const { setSocket } = useButtonContext();
 
   useEffect(() => {
-    const socket = io("http://localhost:5000");
+    console.log(server)
+    const socket = io(server);
     setSocket(socket);
   }, []);
   return (

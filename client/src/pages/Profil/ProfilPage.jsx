@@ -14,7 +14,7 @@ import handleClassNewMessage from "../../lib/utils/handleClassNewMessage";
 
 const ProfilPage = () => {
   const [chatOrCart, setChatOrCart] = useState("vide");
-  const { dataPage, commercials, setCommercialChat, lastMessage , onMessage, notif, commercialChat} =
+  const { dataPage, commercials, setCommercialChat, lastMessage , onMessage, notif, commercialChat, setReceiver} =
     useButtonContext();
     const [lastMessageDisplay, setLastMessageDisplay] = useState([]);
     const [classNewMessage, setClassNewMessage] = useState([])
@@ -74,6 +74,7 @@ const ProfilPage = () => {
                         onClick={() => {
                           setCommercialChat(item);
                           handleOpenMenu();
+                          setReceiver(item.ID_user)
                         }}
                       >
                         <div className="userChat">
