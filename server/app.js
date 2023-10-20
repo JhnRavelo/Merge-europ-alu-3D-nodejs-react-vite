@@ -58,7 +58,7 @@ products.belongsTo(pages, { onDelete: "CASCADE", foreignKey: "pageId" });
 users.hasOne(sessions, { foreignKey: "userId" });
 sessions.belongsTo(users, { foreignKey: "userId" });
 
-db.sequelize.sync({ force:true }).then(() => {
+db.sequelize.sync().then(() => {
   server.listen(process.env.PORT, () => {
     console.log(`http://127.0.0.1:${process.env.PORT}`);
   });
