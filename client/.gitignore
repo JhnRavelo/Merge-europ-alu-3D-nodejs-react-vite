@@ -6,12 +6,8 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
-public
 gltf
-public/gltf
 .env
-images
-avatar
 
 node_modules
 dist
