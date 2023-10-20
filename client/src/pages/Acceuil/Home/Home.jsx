@@ -1,5 +1,4 @@
 import "./Home.scss";
-import logo from "../../../assets/Logo_ea.png";
 import { Link } from "react-router-dom";
 import Form from "../../../components/Pages/Form/Form";
 import useButtonContext from "../../../hooks/useButtonContext";
@@ -23,7 +22,7 @@ const Home = () => {
       <div className="flou"></div>
       <div className="header__home__page">
         <div className="logo__home">
-          <img src={logo} alt="logo" />
+          <img src="./logo/logo_ea.png" alt="logo" />
         </div>
       </div>
       <div className="body__home__page">
