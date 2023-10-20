@@ -12,7 +12,7 @@ function App() {
 
   useEffect(() => {
     console.log(server)
-    const socket = io(`${server}`);
+    const socket = io(server);
     setSocket(socket);
   }, []);
   return (

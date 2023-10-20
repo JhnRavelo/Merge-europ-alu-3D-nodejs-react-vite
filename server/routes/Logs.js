@@ -3,7 +3,7 @@ const router = express.Router();
 const verifyRole = require("../middlewares/verifyRole");
 require("dotenv").config();
 const verifyJWT = require("../middlewares/verifyJWT");
-const { getLogs, readLogs } = require("../controllers/logsController");
+const { getLogs, readLogs } = require("../controllers/logsController.js");
 
 router.post("/", verifyJWT, verifyRole(process.env.PRIME1), getLogs);
 router.get("/", verifyJWT, verifyRole(process.env.PRIME1), readLogs);

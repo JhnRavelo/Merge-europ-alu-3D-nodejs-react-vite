@@ -14,7 +14,7 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: "*",
+    origin: ["http://localhost:5173", "http://192.168.123.210:5173"],
     methods: ["GET", "POST", "OPTIONS", "PUT", "DELETE"],
   },
 });
@@ -71,7 +71,7 @@ app.use(bodyParser.json());
 app.use(
   cors({
     credentials: true,
-    origin: "*",
+    origin: [`http://localhost:5173`, "http://192.168.123.210:5173"],
     methods: ["GET", "POST", "DELETE", "PUT"],
   })
 );

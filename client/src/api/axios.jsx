@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const url = `${import.meta.env.VITE_SERVER_PATH}`
+const url = import.meta.env.VITE_SERVER_PATH
 
 const defaultAxios = axios.create({
   baseURL:url,
