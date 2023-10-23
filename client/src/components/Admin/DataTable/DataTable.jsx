@@ -50,7 +50,7 @@ const DataTable = (props) => {
         tableRef.current.querySelector("button").style.pointerEvent = "none";
       }
     }
-  }, [tableRef.current]);
+  }, [tableRef.current, props.slug]);
 
   useEffect(() => {
     if (props.slug == "products") {
