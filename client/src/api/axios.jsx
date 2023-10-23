@@ -2,6 +2,8 @@ import axios from 'axios'
 
 const url = import.meta.env.VITE_SERVER_PATH
 
+console.log(url)
+
 const defaultAxios = axios.create({
   baseURL:url,
   withCredentials: true,
