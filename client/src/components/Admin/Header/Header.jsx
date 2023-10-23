@@ -26,6 +26,7 @@ const Header = () => {
     selectDate.current.classList.toggle("visible");
     chevron.current.classList.toggle("up");
   };
+  console.log(pathname);
 
   const handleShowNotication = () => {
     notication.current.classList.toggle("showed");
@@ -78,7 +79,7 @@ const Header = () => {
         <img src={logoEuro} alt="logo" />
         <span>{"Europ'Alu"}</span>
       </div>
-      {pathname === "/admin/" || pathname.includes("/admin/product/") && (
+      {(pathname == "/admin/" || pathname.includes("/admin/product/")) && (
         <div className="date">
           <div className="selected__date">
             <h2 onClick={handleVisibleSelecteYear}>Année {year}</h2>

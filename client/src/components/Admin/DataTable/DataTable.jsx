@@ -4,6 +4,10 @@ import { useNavigate } from "react-router-dom";
 import propTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 import useAdminContext from "../../../hooks/useAdminContext";
+import view from "../../../assets/svg/view.svg";
+import deleteSvg from "../../../assets/svg/delete.svg";
+import barChart from "../../../assets/svg/barChart.svg";
+
 
 const DataTable = (props) => {
   const [pagination, setPagination] = useState(() => {
@@ -65,14 +69,14 @@ const DataTable = (props) => {
       return (
         <div className="action">
           <div onClick={() => handleEdit(params.row)}>
-            <img src="/src/assets/svg/view.svg" alt="" />
+            <img src={view} alt="" />
           </div>
           <div className="delete" onClick={() => handleDelete(params.row.id)}>
-            <img src="/src/assets/svg/delete.svg" alt="" />
+            <img src={deleteSvg} alt="" />
           </div>
           {props.slug == "products" && (
             <div onClick={() => handleSingle(params.row)}>
-              <img src="/src/assets/svg/barChart.svg" alt="" />
+              <img src={barChart} alt="" />
             </div>
           )}
         </div>

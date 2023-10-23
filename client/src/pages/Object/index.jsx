@@ -1,11 +1,12 @@
 import EuropExterior from "../../components/Object/EuropExterior";
-import "./Object.css"
+import "./Object.css";
 
 const Object = () => {
   return (
-    <div className="container3D">
-      <EuropExterior />
-    </div>
+    
+      <div className="container3D">
+        <EuropExterior />
+      </div>
   );
 };
 

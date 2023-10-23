@@ -6,6 +6,7 @@ import { Tone } from "../Postprocessing";
 import Icon from "../Icon";
 import Controls from "../Controls/Controls";
 import { useRef } from "react";
+import Loading from "../../Loading/Loading";
 
 function EuropExterior() {
   const controlsRef = useRef();
@@ -25,13 +26,14 @@ function EuropExterior() {
         <Tone />
         {/* <axesHelper args={[20, 20, 20]} /> */}
         <Europ />
+        <Icon />
         <AroundLight />
         <ToplLight />
         <HemiLight />
-        <Icon />
         <Camera />
         <Controls />
       </Canvas>
+      <Loading />
     </>
   );
 }
