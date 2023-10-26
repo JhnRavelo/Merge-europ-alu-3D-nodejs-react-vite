@@ -1,5 +1,5 @@
 const { logs, users, trakers, products } = require("../database/models");
-const { Op, Sequelize, where } = require("sequelize");
+const { Op, Sequelize } = require("sequelize");
 
 const getLogs = async (req, res) => {
   const { year } = req.body;

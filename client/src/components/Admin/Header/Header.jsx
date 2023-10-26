@@ -133,7 +133,11 @@ const Header = () => {
           </Link>
         </div>
         <div className="notification" onClick={handleShowNotication}>
-          <FontAwesomeIcon icon={faBell} className="bellIcon" />
+          {notif == 0 ? (
+            <FontAwesomeIcon icon={faBell} className="bellIcon" />
+          ) : (
+            <FontAwesomeIcon icon={faBell} className="bellIcon" shake />
+          )}
           {notif !== 0 && <span> {notif} </span>}
         </div>
         <div className="user">
