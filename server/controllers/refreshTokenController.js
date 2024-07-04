@@ -34,7 +34,7 @@ handleRefreshToken = async (req, res) => {
             ID_user: decoded.id,
           },
         });
-        console.log("hacked");
+
         hackedUser.refreshToken = "";
         await hackedUser.save();
       }

@@ -26,7 +26,6 @@ const Header = () => {
     selectDate.current.classList.toggle("visible");
     chevron.current.classList.toggle("up");
   };
-  console.log(pathname);
 
   const handleShowNotication = () => {
     notication.current.classList.toggle("showed");

@@ -40,7 +40,7 @@ const ProfilPage = () => {
   return (
     <>
       <div className="profile__page" style={{ animation: "tonga .6s ease" }}>
-      {/* <div className="profilOverlay"></div> */}
+
         <div className="profile__box">
           <UserProfileCard
             data={dataPage}

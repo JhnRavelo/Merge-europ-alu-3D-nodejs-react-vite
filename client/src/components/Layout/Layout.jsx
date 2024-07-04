@@ -7,7 +7,7 @@ import Footer from "./Footer/Footer";
 import FormField from "../Pages/Form/Form";
 import useButtonContext from "../../hooks/useButtonContext";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import defaultAxios from "../../api/axios";
 
@@ -18,7 +18,6 @@ const Layout = () => {
     setDataPage,
     setCommercials,
     setMessages,
-    sender,
     receiver,
     sendMessage,
     setLastMessage,
@@ -26,32 +25,21 @@ const Layout = () => {
     socket,
     onMessage,
     setOnMessage,
-    onAvatar,
-    setOnAvatar,
     setData,
     dataPage,
     setNotif,
-    onForm,
-    setOnForm,
-    onDelete,
-    setOnDelete,
+    userLastInterested,
   } = useButtonContext();
   const axiosPrivate = useAxiosPrivate();
   const location = useLocation();
+  const [executeOnce, setExecuteOnce] = useState(true);
+  const [executeOncePrivate, setExecuteOncePrivate] = useState(true);
+  const [productInterested, setProductInterested] = useState();
 
   useEffect(() => {
     if (socket) {
       socket.on("receiveMessage", (data) => {
         setOnMessage(data);
-      });
-      socket.on("receiveAvatar", (data) => {
-        setOnAvatar(data);
-      });
-      socket.on("receiveForm", (data) => {
-        setOnForm(data);
-      });
-      socket.on("receiveDelete", (data) => {
-        setOnDelete(data);
       });
     }
   }, [socket]);
@@ -68,39 +56,42 @@ const Layout = () => {
   useEffect(() => {
     fetchData();
   }, [
-    show,
-    sender,
     receiver,
     sendMessage,
     onMessage,
-    onAvatar,
-    onForm,
-    onDelete,
-    commercialChat
+    commercialChat,
+    userLastInterested,
   ]);
 
   const fetchData = async () => {
     try {
-      const data = await defaultAxios.get("/page");
-      setData(data.data);
+      if (executeOnce) {
+        const data = await defaultAxios.get("/page");
+        setData(data.data);
+        setExecuteOnce(false);
+      }
       const res = await axiosPrivate.get("/auth");
       if (res.data) {
-        setBody({
-          name: res.data.name,
-          email: res.data.email,
-          phone: res.data.phone,
-        });
-        const page = await axiosPrivate.get("/traker");
-        setDataPage(page.data);
-        const commercial = await axiosPrivate.get("/auth/getCommercials");
-        setCommercials(commercial.data);
+        if (executeOncePrivate) {
+          setBody({
+            name: res.data.name,
+            email: res.data.email,
+            phone: res.data.phone,
+          });
+          const commercial = await axiosPrivate.get("/auth/getCommercials");
+          setCommercials(commercial.data);
+          setExecuteOncePrivate(false)
+        }
+        if (productInterested !== userLastInterested) {
+          const page = await axiosPrivate.get("/traker");
+          setDataPage(page.data);
+          setProductInterested(userLastInterested);
+        }
         const lastmessage = await axiosPrivate.get("/message/getlast");
         setLastMessage(lastmessage.data);
-        console.log(commercialChat)
         if (receiver) {
           const message = await axiosPrivate.post("/message/get", { receiver });
           setMessages(message.data);
-          console.log(message.data)
         }
         const notif = await axiosPrivate.get("/message/getNotif");
         setNotif(notif.data);

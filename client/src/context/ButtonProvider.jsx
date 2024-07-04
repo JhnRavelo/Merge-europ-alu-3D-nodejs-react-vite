@@ -27,6 +27,7 @@ const ButtonProvider = ({ children }) => {
   const [onDelete, setOnDelete] = useState(null);
   const [search, setSearch] = useState(false);
   const [notif, setNotif] = useState([]);
+  const [userLastInterested, setUserLastInterested] = useState([]);
 
   const showForm = () => {
     if (show === false) {
@@ -99,6 +100,8 @@ const ButtonProvider = ({ children }) => {
         setOnForm,
         onDelete,
         setOnDelete,
+        userLastInterested,
+        setUserLastInterested,
       }}
     >
       {children}

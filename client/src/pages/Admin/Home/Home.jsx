@@ -40,7 +40,7 @@ const Home = () => {
 
   useEffect(() => {
     if (nbUser) {
-      setTotalUser(nbUser.countUserByYear[0].userCount);
+      setTotalUser(nbUser.countUserByYear[0]?.userCount);
       setChartDataUser((prevState) => {
         return charDataValue(prevState, nbUser, "countByMonthByYear");
       });

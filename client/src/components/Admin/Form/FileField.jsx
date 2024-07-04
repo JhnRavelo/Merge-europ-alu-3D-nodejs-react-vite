@@ -19,6 +19,7 @@ const FileField = ({ name, accept, setFieldValue, folder, value }) => {
               setFieldValue(name, e.target.files[0]);
             }
           }}
+         
         />
         <label htmlFor={name} className="labelInput">
           <img src={fileImg} alt="" />

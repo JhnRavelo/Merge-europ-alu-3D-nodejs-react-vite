@@ -19,7 +19,7 @@ import { toast } from "react-toastify";
 const prime = import.meta.env.VITE_PRIME.split(" ");
 
 const SignupStepFinal = () => {
-  const { selectedProduct, showForm, body, socket } = useButtonContext();
+  const { selectedProduct, showForm, body, socket, setUserLastInterested } = useButtonContext();
   const formContext = useContext(FormContext);
   const btnListRef = useRef();
   const btnSubmitRef = useRef();
@@ -91,18 +91,25 @@ const SignupStepFinal = () => {
 
       if (!checked[0] == "") {
         track = await addTraker(formContext[1]);
+        console.log(track)
       }
 
       if (res?.data == "L'utilisateur existe déjà") {
         toast.error("L'utilisateur existe déjà");
       }
-
-      socket.emit("UserInterested", {body: body, value: formContext[1], room: prime[0]})
+      if(track == "Produit ajouté"){
+        const arrayInterested = checked.map(check=>{
+          return {user: body.email, product: check}
+        })
+        console.log(arrayInterested)
+        setUserLastInterested(arrayInterested)
+        socket.emit("UserInterested", {value: arrayInterested, room: prime[0]})
+      }
 
       if (res?.data?.role) {
         showForm();
         toast.success("Votre compte a bien été créé.");
-        navigate("/page/5")
+        navigate("/page")
       }
 
       if (track && location.pathname != "/") {

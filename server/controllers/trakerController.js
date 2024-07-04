@@ -1,50 +1,52 @@
 const { trakers, users, products, pages, logs } = require("../database/models");
 const sequelize = require("sequelize");
-const {Op} = require("sequelize")
+const { Op } = require("sequelize");
 
 const addTraker = async (req, res) => {
   const { checked } = await req.body;
   const { ID_user } = req.user;
-  let response, isTraker;
+  const verifyTraker = async () => {
+    if (checked && checked[0] !== "") {
+      const action = await Promise.all(checked.map(async (track) => {
+        var date = new Date();
+        var day = date.getDate();
+        var month = date.getMonth() + 1;
+        var year = date.getFullYear();
 
-  if (checked && checked[0] !== "") {
-    checked.map(async (track) => {
-      var date = new Date();
-      var day = date.getDate();
-      var month = date.getMonth() + 1;
-      var year = date.getFullYear();
-
-      const product = await products.findOne({
-        where: {
-          title: track,
-        },
-      });
-
-      isTraker = await trakers.findOne({
-        where: {
-          userId: ID_user,
-          productId: product.ID_product,
-        },
-      });
-
-      if (!isTraker) {
-        response = await trakers.create({
-          date,
-          day,
-          month,
-          year,
-          userId: ID_user,
-          productId: product.ID_product,
+        const product = await products.findOne({
+          where: {
+            title: track,
+          },
         });
 
-        await logs.create({
-          trakerId: response.id,
-        })
-      }
-    });
-  }
+        const isTraker = await trakers.findOne({
+          where: {
+            userId: ID_user,
+            productId: product.ID_product,
+          },
+        });
 
-  if (response) {
+        if (!isTraker) {
+          const response = await trakers.create({
+            date,
+            day,
+            month,
+            year,
+            userId: ID_user,
+            productId: product.ID_product,
+          });
+          await logs.create({
+            trakerId: response.id,
+          });
+          return "ajout";
+        }
+      }));
+      return action
+    }
+  };
+
+  const trackerResponse = await verifyTraker()
+  if (trackerResponse.includes("ajout")) {
     return res.json("Produit ajouté");
   } else {
     return res.json("Produit déjà ajouté");
@@ -52,13 +54,12 @@ const addTraker = async (req, res) => {
 };
 
 const getTraker = async (req, res) => {
-
   const userRead = await users.findAll({
     where: {
       ID_user: req.user,
     },
-    attributes: ["name", "email", "phone", "avatar", "ID_user"]
-  })
+    attributes: ["name", "email", "phone", "avatar", "ID_user"],
+  });
 
   const traker = await trakers.findAll({
     where: {
@@ -72,7 +73,7 @@ const getTraker = async (req, res) => {
     ],
   });
 
-  res.json({traker, userRead});
+  res.json({ traker, userRead });
 };
 
 const getTrakers = async (req, res) => {
@@ -172,24 +173,22 @@ const nbrProdByTrack = async (req, res) => {
   });
 
   const getYear = await trakers.findAll({
-    attributes: [
-      "year"
-    ],
-    group: ['year'],
-    order: ['year'],
+    attributes: ["year"],
+    group: ["year"],
+    order: ["year"],
     limit: 5,
-  })
+  });
 
   res.json({
     countProdInterested,
     countByMonthByYear,
     countProductByPageByMonth,
-    getYear
+    getYear,
   });
 };
 
-const getProdByInterested = async(req, res)=>{
-  const {id, year} = req.body
+const getProdByInterested = async (req, res) => {
+  const { id, year } = req.body;
 
   const countByMonthByYear = await trakers.findAll({
     where: {
@@ -205,7 +204,7 @@ const getProdByInterested = async(req, res)=>{
   });
 
   const logSingleProductInterested = await trakers.findAll({
-    where:{
+    where: {
       year: year,
       productId: id,
     },
@@ -214,21 +213,21 @@ const getProdByInterested = async(req, res)=>{
       [sequelize.literal("TIME(trakers.createdAt)"), "time"],
     ],
     include: [
-          {
-            model: products,
-            attributes: ["title"],
-          },
-          {
-            model: users,
-            attributes: ["name", "email"],
-          },
+      {
+        model: products,
+        attributes: ["title"],
+      },
+      {
+        model: users,
+        attributes: ["name", "email"],
+      },
     ],
     order: [[sequelize.col("trakers.createdAt"), "DESC"]],
-    limit: 10
+    limit: 10,
   });
 
-  res.json({countByMonthByYear, logSingleProductInterested})
-}
+  res.json({ countByMonthByYear, logSingleProductInterested });
+};
 
 module.exports = {
   addTraker,
@@ -236,5 +235,5 @@ module.exports = {
   getTrakers,
   getTopProduct,
   nbrProdByTrack,
-  getProdByInterested
+  getProdByInterested,
 };

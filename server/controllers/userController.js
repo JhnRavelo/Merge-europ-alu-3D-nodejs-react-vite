@@ -62,9 +62,7 @@ const userRegistration = async (req, res) => {
       secure: true,
     });
 
-    res.json({ role, accessToken });
-  } else {
-    res.json("Suivant");
+    res.json({ role, accessToken, id: userRegister.ID_user });
   }
 };
 
